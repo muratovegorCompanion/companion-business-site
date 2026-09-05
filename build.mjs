@@ -14,20 +14,21 @@ if (!index.includes('<main id="content"></main>')) throw new Error('Missing home
 index = index.replace('<main id="content"></main>', `<main id="content">${home}</main>`);
 await writeFile(join(output, 'index.html'), index);
 
-// Fixed shared header geometry for standalone pages. The classes remain isolated,
-// while every item occupies the same coordinate on DMS, Partners and App.
+// Exact shared desktop geometry for standalone headers. Every visual variable that can
+// change text width (font family, weight, line height, spacing) is fixed explicitly.
 const standaloneGeometry = (prefix) => `
-    .${prefix}-top{height:88px!important;min-height:88px!important;background:#fff;color:#142a46;display:flex;align-items:center;position:relative;z-index:20;border-bottom:1px solid #dce3eb}
-    .${prefix}-top-inner{width:min(1240px,calc(100% - 56px))!important;height:88px!important;min-height:88px!important;margin:0 auto!important;padding:0!important;display:grid!important;grid-template-columns:180px minmax(0,1fr);align-items:center;column-gap:30px!important}
-    .${prefix}-top-logo{display:flex!important;align-items:center!important;width:180px!important;min-width:180px!important;margin:0!important}
-    .${prefix}-top-logo img{display:block;width:180px!important;height:auto}
-    .${prefix}-top-nav{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:28px!important;margin:0!important;padding:0!important;font-size:14px!important;font-weight:600!important;white-space:nowrap;line-height:20px}
-    .${prefix}-top-nav a{color:#142a46;text-decoration:none;padding:10px 0;border-bottom:2px solid transparent}
-    .${prefix}-top-nav a:hover{color:#245dce;border-color:#245dce}
-    .${prefix}-top-nav a.active{color:#245dce;border-color:#245dce;transform:translateY(-4px)}
-    .${prefix}-top-meeting{background:#142a46!important;color:#fff!important;padding:13px 18px!important;border:0!important;border-radius:7px!important;transform:none!important}
-    .${prefix}-top-menu{display:none;border:1px solid #dce3eb;background:#fff;color:#142a46;border-radius:8px;padding:8px 11px;font:inherit;min-height:44px}
-    @media(max-width:1050px){.${prefix}-top{height:auto!important;min-height:74px!important}.${prefix}-top-inner{width:calc(100% - 36px)!important;height:auto!important;min-height:74px!important;grid-template-columns:1fr auto!important;column-gap:14px!important}.${prefix}-top-logo{width:auto!important;min-width:0!important}.${prefix}-top-logo img{width:150px!important}.${prefix}-top-menu{display:block}.${prefix}-top-nav{display:none!important;grid-column:1/-1;width:100%;flex-direction:column;align-items:flex-start!important;justify-content:flex-start!important;gap:10px!important;padding:12px 0 18px!important}.${prefix}-top-nav.open{display:flex!important}.${prefix}-top-nav a.active{transform:translateY(-3px)}.${prefix}-top-meeting{display:inline-block}}
+    .${prefix}-top{height:88px!important;min-height:88px!important;background:#fff;color:#142a46;display:flex!important;align-items:center!important;position:relative;z-index:20;border-bottom:1px solid #dce3eb;font-family:Arial,Helvetica,sans-serif!important}
+    .${prefix}-top *{box-sizing:border-box}
+    .${prefix}-top-inner{width:min(1240px,calc(100% - 56px))!important;height:88px!important;min-height:88px!important;margin:0 auto!important;padding:0!important;display:grid!important;grid-template-columns:180px minmax(0,1fr)!important;align-items:center!important;column-gap:30px!important}
+    .${prefix}-top-logo{display:flex!important;align-items:center!important;width:180px!important;min-width:180px!important;height:88px!important;margin:0!important;padding:0!important}
+    .${prefix}-top-logo img{display:block!important;width:180px!important;height:auto!important;margin:0!important;padding:0!important}
+    .${prefix}-top-nav{display:grid!important;grid-template-columns:max-content max-content max-content max-content max-content max-content!important;align-items:center!important;justify-content:end!important;column-gap:28px!important;margin:0!important;padding:0!important;font-family:Arial,Helvetica,sans-serif!important;font-size:14px!important;font-weight:600!important;font-style:normal!important;letter-spacing:0!important;white-space:nowrap!important;line-height:20px!important}
+    .${prefix}-top-nav a{display:block!important;color:#142a46;text-decoration:none!important;margin:0!important;padding:10px 0!important;border:0!important;border-bottom:2px solid transparent!important;font:inherit!important;letter-spacing:0!important;line-height:20px!important}
+    .${prefix}-top-nav a:hover{color:#245dce!important;border-bottom-color:#245dce!important}
+    .${prefix}-top-nav a.active{color:#245dce!important;border-bottom-color:#245dce!important;transform:translateY(-4px)!important}
+    .${prefix}-top-nav .${prefix}-top-meeting{background:#142a46!important;color:#fff!important;padding:13px 18px!important;border:0!important;border-radius:7px!important;transform:none!important;line-height:20px!important}
+    .${prefix}-top-menu{display:none;border:1px solid #dce3eb;background:#fff;color:#142a46;border-radius:8px;padding:8px 11px;font-family:Arial,Helvetica,sans-serif!important;font-size:14px!important;font-weight:600!important;min-height:44px}
+    @media(max-width:1050px){.${prefix}-top{height:auto!important;min-height:74px!important}.${prefix}-top-inner{width:calc(100% - 36px)!important;height:auto!important;min-height:74px!important;grid-template-columns:1fr auto!important;column-gap:14px!important}.${prefix}-top-logo{width:auto!important;min-width:0!important;height:74px!important}.${prefix}-top-logo img{width:150px!important}.${prefix}-top-menu{display:block}.${prefix}-top-nav{display:none!important;grid-column:1/-1!important;width:100%!important;grid-template-columns:1fr!important;justify-content:start!important;align-items:start!important;row-gap:10px!important;column-gap:0!important;padding:12px 0 18px!important}.${prefix}-top-nav.open{display:grid!important}.${prefix}-top-nav a.active{transform:translateY(-3px)!important}.${prefix}-top-meeting{display:inline-block!important}}
 `;
 
 let dms = await readFile(join(root, 'dms.html'), 'utf8');
@@ -51,4 +52,4 @@ for (const file of [
   await copyFile(join(root, file), join(output, file));
 }
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});
-console.log('Built static Companion site with fixed identical standalone header coordinates.');
+console.log('Built static Companion site with pixel-locked standalone header typography and coordinates.');
