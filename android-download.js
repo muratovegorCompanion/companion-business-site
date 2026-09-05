@@ -8,7 +8,7 @@
       : '<svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.7 12.7c0-2 1.6-3 1.7-3.1-.9-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.3.7-2.9.7-.6 0-1.5-.7-2.5-.7-1.3 0-2.5.8-3.2 1.9-1.4 2.4-.4 6 1 8 .7 1 1.5 2.1 2.6 2 .9 0 1.3-.6 2.5-.6s1.5.6 2.5.6c1.1 0 1.8-1 2.5-2 .8-1.1 1.1-2.2 1.1-2.2s-2.3-.9-2.3-3Zm-1.9-5.9c.5-.7.9-1.7.8-2.7-.8 0-1.8.5-2.3 1.2-.5.6-.9 1.6-.8 2.5.9.1 1.8-.4 2.3-1Z"/></svg>';
     link.innerHTML = `${icon}<span>${label}</span>`;
     if (platform === "android") {
-      link.href = "companion-android.apk";
+      link.href = "https://app.sb-companion.com/companion-android.apk";
       link.download = "Companion-Android.apk";
     } else {
       link.href = "#ios-not-ready";
@@ -24,8 +24,11 @@
     return link;
   };
 
-  document.querySelector(".actions")?.append(makeLink("android"), makeLink("ios"));
-  document.querySelector(".final .wrap")?.append(makeLink("android"), makeLink("ios"));
+  // Reuse the Android buttons already present in the page markup.
+  for (const actions of document.querySelectorAll('.hero .actions, .final .actions')) {
+    if (!actions.querySelector('.btn-android')) actions.append(makeLink('android'));
+    if (!actions.querySelector('.btn-ios')) actions.append(makeLink('ios'));
+  }
   const bottom = document.querySelector(".final .wrap");
   if (bottom) {
     const nav = document.createElement("nav");
