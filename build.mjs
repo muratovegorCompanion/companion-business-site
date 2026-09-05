@@ -13,7 +13,7 @@ let index = await readFile(join(root, 'index.html'), 'utf8');
 if (!index.includes('<main id="content"></main>')) throw new Error('Missing homepage render slot');
 index = index.replace('<main id="content"></main>', `<main id="content">${home}</main>`);
 await writeFile(join(output, 'index.html'), index);
-for (const file of ['styles.css','home.css','home.js','script.js','services.html','dms.html','app.html','logistyka.html','yak-my-pratsyuyemo.html','android-download.js']) {
+for (const file of ['styles.css','home.css','home.js','script.js','services.html','dms.html','app.html','logistyka.html','yak-my-pratsyuyemo.html','android-download.js','CNAME']) {
   await copyFile(join(root, file), join(output, file));
 }
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});
