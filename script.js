@@ -58,7 +58,19 @@ const homePage=()=>window.CompanionHome?.render()||home();
 const pages={home:homePage,services,dms,partners,about,contacts,app};
 main.innerHTML=(pages[page]||homePage)();
 window.CompanionHome?.mount();
-document.querySelectorAll(".site-nav a[data-page]").forEach(a=>{if(a.dataset.page===page)a.setAttribute("aria-current","page")}); document.title={home:"Страхове бюро «Компаньйон» — страхування для бізнесу",services:"Сервіси — Компаньйон",dms:"Медичне страхування — Компаньйон",partners:"Страхові компанії — Компаньйон",about:"Про нас — Компаньйон",contacts:"Контакти — Компаньйон",app:"Застосунок — Компаньйон"}[page]||document.title;
+const siteNav=document.querySelector('.site-nav');
+const aboutNav=siteNav?.querySelector('a[data-page="about"]');
+if(page==='about'){aboutNav?.setAttribute('aria-current','page');aboutNav?.classList.add('nav-active')}
+const directionsNav=siteNav?.querySelector('a[data-section="solutions"]');
+const syncDirections=()=>{
+  if(!directionsNav)return;
+  const active=page==='home' && location.hash==='#solutions';
+  directionsNav.classList.toggle('nav-active',active);
+  if(active)directionsNav.setAttribute('aria-current','page');else directionsNav.removeAttribute('aria-current');
+};
+syncDirections();
+window.addEventListener('hashchange',syncDirections);
+document.title={home:"Страхове бюро «Компаньйон» — страхування для бізнесу",services:"Сервіси — Компаньйон",dms:"Медичне страхування — Компаньйон",partners:"Страхові компанії — Компаньйон",about:"Про нас — Компаньйон",contacts:"Контакти — Компаньйон",app:"Застосунок — Компаньйон"}[page]||document.title;
 if(embed){document.body.classList.add("embed-mode");document.querySelector(".site-header")?.remove();document.querySelector(".site-footer")?.remove()}
 const toggle=document.querySelector(".menu-toggle"), nav=document.querySelector(".site-nav"); toggle?.addEventListener("click",()=>{const open=nav.classList.toggle("is-open");toggle.setAttribute("aria-expanded",open)}); nav?.addEventListener("click",e=>{if(e.target.closest("a")){nav.classList.remove("is-open");toggle?.setAttribute("aria-expanded","false")}});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav?.classList.contains('is-open')){nav.classList.remove('is-open');toggle?.setAttribute('aria-expanded','false');toggle?.focus()}});
