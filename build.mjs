@@ -31,7 +31,7 @@ const standaloneGeometry = (prefix) => `
 `;
 
 let dms = await readFile(join(root, 'dms.html'), 'utf8');
-const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button><nav class="dms-top-nav" id="dms-top-nav" aria-label="Сайт"><a href="index.html#solutions">Послуги</a><a class="active" href="dms.html">Медичне страхування</a><a href="index.html?page=about">Про нас</a><a href="partners.html">Страхові компанії</a><a href="app.html">Застосунок</a><a class="dms-top-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>`;
+const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button><nav class="dms-top-nav" id="dms-top-nav" aria-label="Сайт"><a href="index.html?page=services">Послуги</a><a class="active" href="dms.html">Медичне страхування</a><a href="index.html?page=about">Про нас</a><a href="partners.html">Страхові компанії</a><a href="app.html">Застосунок</a><a class="dms-top-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>`;
 dms = dms.replace('</style>', `${standaloneGeometry('dms')}  </style>`);
 if (!dms.includes('class="dms-top"')) dms = dms.replace('<body>', `<body>\n  ${dmsHeader}`);
 if (!dms.includes("querySelector('.dms-top-menu')")) dms = dms.replace('</body>', `  <script>const dmsMenu=document.querySelector('.dms-top-menu'),dmsNav=document.querySelector('#dms-top-nav');if(dmsMenu&&dmsNav){dmsMenu.addEventListener('click',()=>{const open=dmsNav.classList.toggle('open');dmsMenu.setAttribute('aria-expanded',String(open));});}</script>\n</body>`);
@@ -40,6 +40,7 @@ await writeFile(join(output, 'dms.html'), dms);
 for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
   let page = await readFile(join(root, file), 'utf8');
   page = page.replace(/>Напрями<\/a>/g, '>Послуги</a>');
+  page = page.replace(/href="index\.html#solutions"/g, 'href="index.html?page=services"');
   page = page.replace('</style>', `${standaloneGeometry(prefix)}  </style>`);
   await writeFile(join(output, file), page);
 }
