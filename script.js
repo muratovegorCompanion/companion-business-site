@@ -4,7 +4,7 @@ const images={
   medical:"4d8e25_078aaaef9846412e93e07337442c7456~mv2.jpg/v1/crop/x_316,y_0,w_2368,h_2000/fill/w_487,h_411,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Medical%2520Record%2520Analysis_edited.jpg",
   logistics:"4d8e25_8b1fd12fa0124f66a6d17f89ea975b3b~mv2.jpg/v1/crop/x_430,y_0,w_2141,h_1809/fill/w_487,h_411,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Truck%2520Car%2520Park_edited.jpg",
   people:"f1a82a9de8b64749be3336c0ce0ccdb5.jpg/v1/crop/x_202,y_0,w_1517,h_1280/fill/w_487,h_411,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/%D0%A7%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%20%D0%92%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D0%B5.jpg",
-  casco:"11062b_03a09d40775d4772a4f191ad5c7f6ac9~mv2.jpg/v1/crop/x_525,y_0,w_3949,h_3333/fill/w_487,h_411,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%20%D1%85%D0%BB%D0%BE%D0%BF.jpg",
+  casco:"11062b_03a09d40775d4772a4f191ad5c7f6ac9~mv2.jpg/v1/crop/x_525,y_0,w_3949,h_3333/fill/w_487,h_411,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%20%D0%BA%D0%BB%D0%BE%D0%BF.jpg",
   founder:"3433f0_ded1d57e655e4e3aade7279b65ad2a7f~mv2.jpg/v1/fill/w_769,h_1236,al_c,q_85,enc_avif,quality_auto/3433f0_ded1d57e655e4e3aade7279b65ad2a7f~mv2.jpg",
   olga:"3433f0_21d4095e93ca4c09a5a316fa0f56e2bf~mv2.jpg/v1/fill/w_96,h_139,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/3433f0_21d4095e93ca4c09a5a316fa0f56e2bf~mv2.jpg",
   oksana:"3433f0_ada7ad6e02d7462e8f93a0d9688cc5d2~mv2.jpg/v1/fill/w_96,h_139,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/3433f0_ada7ad6e02d7462e8f93a0d9688cc5d2~mv2.jpg",
@@ -60,13 +60,20 @@ main.innerHTML=(pages[page]||homePage)();
 window.CompanionHome?.mount();
 const siteNav=document.querySelector('.site-nav');
 const aboutNav=siteNav?.querySelector('a[data-page="about"]');
-if(page==='about'){aboutNav?.setAttribute('aria-current','page');aboutNav?.classList.add('nav-active')}
+if(page==='about' && aboutNav){
+  aboutNav.setAttribute('aria-current','page');
+  aboutNav.classList.add('nav-active');
+  aboutNav.style.setProperty('transform','translateY(-4px)','important');
+  aboutNav.style.setProperty('color','#245dce','important');
+  aboutNav.style.setProperty('border-bottom','2px solid #245dce','important');
+}
 const directionsNav=siteNav?.querySelector('a[data-section="solutions"]');
 const syncDirections=()=>{
   if(!directionsNav)return;
   const active=page==='home' && location.hash==='#solutions';
   directionsNav.classList.toggle('nav-active',active);
-  if(active)directionsNav.setAttribute('aria-current','page');else directionsNav.removeAttribute('aria-current');
+  if(active){directionsNav.setAttribute('aria-current','page');directionsNav.style.setProperty('transform','translateY(-4px)','important');directionsNav.style.setProperty('color','#245dce','important');directionsNav.style.setProperty('border-bottom','2px solid #245dce','important')}
+  else{directionsNav.removeAttribute('aria-current');directionsNav.style.removeProperty('transform');directionsNav.style.removeProperty('color');directionsNav.style.removeProperty('border-bottom')}
 };
 syncDirections();
 window.addEventListener('hashchange',syncDirections);
