@@ -1,0 +1,4 @@
+dist/
+companion-android.apk
+.DS_Store
+node_modules/
