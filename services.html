@@ -152,11 +152,25 @@
     .result .section-head { max-width: 770px; }
     .outcome { margin-top: 36px; }
     .outcome-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 0; margin: 0; }
-    .outcome-step { position: relative; display: flex; align-items: center; justify-content: center; padding: 18px 12px; border: 1px solid #c9d5e5; border-radius: 12px; background: #fff; color: var(--ink); font-size: 1rem; font-weight: 650; text-align: center; }
-    .outcome-step:not(:last-child)::after { content: "+"; position: absolute; right: -20px; color: #426189; font-size: 1.25rem; font-weight: 400; }
+
+    /* До 1080px чотири колонки стискаються і описи стають
+       нечитабельними — переходимо на дві. «+» у кінці рядка там зайвий. */
+    @media (max-width: 1080px) and (min-width: 601px) {
+      .outcome-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 30px; }
+      .outcome-step:nth-child(2)::after { display: none; }
+    }
+    @media (max-width: 600px) {
+      .outcome-step:not(:last-child)::after { top: auto; bottom: -18px; right: auto; left: 50%; transform: translateX(-50%); }
+    }
+    .outcome-step { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 8px; text-align: left; padding: 20px 18px; border: 1px solid #c9d5e5; border-radius: 12px; background: #fff; color: var(--ink); font-size: 1rem; font-weight: 650; text-align: center; }
+    .outcome-step:not(:last-child)::after { content: "+"; position: absolute; top: 22px; right: -20px; color: #426189; font-size: 1.25rem; font-weight: 400; }
     .flow-join { color: var(--blue); text-align: center; font-size: 1.75rem; line-height: 1; padding: 16px 0; }
-    .outcome-result { display: flex; align-items: center; gap: 20px; padding: 28px 32px; border-radius: 16px; background: var(--navy-soft); color: #fff; }
+    .outcome-result { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 28px 32px; border-radius: 16px; background: var(--navy-soft); color: #fff; }
     .outcome-mark { flex: 0 0 44px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--c-lime-line); border-radius: 50%; color: var(--lime); font-size: 1.4rem; }
+    
+    .outcome-step strong { font-size: 1rem; line-height: 1.3; }
+    .outcome-step span { font-size: .875rem; line-height: 1.55; color: var(--muted-dark); font-weight: 400; }
+    .outcome-result > div { max-width: 640px; }
     .outcome-result h3 { font-size: 1.375rem; line-height: 1.35; }
     .outcome-result p { margin-top: 6px; color: var(--muted); font-size: 1rem; }
 
@@ -195,7 +209,11 @@
       .outcome-flow { grid-template-columns: minmax(0, 1fr); gap: 22px; }
       .outcome-step:not(:last-child)::after { right: auto; left: 50%; bottom: -26px; transform: translateX(-50%); }
       .outcome-result { padding: 24px; align-items: flex-start; gap: 14px; }
-      .outcome-result h3 { font-size: 1.1875rem; }
+      
+    .outcome-step strong { font-size: 1rem; line-height: 1.3; }
+    .outcome-step span { font-size: .875rem; line-height: 1.55; color: var(--muted-dark); font-weight: 400; }
+    .outcome-result > div { max-width: 640px; }
+    .outcome-result h3 { font-size: 1.1875rem; }
       .outcome-mark { width: 32px; height: 32px; flex-basis: 32px; }
       .final { padding: 58px 0 64px; }
     }
@@ -327,10 +345,10 @@
         </div>
         <div class="outcome">
           <ul class="outcome-flow" aria-label="Робота, яку бере на себе Компаньйон">
-            <li class="outcome-step">Аналіз ризиків</li>
-            <li class="outcome-step">Підбір умов</li>
-            <li class="outcome-step">Супровід</li>
-            <li class="outcome-step">Врегулювання</li>
+            <li class="outcome-step"><strong>Аналіз ризиків</strong><span>Розбираємо, що саме потребує захисту: активи, зобов’язання за договорами, вантажі та люди.</span></li>
+            <li class="outcome-step"><strong>Підбір умов</strong><span>Формуємо запит до ринку і зіставляємо покриття, ліміти, винятки, вартість і сервіс.</span></li>
+            <li class="outcome-step"><strong>Супровід</strong><span>Ведемо договір після підписання: зміни в програмі, документи, питання команди.</span></li>
+            <li class="outcome-step"><strong>Врегулювання</strong><span>Допомагаємо пройти страховий випадок і відстоюємо ваші інтереси перед страховиком.</span></li>
           </ul>
           <div class="flow-join" aria-hidden="true">↓</div>
           <div class="outcome-result">
