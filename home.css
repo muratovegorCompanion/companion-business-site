@@ -282,3 +282,13 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 @media(max-width:800px){
   
 }
+
+/* Логотипи клієнтів одразу під цифрами: «70+ компаній-клієнтів» отримує імена. */
+.b-clients { padding:36px 0 4px; border-top:1px solid var(--b-line); }
+.b-clients-label { margin:0 0 28px; font-size:.8125rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--b-muted); }
+.b-clients-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:34px 26px; margin:0; padding:0; list-style:none; }
+.b-clients-grid li { display:grid; place-items:center; min-height:64px; }
+/* висота в кожного своя — щоб широкі й високі знаки важили на око однаково */
+.b-clients-grid img { width:auto; max-width:100%; }
+@media (max-width:900px) { .b-clients-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px 20px; } }
+@media (max-width:560px) { .b-clients-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
