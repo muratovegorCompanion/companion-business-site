@@ -31,6 +31,10 @@ const shareShell = (html, file) => {
     html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=3"></head>');
   // services.html і app.html відкриваються ще й усередині iframe на ?page=…
   // Там свій підвал зайвий — зовнішня сторінка вже має власний.
+  // styles.css і home.css підключені без версії — без цього браузер
+  // повертаного відвідувача віддає їх із кешу.
+  html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=2"')
+             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=2"');
   // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
   if (!html.includes('data-embedded-footer'))
     html = html.replace('</body>',
