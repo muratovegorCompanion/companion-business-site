@@ -190,7 +190,7 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-work-checklist li { padding:21px 0 21px 31px; border-bottom:1px solid #536176; position:relative; color:#edf3fb; }
 .b-work-checklist li::before { content:"✓"; position:absolute; left:0; color:var(--b-lime); font-weight:700; }
 .b-work-app { padding:76px 0; background:var(--b-paper); }
-.b-work-app-grid { display:grid; grid-template-columns:260px minmax(0,1fr); gap:62px; align-items:center; max-width:890px; }
+.b-work-app-grid { display:grid; grid-template-columns:330px minmax(0,1fr); gap:52px; align-items:center; max-width:960px; }
 .b-work-app img { display:block; width:186px; height:282px; justify-self:center; object-fit:cover; object-position:top; border:6px solid #dce6f3; border-radius:28px; box-shadow:0 18px 36px #22375024; }
 .b-work-app h2 { max-width:650px; margin:14px 0 18px; font-size:clamp(2rem,3.3vw,3rem); line-height:1.14; letter-spacing:-.045em; }
 .b-work-app p:not(.b-eyebrow) { max-width:650px; color:var(--b-muted); font-size:1.0625rem; }

@@ -26,7 +26,7 @@ const shareShell = (html, file) => {
     ? html.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, siteFooter)
     : html.replace('</body>', `${siteFooter}\n</body>`);
   if (!html.includes('tokens.css'))
-    html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=5">');
+    html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
   if (!html.includes('site-footer.css'))
     html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=4"></head>');
   // services.html і app.html відкриваються ще й усередині iframe на ?page=…
@@ -34,7 +34,7 @@ const shareShell = (html, file) => {
   // styles.css і home.css підключені без версії — без цього браузер
   // повертаного відвідувача віддає їх із кешу.
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=5"')
-             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=3"');
+             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=4"');
   // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
   if (!html.includes('data-embedded-footer'))
     html = html.replace('</body>',

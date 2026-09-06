@@ -44,3 +44,18 @@ h1,h2,h3{letter-spacing:-.02em}
    решту смуг — притемнюємо сильніше, щоб він лишався в тому самому тоні. */
 .site-band--bright img { filter:saturate(.80) brightness(.60); }
 .site-band--bright::after { background:linear-gradient(180deg,rgba(20,42,70,.46),rgba(20,42,70,.66)); }
+
+/* Пара екранів застосунку: два телефони з нахилом і перекриттям, щоб показати
+   два стани й не тягнути висоту блоку. Світла і темна підкладки — модифікатори. */
+.phone-pair{display:flex;align-items:center;justify-content:center;padding:26px 10px}
+.phone-pair figure{margin:0;flex:0 0 auto;width:158px;overflow:hidden;border-radius:26px;border:6px solid var(--c-line);background:var(--c-line);box-shadow:0 20px 40px rgba(34,55,80,.20)}
+.phone-pair img{display:block;width:100%;height:268px;object-fit:cover;object-position:top}
+.phone-pair figure:first-child{transform:rotate(-7deg) translateY(10px);z-index:1}
+.phone-pair figure:last-child{margin-left:-30px;transform:rotate(7deg) translateY(-10px);z-index:2}
+.phone-pair--dark figure{border-color:#273f5d;background:#273f5d;box-shadow:0 24px 46px rgba(0,0,0,.48)}
+@media(max-width:700px){
+  .phone-pair figure{width:132px}
+  .phone-pair img{height:224px}
+  .phone-pair figure:first-child{transform:rotate(-5deg) translateY(6px)}
+  .phone-pair figure:last-child{margin-left:-24px;transform:rotate(5deg) translateY(-6px)}
+}
