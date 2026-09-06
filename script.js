@@ -90,6 +90,9 @@ if(presentationFrame){
 // звідки вона прийшла.
 (function initCompanionForms(){
   const ALLOWED=['https://form.sb-companion.com'];
+  // Домен сайту не на Cloudflare, тож воркер живе на *.workers.dev.
+  // Приймаємо тільки наш воркер за іменем, а не будь-що на цьому хості.
+  const isOurWorker=o=>/^https:\/\/companion-meeting-form\.[a-z0-9-]+\.workers\.dev$/.test(o);
   const endpoint=document.documentElement.dataset.meetingEndpoint;
   document.querySelectorAll('form.b-meeting-form').forEach(form=>{
     const status=form.querySelector('.b-form-status');
@@ -118,7 +121,7 @@ if(presentationFrame){
       if(status)status.textContent='Надсилаємо ваш запит…';
       try{
         const target=new URL(endpoint,location.href);
-        const trusted=target.origin===location.origin||ALLOWED.includes(target.origin);
+        const trusted=target.origin===location.origin||ALLOWED.includes(target.origin)||isOurWorker(target.origin);
         if(!trusted||target.protocol!=='https:')throw new Error('Untrusted endpoint');
         const response=await fetch(target,{method:'POST',headers:{'Content-Type':'application/json'},
           body:JSON.stringify(Object.fromEntries(new FormData(form))),signal:AbortSignal.timeout(15000)});
