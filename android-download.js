@@ -29,12 +29,4 @@
     if (!actions.querySelector('.btn-android')) actions.append(makeLink('android'));
     if (!actions.querySelector('.btn-ios')) actions.append(makeLink('ios'));
   }
-  const bottom = document.querySelector(".final .wrap");
-  if (bottom) {
-    const nav = document.createElement("nav");
-    nav.className = "bottom-links";
-    nav.setAttribute("aria-label", "Навігація презентацією");
-    nav.innerHTML = '<a href="#how">Як це працює</a><a href="#policy">Поліс</a><a href="#help">Допомога</a>';
-    bottom.append(nav);
-  }
 })();
