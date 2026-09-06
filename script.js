@@ -15,7 +15,8 @@ const partnerLogos=[
   ["Арсенал","presentation-assets/insurers/arsenal.jpg","https://arsenal-ic.ua/"],
   ["Allianz","presentation-assets/insurers/allianz.jpg","https://www.allianz.ua/"],
   ["TAS","presentation-assets/insurers/tas.jpg","https://sgtas.ua/company/"],
-  ["UNIQA","presentation-assets/insurers/uniqa.jpg","https://uniqa.ua/"]
+  ["UNIQA","presentation-assets/insurers/uniqa.jpg","https://uniqa.ua/"],
+  ["Євроінс","presentation-assets/insurers/euroins.png","https://euroins.com.ua/"]
 ];
 const shell=(content,kicker="")=>`<section class="section"><div class="shell">${kicker?`<p class="section-kicker">${kicker}</p>`:""}${content}</div></section>`;
 function presentation(file,title){return `<iframe class="presentation-frame" src="${file}" title="${title}"></iframe>`}
