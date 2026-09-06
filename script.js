@@ -167,3 +167,53 @@ if(presentationFrame){
   }),{threshold:.4});
   nodes.forEach(n=>io.observe(n));
 })();
+
+/* Слайдер відгуків: гортання нативне (scroll-snap), кнопки лише
+   підштовхують доріжку й показують, на якій картці ми стоїмо. */
+(function initVoices(){
+  const track=document.querySelector('.b-voices-track');
+  if(!track) return;
+  const slides=[...track.children];
+  const box=track.closest('.b-voices');
+  const counter=box?.querySelector('.b-voices-count b');
+  const buttons=[...(box?.querySelectorAll('.b-voices-btn')||[])];
+  if(!slides.length) return;
+  const current=()=>{
+    const x=track.scrollLeft;
+    let best=0, dist=Infinity;
+    slides.forEach((el,i)=>{
+      const d=Math.abs(el.offsetLeft-track.offsetLeft-x);
+      if(d<dist){ dist=d; best=i; }
+    });
+    return best;
+  };
+  const step=()=>{
+    const a=slides[0].getBoundingClientRect();
+    const b=slides[1]?.getBoundingClientRect();
+    return b ? b.left-a.left : a.width;
+  };
+  const sync=()=>{
+    const atStart=track.scrollLeft<=1;
+    const atEnd=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;
+    // видно дві картки одразу, тож показуємо діапазон: «3–4 / 7».
+    // Один номер тут брехав би — остання картка ніколи не стає лівою.
+    if(counter){
+      const seen=Math.max(1, Math.round(track.clientWidth/step()));
+      let first=atEnd ? slides.length-seen+1 : current()+1;
+      first=Math.min(Math.max(1,first), slides.length-seen+1);
+      const last=Math.min(slides.length, first+seen-1);
+      counter.textContent = last>first ? `${first}–${last}` : String(first);
+    }
+    buttons.forEach(b=>{
+      const dir=Number(b.dataset.dir);
+      b.disabled = dir<0 ? atStart : atEnd;
+    });
+  };
+  buttons.forEach(b=>b.addEventListener('click',()=>{
+    track.scrollBy({left: step()*Number(b.dataset.dir)});
+  }));
+  let raf;
+  track.addEventListener('scroll',()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(sync); },{passive:true});
+  addEventListener('resize',sync);
+  sync();
+})();
