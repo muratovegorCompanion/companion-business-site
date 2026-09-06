@@ -21,6 +21,11 @@
     .lg-scope strong { display:block; font-size:1.0625rem; color:var(--b-ink); }
     .lg-scope p { margin:4px 0 0; font-size:.9375rem; color:var(--b-muted); line-height:1.6; }
 
+
+    .lg-band { position:relative; height:clamp(200px,24vw,340px); overflow:hidden; background:var(--c-ink); }
+    .lg-band img { width:100%; height:100%; object-fit:cover; display:block; }
+    .lg-band::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,42,70,.34),rgba(20,42,70,.52)); }
+
     .lg-h2 { margin:16px 0 0; font-size:clamp(1.9rem,3.4vw,2.9rem); line-height:1.12; letter-spacing:-.03em; color:var(--b-ink); }
 
     .lg-roles { background:var(--b-paper); }
@@ -113,6 +118,10 @@
         </div>
       </div>
     </section>
+
+    <div class="lg-band" aria-hidden="true">
+      <img src="presentation-assets/logistics-yard.jpg" alt="" width="1500" height="844" loading="lazy" decoding="async">
+    </div>
 
     <section class="b-section lg-roles" id="roles" aria-labelledby="roles-title">
       <div class="shell">

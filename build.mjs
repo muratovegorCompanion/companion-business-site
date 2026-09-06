@@ -33,7 +33,7 @@ const shareShell = (html, file) => {
   // Там свій підвал зайвий — зовнішня сторінка вже має власний.
   // styles.css і home.css підключені без версії — без цього браузер
   // повертаного відвідувача віддає їх із кешу.
-  html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=2"')
+  html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=3"')
              .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=3"');
   // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
   if (!html.includes('data-embedded-footer'))
