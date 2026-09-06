@@ -3,4 +3,4 @@ main = "meeting-form-worker.js"
 compatibility_date = "2025-01-01"
 
 [vars]
-ALLOWED_ORIGIN = "https://sb-companion.com"
+ALLOWED_ORIGIN = "https://icompanion.com.ua,https://sb-companion.com"

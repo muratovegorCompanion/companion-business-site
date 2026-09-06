@@ -6,7 +6,7 @@
  * Секрети (Workers → Settings → Variables and Secrets):
  *   TELEGRAM_BOT_TOKEN   — токен бота від @BotFather
  *   TELEGRAM_CHAT_ID     — id чату або каналу, куди падають заявки
- *   ALLOWED_ORIGIN       — https://sb-companion.com
+ *   ALLOWED_ORIGIN       — https://icompanion.com.ua (можна кілька через кому)
  *   RESEND_API_KEY       — необов’язково: дубль заявки на пошту
  *   MAIL_TO              — необов’язково: egor_m@icompanion.com.ua
  *   MAIL_BCC             — необов’язково: прихована копія
@@ -44,8 +44,13 @@ const json = (body, status, origin) =>
 
 export default {
   async fetch(request, env) {
-    const allowed = env.ALLOWED_ORIGIN || 'https://sb-companion.com';
+    // Під час переїзду сайт живе на двох доменах, тож приймаємо список.
+    const allowedList = (env.ALLOWED_ORIGIN || 'https://icompanion.com.ua,https://sb-companion.com')
+      .split(',').map((value) => value.trim()).filter(Boolean);
     const origin = request.headers.get('Origin');
+    // У відповідь віддаємо саме той origin, з якого прийшов запит,
+    // інакше браузер відкине її як чужу.
+    const allowed = allowedList.includes(origin) ? origin : allowedList[0];
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(allowed) });
@@ -54,7 +59,7 @@ export default {
       return json({ accepted: false, error: 'method_not_allowed' }, 405, allowed);
     }
     // Заявки приймаємо тільки з власного сайту.
-    if (origin !== allowed) {
+    if (!allowedList.includes(origin)) {
       return json({ accepted: false, error: 'origin_not_allowed' }, 403, allowed);
     }
 
@@ -88,7 +93,7 @@ export default {
     }
 
     const lines = [
-      '<b>Нова заявка з sb-companion.com</b>',
+      '<b>Нова заявка з сайту</b>',
       '',
       ...Object.entries(FIELDS)
         .filter(([key]) => clean[key])
