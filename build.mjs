@@ -22,7 +22,9 @@ const standaloneGeometry = (prefix) => `
     .${prefix}-top-logo img{display:block!important;width:180px!important;height:auto!important;margin:0!important}
     .${prefix}-top-nav{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:28px!important;margin-left:auto!important;margin-right:0!important;padding:0!important;font-family:Arial,Helvetica,sans-serif!important;font-size:14px!important;font-weight:600!important;letter-spacing:0!important;line-height:1.5!important;white-space:nowrap!important}
     .${prefix}-top-nav a{display:inline-block!important;color:#142a46!important;text-decoration:none!important;padding:10px 0!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;background:transparent!important;font:inherit!important;line-height:1.5!important}
-    .${prefix}-top-nav a:hover{color:#245dce!important;border-bottom-color:#245dce!important}
+    .${prefix}-top-nav a{transition:transform .16s ease,color .16s ease,border-color .16s ease!important}
+    .${prefix}-top-nav a:hover{color:#245dce!important;border-bottom-color:#245dce!important;transform:translateY(-4px)!important}
+    @media(prefers-reduced-motion:reduce){.${prefix}-top-nav a{transition:none!important}}
     .${prefix}-top-nav a.active{color:#245dce!important;border-bottom-color:#245dce!important;transform:translateY(-4px)!important}
     .${prefix}-top-nav .${prefix}-top-meeting{padding:13px 18px!important;background:#142a46!important;color:#fff!important;border:0!important;border-radius:7px!important;transform:none!important}
     .${prefix}-top-menu{display:none!important;background:none!important;border:1px solid #dce3eb!important;color:#142a46!important;border-radius:8px!important;padding:8px 11px!important;font:inherit!important;min-height:44px!important}

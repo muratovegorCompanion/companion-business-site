@@ -59,24 +59,29 @@ const pages={home:homePage,services,dms,partners,about,contacts,app};
 main.innerHTML=(pages[page]||homePage)();
 window.CompanionHome?.mount();
 const siteNav=document.querySelector('.site-nav');
-const aboutNav=siteNav?.querySelector('a[data-page="about"]');
-if(page==='about' && aboutNav){
-  aboutNav.setAttribute('aria-current','page');
-  aboutNav.classList.add('nav-active');
-  aboutNav.style.setProperty('transform','translateY(-4px)','important');
-  aboutNav.style.setProperty('color','#245dce','important');
-  aboutNav.style.setProperty('border-bottom','2px solid #245dce','important');
-}
-const directionsNav=siteNav?.querySelector('a[data-section="solutions"]');
-const syncDirections=()=>{
-  if(!directionsNav)return;
-  const active=page==='home' && location.hash==='#solutions';
-  directionsNav.classList.toggle('nav-active',active);
-  if(active){directionsNav.setAttribute('aria-current','page');directionsNav.style.setProperty('transform','translateY(-4px)','important');directionsNav.style.setProperty('color','#245dce','important');directionsNav.style.setProperty('border-bottom','2px solid #245dce','important')}
-  else{directionsNav.removeAttribute('aria-current');directionsNav.style.removeProperty('transform');directionsNav.style.removeProperty('color');directionsNav.style.removeProperty('border-bottom')}
+// Активний пункт меню: раніше стан ставився вручну тільки для «Про нас»,
+// через що «Послуги» ніколи не підсвічувались і не піднімались.
+const setNavActive=(link,active)=>{
+  if(!link)return;
+  link.classList.toggle('nav-active',active);
+  if(active){
+    link.setAttribute('aria-current','page');
+    link.style.setProperty('transform','translateY(-4px)','important');
+    link.style.setProperty('color','#245dce','important');
+    link.style.setProperty('border-bottom','2px solid #245dce','important');
+  }else{
+    link.removeAttribute('aria-current');
+    link.style.removeProperty('transform');
+    link.style.removeProperty('color');
+    link.style.removeProperty('border-bottom');
+  }
 };
-syncDirections();
-window.addEventListener('hashchange',syncDirections);
+const syncNav=()=>{
+  siteNav?.querySelectorAll('a[data-page]').forEach(link=>setNavActive(link,link.dataset.page===page));
+  setNavActive(siteNav?.querySelector('a[data-section="solutions"]'),page==='home'&&location.hash==='#solutions');
+};
+syncNav();
+window.addEventListener('hashchange',syncNav);
 document.title={home:"Страхове бюро «Компаньйон» — страхування для бізнесу",services:"Сервіси — Компаньйон",dms:"Медичне страхування — Компаньйон",partners:"Страхові компанії — Компаньйон",about:"Про нас — Компаньйон",contacts:"Контакти — Компаньйон",app:"Застосунок — Компаньйон"}[page]||document.title;
 if(embed){document.body.classList.add("embed-mode");document.querySelector(".site-header")?.remove();document.querySelector(".site-footer")?.remove()}
 const toggle=document.querySelector(".menu-toggle"), nav=document.querySelector(".site-nav"); toggle?.addEventListener("click",()=>{const open=nav.classList.toggle("is-open");toggle.setAttribute("aria-expanded",open)}); nav?.addEventListener("click",e=>{if(e.target.closest("a")){nav.classList.remove("is-open");toggle?.setAttribute("aria-expanded","false")}});
