@@ -323,3 +323,14 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 @media (prefers-reduced-motion:reduce) { .b-voices-track { scroll-behavior:auto; } }
 @media (max-width:860px) { .b-voices.b-section { padding:48px 0; } .b-voices-head { flex-direction:column; align-items:flex-start; gap:20px; } .b-voice { flex-basis:100%; padding:24px; } }
 .b-insight-body .b-text-link + .b-text-link { margin-top:10px; }
+
+/* Момент продовження договору — головний привід звернутися до брокера,
+   раніше згадувався лише однією карткою в питаннях. */
+.b-renewal { padding:56px 0; background:#e8eef7; border-top:1px solid #d5dfec; border-bottom:1px solid #d5dfec; }
+.b-renewal-inner { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:56px; align-items:center; }
+.b-renewal h2 { margin:14px 0 16px; font-size:2.1rem; line-height:1.15; letter-spacing:-.03em; }
+.b-renewal-copy > p { margin:0; color:var(--b-muted); font-size:1.0625rem; line-height:1.65; max-width:660px; }
+.b-renewal-time { margin-top:14px!important; font-size:.9375rem!important; color:var(--b-ink)!important; font-weight:600; }
+.b-renewal-actions { display:grid; gap:16px; justify-items:start; }
+.b-renewal-main { width:100%; justify-content:center; }
+@media (max-width:900px) { .b-renewal-inner { grid-template-columns:1fr; gap:28px; } .b-renewal { padding:44px 0; } }

@@ -73,7 +73,7 @@ const shareShell = (html, file) => {
   // повертаного відвідувача віддає їх із кешу.
   html = html.replace(/companion-logo\.png(\?[^"']*)?/g, 'companion-logo.png?v=2');
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
-             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=13"');
+             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=14"');
   // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
   if (!html.includes('data-embedded-footer'))
     html = html.replace('</body>',
