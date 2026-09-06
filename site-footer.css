@@ -1,0 +1,20 @@
+/* Самодостатні стилі підвалу: dms.html і services.html не підключають
+   загальний CSS, а підвал тепер стоїть на всіх сторінках. Усе заскоуплено
+   під .site-footer, щоб нічого не протікало у верстку сторінки. */
+.site-footer{background:#142a46;color:#c3c9d2;padding:35px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;box-sizing:border-box}
+.site-footer *{box-sizing:border-box}
+.site-footer a{color:inherit;text-decoration:none}
+.site-footer a:hover{color:#c5f16b}
+.site-footer .shell{width:min(1240px,calc(100% - 56px));margin-inline:auto}
+.site-footer .footer-grid{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:start}
+.site-footer .footer-title{color:#fff;font-size:13px;letter-spacing:.18em;font-weight:800}
+.site-footer .social{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#11141c;font-weight:800;font-size:22px;margin-top:22px}
+.site-footer .footer-links{display:grid;gap:8px;font-size:.9375rem}
+.site-footer .footer-bottom{border-top:1px solid #303642;margin-top:40px;padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}
+.site-footer .footer-bottom a{color:#c5f16b;font-weight:800}
+@media(max-width:700px){
+  .site-footer .shell{width:min(100% - 36px,1240px)}
+  .site-footer .footer-grid{grid-template-columns:1fr;gap:20px}
+  .site-footer .footer-bottom{display:block}
+  .site-footer .footer-bottom a{display:block;margin-top:14px}
+}
