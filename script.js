@@ -61,8 +61,6 @@ syncNav();
 window.addEventListener('hashchange',syncNav);
 if(isRenderSlot)document.title={home:"Страхове бюро «Компаньйон» — страхування для бізнесу",services:"Сервіси — Компаньйон",dms:"Медичне страхування — Компаньйон",partners:"Страхові компанії — Компаньйон",about:"Про нас — Компаньйон",contacts:"Контакти — Компаньйон",app:"Застосунок — Компаньйон"}[page]||document.title;
 if(embed){document.body.classList.add("embed-mode");document.querySelector(".site-header")?.remove();document.querySelector(".site-footer")?.remove()}
-const toggle=document.querySelector(".menu-toggle"), nav=document.querySelector(".site-nav"); toggle?.addEventListener("click",()=>{const open=nav.classList.toggle("is-open");toggle.setAttribute("aria-expanded",open)}); nav?.addEventListener("click",e=>{if(e.target.closest("a")){nav.classList.remove("is-open");toggle?.setAttribute("aria-expanded","false")}});
-document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav?.classList.contains('is-open')){nav.classList.remove('is-open');toggle?.setAttribute('aria-expanded','false');toggle?.focus()}});
 
 const presentationFrame=document.querySelector(".presentation-frame");
 if(presentationFrame){

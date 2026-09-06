@@ -63,6 +63,10 @@ const shareShell = (html, file) => {
     html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
   if (!html.includes('site-footer.css'))
     html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=4"></head>');
+  // Кнопка «Меню» була лише на головній: розмітка з нею вклеювалась усюди,
+  // а обробник лишався в script.js, який підключений тільки на index.
+  if (html.includes('class="menu-toggle"') && !html.includes('nav.js'))
+    html = html.replace('</head>', '<script src="nav.js?v=1" defer></script></head>');
   // services.html і app.html відкриваються ще й усередині iframe на ?page=…
   // Там свій підвал зайвий — зовнішня сторінка вже має власний.
   // styles.css і home.css підключені без версії — без цього браузер
@@ -111,7 +115,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
   await writeFile(join(output, file), shareShell(page, file));
 }
 
-for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','android-download.js','CNAME']) {
+for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','android-download.js','CNAME']) {
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['services.html','logistyka.html','yak-my-pratsyuyemo.html',
