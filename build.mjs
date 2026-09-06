@@ -28,7 +28,7 @@ const shareShell = (html, file) => {
   if (!html.includes('tokens.css'))
     html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=1">');
   if (!html.includes('site-footer.css'))
-    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=3"></head>');
+    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=4"></head>');
   // services.html і app.html відкриваються ще й усередині iframe на ?page=…
   // Там свій підвал зайвий — зовнішня сторінка вже має власний.
   // styles.css і home.css підключені без версії — без цього браузер
