@@ -12,6 +12,9 @@
   --c-blue:#245dce;
   --c-blue-soft:#a6c7ff;
   --c-lime:#c5f16b;
+  --c-lime-soft:#edf8d6;   /* світла плашка */
+  --c-lime-ink:#31480f;    /* текст на світлій плашці */
+  --c-lime-line:rgba(197,241,107,.45); /* контур лаймом на темному */
   --c-paper:#f5f7fa;
   --c-line:#dce3eb;
   --c-white:#ffffff;
