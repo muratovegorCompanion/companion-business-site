@@ -27,6 +27,11 @@ const shareShell = (html, file) => {
     : html.replace('</body>', `${siteFooter}\n</body>`);
   if (!html.includes('site-footer.css'))
     html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css"></head>');
+  // services.html і app.html відкриваються ще й усередині iframe на ?page=…
+  // Там свій підвал зайвий — зовнішня сторінка вже має власний.
+  if (!html.includes('data-embedded-footer'))
+    html = html.replace('</body>',
+      '<script data-embedded-footer>if(self!==top)document.querySelector(".site-footer")?.remove()</script>\n</body>');
   return html;
 };
 
