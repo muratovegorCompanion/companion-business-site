@@ -187,14 +187,17 @@ if(presentationFrame){
     });
     return best;
   };
+  const EDGE=4;
+  const atEndNow=()=>track.scrollLeft>=track.scrollWidth-track.clientWidth-EDGE;
+  const atStartNow=()=>track.scrollLeft<=EDGE;
   const step=()=>{
     const a=slides[0].getBoundingClientRect();
     const b=slides[1]?.getBoundingClientRect();
     return b ? b.left-a.left : a.width;
   };
   const sync=()=>{
-    const atStart=track.scrollLeft<=1;
-    const atEnd=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;
+    const atStart=atStartNow();
+    const atEnd=atEndNow();
     // видно дві картки одразу, тож показуємо діапазон: «3–4 / 7».
     // Один номер тут брехав би — остання картка ніколи не стає лівою.
     if(counter){
@@ -204,14 +207,36 @@ if(presentationFrame){
       const last=Math.min(slides.length, first+seen-1);
       counter.textContent = last>first ? `${first}–${last}` : String(first);
     }
-    buttons.forEach(b=>{
-      const dir=Number(b.dataset.dir);
-      b.disabled = dir<0 ? atStart : atEnd;
-    });
   };
+  // з кінця йдемо на початок, з початку — в кінець: стрічка замкнена
+  const goTo=x=>track.scrollTo({left:x});
+  const maxX=()=>track.scrollWidth-track.clientWidth;
   buttons.forEach(b=>b.addEventListener('click',()=>{
-    track.scrollBy({left: step()*Number(b.dataset.dir)});
+    const dir=Number(b.dataset.dir);
+    if(dir>0 && atEndNow()) return goTo(0);
+    if(dir<0 && atStartNow()) return goTo(maxX());
+    track.scrollBy({left: step()*dir});
   }));
+
+  // те саме для пальця й колеса: доштовхнув за край — повернувся до першого
+  let push=0, idle;
+  const nudge=delta=>{
+    if(delta>0 && atEndNow()) push+=delta;
+    else if(delta<0 && atStartNow()) push-=delta;
+    else push=0;
+    if(push>110){ push=0; goTo(atStartNow() ? maxX() : 0); }
+    clearTimeout(idle); idle=setTimeout(()=>{push=0;},400);
+  };
+  track.addEventListener('wheel',e=>{
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) nudge(e.deltaX);
+  },{passive:true});
+  let touchX=null;
+  track.addEventListener('touchstart',e=>{touchX=e.touches[0].clientX;},{passive:true});
+  track.addEventListener('touchmove',e=>{
+    if(touchX===null) return;
+    const x=e.touches[0].clientX; nudge(touchX-x); touchX=x;
+  },{passive:true});
+  track.addEventListener('touchend',()=>{touchX=null;},{passive:true});
   let raf;
   track.addEventListener('scroll',()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(sync); },{passive:true});
   addEventListener('resize',sync);

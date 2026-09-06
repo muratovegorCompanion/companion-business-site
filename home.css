@@ -302,12 +302,12 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-voices-nav { display:flex; align-items:center; gap:14px; flex-shrink:0; }
 .b-voices-btn { display:grid; place-items:center; width:46px; height:46px; padding:0; border:1px solid rgba(255,255,255,.28); border-radius:50%; background:transparent; color:#fff; cursor:pointer; transition:background .16s ease, border-color .16s ease, opacity .16s ease; }
 .b-voices-btn:hover:not(:disabled) { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.5); }
-.b-voices-btn:disabled { opacity:.3; cursor:default; }
 .b-voices-btn:focus-visible { outline:2px solid var(--b-lime); outline-offset:3px; }
 .b-voices-count { margin:0; font-size:15px; color:#9fb0c6; font-variant-numeric:tabular-nums; min-width:52px; text-align:center; }
 .b-voices-count b { color:#fff; font-weight:700; }
 /* доріжка: гортається пальцем і колесом, кожна картка «прилипає» до краю */
-.b-voices-track { display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; padding-bottom:4px; }
+.b-voices .shell { width:min(1080px,calc(100% - 56px)); }
+.b-voices-track { display:flex; gap:18px; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; padding-bottom:4px; }
 .b-voices-track::-webkit-scrollbar { display:none; }
 .b-voices-track:focus-visible { outline:2px solid var(--b-lime); outline-offset:6px; border-radius:12px; }
 .b-voice { flex:0 0 calc((100% - 18px) / 2); scroll-snap-align:start; display:flex; flex-direction:column; padding:32px; border:1px solid rgba(255,255,255,.16); border-radius:12px; background:rgba(255,255,255,.04); }
