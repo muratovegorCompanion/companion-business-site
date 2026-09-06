@@ -32,3 +32,10 @@ html{font-family:var(--c-font)}
 body{font-family:var(--c-font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 h1,h2,h3,h4,h5,h6,button,input,select,textarea{font-family:inherit}
 h1,h2,h3{letter-spacing:-.02em}
+
+/* Широка смуга-зображення між секціями. Кадри знімалися різними, тому
+   зводимо їх до одного тону: приглушуємо насиченість і накриваємо
+   градієнтом фірмового темно-синього. */
+.site-band { position:relative; overflow:hidden; background:var(--c-ink); height:clamp(200px,24vw,340px); }
+.site-band img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.88) brightness(.95); }
+.site-band::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,42,70,.40),rgba(20,42,70,.60)); }
