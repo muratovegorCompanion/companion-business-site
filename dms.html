@@ -108,12 +108,6 @@
     .coverage-number { color: var(--lime); font-size: .875rem; font-variant-numeric: tabular-nums; padding-top: 3px; }
     .coverage-list strong { display: block; font-size: 1.125rem; font-weight: 650; }
     .coverage-list p { margin-top: 3px; font-size: 1rem; color: var(--muted); }
-    .hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 56px; border-top: 1px solid var(--line-dark); }
-    .hero-stat { padding: 24px 28px 0 0; }
-    .hero-stat + .hero-stat { padding-left: 28px; border-left: 1px solid var(--line-dark); }
-    .hero-stat strong { display: block; color: var(--lime); font-size: clamp(2rem, 3.2vw, 2.75rem); font-weight: 650; line-height: 1; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
-    .hero-stat span { display: block; max-width:180px; margin-top: 9px; color: var(--muted); font-size: .9375rem; line-height: 1.35; }
-    .hero-app { display: grid; grid-template-columns: 184px minmax(0, 1fr); align-items: center; gap: 32px; margin-top: 34px; padding: 24px 32px 24px 24px; border: 1px solid #3c5b7d; border-radius: 18px; background: #112843; }
     .hero-app-screen { display: block; width: 148px; height: 224px; justify-self: center; object-fit: cover; object-position: top; border: 5px solid #273f5d; border-radius: 24px; box-shadow: 0 16px 34px #0007; }
     .hero-app-copy { min-width: 0; }
     .hero-app-mark { display: none; }
@@ -200,7 +194,6 @@
       .hero-grid, .broker-grid, .claims-grid { grid-template-columns: minmax(0, 1fr); gap: 38px; }
       .hero h1 { max-width: 650px; }
       .coverage-panel { max-width: 620px; }
-      .hero-stats { max-width: 620px; }
       .broker-copy { padding-top: 0; }
       .broker .section-title { max-width: 640px; }
       .medical-grid { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 36px; }
@@ -215,12 +208,6 @@
       .actions { flex-direction: column; align-items: stretch; }
       .btn { width: 100%; }
       .coverage-panel { padding: 24px; }
-      .hero-stats { grid-template-columns: 1fr; margin-top: 38px; }
-      .hero-stat { padding: 18px 0; border-bottom: 1px solid var(--line-dark); }
-      .hero-stat + .hero-stat { padding-left: 0; border-left: 0; }
-      .hero-stat:last-child { border-bottom: 0; }
-      .hero-stat strong { font-size: 2.25rem; }
-      .hero-stat span { max-width: none; }
       .hero-app { grid-template-columns: 1fr; gap: 20px; padding: 22px; }
       .hero-app-screen { width: 126px; height: 190px; }
       .hero-app a { justify-content: center; width: 100%; }
@@ -290,11 +277,6 @@
             <li><span class="coverage-number" aria-hidden="true">03</span><div><strong>Бізнес</strong><p>Бачить умови, бюджет і рекомендації щодо розвитку програми.</p></div></li>
           </ul>
         </aside>
-      </div>
-      <div class="wrap hero-stats" aria-label="Компаньйон у цифрах">
-        <div class="hero-stat"><strong data-counter="15678">15 678</strong><span>застрахованих людей</span></div>
-        <div class="hero-stat"><strong data-counter="97" data-suffix="%">97%</strong><span>договорів продовжуються</span></div>
-        <div class="hero-stat"><strong data-counter="70" data-suffix="+">70+</strong><span>компаній-клієнтів</span></div>
       </div>
       <div class="wrap hero-app"><img class="hero-app-screen" src="presentation-assets/policy.png" alt="Екран поліса у застосунку Компаньйон"><div class="hero-app-copy"><span class="hero-app-kicker">Компаньйон для вашої команди</span><strong>Страховий поліс і допомога — у телефоні працівника.</strong><p>Застрахована людина може переглянути покриття, ліміти та винятки, знайти контакти асистансу й звернутися по підтримку без пошуку в документах і чатах.</p><ul class="hero-app-features"><li>Умови поліса</li><li>Покриття та ліміти</li><li>Контакти допомоги</li><li>Чат-помічник</li></ul><a href="app.html">Детальніше про застосунок ↗</a></div></div>
     </section>
@@ -381,27 +363,5 @@
         <div class="actions"><a class="btn btn-primary" href="index.html#meeting" target="_top">Обговорити медичне страхування</a><a class="btn btn-secondary" href="index.html?page=services" target="_top">Усі сервіси Компаньйон</a></div></div>
     </section>
   </main>
-  <script>
-    (() => {
-      const counters = [...document.querySelectorAll('[data-counter]')];
-      const formatter = new Intl.NumberFormat('uk-UA');
-      const finish = (element) => { element.textContent = formatter.format(Number(element.dataset.counter)) + (element.dataset.suffix || ''); };
-      const animate = (element) => {
-        const target = Number(element.dataset.counter);
-        const duration = 1500;
-        const start = performance.now();
-        const tick = (now) => {
-          const progress = Math.min((now - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          element.textContent = formatter.format(Math.round(target * eased)) + (element.dataset.suffix || '');
-          if (progress < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      };
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { counters.forEach(finish); return; }
-      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { animate(entry.target); observer.unobserve(entry.target); } }), { threshold: .35 });
-      counters.forEach((counter) => observer.observe(counter));
-    })();
-  </script>
 </body>
 </html>

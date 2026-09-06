@@ -236,3 +236,40 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
   .site-nav a { padding:10px; }
   .site-nav .header-meeting { text-align:center; }
 }
+
+/* Стрілки між кроками: показують, що це послідовність, а не чотири окремі
+   картки. На двох колонках стрілка в кінці рядка зайва, на одній — дивиться вниз. */
+.b-work-steps li { position:relative; }
+.b-work-steps li:not(:last-child)::after {
+  content:""; position:absolute; top:50%; right:-15px; width:9px; height:9px;
+  border-top:2px solid var(--b-blue); border-right:2px solid var(--b-blue);
+  transform:translateY(-50%) rotate(45deg);
+}
+@media(max-width:800px) {
+  .b-work-steps li:nth-child(2)::after { display:none; }
+}
+@media(max-width:600px) {
+  .b-work-steps li:not(:last-child)::after {
+    top:auto; bottom:-15px; right:auto; left:50%;
+    transform:translateX(-50%) rotate(135deg);
+  }
+  .b-work-steps li:nth-child(2)::after { display:block; }
+}
+
+/* Решта частих питань — списком під картками, щоб не роздувати сітку. */
+.b-faq { margin-top:26px; border-top:1px solid var(--b-line); }
+.b-faq-item { border-bottom:1px solid var(--b-line); }
+.b-faq-item summary { display:flex; align-items:baseline; gap:18px; padding:17px 34px 17px 0; position:relative; cursor:pointer; list-style:none; }
+.b-faq-item summary::-webkit-details-marker { display:none; }
+.b-faq-tag { flex:0 0 168px; font-size:.75rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--b-blue); }
+.b-faq-q { font-size:1.0625rem; font-weight:600; color:var(--b-ink); }
+.b-faq-item summary::after { content:""; position:absolute; right:6px; top:calc(50% - 4px); width:8px; height:8px; border-right:2px solid var(--b-blue); border-bottom:2px solid var(--b-blue); transform:rotate(45deg); transition:transform .18s ease; }
+.b-faq-item[open] summary::after { transform:rotate(-135deg); }
+.b-faq-item p { margin:0 0 20px; padding-left:186px; max-width:820px; color:var(--b-muted); line-height:1.7; }
+.b-faq-item summary:hover .b-faq-q { color:var(--b-blue); }
+@media(prefers-reduced-motion:reduce){ .b-faq-item summary::after { transition:none; } }
+@media(max-width:800px) {
+  .b-faq-item summary { flex-direction:column; gap:6px; padding-right:28px; }
+  .b-faq-tag { flex:none; }
+  .b-faq-item p { padding-left:0; }
+}
