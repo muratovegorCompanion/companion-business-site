@@ -1,5 +1,5 @@
 /* Companion B2B: generous editorial rhythm, blue ink, lime accents. */
-:root { --b-ink:#142a46; --b-muted:#536478; --b-blue:#245dce; --b-lime:#c5f16b; --b-paper:#f5f7fa; --b-line:#dce3eb; --shell:1240px; }
+:root { --b-ink:var(--c-ink); --b-muted:var(--c-muted); --b-blue:var(--c-blue); --b-lime:var(--c-lime); --b-paper:var(--c-paper); --b-line:var(--c-line); }
 html { scroll-padding-top:110px; }
 body { color:var(--b-ink); background:var(--b-paper); }
 a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transparent; }

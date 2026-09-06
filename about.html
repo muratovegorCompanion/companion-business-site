@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Команда страхового бюро «Компаньйон»: партнери, керівники напрямів та їхній досвід у страхуванні бізнесу.">
+  <meta name="theme-color" content="#142a46">
+  <title>Про нас — Страхове бюро «Компаньйон»</title>
+  <link rel="icon" href="presentation-assets/companion-logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="home.css">
+  <style>
+    .about-hero { padding:96px 0 64px; background:var(--c-white); border-bottom:1px solid var(--b-line); }
+    .about-hero-grid { display:grid; grid-template-columns:1.35fr 1fr; gap:70px; align-items:end; }
+    .about-hero h1 { margin:22px 0 0; font-size:clamp(2.6rem,5vw,4.1rem); line-height:1.03; letter-spacing:-.035em; color:var(--b-ink); }
+    .about-hero h1 span { color:var(--b-blue); }
+    .about-hero .b-intro { max-width:none; }
+    .about-facts { display:grid; gap:22px; }
+    .about-fact strong { display:block; font-size:1.75rem; line-height:1.1; color:var(--b-ink); }
+    .about-fact p { margin:6px 0 0; font-size:.9375rem; color:var(--b-muted); }
+
+    .about-stance { background:var(--b-paper); }
+    .about-stance-grid { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; }
+    .about-stance h2 { margin:18px 0 0; font-size:clamp(1.9rem,3.4vw,2.9rem); line-height:1.12; letter-spacing:-.03em; color:var(--b-ink); }
+    .about-stance-list { display:grid; gap:26px; margin:0; padding:0; list-style:none; }
+    .about-stance-list li { padding-top:22px; border-top:1px solid var(--b-line); }
+    .about-stance-list strong { display:block; font-size:1.0625rem; color:var(--b-ink); }
+    .about-stance-list p { margin:8px 0 0; color:var(--b-muted); line-height:1.65; }
+
+    .team { display:grid; gap:0; margin-top:14px; }
+    .team-member { display:grid; grid-template-columns:210px 1fr; gap:46px; align-items:start; padding:44px 0; border-top:1px solid var(--b-line); }
+    .team-member:last-child { border-bottom:1px solid var(--b-line); }
+    .team-photo { width:210px; height:210px; border-radius:14px; object-fit:cover; background:var(--b-line); }
+    .team-initials { display:grid; place-items:center; width:210px; height:210px; border-radius:14px; background:var(--b-ink); color:var(--b-lime); font-size:3rem; font-weight:700; letter-spacing:.02em; }
+    .team-member h3 { margin:0; font-size:1.5rem; letter-spacing:-.02em; color:var(--b-ink); }
+    .team-role { margin:6px 0 18px; font-size:.9375rem; font-weight:600; color:var(--b-blue); }
+    .team-quote { margin:0; font-size:1.0625rem; line-height:1.7; color:var(--b-ink); max-width:720px; }
+    .team-edu { margin:22px 0 0; padding-top:16px; border-top:1px solid var(--b-line); font-size:.875rem; line-height:1.6; color:var(--b-muted); max-width:720px; }
+    .team-edu span { display:block; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.75rem; color:var(--b-ink); margin-bottom:8px; }
+
+    .about-cta { background:var(--b-ink); color:#fff; padding:84px 0; }
+    .about-cta-grid { display:grid; grid-template-columns:1.4fr auto; gap:44px; align-items:center; }
+    .about-cta h2 { margin:0; font-size:clamp(1.7rem,3vw,2.5rem); line-height:1.15; letter-spacing:-.03em; }
+    .about-cta p { margin:14px 0 0; color:#b9c6d8; max-width:560px; line-height:1.7; }
+    .about-cta .b-button { background:var(--b-lime); color:var(--b-ink); }
+
+    @media (max-width:950px) {
+      .about-hero-grid, .about-stance-grid, .about-cta-grid { grid-template-columns:1fr; gap:36px; }
+      .team-member { grid-template-columns:150px 1fr; gap:28px; }
+      .team-photo, .team-initials { width:150px; height:150px; }
+    }
+    @media (max-width:700px) {
+      .about-hero { padding:64px 0 46px; }
+      .team-member { grid-template-columns:1fr; gap:22px; padding:34px 0; }
+      .team-photo, .team-initials { width:130px; height:130px; }
+    }
+  </style>
+</head>
+<body class="business-page about-page">
+  <a class="skip-link" href="#content">Перейти до основного контенту</a>
+  <header class="site-header"><div class="shell header-inner"><a class="brand" href="index.html" aria-label="Страхове бюро «Компаньйон» — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро «Компаньйон»"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav" class="site-nav" aria-label="Сайт"><a href="index.html#solutions">Напрями</a><a href="dms.html">Медичне страхування</a><a href="logistyka.html">Логістика</a><a href="yak-my-pratsyuyemo.html">Як ми працюємо</a><a href="about.html">Про нас</a><a href="app.html">Застосунок</a><a class="header-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>
+
+  <main id="content">
+    <section class="about-hero">
+      <div class="shell about-hero-grid">
+        <div>
+          <p class="b-eyebrow"><span class="b-dot" aria-hidden="true"></span> Про бюро</p>
+          <h1>Команда, яка пояснює ринок <span>і залишається поруч.</span></h1>
+          <p class="b-intro" style="margin-top:24px">Команда експертів у сфері страхування з досвідом роботи більше 10-ти років. Ми створили бюро максимально комфортних сервісів для компаній, які турбуються про зменшення ризиків власного бізнесу. Працюємо, щоб робити зрозумілим та ефективним страхування, яке вам потрібно.</p>
+        </div>
+        <div class="about-facts">
+          <div class="about-fact"><strong>Страховий брокер</strong><p>У Реєстрі страхових брокерів України — № 35. Свідоцтво № 21/25-рк від 15.01.2024.</p></div>
+          <div class="about-fact"><strong>Київ</strong><p>вул. Юрія Іллєнка, 81, офіс 302. Працюємо з компаніями по всій Україні.</p></div>
+          <div class="about-fact"><strong>70+</strong><p>компаній-клієнтів у корпоративних програмах страхування.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-section about-stance">
+      <div class="shell about-stance-grid">
+        <div>
+          <p class="b-eyebrow">Наша позиція</p>
+          <h2>Брокер потрібен не для того, щоб продати поліс.</h2>
+          <p class="b-intro" style="margin-top:22px">Ми організовуємо тендер, пояснюємо відмінності між пропозиціями та даємо рекомендацію. Страхову компанію обирає клієнт — і має бачити, на чому цей вибір побудований.</p>
+          <a class="b-text-link" href="yak-my-pratsyuyemo.html" style="margin-top:24px">Як ми працюємо <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul class="about-stance-list">
+          <li><strong>Показуємо ринок, а не одну пропозицію</strong><p>Зводимо покриття, ліміти, винятки, вартість і сервіс у зрозумілий для порівняння вигляд.</p></li>
+          <li><strong>Залишаємося після підписання договору</strong><p>Допомагаємо запустити програму, працювати зі змінами та складними страховими зверненнями.</p></li>
+          <li><strong>Говоримо про обмеження прямо</strong><p>Рішення про покриття чи виплату ухвалює страхова компанія. Наша роль — супровід і представництво інтересів клієнта.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="b-section">
+      <div class="shell">
+        <div class="b-section-head">
+          <div><p class="b-eyebrow">Команда</p><h2 style="margin:16px 0 0;font-size:clamp(1.9rem,3.4vw,2.9rem);line-height:1.12;letter-spacing:-.03em;color:var(--b-ink)">Люди, з якими ви<br>працюватимете.</h2></div>
+          <p style="color:var(--b-muted);line-height:1.7;margin:0">Партнери бюро та керівники напрямів. За кожною корпоративною програмою закріплена команда супроводу.</p>
+        </div>
+
+        <div class="team">
+          <article class="team-member">
+            <img class="team-photo" src="presentation-assets/team/yehor.jpg" alt="Єгор Муратов" width="600" height="600" loading="lazy">
+            <div>
+              <h3>Єгор Муратов</h3>
+              <p class="team-role">Засновник, керуючий партнер</p>
+              <p class="team-quote">Мій досвід роботи дозволяє бути впевненим, що інструмент страхування в Україні працює. Я вірю, що страхові брокери, представляючи частину страхового ринку, несуть відповідальність за ефективність використання цього інструменту.</p>
+              <p class="team-edu"><span>Сертифікати і освіта</span>Університет Technion, Хайфа · Project Management<br>Інститут післядипломної освіти та бізнесу · Курс організації діяльності страхових та перестрахових брокерів № 7963 від 09.04.2014</p>
+            </div>
+          </article>
+
+          <article class="team-member">
+            <div class="team-initials" aria-hidden="true">АА</div>
+            <div>
+              <h3>Анатолій Артюшенко</h3>
+              <p class="team-role">Старший партнер, директор з особистих видів страхування</p>
+              <p class="team-quote">Страхування в українських реаліях — це не просто інструмент управління ризиками. Ми покращуємо або знаходимо нові рішення на стику раціональності та інновацій, не забуваючи, що сервіс — це додаток до грамотно проаналізованого та застрахованого ризику.</p>
+              <p class="team-edu"><span>Сертифікати і освіта</span>Національний медичний університет імені А.А. Богомольця · лікар невідкладних станів, лікар загального профілю</p>
+            </div>
+          </article>
+
+          <article class="team-member">
+            <img class="team-photo" src="presentation-assets/team/olga.jpg" alt="Ольга Жиглинська" width="600" height="600" loading="lazy">
+            <div>
+              <h3>Ольга Жиглинська</h3>
+              <p class="team-role">Старший партнер</p>
+              <p class="team-quote">Вірю, що не людина вибирає страхування, а страхування вибирає людину, щоб вчасно надати їй фінансовий захист. Ефективне використання інструменту страхування дозволяє зменшити неприємні наслідки у непередбачуваних ситуаціях.</p>
+              <p class="team-edu"><span>Сертифікати і освіта</span>Донецький національний університет · математичний факультет, кафедра теорії ймовірності та статистики. Магістр страхування.</p>
+            </div>
+          </article>
+
+          <article class="team-member">
+            <img class="team-photo" src="presentation-assets/team/oksana.jpg" alt="Оксана Кузьминська" width="600" height="600" loading="lazy">
+            <div>
+              <h3>Оксана Кузьминська</h3>
+              <p class="team-role">Директор з корпоративного страхування</p>
+              <p class="team-quote">Я вірю, що тільки ми несемо відповідальність за своє життя та свій бізнес. З полісом страхування негативний вплив стає контрольованим. А що може бути краще для топменеджера, ніж можливість контролювати ризики?</p>
+              <p class="team-edu"><span>Сертифікати і освіта</span>Харківський національний технічний університет · економіка підприємств</p>
+            </div>
+          </article>
+
+          <article class="team-member">
+            <img class="team-photo" src="presentation-assets/team/pavlo.jpg" alt="Павел Брадулов" width="600" height="600" loading="lazy">
+            <div>
+              <h3>Павел Брадулов</h3>
+              <p class="team-role">Департамент страхування фізичних осіб</p>
+              <p class="team-quote">Як страховий брокер, я завжди поруч із клієнтом, у тому числі коли йому найбільше потрібна підтримка. Допомагаю вибудувати правильний порядок дій клієнта, страхової компанії і сторонніх чинників, щоб страхування спрацювало.</p>
+              <p class="team-edu"><span>Сертифікати і освіта</span>ДонНТУ · спеціальність «Інформаційні технології машинобудівництва»</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-cta">
+      <div class="shell about-cta-grid">
+        <div>
+          <h2>Розкажіть, що важливо вашій компанії.</h2>
+          <p>Обговоримо вашу ситуацію, потрібну інформацію та наступні кроки. Безоплатно, онлайн або особисто в Києві.</p>
+        </div>
+        <a class="b-button" href="index.html#meeting">Домовитися про зустріч <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

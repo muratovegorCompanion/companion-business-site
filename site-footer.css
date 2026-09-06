@@ -1,36 +1,35 @@
 /* Самодостатні стилі підвалу: dms.html і services.html не підключають
-   загальний CSS, а підвал тепер стоїть на всіх сторінках. Усе заскоуплено
-   під .site-footer, щоб нічого не протікало у верстку сторінки. */
-.site-footer{background:#142a46;color:#c3c9d2;padding:35px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;box-sizing:border-box}
+   загальний CSS, а підвал стоїть на всіх сторінках. Усе заскоуплено під
+   .site-footer, щоб нічого не протікало у верстку сторінки. */
+.site-footer{background:var(--c-ink);color:#c9d4e2;font-family:var(--c-font);font-size:13px;line-height:1.45;box-sizing:border-box;padding:8px 0}
 .site-footer *{box-sizing:border-box}
-.site-footer a{color:inherit;text-decoration:none}
-.site-footer a:hover{color:#c5f16b}
-.site-footer .shell{width:min(1240px,calc(100% - 56px));margin-inline:auto}
-.site-footer .footer-grid{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:start}
-.site-footer .footer-title{color:#fff;font-size:13px;letter-spacing:.18em;font-weight:800}
-.site-footer .social{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#11141c;font-weight:800;font-size:22px;margin-top:22px}
-.site-footer .footer-links{display:grid;gap:8px;font-size:.9375rem}
-.site-footer .footer-bottom{border-top:1px solid #303642;margin-top:40px;padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}
-.site-footer .footer-bottom a{color:#c5f16b;font-weight:800}
-@media(max-width:700px){
-  .site-footer .shell{width:min(100% - 36px,1240px)}
-  .site-footer .footer-grid{grid-template-columns:1fr;gap:20px}
-  .site-footer .footer-bottom{display:block}
-  .site-footer .footer-bottom a{display:block;margin-top:14px}
-}
+.site-footer a{color:inherit;text-decoration:none;white-space:nowrap}
+.site-footer a:hover{color:var(--c-lime)}
+.site-footer .shell{width:min(var(--c-shell),calc(100% - 56px));margin-inline:auto}
+.site-footer .footer-bar{display:flex;align-items:center;justify-content:space-between;gap:18px 26px;flex-wrap:wrap}
+.site-footer .footer-contacts,.site-footer .footer-legal{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;min-width:0}
+.site-footer .footer-contacts a{font-weight:600;color:#fff}
+.site-footer .footer-contacts a:hover{color:var(--c-lime)}
+.site-footer .footer-legal{font-size:12px;color:#93a4b8}
+.site-footer .footer-legal span{white-space:nowrap}
+.site-footer .footer-legal a{color:var(--c-lime);font-weight:600}
 
 /* Підвал виїжджає, коли екран перестає рухатися, і ховається під час прокрутки.
-   Нижній відступ дорівнює висоті підвала, щоб кінець сторінки не лишався
+   Нижній відступ сторінки дорівнює його висоті, щоб кінець сторінки не лишався
    назавжди прикритим. */
 body.has-sliding-footer{padding-bottom:var(--footer-reveal-height,0px)}
-.site-footer.is-sliding{position:fixed;left:0;right:0;bottom:0;z-index:40;max-height:78vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s ease;will-change:transform;box-shadow:0 -18px 40px rgba(10,20,35,.3)}
+.site-footer.is-sliding{position:fixed;left:0;right:0;bottom:0;z-index:40;max-height:40vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s ease;will-change:transform;box-shadow:0 -14px 32px rgba(10,20,35,.32)}
 .site-footer.is-sliding.is-revealed{transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.site-footer.is-sliding{transition:none}}
 
-/* У виїжджаючому режимі підвал притискаємо: інакше він закриває майже
-   половину екрана. */
-.site-footer.is-sliding{padding:20px 0 12px}
-.site-footer.is-sliding .footer-grid{gap:20px}
-.site-footer.is-sliding .social{margin-top:12px;width:30px;height:30px;font-size:19px}
-.site-footer.is-sliding .shell[style]{padding-top:12px!important;padding-bottom:10px!important;font-size:13px!important;line-height:1.45!important}
-.site-footer.is-sliding .footer-bottom{margin-top:14px;padding-top:12px}
+@media(max-width:1200px){
+  .site-footer .footer-legal span{display:none}
+}
+@media(max-width:700px){
+  .site-footer{padding:8px 0}
+  .site-footer .shell{width:min(100% - 24px,var(--c-shell))}
+  .site-footer .footer-bar{gap:6px 14px}
+  .site-footer .footer-contacts,.site-footer .footer-legal{gap:4px 14px}
+  .site-footer .footer-contacts a{font-size:12px}
+  .site-footer .footer-legal{font-size:11px}
+}
