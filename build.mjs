@@ -26,12 +26,13 @@ const shareShell = (html, file) => {
     ? html.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, siteFooter)
     : html.replace('</body>', `${siteFooter}\n</body>`);
   if (!html.includes('site-footer.css'))
-    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css"></head>');
+    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=2"></head>');
   // services.html і app.html відкриваються ще й усередині iframe на ?page=…
   // Там свій підвал зайвий — зовнішня сторінка вже має власний.
+  // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
   if (!html.includes('data-embedded-footer'))
     html = html.replace('</body>',
-      '<script data-embedded-footer>if(self!==top)document.querySelector(".site-footer")?.remove()</script>\n</body>');
+      '<script data-embedded-footer>(function(){var f=document.querySelector(".site-footer");if(!f)return;if(self!==top){f.remove();return}var t,shown=false;function size(){var h=Math.min(f.offsetHeight,Math.round(innerHeight*0.78));document.body.style.setProperty("--footer-reveal-height",h+"px")}function reveal(){shown=true;f.classList.add("is-revealed")}function schedule(){if(shown){shown=false;f.classList.remove("is-revealed")}clearTimeout(t);t=setTimeout(reveal,450)}f.classList.add("is-sliding");document.body.classList.add("has-sliding-footer");size();addEventListener("scroll",schedule,{passive:true});addEventListener("resize",function(){size();schedule()});f.addEventListener("focusin",reveal);t=setTimeout(function(){size();reveal()},700);})()<\/script>\n</body>');
   return html;
 };
 
