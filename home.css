@@ -295,12 +295,13 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-clients-link { display:inline-flex; margin-top:30px; }
 
 /* Відгуки клієнтів: темна секція між світло-блакитним блоком і білою формою. */
+.b-voices.b-section { padding:64px 0; }
 .b-voices { background:var(--b-ink); color:#fff; }
 .b-voices .b-eyebrow { color:var(--b-lime); }
 .b-voices h2 { margin:14px 0 0; }
-.b-voices-head { display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:38px; }
+.b-voices-head { display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:26px; }
 .b-voices-nav { display:flex; align-items:center; gap:14px; flex-shrink:0; }
-.b-voices-btn { display:grid; place-items:center; width:46px; height:46px; padding:0; border:1px solid rgba(255,255,255,.28); border-radius:50%; background:transparent; color:#fff; cursor:pointer; transition:background .16s ease, border-color .16s ease, opacity .16s ease; }
+.b-voices-btn { display:grid; place-items:center; width:40px; height:40px; padding:0; border:1px solid rgba(255,255,255,.28); border-radius:50%; background:transparent; color:#fff; cursor:pointer; transition:background .16s ease, border-color .16s ease, opacity .16s ease; }
 .b-voices-btn:hover:not(:disabled) { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.5); }
 .b-voices-btn:focus-visible { outline:2px solid var(--b-lime); outline-offset:3px; }
 .b-voices-count { margin:0; font-size:15px; color:#9fb0c6; font-variant-numeric:tabular-nums; min-width:52px; text-align:center; }
@@ -310,14 +311,14 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-voices-track { display:flex; gap:18px; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; padding-bottom:4px; }
 .b-voices-track::-webkit-scrollbar { display:none; }
 .b-voices-track:focus-visible { outline:2px solid var(--b-lime); outline-offset:6px; border-radius:12px; }
-.b-voice { flex:0 0 calc((100% - 18px) / 2); scroll-snap-align:start; display:flex; flex-direction:column; padding:32px; border:1px solid rgba(255,255,255,.16); border-radius:12px; background:rgba(255,255,255,.04); }
-.b-voice blockquote { margin:0; font-size:1.0625rem; line-height:1.6; color:#e7edf5; }
-.b-voice blockquote::before { content:""; display:block; width:34px; height:3px; border-radius:2px; background:var(--b-lime); margin-bottom:20px; }
-.b-voice-who { margin:auto 0 0; padding-top:24px; font-size:.9375rem; line-height:1.5; }
+.b-voice { flex:0 0 calc((100% - 18px) / 2); scroll-snap-align:start; display:flex; flex-direction:column; padding:26px 28px; border:1px solid rgba(255,255,255,.16); border-radius:12px; background:rgba(255,255,255,.04); }
+.b-voice blockquote { margin:0; font-size:1rem; line-height:1.55; color:#e7edf5; }
+.b-voice blockquote::before { content:""; display:block; width:30px; height:3px; border-radius:2px; background:var(--b-lime); margin-bottom:15px; }
+.b-voice-who { margin:auto 0 0; padding-top:18px; font-size:.9375rem; line-height:1.45; }
 .b-voice-who b { display:block; color:#fff; font-weight:700; }
 .b-voice-who span { color:#9fb0c6; }
-.b-voice-co { margin:10px 0 0; font-size:.8125rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--b-lime); }
-.b-voices-all { display:inline-flex; margin-top:32px; color:#fff; }
+.b-voice-co { margin:7px 0 0; font-size:.8125rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--b-lime); }
+.b-voices-all { display:inline-flex; margin-top:24px; color:#fff; }
 .b-voices-all:hover { color:var(--b-lime); }
 @media (prefers-reduced-motion:reduce) { .b-voices-track { scroll-behavior:auto; } }
-@media (max-width:860px) { .b-voices-head { flex-direction:column; align-items:flex-start; gap:22px; } .b-voice { flex-basis:100%; padding:26px; } }
+@media (max-width:860px) { .b-voices.b-section { padding:48px 0; } .b-voices-head { flex-direction:column; align-items:flex-start; gap:20px; } .b-voice { flex-basis:100%; padding:24px; } }
