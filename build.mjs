@@ -16,11 +16,45 @@ index = index.replace('<main id="content"></main>', `<main id="content">${home}<
 // Один підвал і одне меню на весь сайт: раніше підвал існував у шести різних
 // версіях, а на dms.html і services.html його не було зовсім.
 const siteFooter = index.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)[0];
-const siteNav = index.match(/<nav id="site-nav"[\s\S]*?<\/nav>/)[0];
+// Одне меню на весь сайт. Раніше воно існувало у трьох варіантах: дев'ять
+// пунктів на головній, вісім без «Головної» на dms/app/partners і три
+// на службових сторінках. Тепер список тут один, а шапки лише вдягають
+// його у свої класи.
+const NAV = [
+  {href:'index.html', label:'Головна'},
+  {href:'index.html?page=services', label:'Послуги', page:'services'},
+  {href:'dms.html', label:'Медичне страхування'},
+  {href:'logistyka.html', label:'Логістика'},
+  {href:'yak-my-pratsyuyemo.html', label:'Як працюємо'},
+  {href:'about.html', label:'Про нас', page:'about'},
+  {href:'partners.html', label:'Страхові компанії'},
+  {href:'app.html', label:'Застосунок'},
+];
+const MEETING_HREF = 'index.html#meeting';
+const MEETING_LABEL = 'Домовитися про зустріч ↗';
+
+const navLinks = (file, {meetingClass='header-meeting', activeAs='aria'}={}) =>
+  NAV.map(item => {
+    let attrs = item.page ? ` data-page="${item.page}"` : '';
+    if (item.href === file) attrs += activeAs === 'aria' ? ' aria-current="page"' : ' class="active"';
+    return `<a${attrs} href="${item.href}">${item.label}</a>`;
+  }).join('') + `<a class="${meetingClass}" href="${MEETING_HREF}">${MEETING_LABEL}</a>`;
+
+const sharedNav = file =>
+  `<nav id="site-nav" class="site-nav" aria-label="Сайт">${navLinks(file)}</nav>`;
+
+const standaloneNav = (prefix, file) =>
+  `<nav class="${prefix}-top-nav" id="${prefix}-top-nav" aria-label="Сайт">` +
+  `${navLinks(file, {meetingClass:`${prefix}-top-meeting`, activeAs:'class'})}</nav>`;
 const shareShell = (html, file) => {
-  if (/<nav id="site-nav"/.test(html)) {
-    const pageNav = siteNav.replace(`href="${file}"`, `href="${file}" aria-current="page"`);
-    html = html.replace(/<nav id="site-nav"[\s\S]*?<\/nav>/, pageNav);
+  // Службові сторінки мали власний куций <nav class="site-nav"> без id —
+  // ловимо обидві форми, інакше меню там лишалося з трьох пунктів.
+  if (/<nav[^>]*class="site-nav"/.test(html)) {
+    html = html.replace(/<nav[^>]*class="site-nav"[^>]*>[\s\S]*?<\/nav>/, sharedNav(file));
+    // Без цієї кнопки дев'ять пунктів на телефоні нікуди не розгорнути.
+    if (!html.includes('class="menu-toggle"'))
+      html = html.replace('<nav id="site-nav"',
+        '<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav"');
   }
   html = /<footer class="site-footer">/.test(html)
     ? html.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, siteFooter)
@@ -34,8 +68,8 @@ const shareShell = (html, file) => {
   // styles.css і home.css підключені без версії — без цього браузер
   // повертаного відвідувача віддає їх із кешу.
   html = html.replace(/companion-logo\.png(\?[^"']*)?/g, 'companion-logo.png?v=2');
-  html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=5"')
-             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=5"');
+  html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
+             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=7"');
   // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
   if (!html.includes('data-embedded-footer'))
     html = html.replace('</body>',
@@ -48,23 +82,23 @@ await writeFile(join(output, 'index.html'), shareShell(index, 'index.html'));
 // Standalone headers use the exact same desktop geometry as the homepage header.
 const standaloneGeometry = (prefix) => `
     .${prefix}-top{height:88px!important;min-height:88px!important;background:var(--c-white);color:var(--c-ink);display:block!important;position:relative;z-index:20;border-bottom:1px solid var(--c-line);font-family:var(--c-font)!important;line-height:1.5!important}
-    .${prefix}-top-inner{width:min(1240px,calc(100% - 56px))!important;height:88px!important;min-height:88px!important;margin-inline:auto!important;padding:0!important;display:flex!important;align-items:center!important;gap:30px!important}
-    .${prefix}-top-logo{display:flex!important;align-items:center!important;gap:10px!important;min-width:180px!important;width:auto!important;margin:0!important;padding:0!important}
-    .${prefix}-top-logo img{display:block!important;width:180px!important;height:auto!important;margin:0!important}
-    .${prefix}-top-nav{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:22px!important;row-gap:2px!important;flex-wrap:wrap!important;margin-left:auto!important;margin-right:0!important;padding:0!important;font-family:var(--c-font)!important;font-size:14px!important;font-weight:600!important;letter-spacing:0!important;line-height:1.5!important;white-space:normal!important}
-    .${prefix}-top-nav a{display:inline-block!important;color:var(--c-ink)!important;text-decoration:none!important;padding:10px 0!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;background:transparent!important;font:inherit!important;line-height:1.5!important}
+    .${prefix}-top-inner{width:min(1240px,calc(100% - 56px))!important;height:88px!important;min-height:88px!important;margin-inline:auto!important;padding:0!important;display:flex!important;align-items:center!important;gap:24px!important}
+    .${prefix}-top-logo{display:flex!important;align-items:center!important;gap:10px!important;min-width:160px!important;width:auto!important;margin:0!important;padding:0!important}
+    .${prefix}-top-logo img{display:block!important;width:160px!important;height:auto!important;margin:0!important}
+    .${prefix}-top-nav{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:14px!important;row-gap:2px!important;flex-wrap:nowrap!important;margin-left:auto!important;margin-right:0!important;padding:0!important;font-family:var(--c-font)!important;font-size:14px!important;font-weight:600!important;letter-spacing:0!important;line-height:1.5!important;white-space:normal!important}
+    .${prefix}-top-nav a{display:inline-block!important;color:var(--c-ink)!important;text-decoration:none!important;padding:10px 0!important;white-space:nowrap!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;background:transparent!important;font:inherit!important;line-height:1.5!important}
     .${prefix}-top-nav a{transition:transform .16s ease,color .16s ease,border-color .16s ease!important}
     .${prefix}-top-nav a:hover{color:var(--c-blue)!important;border-bottom-color:var(--c-blue)!important;transform:translateY(-4px)!important}
     @media(prefers-reduced-motion:reduce){.${prefix}-top-nav a{transition:none!important}}
     .${prefix}-top-nav a.active{color:var(--c-blue)!important;border-bottom-color:var(--c-blue)!important;transform:translateY(-4px)!important}
-    .${prefix}-top-nav .${prefix}-top-meeting{padding:13px 18px!important;background:var(--c-ink)!important;color:#fff!important;border:0!important;border-radius:7px!important;transform:none!important}
+    .${prefix}-top-nav .${prefix}-top-meeting{padding:10px 15px!important;background:var(--c-ink)!important;color:#fff!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:7px!important;transform:none!important}
     .${prefix}-top-menu{display:none!important;background:none!important;border:1px solid var(--c-line)!important;color:var(--c-ink)!important;border-radius:8px!important;padding:8px 11px!important;font:inherit!important;min-height:44px!important}
-    @media(max-width:950px){.${prefix}-top-inner{gap:15px!important}.${prefix}-top-logo{min-width:190px!important}.${prefix}-top-logo img{width:135px!important}.${prefix}-top-nav{gap:12px!important;font-size:11px!important}}
-    @media(max-width:1000px){.${prefix}-top{height:auto!important;min-height:74px!important}.${prefix}-top-inner{width:min(100% - 36px,1240px)!important;height:auto!important;min-height:74px!important;flex-wrap:wrap!important}.${prefix}-top-logo{flex:1!important;min-width:0!important}.${prefix}-top-logo img{width:125px!important}.${prefix}-top-menu{display:block!important}.${prefix}-top-nav{display:none!important;order:4!important;width:100%!important;padding:14px 0 20px!important;flex-direction:column!important;align-items:flex-start!important;gap:10px!important;margin-left:0!important}.${prefix}-top-nav.open{display:flex!important}.${prefix}-top-nav a.active{transform:translateY(-3px)!important}.${prefix}-top-nav .${prefix}-top-meeting{display:inline-block!important}}
+    @media(max-width:1420px){.${prefix}-top-inner{gap:15px!important}.${prefix}-top-logo{min-width:190px!important}.${prefix}-top-logo img{width:135px!important}.${prefix}-top-nav{gap:12px!important;font-size:11px!important}}
+    @media(max-width:1279px){.${prefix}-top{height:auto!important;min-height:74px!important}.${prefix}-top-inner{width:min(100% - 36px,1240px)!important;height:auto!important;min-height:74px!important;flex-wrap:wrap!important}.${prefix}-top-logo{flex:1!important;min-width:0!important}.${prefix}-top-logo img{width:125px!important}.${prefix}-top-menu{display:block!important}.${prefix}-top-nav{display:none!important;order:4!important;width:100%!important;padding:14px 0 20px!important;flex-wrap:wrap!important;flex-direction:column!important;align-items:flex-start!important;gap:10px!important;margin-left:0!important}.${prefix}-top-nav.open{display:flex!important}.${prefix}-top-nav a.active{transform:translateY(-3px)!important}.${prefix}-top-nav .${prefix}-top-meeting{display:inline-block!important}}
 `;
 
 let dms = await readFile(join(root, 'dms.html'), 'utf8');
-const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button><nav class="dms-top-nav" id="dms-top-nav" aria-label="Сайт"><a href="index.html?page=services">Послуги</a><a class="active" href="dms.html">Медичне страхування</a><a href="logistyka.html">Логістика</a><a href="yak-my-pratsyuyemo.html">Як працюємо</a><a href="about.html">Про нас</a><a href="partners.html">Страхові компанії</a><a href="app.html">Застосунок</a><a class="dms-top-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>`;
+const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button>${standaloneNav('dms','dms.html')}</div></header>`;
 dms = dms.replace('</style>', `${standaloneGeometry('dms')}  </style>`);
 if (!dms.includes('class="dms-top"')) dms = dms.replace('<body>', `<body>\n  ${dmsHeader}`);
 if (!dms.includes("querySelector('.dms-top-menu')")) dms = dms.replace('</body>', `  <script>const dmsMenu=document.querySelector('.dms-top-menu'),dmsNav=document.querySelector('#dms-top-nav');if(dmsMenu&&dmsNav){dmsMenu.addEventListener('click',()=>{const open=dmsNav.classList.toggle('open');dmsMenu.setAttribute('aria-expanded',String(open));});}</script>\n</body>`);
@@ -72,10 +106,7 @@ await writeFile(join(output, 'dms.html'), shareShell(dms, 'dms.html'));
 
 for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
   let page = await readFile(join(root, file), 'utf8');
-  page = page.replace(/>Напрями<\/a>/g, '>Послуги</a>');
-  page = page.replace(/href="index\.html#solutions"/g, 'href="index.html?page=services"');
-  page = page.replace('<a href="dms.html">Медичне страхування</a>',
-    '<a href="dms.html">Медичне страхування</a><a href="logistyka.html">Логістика</a><a href="yak-my-pratsyuyemo.html">Як працюємо</a>');
+  page = page.replace(new RegExp(`<nav class="${prefix}-top-nav"[\\s\\S]*?</nav>`), standaloneNav(prefix, file));
   page = page.replace('</style>', `${standaloneGeometry(prefix)}  </style>`);
   await writeFile(join(output, file), shareShell(page, file));
 }

@@ -133,3 +133,34 @@ if(presentationFrame){
     });
   });
 })();
+
+// Цифри «розкручуються» з нуля, коли блок з'являється на екрані.
+// Справжнє число лежить у розмітці: якщо скрипт не спрацює або людина
+// просила менше руху, вона побачить значення, а не нуль.
+(function initCounters(){
+  const nodes=[...document.querySelectorAll('[data-count]')];
+  if(!nodes.length) return;
+  const fmt=new Intl.NumberFormat('uk-UA');
+  const paint=(el,v)=>{
+    const suffix=el.dataset.suffix||'';
+    el.textContent=fmt.format(v);
+    if(suffix){ const sp=document.createElement('span'); sp.textContent=suffix; el.append(sp); }
+  };
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(still||!('IntersectionObserver' in window)) return;
+  const run=el=>{
+    const to=Number(el.dataset.count); if(!Number.isFinite(to)) return;
+    const dur=Math.min(1100, 380+Math.log10(Math.max(to,1))*260);
+    const t0=performance.now();
+    const tick=now=>{
+      const k=Math.min((now-t0)/dur,1);
+      paint(el, Math.round(to*(1-Math.pow(1-k,3))));
+      if(k<1) requestAnimationFrame(tick);
+    };
+    paint(el,0); requestAnimationFrame(tick);
+  };
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ run(e.target); io.unobserve(e.target); }
+  }),{threshold:.4});
+  nodes.forEach(n=>io.observe(n));
+})();
