@@ -39,3 +39,8 @@ h1,h2,h3{letter-spacing:-.02em}
 .site-band { position:relative; overflow:hidden; background:var(--c-ink); height:clamp(200px,24vw,340px); }
 .site-band img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.88) brightness(.95); }
 .site-band::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,42,70,.40),rgba(20,42,70,.60)); }
+
+/* Кадр зі світлим сюжетом (папери на столі) сам по собі вдвічі світліший за
+   решту смуг — притемнюємо сильніше, щоб він лишався в тому самому тоні. */
+.site-band--bright img { filter:saturate(.80) brightness(.60); }
+.site-band--bright::after { background:linear-gradient(180deg,rgba(20,42,70,.46),rgba(20,42,70,.66)); }

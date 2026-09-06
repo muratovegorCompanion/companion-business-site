@@ -26,7 +26,7 @@ const shareShell = (html, file) => {
     ? html.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, siteFooter)
     : html.replace('</body>', `${siteFooter}\n</body>`);
   if (!html.includes('tokens.css'))
-    html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=4">');
+    html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=5">');
   if (!html.includes('site-footer.css'))
     html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=4"></head>');
   // services.html і app.html відкриваються ще й усередині iframe на ?page=…
