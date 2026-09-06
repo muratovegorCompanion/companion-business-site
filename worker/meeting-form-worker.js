@@ -75,6 +75,12 @@ export default {
       return json({ accepted: true }, 200, allowed);
     }
 
+    // Галочку згоди на обробку контактів вимагає й форма, але покладатися
+    // на браузер не можна: запит легко надіслати повз сторінку.
+    if (payload.consent !== 'on' && payload.consent !== true) {
+      return json({ accepted: false, error: 'consent_required' }, 400, allowed);
+    }
+
     const clean = {};
     for (const [key, rule] of Object.entries(FIELDS)) {
       const value = typeof payload[key] === 'string' ? payload[key].trim() : '';
