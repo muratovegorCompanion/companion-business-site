@@ -73,7 +73,7 @@ const shareShell = (html, file) => {
   // повертаного відвідувача віддає їх із кешу.
   html = html.replace(/companion-logo\.png(\?[^"']*)?/g, 'companion-logo.png?v=2');
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
-             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=12"');
+             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=13"');
   // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
   if (!html.includes('data-embedded-footer'))
     html = html.replace('</body>',
@@ -119,7 +119,7 @@ for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['services.html','logistyka.html','yak-my-pratsyuyemo.html',
-  'about.html','contacts.html','rekomendatsii.html','regulatory.html','privacy.html','insurance-products.html']) {
+  'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','regulatory.html','privacy.html','insurance-products.html']) {
   await writeFile(join(output, file), shareShell(await readFile(join(root, file), 'utf8'), file));
 }
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});

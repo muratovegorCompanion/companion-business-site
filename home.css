@@ -322,3 +322,4 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-voices-all:hover { color:var(--b-lime); }
 @media (prefers-reduced-motion:reduce) { .b-voices-track { scroll-behavior:auto; } }
 @media (max-width:860px) { .b-voices.b-section { padding:48px 0; } .b-voices-head { flex-direction:column; align-items:flex-start; gap:20px; } .b-voice { flex-basis:100%; padding:24px; } }
+.b-insight-body .b-text-link + .b-text-link { margin-top:10px; }
