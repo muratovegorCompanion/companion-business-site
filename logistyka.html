@@ -3,28 +3,229 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Страхування вантажів, відповідальності перевізника та складів для логістичного бізнесу від страхового бюро «Компаньйон».">
+  <meta name="description" content="Страхування вантажів, відповідальності перевізника та складських ризиків. Розбираємо ролі учасників складського бізнесу, регресні вимоги та межі відповідальності перевізника за CMR.">
   <meta name="theme-color" content="#142a46">
   <title>Страхування логістики — Страхове бюро «Компаньйон»</title>
   <link rel="icon" href="presentation-assets/companion-logo.png">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="home.css">
+  <style>
+    .lg-hero { padding:92px 0 70px; background:var(--c-white); border-bottom:1px solid var(--b-line); }
+    .lg-hero-grid { display:grid; grid-template-columns:1.25fr 1fr; gap:70px; align-items:end; }
+    .lg-hero h1 { margin:22px 0 0; font-size:clamp(2.6rem,5vw,4rem); line-height:1.04; letter-spacing:-.035em; color:var(--b-ink); }
+    .lg-hero h1 span { color:var(--b-blue); }
+    .lg-hero .b-intro { margin-top:24px; max-width:none; }
+    .lg-hero-actions { display:flex; flex-wrap:wrap; gap:14px; margin-top:32px; }
+    .lg-scope { display:grid; gap:14px; }
+    .lg-scope div { padding-top:16px; border-top:1px solid var(--b-line); }
+    .lg-scope strong { display:block; font-size:1.0625rem; color:var(--b-ink); }
+    .lg-scope p { margin:4px 0 0; font-size:.9375rem; color:var(--b-muted); line-height:1.6; }
+
+    .lg-h2 { margin:16px 0 0; font-size:clamp(1.9rem,3.4vw,2.9rem); line-height:1.12; letter-spacing:-.03em; color:var(--b-ink); }
+
+    .lg-roles { background:var(--b-paper); }
+    .lg-roles-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; margin-top:38px; }
+    .lg-role { background:#fff; border:1px solid var(--b-line); border-radius:10px; padding:26px; display:flex; flex-direction:column; }
+    .lg-role-tag { font-size:.75rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--b-blue); }
+    .lg-role h3 { margin:12px 0 14px; font-size:1.25rem; letter-spacing:-.02em; color:var(--b-ink); }
+    .lg-role ul { margin:0; padding:0; list-style:none; display:grid; gap:9px; }
+    .lg-role li { position:relative; padding-left:18px; font-size:.9375rem; line-height:1.6; color:var(--b-muted); }
+    .lg-role li::before { content:""; position:absolute; left:0; top:.62em; width:6px; height:6px; border-radius:50%; background:var(--b-blue); }
+    .lg-case { margin-top:18px; padding-top:16px; border-top:1px solid var(--b-line); font-size:.875rem; line-height:1.6; color:var(--b-ink); }
+    .lg-case span { display:block; font-size:.6875rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--b-muted); margin-bottom:7px; }
+
+    .lg-regress { background:var(--b-ink); color:#fff; }
+    .lg-regress-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+    .lg-regress .b-eyebrow { color:var(--b-lime); }
+    .lg-regress h2 { margin:16px 0 0; font-size:clamp(1.8rem,3.2vw,2.6rem); line-height:1.15; letter-spacing:-.03em; }
+    .lg-regress p { color:#b9c6d8; line-height:1.75; }
+    .lg-chain { display:grid; gap:0; margin:0; padding:0; list-style:none; counter-reset:chain; }
+    .lg-chain li { counter-increment:chain; position:relative; padding:18px 0 18px 58px; border-top:1px solid rgba(255,255,255,.14); }
+    .lg-chain li:last-child { border-bottom:1px solid rgba(255,255,255,.14); }
+    .lg-chain li::before { content:"0" counter(chain); position:absolute; left:0; top:19px; font-size:.8125rem; font-weight:700; color:var(--b-lime); }
+    .lg-chain strong { display:block; font-size:1rem; }
+    .lg-chain p { margin:5px 0 0; font-size:.9375rem; }
+
+    .lg-cargo-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+    .lg-limit { border:1px solid var(--b-line); border-radius:12px; background:var(--b-paper); padding:30px; }
+    .lg-limit strong { display:block; font-size:clamp(2rem,4vw,2.9rem); line-height:1; letter-spacing:-.03em; color:var(--b-blue); }
+    .lg-limit p { margin:14px 0 0; color:var(--b-ink); font-size:1rem; line-height:1.6; }
+    .lg-limit small { display:block; margin-top:14px; color:var(--b-muted); font-size:.8125rem; line-height:1.6; }
+    .lg-split { display:grid; gap:22px; margin-top:26px; }
+    .lg-split div { padding-top:18px; border-top:1px solid var(--b-line); }
+    .lg-split strong { display:block; font-size:1.0625rem; color:var(--b-ink); }
+    .lg-split p { margin:6px 0 0; color:var(--b-muted); line-height:1.7; }
+
+    .lg-steps { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:18px; margin-top:38px; padding:0; list-style:none; counter-reset:lg; }
+    .lg-steps li { counter-increment:lg; position:relative; background:#fff; border:1px solid var(--b-line); border-radius:8px; padding:22px 18px; }
+    .lg-steps li::before { content:"0" counter(lg); display:block; margin-bottom:14px; color:var(--b-blue); font-size:.8125rem; font-weight:700; }
+    .lg-steps li:not(:last-child)::after { content:""; position:absolute; top:34px; right:-12px; width:7px; height:7px; border-top:2px solid var(--b-blue); border-right:2px solid var(--b-blue); transform:rotate(45deg); }
+    .lg-steps h3 { margin:0 0 8px; font-size:1rem; letter-spacing:-.015em; color:var(--b-ink); }
+    .lg-steps p { margin:0; font-size:.875rem; line-height:1.55; color:var(--b-muted); }
+
+    .lg-note { margin-top:28px; padding-top:20px; border-top:1px solid var(--b-line); font-size:.875rem; line-height:1.7; color:var(--b-muted); max-width:840px; }
+
+    .lg-cta { background:var(--b-ink); color:#fff; padding:84px 0; }
+    .lg-cta-grid { display:grid; grid-template-columns:1.4fr auto; gap:44px; align-items:center; }
+    .lg-cta h2 { margin:0; font-size:clamp(1.7rem,3vw,2.5rem); line-height:1.15; letter-spacing:-.03em; }
+    .lg-cta p { margin:14px 0 0; color:#b9c6d8; max-width:600px; line-height:1.7; }
+    .lg-cta .b-button { background:var(--b-lime); color:var(--b-ink); }
+
+    @media (max-width:1080px) {
+      .lg-steps { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .lg-steps li:nth-child(3)::after { display:none; }
+    }
+    @media (max-width:950px) {
+      .lg-hero-grid, .lg-regress-grid, .lg-cargo-grid, .lg-cta-grid { grid-template-columns:1fr; gap:38px; }
+      .lg-roles-grid { grid-template-columns:1fr; }
+      .lg-steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .lg-steps li:nth-child(2)::after,.lg-steps li:nth-child(4)::after { display:none; }
+      .lg-steps li:nth-child(3)::after { display:block; }
+    }
+    @media (max-width:600px) {
+      .lg-hero { padding:64px 0 48px; }
+      .lg-steps { grid-template-columns:1fr; }
+      .lg-steps li:not(:last-child)::after { top:auto; bottom:-12px; right:auto; left:50%; transform:translateX(-50%) rotate(135deg); }
+      .lg-steps li:nth-child(2)::after,.lg-steps li:nth-child(4)::after { display:block; }
+    }
+  </style>
 </head>
 <body class="business-page logistics-page">
   <a class="skip-link" href="#content">Перейти до основного контенту</a>
-  <header class="site-header"><div class="shell header-inner"><a class="brand" href="index.html" aria-label="Страхове бюро «Компаньйон» — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро «Компаньйон»"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav" class="site-nav" aria-label="Сайт"><a href="index.html#solutions">Напрями</a><a href="about.html">Про нас</a><a href="app.html">Застосунок</a><a class="header-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>
+  <header class="site-header"><div class="shell header-inner"><a class="brand" href="index.html" aria-label="Страхове бюро «Компаньйон» — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро «Компаньйон»"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav" class="site-nav" aria-label="Сайт"><a href="index.html#solutions">Напрями</a><a href="dms.html">Медичне страхування</a><a href="logistyka.html">Логістика</a><a href="yak-my-pratsyuyemo.html">Як працюємо</a><a href="about.html">Про нас</a><a href="app.html">Застосунок</a><a class="header-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>
+
   <main id="content">
-    <section class="log-hero"><div class="shell log-hero-grid"><div><p class="b-eyebrow">Логістика</p><h1>Страхування, яке враховує <span>ваш маршрут і відповідальність.</span></h1><p>Допомагаємо логістичним компаніям захистити вантаж, відповідальність перевізника та складські ризики — без шаблонної програми, яка не відповідає реальній операційній моделі.</p><div class="actions"><a class="b-button" href="index.html#meeting" data-interest="Логістика">Обговорити логістику <span aria-hidden="true">↗</span></a></div></div><aside class="log-hero-aside" aria-label="Напрями страхування логістики"><div><span>01</span><strong>Вантажі</strong><p>Захист товару в дорозі з урахуванням маршруту й типу перевезення.</p></div><div><span>02</span><strong>Відповідальність перевізника</strong><p>Ризики перед клієнтом і контрагентами в межах ваших договорів.</p></div><div><span>03</span><strong>Склади</strong><p>Майно, товарні запаси та відповідальність складської операції.</p></div></aside></div></section>
+    <section class="lg-hero">
+      <div class="shell lg-hero-grid">
+        <div>
+          <p class="b-eyebrow"><span class="b-dot" aria-hidden="true"></span> Логістика</p>
+          <h1>Вантаж, склад і відповідальність — <span>це три різні поліси.</span></h1>
+          <p class="b-intro">Логістичну компанію рідко захищає один договір. Ризик залежить від того, що ви перевозите, де зберігаєте вантаж, хто за нього відповідає в кожен момент часу і що записано у ваших договорах. Спершу розкладаємо цю картину, а вже потім виходимо на ринок.</p>
+          <div class="lg-hero-actions">
+            <a class="b-button" href="index.html#meeting">Обговорити вашу операцію <span aria-hidden="true">↗</span></a>
+            <a class="b-text-link" href="#roles">Ролі та ризики <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <div class="lg-scope">
+          <div><strong>Вантажі в дорозі</strong><p>Захист самого товару — незалежно від того, чи винен перевізник.</p></div>
+          <div><strong>Відповідальність перевізника та експедитора</strong><p>Ваші зобов’язання перед замовником у межах договору й конвенції CMR.</p></div>
+          <div><strong>Складські ризики</strong><p>Будівля, товар на зберіганні та відповідальність перед орендарями й клієнтами.</p></div>
+        </div>
+      </div>
+    </section>
 
-    <section class="b-work-section"><div class="shell log-intro"><div><p class="b-eyebrow">Починаємо з операції</p><h2>Страхування логістики — це не один поліс.</h2></div><p class="b-intro">Ризик залежить від того, що саме ви перевозите, де зберігаєте вантаж, хто за нього відповідає, які умови закладено в договорах та як побудований маршрут. Спочатку розкладаємо цю картину, а вже потім виходимо на ринок.</p></div></section>
+    <section class="b-section lg-roles" id="roles" aria-labelledby="roles-title">
+      <div class="shell">
+        <div class="b-section-head">
+          <div><p class="b-eyebrow">01 / Склад</p><h2 class="lg-h2" id="roles-title">На одному складі —<br>три різні ризики.</h2></div>
+          <p style="color:var(--b-muted);line-height:1.7;margin:0">Власник, оператор і орендар працюють в одній будівлі, але відповідають за різне. Поліс, який закриває одного, не закриває іншого.</p>
+        </div>
+        <div class="lg-roles-grid">
+          <article class="lg-role">
+            <span class="lg-role-tag">Власник складу</span>
+            <h3>Будівля і дохід від неї</h3>
+            <ul>
+              <li>Пошкодження будівлі складського комплексу</li>
+              <li>Перерва в бізнесі, поки будівля не відновлена</li>
+              <li>Пошкодження товару орендарів</li>
+              <li>Втрата орендаря, якщо після збитку він стає неплатоспроможним</li>
+              <li>Шкода життю та здоров’ю третіх осіб</li>
+            </ul>
+            <p class="lg-case"><span>Модельна ситуація</span>Пожежа пошкоджує комплекс. Страховик власника виплачує відшкодування — і йде з регресом до винної сторони. Нею може виявитися ваш же орендар або оператор.</p>
+          </article>
+          <article class="lg-role">
+            <span class="lg-role-tag">Оператор складу</span>
+            <h3>Чужий товар у ваших руках</h3>
+            <ul>
+              <li>Відповідальність за пошкодження будівлі складу</li>
+              <li>Перерва в бізнесі через пошкодження будівлі</li>
+              <li>Пошкодження товару клієнтів під час операційної діяльності</li>
+              <li>Шкода життю та здоров’ю співробітників і третіх осіб</li>
+            </ul>
+            <p class="lg-case"><span>Модельна ситуація</span>Під час навантаження пошкоджено вантаж клієнта. Страховик клієнта виплачує йому відшкодування і виставляє регрес вам — як винній стороні.</p>
+          </article>
+          <article class="lg-role">
+            <span class="lg-role-tag">Орендар</span>
+            <h3>Свій товар серед чужих</h3>
+            <ul>
+              <li>Відповідальність за пошкодження будівлі складу</li>
+              <li>Перерва в бізнесі через пошкодження будівлі</li>
+              <li>Пошкодження товару інших орендарів</li>
+              <li>Пошкодження власного товару через дії сусідів або несправність комплексу</li>
+              <li>Шкода життю та здоров’ю співробітників і третіх осіб</li>
+            </ul>
+            <p class="lg-case"><span>Модельна ситуація</span>Пожежа в сусіднього орендаря. Під час гасіння ваш товар залито водою. Прямого винуватця немає — претензію пред’являти нема кому.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <section class="log-products"><div class="shell"><p class="b-eyebrow">Що можемо організувати</p><h2 class="section-title">Покриття для ключових точок логістичного ланцюга.</h2><div class="log-products-grid"><article><span>01</span><h3>Страхування вантажів</h3><p>Оцінюємо характер вантажу, географію, вид транспорту, умови перевезення та потрібний рівень захисту.</p></article><article><span>02</span><h3>Відповідальність перевізника</h3><p>Допомагаємо зрозуміти зобов’язання перед замовником і зіставити їх з умовами страхування.</p></article><article><span>03</span><h3>Складські ризики</h3><p>Розглядаємо захист майна, товарних запасів та відповідальності залежно від моделі роботи складу.</p></article></div><p class="log-note">Конкретні ризики, ліміти, франшизи та виключення визначаються програмою і договором страхування.</p></div></section>
+    <section class="b-section lg-regress" aria-labelledby="regress-title">
+      <div class="shell lg-regress-grid">
+        <div>
+          <p class="b-eyebrow">02 / Чому це важливо</p>
+          <h2 id="regress-title">Збиток рідко зупиняється на тому, хто його зазнав.</h2>
+          <p style="margin-top:18px">Страховик потерпілого виплачує відшкодування і отримує право вимоги до винного. Ця вимога приходить до учасника ланцюга, який часто взагалі не вважав себе стороною ризику — і в нього немає ані поліса, ані резерву під таку суму.</p>
+          <p>Тому програму для складу ми будуємо не від будівлі, а від договорів: хто кому і за що відповідає, коли право власності переходить, що записано в договорі зберігання й оренди.</p>
+        </div>
+        <ol class="lg-chain">
+          <li><strong>Настає подія</strong><p>Пожежа, залиття, пошкодження при навантаженні.</p></li>
+          <li><strong>Страховик потерпілого платить</strong><p>Клієнт або орендар отримує відшкодування за своїм полісом.</p></li>
+          <li><strong>Виникає право регресу</strong><p>Страховик заміщує потерпілого у вимозі до винної сторони.</p></li>
+          <li><strong>Вимога приходить до вас</strong><p>Якщо відповідальність не застрахована, сума лягає на власні кошти компанії.</p></li>
+        </ol>
+      </div>
+    </section>
 
-    <section class="log-process"><div class="shell"><div class="log-process-head"><p class="b-eyebrow">Як працюємо</p><h2>Перетворюємо складну операцію на зрозуміле страхове рішення.</h2></div><ol class="log-steps"><li><strong>Розбираємо маршрут і відповідальність</strong><p>Уточнюємо вантажі, географію, контрагентів, договори й точки найбільшого ризику.</p></li><li><strong>Формуємо вимоги до покриття</strong><p>Визначаємо, що справді потрібно захистити та які обмеження критичні для вашого бізнесу.</p></li><li><strong>Порівнюємо пропозиції страховиків</strong><p>Зіставляємо не тільки вартість, а й умови, ліміти, франшизи та порядок врегулювання.</p></li><li><strong>Супроводжуємо після запуску</strong><p>Допомагаємо з питаннями за договором і комунікацією зі страховиком у разі складної ситуації.</p></li></ol><div class="log-choice"><strong>Вибір страхової компанії — за вами.</strong><p>Ми пояснюємо відмінності між пропозиціями та даємо рекомендацію, але рішення завжди приймає клієнт.</p></div></div></section>
+    <section class="b-section" aria-labelledby="cargo-title">
+      <div class="shell">
+        <div class="b-section-head">
+          <div><p class="b-eyebrow">03 / Дорога</p><h2 class="lg-h2" id="cargo-title">Відповідальність перевізника<br>не дорівнює вартості вантажу.</h2></div>
+          <p style="color:var(--b-muted);line-height:1.7;margin:0">Найчастіша хибна впевненість у логістиці: «перевізник застрахований, отже вантаж захищений».</p>
+        </div>
+        <div class="lg-cargo-grid" style="margin-top:36px">
+          <div class="lg-limit">
+            <strong>8,33 SDR</strong>
+            <p>за кілограм пошкодженої ваги брутто — межа відповідальності перевізника при міжнародному автомобільному перевезенні, якщо вартість вантажу не оголошено в накладній окремо.</p>
+            <small>Конвенція про договір міжнародного дорожнього перевезення вантажів (CMR), стаття 23. SDR — розрахункова одиниця МВФ, її курс змінюється.</small>
+          </div>
+          <div>
+            <div class="lg-split">
+              <div><strong>Що це означає на практиці</strong><p>Для легкого та дорогого вантажу — електроніки, фармацевтики, компонентів — ліміт за вагою покриває лише частину реальної вартості. Різницю несе власник вантажу.</p></div>
+              <div><strong>Тому це два різні договори</strong><p>Страхування відповідальності захищає перевізника від вимог замовника. Страхування вантажу захищає сам товар — і працює навіть тоді, коли перевізник не винен або звільнений від відповідальності.</p></div>
+              <div><strong>Воєнні ризики — окреме питання</strong><p>Це не стандартне покриття: воно погоджується окремо, залежить від маршруту й місця зберігання, а умови на ринку змінюються. Перевіряємо їх на етапі формування вимог, а не після підписання.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="b-work-cta"><div class="shell b-work-cta-grid"><h2>Опишіть вашу логістичну задачу — почнемо з того, що для вас справді важливо.</h2><a class="b-button" href="index.html#meeting" data-interest="Логістика">Домовитися про зустріч <span aria-hidden="true">↗</span></a></div></section>
+    <section class="b-section lg-roles" aria-labelledby="steps-title">
+      <div class="shell">
+        <div class="b-section-head">
+          <div><p class="b-eyebrow">04 / Як ми працюємо</p><h2 class="lg-h2" id="steps-title">П’ять кроків від операції<br>до робочої програми.</h2></div>
+          <p style="color:var(--b-muted);line-height:1.7;margin:0">Той самий порядок, за яким ми ведемо складні складські та транспортні програми.</p>
+        </div>
+        <ol class="lg-steps">
+          <li><h3>Аналіз ризиків</h3><p>Розбираємо маршрути, вантажі, склади, контрагентів і договори — де саме виникає ваша відповідальність.</p></li>
+          <li><h3>Програма страхування</h3><p>Описуємо, що має бути покрито, з якими лімітами й винятками, і що для вас критично.</p></li>
+          <li><h3>Тендер</h3><p>Виходимо на страховиків і перестраховиків, для яких ваш ризик релевантний. Складські ризики беруть не всі.</p></li>
+          <li><h3>Перевірка договору</h3><p>Звіряємо остаточний текст із домовленостями до підписання — саме тут з’являється більшість неприємних сюрпризів.</p></li>
+          <li><h3>Супровід і врегулювання</h3><p>Ведемо договір увесь строк дії та супроводжуємо збитки, включно з регресними вимогами.</p></li>
+        </ol>
+        <p class="lg-note">Розміщення складських ризиків складніше за типове корпоративне страхування: учасників багато, можлива сума збитку сягає вартості всього комплексу, а частина страховиків такі об’єкти не приймає. Конкретні ризики, ліміти, франшизи та виключення визначаються програмою і договором страхування. Вибір страхової компанії залишається за вами — ми показуємо ринок і пояснюємо відмінності.</p>
+      </div>
+    </section>
+
+    <section class="lg-cta">
+      <div class="shell lg-cta-grid">
+        <div>
+          <h2>Опишіть вашу логістичну задачу.</h2>
+          <p>Маршрути, склади, договори з клієнтами — почнемо з того, де у вашій операції насправді виникає ризик. Безоплатно, онлайн або особисто в Києві.</p>
+        </div>
+        <a class="b-button" href="index.html#meeting">Домовитися про зустріч <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer"><div class="shell footer-grid"><div><p class="footer-title">МИ В СОЦІАЛЬНИХ МЕРЕЖАХ</p><a class="social" href="https://www.facebook.com/insurancebureaucompanion" target="_blank" rel="noreferrer">f</a></div><div><p class="footer-title">ПОЗНАЙОМИМОСЯ</p><a href="tel:+380501452605">+38 (050) 145 2605</a><p>Київ, вул. Юрія Іллєнка, 81, офіс 302<br>Офіс: пн–пт, 09:00–18:00</p></div><div><p class="footer-title">КОМПАНЬЙОН</p><nav class="footer-links" aria-label="Додаткова навігація"><a href="about.html">Про нас</a><a href="dms.html">Корпоративне ДМС</a><a href="index.html?page=partners">Страхові компанії</a><a href="contacts.html">Контакти</a></nav></div></div><div class="shell footer-bottom"><span>© Страхове бюро «Компаньйон»</span><a href="https://bank.gov.ua/ua/supervision/nonbanks/registers-lists" target="_blank" rel="noreferrer">Реєстр страхових посередників НБУ ↗</a></div></footer>
-  <script>const b=document.querySelector('.menu-toggle'),n=document.querySelector('.site-nav');b?.addEventListener('click',()=>{const o=n.classList.toggle('is-open');b.setAttribute('aria-expanded',o)});n?.addEventListener('click',e=>{if(e.target.closest('a')){n.classList.remove('is-open');b.setAttribute('aria-expanded','false')}});</script>
 </body>
 </html>
