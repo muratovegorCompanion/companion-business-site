@@ -28,10 +28,9 @@
     .about-stance-list p { margin:8px 0 0; color:var(--b-muted); line-height:1.65; }
 
     .team { display:grid; gap:0; margin-top:14px; }
-    .team-member { display:grid; grid-template-columns:210px 1fr; gap:46px; align-items:start; padding:44px 0; border-top:1px solid var(--b-line); }
+    .team-member { display:grid; grid-template-columns:200px 1fr; gap:46px; align-items:start; padding:44px 0; border-top:1px solid var(--b-line); }
     .team-member:last-child { border-bottom:1px solid var(--b-line); }
-    .team-photo { width:210px; height:210px; border-radius:14px; object-fit:cover; background:var(--b-line); }
-    .team-initials { display:grid; place-items:center; width:210px; height:210px; border-radius:14px; background:var(--b-ink); color:var(--b-lime); font-size:3rem; font-weight:700; letter-spacing:.02em; }
+    .team-photo { width:200px; height:250px; border-radius:14px; object-fit:cover; object-position:center top; background:var(--b-line); }
     .team-member h3 { margin:0; font-size:1.5rem; letter-spacing:-.02em; color:var(--b-ink); }
     .team-role { margin:6px 0 18px; font-size:.9375rem; font-weight:600; color:var(--b-blue); }
     .team-quote { margin:0; font-size:1.0625rem; line-height:1.7; color:var(--b-ink); max-width:720px; }
@@ -47,12 +46,12 @@
     @media (max-width:950px) {
       .about-hero-grid, .about-stance-grid, .about-cta-grid { grid-template-columns:1fr; gap:36px; }
       .team-member { grid-template-columns:150px 1fr; gap:28px; }
-      .team-photo, .team-initials { width:150px; height:150px; }
+      .team-photo { width:150px; height:188px; }
     }
     @media (max-width:700px) {
       .about-hero { padding:64px 0 46px; }
       .team-member { grid-template-columns:1fr; gap:22px; padding:34px 0; }
-      .team-photo, .team-initials { width:130px; height:130px; }
+      .team-photo { width:130px; height:163px; }
     }
   </style>
 </head>
@@ -100,7 +99,7 @@
 
         <div class="team">
           <article class="team-member">
-            <img class="team-photo" src="presentation-assets/team/yehor.jpg" alt="Єгор Муратов" width="600" height="600" loading="lazy">
+            <img class="team-photo" src="presentation-assets/team/yehor.jpg" alt="Єгор Муратов" width="640" height="800" loading="lazy">
             <div>
               <h3>Єгор Муратов</h3>
               <p class="team-role">Засновник, керуючий партнер</p>
@@ -110,7 +109,7 @@
           </article>
 
           <article class="team-member">
-            <img class="team-photo" src="presentation-assets/team/anatolii.jpg" alt="Анатолій Артюшенко" width="600" height="600" loading="lazy">
+            <img class="team-photo" src="presentation-assets/team/anatolii.jpg" alt="Анатолій Артюшенко" width="640" height="800" loading="lazy">
             <div>
               <h3>Анатолій Артюшенко</h3>
               <p class="team-role">Старший партнер, директор з особистих видів страхування</p>
@@ -120,7 +119,7 @@
           </article>
 
           <article class="team-member">
-            <img class="team-photo" src="presentation-assets/team/olga.jpg" alt="Ольга Жиглинська" width="600" height="600" loading="lazy">
+            <img class="team-photo" src="presentation-assets/team/olga.jpg" alt="Ольга Жиглинська" width="640" height="800" loading="lazy">
             <div>
               <h3>Ольга Жиглинська</h3>
               <p class="team-role">Старший партнер</p>
@@ -130,7 +129,7 @@
           </article>
 
           <article class="team-member">
-            <img class="team-photo" src="presentation-assets/team/oksana.jpg" alt="Оксана Кузьминська" width="600" height="600" loading="lazy">
+            <img class="team-photo" src="presentation-assets/team/oksana.jpg" alt="Оксана Кузьминська" width="640" height="800" loading="lazy">
             <div>
               <h3>Оксана Кузьминська</h3>
               <p class="team-role">Директор з корпоративного страхування</p>
@@ -140,7 +139,7 @@
           </article>
 
           <article class="team-member">
-            <img class="team-photo" src="presentation-assets/team/pavlo.jpg" alt="Павел Брадулов" width="600" height="600" loading="lazy">
+            <img class="team-photo" src="presentation-assets/team/pavlo.jpg" alt="Павел Брадулов" width="640" height="800" loading="lazy">
             <div>
               <h3>Павел Брадулов</h3>
               <p class="team-role">Департамент страхування фізичних осіб</p>
