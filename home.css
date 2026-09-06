@@ -292,3 +292,4 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-clients-grid img { width:auto; max-width:100%; }
 @media (max-width:900px) { .b-clients-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px 20px; } }
 @media (max-width:560px) { .b-clients-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.b-clients-link { display:inline-flex; margin-top:30px; }
