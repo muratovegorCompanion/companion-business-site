@@ -181,7 +181,7 @@ const standaloneGeometry = (prefix) => `
 `;
 
 let dms = await readFile(join(root, 'dms.html'), 'utf8');
-const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button>${standaloneNav('dms','dms.html')}</div></header>`;
+const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button>${standaloneNav('dms','dms.html')}</div></header>`;
 dms = dms.replace('</style>', `${standaloneGeometry('dms')}  </style>`);
 if (!dms.includes('class="dms-top"')) dms = dms.replace('<body>', `<body>\n  ${dmsHeader}`);
 if (!dms.includes("querySelector('.dms-top-menu')")) dms = dms.replace('</body>', `  <script>const dmsMenu=document.querySelector('.dms-top-menu'),dmsNav=document.querySelector('#dms-top-nav');if(dmsMenu&&dmsNav){dmsMenu.addEventListener('click',()=>{const open=dmsNav.classList.toggle('open');dmsMenu.setAttribute('aria-expanded',String(open));});}</script>\n</body>`);
@@ -190,7 +190,7 @@ await writeFile(join(output, 'dms.html'), shareShell(dms, 'dms.html'));
 let services = await readFile(join(root, 'services.html'), 'utf8');
 const servicesHeader = `<header class="services-top"><div class="services-top-inner">`
   + `<a class="services-top-logo" href="index.html" aria-label="Компаньйон — на головну">`
-  + `<img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон"></a>`
+  + `<img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a>`
   + `<button class="services-top-menu" type="button" aria-expanded="false" aria-controls="services-top-nav">Меню</button>`
   + `${standaloneNav('services','services.html')}</div></header>`;
 services = services.replace('</style>', `${standaloneGeometry('services')}  </style>`);
@@ -199,10 +199,30 @@ if (!services.includes("querySelector('.services-top-menu')"))
   services = services.replace('</body>', `  <script>const sMenu=document.querySelector('.services-top-menu'),sNav=document.querySelector('#services-top-nav');if(sMenu&&sNav){sMenu.addEventListener('click',()=>{const open=sNav.classList.toggle('open');sMenu.setAttribute('aria-expanded',String(open));});}<\/script>\n</body>`);
 await writeFile(join(output, 'services.html'), shareShell(services, 'services.html'));
 
+// Перелік страхових компаній малювався у браузері, тож у HTML його не було
+// зовсім — пошуковик бачив порожню сітку. Розкриваємо той самий масив на
+// збірці, а клієнтський рендер прибираємо, щоб він не перемальовував готове.
+const prerenderPartners = (page) => {
+  const data = page.match(/const p=(\[[\s\S]*?\]);document\.getElementById\('partners'\)/);
+  if (!data) return page;
+  const rows = vm.runInNewContext(data[1]);
+  const cards = rows.map(([name, logo, site, docLabel, docHref]) =>
+    `<article class="partner-card">`
+    + `<img src="${logo}" alt="${name}" width="316" height="237" loading="lazy">`
+    + `<h3>${name}</h3><div class="partner-links">`
+    + `<a href="${site}" target="_blank" rel="noreferrer">Сайт компанії ↗</a>`
+    + `<a href="${docHref}" target="_blank" rel="noreferrer">${docLabel} ↗</a>`
+    + `</div></article>`).join('');
+  return page
+    .replace('<div class="partners-grid" id="partners">', `<div class="partners-grid" id="partners">${cards}`)
+    .replace(/const W='';const p=\[[\s\S]*?\.join\(''\);/, '');
+};
+
 for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
   let page = await readFile(join(root, file), 'utf8');
   page = page.replace(new RegExp(`<nav class="${prefix}-top-nav"[\\s\\S]*?</nav>`), standaloneNav(prefix, file));
   page = page.replace('</style>', `${standaloneGeometry(prefix)}  </style>`);
+  if (prefix === 'partners') page = prerenderPartners(page);
   await writeFile(join(output, file), shareShell(page, file));
 }
 
