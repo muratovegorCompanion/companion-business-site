@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function(){
+  const path = decodeURIComponent(window.location.pathname).replace(/\/+$/, '').toLowerCase();
+  if (path === '/застасунок' || path === '/застосунок') {
+    window.location.replace('/app.html');
+  }
+})();
+</script>
 <meta name="robots" content="noindex">
 <meta name="description" content="Сторінку не знайдено. Перейдіть на головну або скористайтеся меню — страхове бюро «Компаньйон».">
 <meta name="theme-color" content="#142a46">
