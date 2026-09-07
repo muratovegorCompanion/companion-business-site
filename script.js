@@ -25,7 +25,7 @@ function dms(){return presentation("dms.html","Медичне страхуван
 function partners(){return `${shell(`<h1 class="section-title">Наші партнери</h1><p class="lead">Страхове бюро Компаньйон не володіє прямо або опосередковано частками чи акціями у статутному капіталі перелічених партнерів зі страхування та перестрахування. Також жоден із перелічених партнерів не володіє частками у статутному капіталі СБ Компаньйон.</p><div class="partner-grid">${partnerLogos.map(([name,src,url])=>`<article class="partner-card"><img src="${src}" alt="${name}"><a href="${url}" target="_blank" rel="noreferrer">ІНФОРМАЦІЯ ПРО СТРАХОВУ КОМПАНІЮ ↗</a></article>`).join("")}</div>`)}`}
 function app(){return `<iframe class="app-frame" src="app.html" title="Презентація застосунку Компаньйон"></iframe>`}
 const params=new URLSearchParams(location.search);
-const movedPages={about:"about.html",contacts:"contacts.html"};
+const movedPages={about:"about.html",contacts:"contacts.html",services:"services.html"};
 const requested=params.get("page")||"home";
 if(movedPages[requested])location.replace(movedPages[requested]);
 const page=movedPages[requested]?"home":requested; const embed=params.get("embed")==="1"; const main=document.querySelector("main");

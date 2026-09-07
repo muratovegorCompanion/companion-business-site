@@ -22,7 +22,7 @@ const siteFooter = index.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)
 // його у свої класи.
 const NAV = [
   {href:'index.html', label:'Головна'},
-  {href:'index.html?page=services', label:'Послуги', page:'services'},
+  {href:'services.html', label:'Послуги'},
   {href:'dms.html', label:'Медичне страхування'},
   {href:'logistyka.html', label:'Логістика'},
   {href:'yak-my-pratsyuyemo.html', label:'Як працюємо'},
@@ -187,6 +187,18 @@ if (!dms.includes('class="dms-top"')) dms = dms.replace('<body>', `<body>\n  ${d
 if (!dms.includes("querySelector('.dms-top-menu')")) dms = dms.replace('</body>', `  <script>const dmsMenu=document.querySelector('.dms-top-menu'),dmsNav=document.querySelector('#dms-top-nav');if(dmsMenu&&dmsNav){dmsMenu.addEventListener('click',()=>{const open=dmsNav.classList.toggle('open');dmsMenu.setAttribute('aria-expanded',String(open));});}</script>\n</body>`);
 await writeFile(join(output, 'dms.html'), shareShell(dms, 'dms.html'));
 
+let services = await readFile(join(root, 'services.html'), 'utf8');
+const servicesHeader = `<header class="services-top"><div class="services-top-inner">`
+  + `<a class="services-top-logo" href="index.html" aria-label="Компаньйон — на головну">`
+  + `<img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон"></a>`
+  + `<button class="services-top-menu" type="button" aria-expanded="false" aria-controls="services-top-nav">Меню</button>`
+  + `${standaloneNav('services','services.html')}</div></header>`;
+services = services.replace('</style>', `${standaloneGeometry('services')}  </style>`);
+if (!services.includes('class="services-top"')) services = services.replace('<body>', `<body>\n  ${servicesHeader}`);
+if (!services.includes("querySelector('.services-top-menu')"))
+  services = services.replace('</body>', `  <script>const sMenu=document.querySelector('.services-top-menu'),sNav=document.querySelector('#services-top-nav');if(sMenu&&sNav){sMenu.addEventListener('click',()=>{const open=sNav.classList.toggle('open');sMenu.setAttribute('aria-expanded',String(open));});}<\/script>\n</body>`);
+await writeFile(join(output, 'services.html'), shareShell(services, 'services.html'));
+
 for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
   let page = await readFile(join(root, file), 'utf8');
   page = page.replace(new RegExp(`<nav class="${prefix}-top-nav"[\\s\\S]*?</nav>`), standaloneNav(prefix, file));
@@ -199,7 +211,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','android-download.js','CNAME','google3dbd541ddd703421.html']) {
   await copyFile(join(root, file), join(output, file));
 }
-for (const file of ['services.html','logistyka.html','yak-my-pratsyuyemo.html',
+for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
   'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','404.html','regulatory.html','privacy.html','insurance-products.html']) {
   await writeFile(join(output, file), shareShell(await readFile(join(root, file), 'utf8'), file));
 }
