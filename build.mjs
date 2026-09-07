@@ -161,7 +161,7 @@ const shareShell = (html, file) => {
     ? html.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, siteFooter)
     : html.replace('</body>', `${siteFooter}\n</body>`);
   if (!html.includes('tokens.css'))
-    html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
+    html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=7">');
   if (!html.includes('application/ld+json'))
     html = html.replace('</head>', `${jsonLdTag(orgJsonLd)}</head>`);
   const crumbs = breadcrumbJsonLd(file);
