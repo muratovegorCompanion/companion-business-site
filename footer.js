@@ -5,6 +5,7 @@
   if (!footer || self !== top) return;          // у вбудованій копії підвал зайвий
   const body = footer.querySelector('.footer-body');
   const toggle = footer.querySelector('.footer-toggle');
+  const label = footer.querySelector('.footer-toggle-label');
   if (!body || !toggle) return;
 
   const KEY = 'companion:footer-collapsed';
@@ -23,6 +24,8 @@
   const apply = (state, remember) => {
     footer.classList.toggle('is-collapsed', state);
     toggle.setAttribute('aria-expanded', String(!state));
+    // Підпис — дієслово в обидва боки, щоб було ясно, що станеться
+    if (label) label.textContent = state ? 'Розгорнути' : 'Згорнути';
     toggle.title = state ? 'Показати контакти' : 'Згорнути контакти';
     fit();
     if (remember) { try { localStorage.setItem(KEY, state ? '1' : '0'); } catch (e) {} }

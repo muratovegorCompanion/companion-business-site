@@ -63,4 +63,4 @@ body
 /* телефон уже стоїть у смужці — у розгорнутій частині він зайвий */
 .site-footer .footer-body .footer-phone{display:none}
 @media (prefers-reduced-motion:reduce){.site-footer .footer-body,.footer-chev{transition:none}}
-@media (max-width:700px){.footer-toggle-label{display:none}.footer-dock-phone{font-size:14px}}
+@media (max-width:700px){.footer-dock-phone{font-size:14px}.footer-toggle{font-size:12.5px}}

@@ -87,7 +87,7 @@ const shareShell = (html, file) => {
   if (!html.includes('tokens.css'))
     html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
   if (!html.includes('site-footer.css'))
-    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=7"></head>');
+    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=8"></head>');
   // Кнопка «Меню» була лише на головній: розмітка з нею вклеювалась усюди,
   // а обробник лишався в script.js, який підключений тільки на index.
   if (html.includes('class="menu-toggle"') && !html.includes('nav.js'))
@@ -108,7 +108,7 @@ const shareShell = (html, file) => {
   // Підвал згортається у смужку з телефоном; логіка — у footer.js,
   // він же прибирає підвал у вбудованій копії (iframe).
   if (!html.includes('footer.js'))
-    html = html.replace('</head>', '<script src="footer.js?v=2" defer></script></head>');
+    html = html.replace('</head>', '<script src="footer.js?v=3" defer></script></head>');
   return openGraph(html, file);
 };
 
