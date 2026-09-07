@@ -311,13 +311,13 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-voices-track { display:flex; gap:18px; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; padding-bottom:4px; }
 .b-voices-track::-webkit-scrollbar { display:none; }
 .b-voices-track:focus-visible { outline:2px solid var(--b-lime); outline-offset:6px; border-radius:12px; }
-.b-voice { flex:0 0 calc((100% - 18px) / 2); scroll-snap-align:start; display:flex; flex-direction:column; padding:26px 28px; border:1px solid rgba(255,255,255,.16); border-radius:12px; background:rgba(255,255,255,.04); }
-.b-voice blockquote { margin:0; font-size:1rem; line-height:1.55; color:#e7edf5; }
-.b-voice blockquote::before { content:""; display:block; width:30px; height:3px; border-radius:2px; background:var(--b-lime); margin-bottom:15px; }
+.b-voice { flex:0 0 calc((100% - 18px) / 2); scroll-snap-align:start; display:flex; flex-direction:column; padding:26px 28px; border:0; border-radius:12px; background:#fff; box-shadow:0 10px 26px rgba(0,0,0,.28); }
+.b-voice blockquote { margin:0; font-size:1rem; line-height:1.55; color:var(--b-ink); }
+.b-voice blockquote::before { content:""; display:block; width:30px; height:3px; border-radius:2px; background:var(--b-blue); margin-bottom:15px; }
 .b-voice-who { margin:auto 0 0; padding-top:18px; font-size:.9375rem; line-height:1.45; }
-.b-voice-who b { display:block; color:#fff; font-weight:700; }
-.b-voice-who span { color:#9fb0c6; }
-.b-voice-co { margin:7px 0 0; font-size:.8125rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--b-lime); }
+.b-voice-who b { display:block; color:var(--b-ink); font-weight:700; }
+.b-voice-who span { color:var(--b-muted); }
+.b-voice-co { margin:7px 0 0; font-size:.8125rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--b-blue); }
 .b-voices-all { display:inline-flex; margin-top:24px; color:#fff; }
 .b-voices-all:hover { color:var(--b-lime); }
 @media (prefers-reduced-motion:reduce) { .b-voices-track { scroll-behavior:auto; } }
