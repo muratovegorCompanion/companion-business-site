@@ -25,58 +25,5 @@ window.CompanionHome = {
       <section class="b-digital b-digital-compact" aria-labelledby="digital-heading"><div class="shell b-digital-grid"><div class="b-app-preview"><img src="presentation-assets/policy.png" alt="Екран Компаньйон: поліс, застраховані особи та покриття програми" width="1290" height="2796" loading="lazy"></div><div class="b-digital-copy"><p class="b-eyebrow">Застосунок для медичного страхування</p><h2 id="digital-heading">Поліс і контакти допомоги — у телефоні працівника.</h2><p class="b-intro">Важлива частина сервісу: людина бачить покриття та швидше розуміє, куди звертатися.</p><a class="b-text-link" href="app.html">Детальніше про застосунок <span aria-hidden="true">↗</span></a></div></div></section>
       <section class="b-section b-meeting" id="meeting" aria-labelledby="meeting-heading"><div class="shell b-meeting-grid"><div><p class="b-eyebrow">Почнемо зі знайомства</p><h2 id="meeting-heading">Розкажіть,<br>що важливо<br><span>вашій компанії.</span></h2><p class="b-intro">Залиште контакти, і ми погодимо зручний час зустрічі. Обговоримо вашу ситуацію, потрібну інформацію та наступні кроки.</p><div class="b-meeting-facts"><p>Безоплатна зустріч</p><p>Онлайн або особисто в Києві</p><p>Для ДМС — з керівником напряму або його заступником</p></div></div><form class="b-meeting-form" id="meeting-form"><div class="b-form-row"><div class="b-field"><label for="meeting-name">Ваше ім’я *</label><input id="meeting-name" name="name" type="text" autocomplete="name" required maxlength="100" placeholder="Як до вас звертатися"></div><div class="b-field"><label for="meeting-company">Компанія *</label><input id="meeting-company" name="company" type="text" autocomplete="organization" required maxlength="160" placeholder="Назва компанії"></div></div><div class="b-field"><label for="meeting-contact">Телефон або email *</label><input id="meeting-contact" name="contact" type="text" required maxlength="180" placeholder="Зручний контакт для відповіді" aria-describedby="contact-hint"><small id="contact-hint">Номер з кодом країни або email.</small></div><div class="b-field"><label for="meeting-topic">Що хочете обговорити?</label><select id="meeting-topic" name="interest"><option>Корпоративне медичне страхування</option><option>Логістика</option><option>Майно бізнесу</option><option>Відповідальність бізнесу</option><option>Інше</option></select></div><div class="b-field"><label for="meeting-message">Кілька слів про задачу <span class="b-optional">необов’язково</span></label><textarea id="meeting-message" name="message" rows="3" maxlength="2000" placeholder="Наприклад, плануємо продовжити програму для 150 працівників"></textarea></div><label class="b-consent"><input name="consent" type="checkbox" required><span>Погоджуюся на обробку цих контактів для відповіді на мій запит.</span></label><div class="b-honeypot" aria-hidden="true"><label for="meeting-website">Ваш сайт</label><input id="meeting-website" name="website" tabindex="-1" autocomplete="off"></div><button class="b-button" type="submit">Домовитися про зустріч <span aria-hidden="true">↗</span></button><p class="b-form-status" id="meeting-status" role="status" aria-live="polite"></p></form></div></section>
     </div>`;
-  },
-  mount() {
-    const form = document.querySelector('#meeting-form');
-    if (!form) return;
-    const status = document.querySelector('#meeting-status');
-    const button = form.querySelector('button[type="submit"]');
-    const contact = form.elements.contact;
-    // Приймач заявок вмикається окремо: поки його немає, форма нічого не надсилає
-    // і не викидає введені дані в адресний рядок.
-    const ALLOWED_ENDPOINT_ORIGINS = [];
-    const endpoint = document.documentElement.dataset.meetingEndpoint;
-    if (!endpoint) {
-      button.disabled = true;
-      status.textContent = 'Онлайн-запис ще не відкрито. Щоб погодити зустріч, зателефонуйте: +38 (050) 145 2605.';
-    }
-    contact.addEventListener('input', () => contact.setCustomValidity(''));
-    form.addEventListener('submit', async event => {
-      event.preventDefault();
-      const value = contact.value.trim();
-      const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      const digits = value.replace(/\D/g, '');
-      const phone = /^\+?[\d\s().-]+$/.test(value) && digits.length >= 10 && digits.length <= 15;
-      contact.setCustomValidity(email || phone ? '' : 'Вкажіть коректний email або номер телефону з кодом країни.');
-      if (!form.reportValidity()) return;
-      if (!endpoint) {
-        status.textContent = 'Заявку не надіслано. Щоб погодити зустріч, зателефонуйте: +38 (050) 145 2605.';
-        return;
-      }
-      button.disabled = true;
-      form.setAttribute('aria-busy', 'true');
-      status.textContent = 'Надсилаємо ваш запит…';
-      try {
-        const target = new URL(endpoint, location.href);
-        const trusted = target.origin === location.origin || ALLOWED_ENDPOINT_ORIGINS.includes(target.origin);
-        if (!trusted || target.protocol !== 'https:') throw new Error('Untrusted endpoint');
-        const response = await fetch(target, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(Object.fromEntries(new FormData(form))),
-          signal: AbortSignal.timeout(15000)
-        });
-        if (!response.ok) throw new Error('Delivery failed');
-        const result = await response.json();
-        if (result.accepted !== true) throw new Error('Delivery not confirmed');
-        status.textContent = 'Дякуємо! Ми отримали ваш запит і зв’яжемося з вами, щоб погодити час зустрічі.';
-        form.reset();
-      } catch {
-        status.textContent = 'Не вдалося надіслати запит. Ваші дані залишилися у формі. Спробуйте ще раз або зателефонуйте: +38 (050) 145 2605.';
-      } finally {
-        button.disabled = false;
-        form.removeAttribute('aria-busy');
-      }
-    });
   }
 };

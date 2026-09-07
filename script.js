@@ -34,7 +34,6 @@ const pages={home:homePage,services,dms,partners,app};
 // about.html і contacts.html мають власну розмітку — скрипт заповнює лише порожній слот.
 const isRenderSlot=params.has("page")||main.children.length===0;
 if(isRenderSlot)main.innerHTML=(pages[page]||homePage)();
-window.CompanionHome?.mount();
 const siteNav=document.querySelector('.site-nav');
 // Активний пункт меню: раніше стан ставився вручну тільки для «Про нас»,
 // через що «Послуги» ніколи не підсвічувались і не піднімались.
