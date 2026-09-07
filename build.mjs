@@ -48,7 +48,7 @@ const standaloneNav = (prefix, file) =>
   `${navLinks(file, {meetingClass:`${prefix}-top-meeting`, activeAs:'class'})}</nav>`;
 // Картка для месенджерів і соцмереж. Тёплий трафік приходить пересланим
 // посиланням, а без цих тегів воно розгортається голою адресою.
-const SITE_URL = 'https://sb-companion.com';
+const SITE_URL = 'https://icompanion.com.ua';
 const OG_IMAGE = `${SITE_URL}/presentation-assets/og-companion.jpg`;
 const esc = (value) => value.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 const openGraph = (html, file) => {
