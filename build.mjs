@@ -142,6 +142,11 @@ const breadcrumbJsonLd = (file) => {
       name: href === 'index.html' ? 'Головна' : crumbName(href), item: pageUrl(href)}))});
 };
 
+// Лічильник Cloudflare Web Analytics. Без кук і без персональних даних —
+// рахує перегляди та візити. Токен маячка не є секретом: він і так лежить
+// у HTML кожної сторінки, відкритий будь-якому відвідувачу.
+const CF_BEACON = `<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "dbe716f5a0a24f30960e4ae47744e73a"}'><\/script>`;
+
 const shareShell = (html, file) => {
   // Службові сторінки мали власний куций <nav class="site-nav"> без id —
   // ловимо обидві форми, інакше меню там лишалося з трьох пунктів.
@@ -175,6 +180,8 @@ const shareShell = (html, file) => {
   html = html.replace(/companion-logo\.png(\?[^"']*)?/g, 'companion-logo.png?v=2');
   // Іконка вкладки: логотип-простирадло 2172x724 на 304 КБ браузер стискав
   // у нечитабельну смужку. Тепер квадратний знак.
+  if (!html.includes('cloudflareinsights.com'))
+    html = html.replace('</body>', `${CF_BEACON}</body>`);
   html = html.replace(/<link rel="icon"[^>]*>/g, '')
              .replace('</head>',
                '<link rel="icon" type="image/png" sizes="64x64" href="presentation-assets/icon-64.png">'
