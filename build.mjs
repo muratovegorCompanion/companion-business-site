@@ -116,6 +116,32 @@ const faqJsonLd = (homeHtml) => {
 const strip = (value) => value.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
 const jsonLdTag = (data) => `<script type="application/ld+json">${data.replace(/</g,'\\u003c')}<\/script>`;
 
+// Хлібні крихти: у видачі вони показують, де сторінка живе, замість голої
+// адреси. Назви беремо ті самі, що в меню, щоб дороговказ збігався з тим,
+// що людина побачить, коли перейде.
+const NAV_LABEL = Object.fromEntries(NAV.map(item => [item.href, item.label]));
+const CRUMB_PARENT = {'perevirka-dms.html':'dms.html', 'rekomendatsii.html':'about.html'};
+const CRUMB_NAME = {
+  'perevirka-dms.html':'Чек-лист ДМС перед продовженням',
+  'vidmova-u-vyplati.html':'Відмова у виплаті',
+  'rekomendatsii.html':'Відгуки клієнтів',
+  'contacts.html':'Контакти',
+  'regulatory.html':'Регуляторна інформація',
+  'insurance-products.html':'Страхові продукти',
+  'privacy.html':'Персональні дані',
+};
+const crumbName = (file) => CRUMB_NAME[file] || NAV_LABEL[file] || file;
+const breadcrumbJsonLd = (file) => {
+  // Головна — корінь ланцюжка, а 404 закрита від індексації: крихти там ні до чого.
+  if (file === 'index.html' || file === '404.html') return '';
+  const chain = ['index.html'];
+  if (CRUMB_PARENT[file]) chain.push(CRUMB_PARENT[file]);
+  chain.push(file);
+  return JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList',
+    itemListElement: chain.map((href, i) => ({'@type':'ListItem', position:i+1,
+      name: href === 'index.html' ? 'Головна' : crumbName(href), item: pageUrl(href)}))});
+};
+
 const shareShell = (html, file) => {
   // Службові сторінки мали власний куций <nav class="site-nav"> без id —
   // ловимо обидві форми, інакше меню там лишалося з трьох пунктів.
@@ -133,6 +159,9 @@ const shareShell = (html, file) => {
     html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
   if (!html.includes('application/ld+json'))
     html = html.replace('</head>', `${jsonLdTag(orgJsonLd)}</head>`);
+  const crumbs = breadcrumbJsonLd(file);
+  if (crumbs && !html.includes('BreadcrumbList'))
+    html = html.replace('</head>', `${jsonLdTag(crumbs)}</head>`);
   if (!html.includes('site-footer.css'))
     html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=8"></head>');
   // Кнопка «Меню» була лише на головній: розмітка з нею вклеювалась усюди,
