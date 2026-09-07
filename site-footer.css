@@ -42,3 +42,25 @@ body
   .site-footer .footer-phone{font-size:17px}
   .site-footer .footer-bar{gap:9px}
 }
+
+/* Підвал пришпилений до низу, але його можна згорнути: у згорнутому стані
+   лишається смужка з телефоном. Раніше він займав 24% екрана телефона
+   постійно, а без пришпилення контакти опинялися за 7000 пікселів прокрутки. */
+.site-footer{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:0;
+  box-shadow:0 -12px 28px rgba(10,20,35,.28)}
+.site-footer .footer-dock{display:flex;align-items:center;justify-content:space-between;
+  gap:16px;min-height:44px;padding:4px 0}
+.footer-dock-phone{font-weight:700;font-size:15px;color:#fff!important;white-space:nowrap}
+.footer-toggle{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:6px 10px;
+  background:none;border:0;border-radius:8px;color:#c9d4e2;font:inherit;font-size:13px;cursor:pointer}
+.footer-toggle:hover{background:rgba(255,255,255,.08);color:#fff}
+.footer-toggle:focus-visible{outline:2px solid var(--c-lime);outline-offset:2px}
+.footer-chev{transition:transform .2s ease}
+.site-footer .footer-body{overflow:hidden;transition:height .24s ease}
+.site-footer.is-collapsed .footer-body{height:0!important}
+.site-footer.is-collapsed .footer-chev{transform:rotate(180deg)}
+.site-footer .footer-body > .footer-bar{padding-bottom:16px}
+/* телефон уже стоїть у смужці — у розгорнутій частині він зайвий */
+.site-footer .footer-body .footer-phone{display:none}
+@media (prefers-reduced-motion:reduce){.site-footer .footer-body,.footer-chev{transition:none}}
+@media (max-width:700px){.footer-toggle-label{display:none}.footer-dock-phone{font-size:14px}}

@@ -87,7 +87,7 @@ const shareShell = (html, file) => {
   if (!html.includes('tokens.css'))
     html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
   if (!html.includes('site-footer.css'))
-    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=5"></head>');
+    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=7"></head>');
   // Кнопка «Меню» була лише на головній: розмітка з нею вклеювалась усюди,
   // а обробник лишався в script.js, який підключений тільки на index.
   if (html.includes('class="menu-toggle"') && !html.includes('nav.js'))
@@ -105,11 +105,10 @@ const shareShell = (html, file) => {
              + '<link rel="apple-touch-icon" href="presentation-assets/icon-180.png"></head>');
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
              .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=15"');
-  // Підвал більше не виїжджає і не липне до низу: на телефоні він з'їдав
-  // 24% екрана. У вбудованій копії (iframe) він і далі зайвий.
-  if (!html.includes('data-embedded-footer'))
-    html = html.replace('</body>',
-      '<script data-embedded-footer>(function(){if(self!==top){document.querySelector(".site-footer")?.remove()}})()<\/script>\n</body>');
+  // Підвал згортається у смужку з телефоном; логіка — у footer.js,
+  // він же прибирає підвал у вбудованій копії (iframe).
+  if (!html.includes('footer.js'))
+    html = html.replace('</head>', '<script src="footer.js?v=2" defer></script></head>');
   return openGraph(html, file);
 };
 
@@ -147,7 +146,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
   await writeFile(join(output, file), shareShell(page, file));
 }
 
-for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','android-download.js','CNAME']) {
+for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','android-download.js','CNAME']) {
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['services.html','logistyka.html','yak-my-pratsyuyemo.html',
