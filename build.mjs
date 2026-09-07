@@ -74,10 +74,10 @@ const openGraph = (html, file) => {
 // Пошуковикам не було з чого починати обхід: ні robots.txt, ні sitemap,
 // ні canonical. Тепер усе це генерується разом зі сторінками.
 const PAGES = ['index.html','dms.html','logistyka.html','yak-my-pratsyuyemo.html',
-  'services.html','perevirka-dms.html','about.html','contacts.html','partners.html',
+  'services.html','perevirka-dms.html','vidmova-u-vyplati.html','about.html','contacts.html','partners.html',
   'app.html','rekomendatsii.html','regulatory.html','insurance-products.html','privacy.html'];
 const PRIORITY = {'index.html':'1.0','dms.html':'0.9','logistyka.html':'0.9',
-  'perevirka-dms.html':'0.8','yak-my-pratsyuyemo.html':'0.8','services.html':'0.7'};
+  'perevirka-dms.html':'0.8','vidmova-u-vyplati.html':'0.8','yak-my-pratsyuyemo.html':'0.8','services.html':'0.7'};
 const pageUrl = (file) => `${SITE_URL}/${file === 'index.html' ? '' : file}`;
 
 const canonical = (html, file) =>
@@ -212,7 +212,7 @@ for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
-  'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','404.html','regulatory.html','privacy.html','insurance-products.html']) {
+  'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','vidmova-u-vyplati.html','404.html','regulatory.html','privacy.html','insurance-products.html']) {
   await writeFile(join(output, file), shareShell(await readFile(join(root, file), 'utf8'), file));
 }
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});
