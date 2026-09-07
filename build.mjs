@@ -164,7 +164,7 @@ await writeFile(join(output, 'index.html'), shareShell(index, 'index.html'));
 
 // Standalone headers use the exact same desktop geometry as the homepage header.
 const standaloneGeometry = (prefix) => `
-    .${prefix}-top{height:88px!important;min-height:88px!important;background:var(--c-white);color:var(--c-ink);display:block!important;position:relative;z-index:20;border-bottom:1px solid var(--c-line);font-family:var(--c-font)!important;line-height:1.5!important}
+    .${prefix}-top{height:88px!important;min-height:88px!important;background:var(--c-white);color:var(--c-ink);display:block!important;position:sticky!important;top:0!important;z-index:20;border-bottom:1px solid var(--c-line);font-family:var(--c-font)!important;line-height:1.5!important}
     .${prefix}-top-inner{width:min(1240px,calc(100% - 56px))!important;height:88px!important;min-height:88px!important;margin-inline:auto!important;padding:0!important;display:flex!important;align-items:center!important;gap:24px!important}
     .${prefix}-top-logo{display:flex!important;align-items:center!important;gap:10px!important;min-width:160px!important;width:auto!important;margin:0!important;padding:0!important}
     .${prefix}-top-logo img{display:block!important;width:160px!important;height:auto!important;margin:0!important}
