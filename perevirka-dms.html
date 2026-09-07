@@ -10,34 +10,93 @@
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="home.css">
 <style>
-.chk-page{padding:72px 0 90px;counter-reset:chk}
-.chk-lead{max-width:680px}
-.chk-meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin:30px 0 0;padding:20px 0 0;border-top:1px solid var(--line);font-size:15px;color:var(--muted)}
-.chk-meta b{color:var(--ink);font-weight:700}
-.chk-print{margin-left:auto;color:var(--blue);font-weight:700;background:none;border:0;padding:0;font-size:15px;cursor:pointer}
-.chk-print:hover{text-decoration:underline;text-underline-offset:3px}
+/* Сторінка живе в мові головної: точка перед надстроковим рядком, останній
+   рядок заголовка синім, картки з тією самою рамкою й радіусом, ті самі
+   кнопки. Своє тут лише те, чого на головній немає, — відмітки. */
+.chk-page{padding:78px 0 96px}
+.chk-page h1{margin:14px 0 0;font-size:clamp(2.2rem,4.2vw,3.15rem);line-height:1.08;letter-spacing:-.03em;max-width:20ch}
+.chk-page h1 span{display:block;color:var(--b-blue)}
+.chk-lead{margin:22px 0 0;max-width:56ch;color:var(--b-muted);font-size:1.0625rem;line-height:1.65}
 
-.chk-group{margin-top:56px}
-.chk-group > h2{margin:0 0 6px;font-size:26px;letter-spacing:-.025em}
-.chk-group > p.chk-note{margin:0 0 26px;color:var(--muted);font-size:16px;max-width:680px}
-.chk-list{display:grid;gap:14px;margin:0;padding:0;list-style:none}
-.chk-item{display:grid;grid-template-columns:34px minmax(0,1fr);gap:18px;padding:22px 24px;background:#fff;border:1px solid var(--line);border-radius:10px}
-.chk-item::before{counter-increment:chk;content:counter(chk,decimal-leading-zero);font-size:14px;font-weight:800;color:var(--blue);letter-spacing:.02em;padding-top:2px}
-.chk-item h3{margin:0 0 7px;font-size:18px;line-height:1.3;letter-spacing:-.015em}
-.chk-item p{margin:0;color:var(--muted);font-size:15.5px;line-height:1.6}
+.chk-meta{display:flex;flex-wrap:wrap;gap:12px 44px;margin:38px 0 0;padding:22px 0;border-top:1px solid var(--b-line);border-bottom:1px solid var(--b-line);font-size:.9375rem;color:var(--b-muted)}
+.chk-meta b{color:var(--b-ink);font-weight:700}
 
-.chk-cta{margin-top:56px;padding:34px;background:var(--ink);color:#fff;border-radius:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:26px;align-items:center}
-.chk-cta p{margin:0;color:#c3cede;font-size:16px;line-height:1.6;max-width:620px}
-.chk-cta strong{display:block;color:#fff;font-size:20px;margin-bottom:8px;letter-spacing:-.02em}
-.chk-cta .btn{margin:0;background:var(--lime);color:var(--ink);white-space:nowrap}
+.chk-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:36px;margin-top:44px}
+@media(min-width:1060px){.chk-layout{grid-template-columns:minmax(0,1fr) 264px;gap:56px;align-items:start}}
 
-@media(max-width:760px){.chk-page{padding:48px 0 64px}.chk-item{grid-template-columns:26px minmax(0,1fr);gap:12px;padding:18px}.chk-cta{grid-template-columns:1fr;padding:26px}}
+.chk-aside{position:sticky;top:112px;display:grid;gap:16px}
+@media(max-width:1059px){.chk-aside{position:static;top:auto}}
+.chk-count{margin:0;font-size:.9375rem;color:var(--b-muted);line-height:1.4}
+.chk-count b{display:block;font-size:2.35rem;color:var(--b-ink);letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin-bottom:4px;font-weight:700}
+.chk-bar{height:4px;border-radius:99px;background:var(--b-line);overflow:hidden}
+.chk-bar i{display:block;height:100%;width:0;background:var(--b-blue);border-radius:99px;transition:width .25s ease}
+.chk-aside-note{margin:0;padding-left:14px;border-left:3px solid var(--b-lime);font-size:.875rem;line-height:1.55;color:var(--b-muted)}
+.chk-actions{display:grid;gap:11px;justify-items:start;padding-top:18px;border-top:1px solid var(--b-line)}
+.chk-link{color:var(--b-blue);font-size:.9375rem;font-weight:600;background:none;border:0;padding:0;cursor:pointer;font-family:inherit;text-align:left}
+.chk-link:hover{text-decoration:underline;text-underline-offset:4px}
+.chk-link[data-quiet]{color:var(--b-muted);font-weight:500}
+.chk-sign{display:none}
+
+.chk-group + .chk-group{margin-top:52px}
+.chk-group-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 8px}
+.chk-group-head h2{margin:0;font-size:1.6rem;line-height:1.15;letter-spacing:-.025em}
+.chk-part{font-size:.75rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--b-blue)}
+.chk-of{margin-left:auto;font-size:.875rem;color:var(--b-muted);font-variant-numeric:tabular-nums}
+.chk-note{margin:0 0 24px;color:var(--b-muted);font-size:1rem;line-height:1.6;max-width:62ch}
+
+.chk-list{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:chk}
+.chk-list[data-start="9"]{counter-reset:chk 8}
+.chk-item{background:#fff;border:1px solid #d5dfec;border-radius:9px;transition:border-color .16s ease,box-shadow .16s ease}
+.chk-item:hover{border-color:var(--b-blue);box-shadow:0 1px 0 rgba(36,93,206,.06)}
+.chk-item label{display:grid;grid-template-columns:21px minmax(0,1fr);gap:16px;padding:20px 22px;cursor:pointer;align-items:start}
+.chk-item input{appearance:none;-webkit-appearance:none;margin:1px 0 0;width:21px;height:21px;border:1.5px solid #c2cfe0;border-radius:5px;background:#fff;cursor:pointer;transition:border-color .16s ease,background .16s ease}
+.chk-item input:hover{border-color:var(--b-blue)}
+.chk-item input:focus-visible{outline:2px solid var(--b-blue);outline-offset:2px}
+.chk-item input:checked{background:var(--b-blue);border-color:var(--b-blue)}
+.chk-item input:checked::after{content:"";display:block;width:5px;height:10px;margin:2px auto 0;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.chk-head{display:flex;align-items:baseline;gap:12px;margin:0 0 7px}
+.chk-num{flex:0 0 auto;font-size:.75rem;font-weight:700;letter-spacing:.03em;color:var(--b-blue);font-variant-numeric:tabular-nums}
+.chk-num::before{counter-increment:chk;content:counter(chk,decimal-leading-zero)}
+.chk-item h3{margin:0;font-size:1.0625rem;line-height:1.35;letter-spacing:-.015em}
+.chk-item p{margin:0;color:var(--b-muted);font-size:.9375rem;line-height:1.62}
+.chk-item.is-done{background:var(--b-paper)}
+.chk-item.is-done h3,.chk-item.is-done .chk-num{color:var(--b-muted)}
+
+.chk-cta{margin-top:60px;padding:38px 40px;background:var(--b-ink);border-radius:9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:center}
+.chk-cta strong{display:block;color:#fff;font-size:1.35rem;line-height:1.25;letter-spacing:-.025em;margin-bottom:10px}
+.chk-cta p{margin:0;color:#a9b7c9;font-size:1rem;line-height:1.6;max-width:60ch}
+.chk-cta .b-button{white-space:nowrap}
+
+@media(max-width:760px){
+  .chk-page{padding:52px 0 68px}
+  .chk-item label{gap:13px;padding:17px 18px}
+  .chk-cta{grid-template-columns:1fr;padding:28px 24px}
+  .chk-of{margin-left:0;width:100%}
+}
+
+/* На папері це знову чек-лист: порожні квадратики, які відмічають ручкою. */
+@page{size:A4;margin:0}
 @media print{
-  .site-header,.site-footer,.chk-cta,.chk-print,.skip-link{display:none!important}
+  .site-header,.site-footer,.chk-cta,.chk-aside,.skip-link{display:none!important}
   body{background:#fff}
-  .chk-page{padding:0}
-  .chk-item{break-inside:avoid;border-color:#ccc;padding:12px 14px}
-  .chk-list{gap:8px}
+  /* Поля даємо самі: інакше браузер друкує свій колонтитул із датою й адресою. */
+  .chk-page{padding:15mm 14mm}
+  .shell{width:100%;max-width:none;margin:0;padding:0}
+  .chk-layout{display:block;margin-top:18px}
+  .chk-meta{margin-top:22px;padding:14px 0}
+  .chk-list{gap:6px}
+  .chk-item{break-inside:avoid;page-break-inside:avoid;border-color:#c8d0da;background:#fff!important;box-shadow:none!important}
+  .chk-item label{padding:10px 12px;gap:10px}
+  .chk-item input{border-color:#8a97a8!important;background:#fff!important}
+  .chk-item input:checked{background:#fff!important}
+  .chk-item input:checked::after{border-color:#1f2c3d}
+  .chk-head{margin-bottom:4px}
+  .chk-item h3{font-size:14.5px;color:#142a46!important}
+  .chk-item p{font-size:12px}
+  .chk-item.is-done{background:#fff!important}
+  .chk-item.is-done h3,.chk-item.is-done .chk-num{color:#142a46!important}
+  .chk-group + .chk-group{margin-top:24px}
+  .chk-sign{display:block;margin-top:20px;padding-top:12px;border-top:1px solid #c8d0da;font-size:11px;color:#536478}
 }
 </style>
 </head>
@@ -48,46 +107,116 @@
 <main id="content">
 <section class="chk-page">
 <div class="shell">
-  <p class="section-kicker">Чек-лист</p>
-  <h1 class="section-title">Що перевірити в ДМС перед продовженням</h1>
-  <p class="lead chk-lead">Договір продовжують мовчки частіше, ніж переглядають. Ось питання, які варто поставити до чинної програми — самим собі, страховій компанії та своїм працівникам. Відповіді на них показують, чи справді програма робить те, за що компанія платить.</p>
+  <p class="b-eyebrow"><span class="b-dot" aria-hidden="true"></span>Чек-лист</p>
+  <h1>Що перевірити в ДМС <span>перед продовженням.</span></h1>
+  <p class="chk-lead">Договір продовжують мовчки частіше, ніж переглядають. Ось питання, які варто поставити до чинної програми — самим собі, страховій компанії та своїм працівникам. Відповіді на них показують, чи справді програма робить те, за що компанія платить.</p>
 
-  <p class="chk-meta"><span>Коли проходити: <b>за місяць до кінця договору</b></span><span>Скільки займе: <b>близько години</b></span><button class="chk-print" type="button">Роздрукувати або зберегти PDF</button></p>
+  <p class="chk-meta"><span>Коли проходити: <b>за місяць до кінця договору</b></span><span>Скільки займе: <b>близько години</b></span><span>Питань: <b>13</b></span></p>
 
-  <div class="chk-group">
-    <h2>Що написано в договорі</h2>
-    <p class="chk-note">Перші питання — до самих умов. Їх зазвичай узгоджували рік тому, і за рік змінилася і компанія, і ринок.</p>
-    <ol class="chk-list">
-      <li class="chk-item"><div><h3>Кого програма страхує сьогодні</h3><p>Чи всі підрозділи в ній, чи з’явилися нові локації, чи є різні пакети для різних категорій. Часто список застрахованих відстає від реального складу команди на десятки людей.</p></div></li>
-      <li class="chk-item"><div><h3>Річний ліміт на людину і з чого він складається</h3><p>Скільки припадає на амбулаторію, стаціонар, ліки, стоматологію. Загальна сума ні про що не говорить, доки не видно, як вона поділена.</p></div></li>
-      <li class="chk-item"><div><h3>Що програма не покриває взагалі</h3><p>Розділ винятків читають рідше за все, а саме там виникає більшість конфліктів. Варто прочитати його цілком і виписати те, що стосується вашої команди.</p></div></li>
-      <li class="chk-item"><div><h3>Окремі ліміти на стоматологію та ліки</h3><p>Це два підліміти, які закінчуються найшвидше і про які найчастіше дізнаються постфактум — коли людині вже відмовили.</p></div></li>
-      <li class="chk-item"><div><h3>Перелік клінік — і чи зручний він там, де живуть люди</h3><p>Перелік змінюється протягом року. Перевірте не місто загалом, а райони: до клініки, куди треба їхати годину, працівник просто не поїде.</p></div></li>
-      <li class="chk-item"><div><h3>Порядок звернення та скільки триває погодження</h3><p>Через асистанс, за направленням чи самостійно. Скільки часу займає погодження допомоги в буденному випадку і що робити вночі або у вихідний.</p></div></li>
-      <li class="chk-item"><div><h3>Відшкодування власних витрат</h3><p>Чи передбачене взагалі, у який строк виплачують і які документи потрібні. Це той пункт, який рятує, коли людина захворіла далеко від «своєї» клініки.</p></div></li>
-      <li class="chk-item"><div><h3>Географія покриття</h3><p>Чи діє програма поза Києвом і за кордоном — для відряджень і для тих, хто працює віддалено з інших міст.</p></div></li>
-    </ol>
-  </div>
+  <div class="chk-layout">
+    <div>
+      <div class="chk-group">
+        <div class="chk-group-head">
+          <span class="chk-part">Частина 1</span>
+          <h2>Що написано в договорі</h2>
+          <span class="chk-of">8 питань</span>
+        </div>
+        <p class="chk-note">Перші питання — до самих умов. Їх зазвичай узгоджували рік тому, і за рік змінилася і компанія, і ринок.</p>
+        <ul class="chk-list">
+          <li class="chk-item"><label><input type="checkbox" data-q="1"><span><span class="chk-head"><span class="chk-num"></span><h3>Кого програма страхує сьогодні</h3></span><p>Чи всі підрозділи в ній, чи з’явилися нові локації, чи є різні пакети для різних категорій. Часто список застрахованих відстає від реального складу команди на десятки людей.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="2"><span><span class="chk-head"><span class="chk-num"></span><h3>Річний ліміт на людину і з чого він складається</h3></span><p>Скільки припадає на амбулаторію, стаціонар, ліки, стоматологію. Загальна сума ні про що не говорить, доки не видно, як вона поділена.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="3"><span><span class="chk-head"><span class="chk-num"></span><h3>Що програма не покриває взагалі</h3></span><p>Розділ винятків читають рідше за все, а саме там виникає більшість конфліктів. Варто прочитати його цілком і виписати те, що стосується вашої команди.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="4"><span><span class="chk-head"><span class="chk-num"></span><h3>Окремі ліміти на стоматологію та ліки</h3></span><p>Це два підліміти, які закінчуються найшвидше і про які найчастіше дізнаються постфактум — коли людині вже відмовили.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="5"><span><span class="chk-head"><span class="chk-num"></span><h3>Перелік клінік — і чи зручний він там, де живуть люди</h3></span><p>Перелік змінюється протягом року. Перевірте не місто загалом, а райони: до клініки, куди треба їхати годину, працівник просто не поїде.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="6"><span><span class="chk-head"><span class="chk-num"></span><h3>Порядок звернення та скільки триває погодження</h3></span><p>Через асистанс, за направленням чи самостійно. Скільки часу займає погодження допомоги в буденному випадку і що робити вночі або у вихідний.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="7"><span><span class="chk-head"><span class="chk-num"></span><h3>Відшкодування власних витрат</h3></span><p>Чи передбачене взагалі, у який строк виплачують і які документи потрібні. Це той пункт, який рятує, коли людина захворіла далеко від «своєї» клініки.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="8"><span><span class="chk-head"><span class="chk-num"></span><h3>Географія покриття</h3></span><p>Чи діє програма поза Києвом і за кордоном — для відряджень і для тих, хто працює віддалено з інших міст.</p></span></label></li>
+        </ul>
+      </div>
 
-  <div class="chk-group">
-    <h2>Що показав рік</h2>
-    <p class="chk-note">Друга частина важливіша за першу: договір описує наміри, а статистика — те, що сталося насправді.</p>
-    <ol class="chk-list" start="9" aria-label="Продовження переліку">
-      <li class="chk-item"><div><h3>Скільки людей реально скористалися програмою</h3><p>Якщо звернень мало — це не завжди хороша новина. Іноді це означає, що люди не знають, як звертатися, або одного разу спробували й більше не хочуть.</p></div></li>
-      <li class="chk-item"><div><h3>На що пішли гроші й де вперлися в ліміт</h3><p>Запросіть у страхової компанії узагальнену статистику: за якими напрямами витрати, скільки людей вичерпали ліміт і коли саме це сталося.</p></div></li>
-      <li class="chk-item"><div><h3>Скільки було відмов і чим вони мотивовані</h3><p>Кожна відмова — або справді поза умовами, або погано пояснена умова. Розділити одне й друге можна, лише переглянувши їх поіменно.</p></div></li>
-      <li class="chk-item"><div><h3>Що кажуть самі працівники</h3><p>Коротке опитування на п’ять питань дасть більше, ніж будь-який звіт: чи зрозуміло, куди звертатися, чи довго чекали, чи довелося платити самим.</p></div></li>
-      <li class="chk-item"><div><h3>Як змінилася ціна відносно наповнення</h3><p>Підвищення вартості саме собою нормальне. Питання в тому, чи змінилося разом із нею покриття — і в який бік.</p></div></li>
-    </ol>
+      <div class="chk-group">
+        <div class="chk-group-head">
+          <span class="chk-part">Частина 2</span>
+          <h2>Що показав рік</h2>
+          <span class="chk-of">5 питань</span>
+        </div>
+        <p class="chk-note">Друга частина важливіша за першу: договір описує наміри, а статистика — те, що сталося насправді.</p>
+        <ul class="chk-list" data-start="9">
+          <li class="chk-item"><label><input type="checkbox" data-q="9"><span><span class="chk-head"><span class="chk-num"></span><h3>Скільки людей реально скористалися програмою</h3></span><p>Якщо звернень мало — це не завжди хороша новина. Іноді це означає, що люди не знають, як звертатися, або одного разу спробували й більше не хочуть.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="10"><span><span class="chk-head"><span class="chk-num"></span><h3>На що пішли гроші й де вперлися в ліміт</h3></span><p>Запросіть у страхової компанії узагальнену статистику: за якими напрямами витрати, скільки людей вичерпали ліміт і коли саме це сталося.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="11"><span><span class="chk-head"><span class="chk-num"></span><h3>Скільки було відмов і чим вони мотивовані</h3></span><p>Кожна відмова — або справді поза умовами, або погано пояснена умова. Розділити одне й друге можна, лише переглянувши їх поіменно.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="12"><span><span class="chk-head"><span class="chk-num"></span><h3>Що кажуть самі працівники</h3></span><p>Коротке опитування на п’ять питань дасть більше, ніж будь-який звіт: чи зрозуміло, куди звертатися, чи довго чекали, чи довелося платити самим.</p></span></label></li>
+          <li class="chk-item"><label><input type="checkbox" data-q="13"><span><span class="chk-head"><span class="chk-num"></span><h3>Як змінилася ціна відносно наповнення</h3></span><p>Підвищення вартості саме собою нормальне. Питання в тому, чи змінилося разом із нею покриття — і в який бік.</p></span></label></li>
+        </ul>
+      </div>
+    </div>
+
+    <aside class="chk-aside" aria-label="Ваш поступ">
+      <p class="chk-count"><b><span data-done>0</span> з 13</b>питань пройдено</p>
+      <div class="chk-bar" role="progressbar" aria-valuemin="0" aria-valuemax="13" aria-valuenow="0" aria-label="Пройдено питань"><i data-fill></i></div>
+      <p class="chk-aside-note">Відмітки зберігаються у вашому браузері — можна закрити сторінку й повернутися пізніше.</p>
+      <div class="chk-actions">
+        <a class="chk-link" href="cheklist-dms.pdf" download>Завантажити PDF</a>
+        <button class="chk-link" type="button" data-print data-quiet>Роздрукувати</button>
+        <button class="chk-link" type="button" data-reset data-quiet>Зняти всі відмітки</button>
+      </div>
+    </aside>
+    <p class="chk-sign">Страхове бюро «Компаньйон» · ТОВ «СТРАХОВЕ БЮРО «КОМПАНЬЙОН» · Реєстр страхових брокерів НБУ № 35 · icompanion.com.ua · +38 (050) 145 2605</p>
   </div>
 
   <div class="chk-cta">
     <p><strong>Пройшли й побачили питання без відповідей?</strong>Ми аналізуємо чинну програму, доступну статистику звернень і зворотний зв’язок працівників — і показуємо, що варто переглянути до продовження. Безоплатно, до того як ви побачите будь-які пропозиції.</p>
-    <a class="btn" href="index.html#meeting">Обговорити програму <span aria-hidden="true">↗</span></a>
+    <a class="b-button" href="index.html#meeting">Обговорити програму <span aria-hidden="true">↗</span></a>
   </div>
 </div>
 </section>
 </main>
-<script>document.querySelector('.chk-print')?.addEventListener('click',()=>window.print());</script>
+<script>
+(function () {
+  var KEY = 'chk-dms-v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.chk-item input[data-q]'));
+  var doneEl = document.querySelector('[data-done]');
+  var fillEl = document.querySelector('[data-fill]');
+  var barEl = document.querySelector('.chk-bar');
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; }
+  }
+  function save(ids) {
+    try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch (e) { /* приватний режим — просто не зберігаємо */ }
+  }
+  function render() {
+    var done = 0;
+    boxes.forEach(function (box) {
+      var item = box.closest('.chk-item');
+      if (box.checked) { done++; item.classList.add('is-done'); }
+      else { item.classList.remove('is-done'); }
+    });
+    if (doneEl) doneEl.textContent = String(done);
+    if (fillEl) fillEl.style.width = (done / boxes.length * 100) + '%';
+    if (barEl) barEl.setAttribute('aria-valuenow', String(done));
+  }
+
+  var saved = load();
+  boxes.forEach(function (box) {
+    if (saved.indexOf(box.dataset.q) !== -1) box.checked = true;
+    box.addEventListener('change', function () {
+      save(boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.dataset.q; }));
+      render();
+    });
+  });
+  render();
+
+  var printBtn = document.querySelector('[data-print]');
+  if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+
+  var resetBtn = document.querySelector('[data-reset]');
+  if (resetBtn) resetBtn.addEventListener('click', function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    save([]);
+    render();
+  });
+})();
+</script>
 </body>
 </html>
