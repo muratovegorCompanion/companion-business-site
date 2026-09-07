@@ -334,3 +334,15 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-renewal-actions { display:grid; gap:16px; justify-items:start; }
 .b-renewal-main { width:100%; justify-content:center; }
 @media (max-width:900px) { .b-renewal-inner { grid-template-columns:1fr; gap:28px; } .b-renewal { padding:44px 0; } }
+
+/* Блок підтверджень одразу після відгуків: логотипи клієнтів і цитати
+   кажуть «нам довіряють», цей — «це можна перевірити». */
+.b-proof { padding:56px 0 60px; background:#fff; border-top:1px solid var(--b-line); }
+.b-proof-title { margin:0 0 34px; font-size:1.3rem; font-weight:700; letter-spacing:-.02em; }
+.b-proof-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.b-proof-item { display:flex; flex-direction:column; padding:26px 26px 24px; border:1px solid var(--b-line); border-radius:12px; }
+.b-proof-label { margin:0; font-size:.75rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--b-blue); }
+.b-proof-fact { margin:12px 0 0; font-size:1.5rem; line-height:1.15; letter-spacing:-.03em; color:var(--b-ink); }
+.b-proof-note { margin:12px 0 0; font-size:.9375rem; line-height:1.6; color:var(--b-muted); }
+.b-proof-item .b-text-link { margin-top:auto; padding-top:20px; }
+@media (max-width:900px) { .b-proof-grid { grid-template-columns:1fr; } .b-proof { padding:44px 0 46px; } }

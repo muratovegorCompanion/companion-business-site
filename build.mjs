@@ -151,7 +151,7 @@ const shareShell = (html, file) => {
                '<link rel="icon" type="image/png" sizes="64x64" href="presentation-assets/icon-64.png">'
              + '<link rel="apple-touch-icon" href="presentation-assets/icon-180.png"></head>');
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
-             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=15"');
+             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=16"');
   // Підвал згортається у смужку з телефоном; логіка — у footer.js,
   // він же прибирає підвал у вбудованій копії (iframe).
   if (!html.includes('footer.js'))
