@@ -71,6 +71,51 @@ const openGraph = (html, file) => {
   return html.replace('</head>', `${tags}</head>`);
 };
 
+// Пошуковикам не було з чого починати обхід: ні robots.txt, ні sitemap,
+// ні canonical. Тепер усе це генерується разом зі сторінками.
+const PAGES = ['index.html','dms.html','logistyka.html','yak-my-pratsyuyemo.html',
+  'services.html','perevirka-dms.html','about.html','contacts.html','partners.html',
+  'app.html','rekomendatsii.html','regulatory.html','insurance-products.html','privacy.html'];
+const PRIORITY = {'index.html':'1.0','dms.html':'0.9','logistyka.html':'0.9',
+  'perevirka-dms.html':'0.8','yak-my-pratsyuyemo.html':'0.8','services.html':'0.7'};
+const pageUrl = (file) => `${SITE_URL}/${file === 'index.html' ? '' : file}`;
+
+const canonical = (html, file) =>
+  /rel="canonical"/.test(html) ? html
+    : html.replace('</head>', `<link rel="canonical" href="${pageUrl(file)}"></head>`);
+
+const orgJsonLd = JSON.stringify({
+  '@context':'https://schema.org',
+  '@type':'InsuranceAgency',
+  name:'Страхове бюро «Компаньйон»',
+  legalName:'ТОВ «СТРАХОВЕ БЮРО «КОМПАНЬЙОН»',
+  url:SITE_URL,
+  logo:`${SITE_URL}/presentation-assets/companion-logo.png`,
+  image:OG_IMAGE,
+  telephone:'+380501452605',
+  email:'egor_m@icompanion.com.ua',
+  address:{'@type':'PostalAddress',streetAddress:'вул. Юрія Іллєнка, 81, офіс 302',
+    addressLocality:'Київ',postalCode:'04050',addressCountry:'UA'},
+  areaServed:{'@type':'Country',name:'Україна'},
+  openingHours:'Mo-Fr 09:00-18:00',
+  foundingDate:'2014',
+  identifier:'39337363',
+  sameAs:['https://www.facebook.com/insurancebureaucompanion'],
+  description:'Страховий брокер для бізнесу: організація тендерів, корпоративне медичне страхування, страхування вантажів і відповідальності, супровід після укладення договору.',
+});
+
+// Питання з головної — вже видимі на сторінці, тож розмітка їх лише
+// пояснює машині. Це ж формат, який цитують мовні моделі.
+const faqJsonLd = (homeHtml) => {
+  const items = [...homeHtml.matchAll(/<details class="b-insight">[\s\S]*?<h3>([\s\S]*?)<\/h3>[\s\S]*?<div class="b-insight-body"><p>([\s\S]*?)<\/p>/g)]
+    .map(([, q, a]) => ({'@type':'Question', name: strip(q),
+      acceptedAnswer:{'@type':'Answer', text: strip(a)}}));
+  if (!items.length) return '';
+  return JSON.stringify({'@context':'https://schema.org','@type':'FAQPage',mainEntity:items});
+};
+const strip = (value) => value.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+const jsonLdTag = (data) => `<script type="application/ld+json">${data.replace(/</g,'\\u003c')}<\/script>`;
+
 const shareShell = (html, file) => {
   // Службові сторінки мали власний куций <nav class="site-nav"> без id —
   // ловимо обидві форми, інакше меню там лишалося з трьох пунктів.
@@ -86,6 +131,8 @@ const shareShell = (html, file) => {
     : html.replace('</body>', `${siteFooter}\n</body>`);
   if (!html.includes('tokens.css'))
     html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
+  if (!html.includes('application/ld+json'))
+    html = html.replace('</head>', `${jsonLdTag(orgJsonLd)}</head>`);
   if (!html.includes('site-footer.css'))
     html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=8"></head>');
   // Кнопка «Меню» була лише на головній: розмітка з нею вклеювалась усюди,
@@ -109,9 +156,10 @@ const shareShell = (html, file) => {
   // він же прибирає підвал у вбудованій копії (iframe).
   if (!html.includes('footer.js'))
     html = html.replace('</head>', '<script src="footer.js?v=3" defer></script></head>');
-  return openGraph(html, file);
+  return openGraph(canonical(html, file), file);
 };
 
+index = index.replace('</head>', `${jsonLdTag(orgJsonLd)}${jsonLdTag(faqJsonLd(index))}</head>`);
 await writeFile(join(output, 'index.html'), shareShell(index, 'index.html'));
 
 // Standalone headers use the exact same desktop geometry as the homepage header.
@@ -156,3 +204,14 @@ for (const file of ['services.html','logistyka.html','yak-my-pratsyuyemo.html',
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});
 await cp(join(root, 'fonts'), join(output, 'fonts'), {recursive:true});
 console.log('Built static Companion site with homepage-exact isolated header geometry.');
+
+// robots.txt і карта сайту: без них пошуковику нема з чого почати обхід.
+const today = new Date().toISOString().slice(0, 10);
+await writeFile(join(output, 'robots.txt'),
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+await writeFile(join(output, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
+  + PAGES.map((file) =>
+      `  <url><loc>${pageUrl(file)}</loc><lastmod>${today}</lastmod>`
+      + `<priority>${PRIORITY[file] || '0.5'}</priority></url>`).join('\n')
+  + `\n</urlset>\n`);
