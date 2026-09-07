@@ -94,7 +94,7 @@ if(presentationFrame){
 // .b-meeting-form і несе приховане поле source, щоб у заявці було видно,
 // звідки вона прийшла.
 (function initCompanionForms(){
-  const ALLOWED=['https://form.sb-companion.com'];
+  const ALLOWED=[];
   // Домен сайту не на Cloudflare, тож воркер живе на *.workers.dev.
   // Приймаємо тільки наш воркер за іменем, а не будь-що на цьому хості.
   const isOurWorker=o=>/^https:\/\/companion-meeting-form\.[a-z0-9-]+\.workers\.dev$/.test(o);

@@ -34,7 +34,7 @@ window.CompanionHome = {
     const contact = form.elements.contact;
     // Приймач заявок вмикається окремо: поки його немає, форма нічого не надсилає
     // і не викидає введені дані в адресний рядок.
-    const ALLOWED_ENDPOINT_ORIGINS = ['https://form.sb-companion.com'];
+    const ALLOWED_ENDPOINT_ORIGINS = [];
     const endpoint = document.documentElement.dataset.meetingEndpoint;
     if (!endpoint) {
       button.disabled = true;

@@ -8,7 +8,7 @@
  *   TELEGRAM_CHAT_ID     — id чату або каналу, куди падають заявки
  *   ALLOWED_ORIGIN       — https://icompanion.com.ua (можна кілька через кому)
  *   RESEND_API_KEY       — необов’язково: дубль заявки на пошту
- *   MAIL_TO              — необов’язково: egor_m@icompanion.com.ua
+ *   MAIL_TO              — необов’язково: zapyt@icompanion.com.ua
  *   MAIL_BCC             — необов’язково: прихована копія
  *   MAIL_FROM            — необов’язково: verified-адреса відправника у Resend
  *
@@ -45,7 +45,7 @@ const json = (body, status, origin) =>
 export default {
   async fetch(request, env) {
     // Під час переїзду сайт живе на двох доменах, тож приймаємо список.
-    const allowedList = (env.ALLOWED_ORIGIN || 'https://icompanion.com.ua,https://sb-companion.com')
+    const allowedList = (env.ALLOWED_ORIGIN || 'https://icompanion.com.ua,https://www.icompanion.com.ua')
       .split(',').map((value) => value.trim()).filter(Boolean);
     const origin = request.headers.get('Origin');
     // У відповідь віддаємо саме той origin, з якого прийшов запит,
@@ -136,7 +136,7 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: env.MAIL_FROM || 'Компаньйон <no-reply@sb-companion.com>',
+            from: env.MAIL_FROM || 'Компаньйон <no-reply@icompanion.com.ua>',
             to: [env.MAIL_TO],
             ...(env.MAIL_BCC ? { bcc: [env.MAIL_BCC] } : {}),
             reply_to: looksLikeEmail ? contact : undefined,
