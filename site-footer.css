@@ -21,10 +21,10 @@
 /* Підвал виїжджає, коли екран перестає рухатися, і ховається під час прокрутки.
    Нижній відступ сторінки дорівнює його висоті, щоб кінець сторінки не лишався
    назавжди прикритим. */
-body.has-sliding-footer{padding-bottom:var(--footer-reveal-height,0px)}
-.site-footer.is-sliding{position:fixed;left:0;right:0;bottom:0;z-index:40;max-height:45vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s ease;will-change:transform;box-shadow:0 -14px 32px rgba(10,20,35,.32)}
-.site-footer.is-sliding.is-revealed{transform:translateY(0)}
-@media(prefers-reduced-motion:reduce){.site-footer.is-sliding{transition:none}}
+body
+
+
+
 
 @media(max-width:1100px){
   .site-footer .footer-bar{grid-template-columns:auto 1fr;gap:12px 32px}

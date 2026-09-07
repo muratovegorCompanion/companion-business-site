@@ -55,6 +55,13 @@ const setNavActive=(link,active)=>{
 };
 const syncNav=()=>{
   siteNav?.querySelectorAll('a[data-page]').forEach(link=>setNavActive(link,link.dataset.page===page));
+  // Коли активний пункт із data-page, «Головна» більше не підсвічена:
+  // інакше на ?page=services горіли обидва.
+  if(page!=='home'){
+    const home=siteNav?.querySelector('a[href="index.html"]');
+    if(home){ home.removeAttribute('aria-current'); home.classList.remove('nav-active');
+      ['transform','color','border-bottom'].forEach(k=>home.style.removeProperty(k)); }
+  }
   setNavActive(siteNav?.querySelector('a[data-section="solutions"]'),page==='home'&&location.hash==='#solutions');
 };
 syncNav();

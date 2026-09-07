@@ -46,6 +46,31 @@ const sharedNav = file =>
 const standaloneNav = (prefix, file) =>
   `<nav class="${prefix}-top-nav" id="${prefix}-top-nav" aria-label="Сайт">` +
   `${navLinks(file, {meetingClass:`${prefix}-top-meeting`, activeAs:'class'})}</nav>`;
+// Картка для месенджерів і соцмереж. Тёплий трафік приходить пересланим
+// посиланням, а без цих тегів воно розгортається голою адресою.
+const SITE_URL = 'https://sb-companion.com';
+const OG_IMAGE = `${SITE_URL}/presentation-assets/og-companion.jpg`;
+const esc = (value) => value.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const openGraph = (html, file) => {
+  if (/property="og:/.test(html)) return html;
+  const title = (html.match(/<title>([\s\S]*?)<\/title>/) || [,''])[1].trim();
+  const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [,''])[1].trim();
+  const url = `${SITE_URL}/${file === 'index.html' ? '' : file}`;
+  const tags = [
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:site_name" content="Страхове бюро «Компаньйон»">`,
+    `<meta property="og:locale" content="uk_UA">`,
+    `<meta property="og:url" content="${url}">`,
+    title && `<meta property="og:title" content="${esc(title)}">`,
+    desc && `<meta property="og:description" content="${esc(desc)}">`,
+    `<meta property="og:image" content="${OG_IMAGE}">`,
+    `<meta property="og:image:width" content="1200">`,
+    `<meta property="og:image:height" content="630">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+  ].filter(Boolean).join('');
+  return html.replace('</head>', `${tags}</head>`);
+};
+
 const shareShell = (html, file) => {
   // Службові сторінки мали власний куций <nav class="site-nav"> без id —
   // ловимо обидві форми, інакше меню там лишалося з трьох пунктів.
@@ -62,7 +87,7 @@ const shareShell = (html, file) => {
   if (!html.includes('tokens.css'))
     html = html.replace(/<head>/, '<head><link rel="stylesheet" href="tokens.css?v=6">');
   if (!html.includes('site-footer.css'))
-    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=4"></head>');
+    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=5"></head>');
   // Кнопка «Меню» була лише на головній: розмітка з нею вклеювалась усюди,
   // а обробник лишався в script.js, який підключений тільки на index.
   if (html.includes('class="menu-toggle"') && !html.includes('nav.js'))
@@ -72,13 +97,20 @@ const shareShell = (html, file) => {
   // styles.css і home.css підключені без версії — без цього браузер
   // повертаного відвідувача віддає їх із кешу.
   html = html.replace(/companion-logo\.png(\?[^"']*)?/g, 'companion-logo.png?v=2');
+  // Іконка вкладки: логотип-простирадло 2172x724 на 304 КБ браузер стискав
+  // у нечитабельну смужку. Тепер квадратний знак.
+  html = html.replace(/<link rel="icon"[^>]*>/g, '')
+             .replace('</head>',
+               '<link rel="icon" type="image/png" sizes="64x64" href="presentation-assets/icon-64.png">'
+             + '<link rel="apple-touch-icon" href="presentation-assets/icon-180.png"></head>');
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
              .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=15"');
-  // Підвал виїжджає на паузі скролу; у вбудованій копії його прибираємо.
+  // Підвал більше не виїжджає і не липне до низу: на телефоні він з'їдав
+  // 24% екрана. У вбудованій копії (iframe) він і далі зайвий.
   if (!html.includes('data-embedded-footer'))
     html = html.replace('</body>',
-      '<script data-embedded-footer>(function(){var f=document.querySelector(".site-footer");if(!f)return;if(self!==top){f.remove();return}var t,shown=false;function size(){var h=Math.min(f.offsetHeight,Math.round(innerHeight*0.78));document.body.style.setProperty("--footer-reveal-height",h+"px")}function reveal(){shown=true;f.classList.add("is-revealed")}function schedule(){if(shown){shown=false;f.classList.remove("is-revealed")}clearTimeout(t);t=setTimeout(reveal,450)}f.classList.add("is-sliding");document.body.classList.add("has-sliding-footer");size();addEventListener("scroll",schedule,{passive:true});addEventListener("resize",function(){size();schedule()});f.addEventListener("focusin",reveal);t=setTimeout(function(){size();reveal()},700);})()<\/script>\n</body>');
-  return html;
+      '<script data-embedded-footer>(function(){if(self!==top){document.querySelector(".site-footer")?.remove()}})()<\/script>\n</body>');
+  return openGraph(html, file);
 };
 
 await writeFile(join(output, 'index.html'), shareShell(index, 'index.html'));
@@ -119,7 +151,7 @@ for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['services.html','logistyka.html','yak-my-pratsyuyemo.html',
-  'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','regulatory.html','privacy.html','insurance-products.html']) {
+  'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','404.html','regulatory.html','privacy.html','insurance-products.html']) {
   await writeFile(join(output, file), shareShell(await readFile(join(root, file), 'utf8'), file));
 }
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});
