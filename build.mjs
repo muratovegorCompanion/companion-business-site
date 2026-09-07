@@ -93,7 +93,7 @@ const orgJsonLd = JSON.stringify({
   logo:`${SITE_URL}/presentation-assets/companion-logo.png`,
   image:OG_IMAGE,
   telephone:'+380501452605',
-  email:'egor_m@icompanion.com.ua',
+  email:'zapyt@icompanion.com.ua',
   address:{'@type':'PostalAddress',streetAddress:'вул. Юрія Іллєнка, 81, офіс 302',
     addressLocality:'Київ',postalCode:'04050',addressCountry:'UA'},
   areaServed:{'@type':'Country',name:'Україна'},
