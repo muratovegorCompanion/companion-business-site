@@ -78,12 +78,14 @@
       .step-flow::before { top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--c-lime); opacity: .5; }
       .step-flow::after {
         content: counter(step, decimal-leading-zero);
-        top: 82px; transform: translateX(-50%);
+        top: 70px; transform: translateX(-50%);
         display: grid; place-items: center; width: 54px; height: 54px;
         border: 2px solid var(--c-lime); border-radius: 50%; background: #fff;
         color: var(--ink); font-size: .9375rem; font-weight: 750; font-variant-numeric: tabular-nums;
       }
-      .services.step-flow::after { top: 62px; }
+      .services.step-flow::after { top: 50px; }
+      /* фото у цій секції вище за текст — інакше кікер поїде вниз від кружка */
+      .medical-grid > div { align-self: start; }
       .claims.step-flow::after { background: var(--navy); color: var(--c-lime); }
       .beyond.step-flow::before { bottom: 0; }
     }
@@ -94,7 +96,10 @@
       line-height: 1.12;
     }
     .lead { max-width: 700px; font-size: 1.125rem; color: var(--muted-dark); }
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 30px; }
+    /* посилання на чек-лист стоїть після кнопок; свій відступ воно тримає
+       через gap, інакше після переносу рядка з’їжджає праворуч */
+    .actions a.dms-hero-secondary { margin-left: 0; }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -305,8 +310,9 @@
           <h1 id="hero-title">Медичне страхування з турботою про вашу команду</h1>
           <p class="hero-lead">Допомагаємо бізнесу обрати програму добровільного медичного страхування та зробити її зрозумілою для працівників. Від першого порівняння пропозицій до щоденної підтримки — ми на вашій стороні.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="index.html#meeting" target="_top">Обговорити програму ДМС</a><a class="dms-hero-secondary" href="perevirka-dms.html">Чек-лист: що перевірити перед продовженням ↗</a>
+            <a class="btn btn-primary" href="index.html#meeting" target="_top">Обговорити програму ДМС</a>
             <a class="btn btn-secondary" href="#support">Як ми підтримуємо команду</a>
+            <a class="dms-hero-secondary" href="perevirka-dms.html">Чек-лист: що перевірити перед продовженням ↗</a>
           </div>
           <nav class="section-links" aria-label="Розділи сторінки">
             <a href="#program">Підбір програми</a><a href="#renewal">Аналітика і продовження</a><a href="#questions">Запитання</a>
@@ -317,7 +323,7 @@
           <h2 id="coverage-title">Кожен розуміє, на що може розраховувати</h2>
           <ul class="coverage-list">
             <li><span class="coverage-number" aria-hidden="true">01</span><div><strong>Працівник</strong><p>Знає, як скористатися полісом і до кого звернутися по підтримку.</p></div></li>
-            <li><span class="coverage-number" aria-hidden="true">02</span><div><strong>HR-команда</strong><p>Має партнера для страхових питань, змін у програмі та складних звернень.</p></div></li>
+            <li><span class="coverage-number" aria-hidden="true">02</span><div><strong>HR-команда</strong><p>Тримає весь процес медичного страхування під контролем — і має з ким його вести: зміни у програмі, складні звернення, звітність.</p></div></li>
             <li><span class="coverage-number" aria-hidden="true">03</span><div><strong>Бізнес</strong><p>Бачить умови, бюджет і рекомендації щодо розвитку програми.</p></div></li>
           </ul>
         </aside>
