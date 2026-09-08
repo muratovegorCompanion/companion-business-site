@@ -58,6 +58,13 @@
     }
     .hero .kicker, .claims .kicker, .final .kicker { color: var(--lime); }
     .section { padding: 88px 0; }
+
+    /* Кроки 01–06 — це один процес, а не набір розділів. Тонка лаймова лінія
+       зі стрілкою на початку кожного наступного кроку веде погляд далі вниз.
+       Лайм світлий, тож на білому він підказує, а не кричить. */
+    .step-link { position: relative; height: 92px; margin: -104px 0 22px; }
+    .step-link::before { content: ""; position: absolute; left: 1px; top: 0; width: 2px; height: 100%; border-radius: 2px; background: linear-gradient(180deg, rgba(197, 241, 107, 0), var(--c-lime)); }
+    .step-link::after { content: ""; position: absolute; left: -2px; bottom: 1px; width: 9px; height: 9px; border-right: 2px solid var(--c-lime); border-bottom: 2px solid var(--c-lime); transform: rotate(45deg); }
     .section-title {
       max-width: 750px;
       margin: 16px 0 22px;
@@ -215,6 +222,7 @@
       .service-grid, .medical-grid { grid-template-columns: minmax(0, 1fr); }
       .tender-timing { grid-template-columns: minmax(0, 1fr); }
       .service-card { padding: 24px; }
+      .step-link { height: 62px; margin: -72px 0 16px; }
       .service-card-head { gap: 14px; }
       .service-card h3 { font-size: 1.1875rem; }
       .expert-card { max-width: 400px; width: 100%; margin-inline: auto; }
@@ -307,6 +315,7 @@
     </section>
 
     <section class="section services" id="program" aria-labelledby="program-title">
+      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
       <div class="wrap">
         <div class="section-head"><p class="kicker">02 / Аналітика та тендер</p><h2 class="section-title" id="program-title">Порівнюємо зміст програми, а не лише ціну</h2><p class="lead">Перетворюємо різні пропозиції страхових компаній на зрозумілий вибір. Пояснюємо, що ви отримуєте за запропонований бюджет і де є обмеження.</p></div>
         <div class="service-grid">
@@ -321,6 +330,7 @@
     </section>
 
     <section class="section medical" id="support" aria-labelledby="support-title">
+      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
       <div class="wrap medical-grid">
         <figure class="expert-card">
           <img class="expert-photo" src="presentation-assets/team/anatolii-portrait.jpg" alt="Анатолій Артюшенко" width="385" height="443" loading="lazy">
@@ -341,6 +351,7 @@
     </section>
 
     <section class="section claims" aria-labelledby="claims-title">
+      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
       <div class="wrap claims-grid">
         <div><p class="kicker">04 / Врегулювання страхових випадків</p><h2 class="section-title" id="claims-title">Ми завжди на стороні клієнта</h2><p class="claims-intro">Допомогу не погодили, виникло запитання щодо покриття або затягнувся розгляд документів? Допомагаємо з’ясувати причину та пройти наступні кроки.</p><p class="support-note">Відстоюємо ваші інтереси на підставі умов договору. Рішення про покриття чи виплату ухвалює страхова компанія.</p></div>
         <ol class="claim-list">
@@ -353,6 +364,7 @@
     </section>
 
     <section class="section renewal" id="renewal" aria-labelledby="renewal-title">
+      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
       <div class="wrap broker-grid">
         <div><p class="kicker">05 / Розвиток програми</p><h2 class="section-title" id="renewal-title">Готуємо наступний рік за фактами</h2><p class="lead">Перед пролонгацією дивимося, як програмою користувалися насправді: що залишити, що розширити, а що переглянути.</p></div>
         <div class="broker-copy"><ul class="medical-points">
@@ -364,7 +376,8 @@
     </section>
 
     <section class="section beyond" aria-labelledby="beyond-title">
-  <div class="wrap">
+  <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
+      <div class="wrap">
     <div class="section-head"><p class="kicker">06 / Понад страхову програму</p><h2 class="section-title" id="beyond-title">Частина роботи не вміщується в поліс</h2><p class="lead">Договір закриває медицину. Але у команди виникають задачі, для яких у страховій програмі рядка немає, — і їх теж хтось має вирішувати.</p></div>
     <div class="service-grid">
       <article class="service-card"><span class="card-number">Застосунок</span><h3>Своя програма — у телефоні працівника</h3><p>Умови покриття, ліміти, перелік клінік і порядок звернення — під рукою й без запиту до HR. Плюс чат-бот у месенджері, якщо компанії так зручніше.</p></article>
