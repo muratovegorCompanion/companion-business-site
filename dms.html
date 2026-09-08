@@ -256,7 +256,7 @@
     .faq { max-width: 850px; margin-top: 30px; }
     /* Питання — такі самі картки, як решта сторінки. Рідний маркер ▼ прибираємо
        й малюємо свій плюс, який на відкритій картці стає мінусом. */
-    .faq { display: grid; gap: 16px; margin-top: 38px; }
+    .faq { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 20px; margin-top: 38px; }
     .faq details { border: 1px solid var(--line); border-radius: 16px; background: #fff; padding: 24px 28px; }
     .faq summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; cursor: pointer; font-size: 1.125rem; line-height: 1.35; font-weight: 650; list-style: none; }
     .faq summary::-webkit-details-marker { display: none; }
@@ -264,6 +264,7 @@
     .faq details[open] summary::after { content: "\2212"; }
     .faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
     .faq details p { color: var(--muted-dark); margin-top: 16px; }
+    @media (max-width: 980px) { .faq { grid-template-columns: 1fr; } }
     @media (max-width: 760px) { .faq details { padding: 20px 22px; } }
   .dms-hero-secondary{display:inline-block;margin-left:18px;color:#c9d6ea;font-weight:600;font-size:15px;text-decoration:none;border-bottom:1px solid rgba(201,214,234,.4)}.dms-hero-secondary:hover{color:#fff;border-bottom-color:#fff}@media(max-width:700px){.dms-hero-secondary{display:block;margin:16px 0 0}}
       .beyond { background: var(--paper); }
