@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="uk" data-meeting-endpoint="https://companion-meeting-form.icompanion.workers.dev">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Сторінка приймає рекламний трафік і навмисно закрита від індексації: інакше
+     вона конкурувала б у пошуку з dms.html за ті самі запити. -->
+<meta name="robots" content="noindex,follow">
+<meta name="description" content="Розбираємо чинну програму ДМС і показуємо, що варто змінити до продовження договору. Безоплатно, до того як ви побачите пропозиції страхових.">
+<meta name="theme-color" content="#0f1c2e">
+<title>Корпоративне ДМС — розбір програми перед продовженням</title>
+<link rel="icon" href="presentation-assets/companion-logo.png?v=2">
+<link rel="stylesheet" href="tokens.css?v=7">
+<link rel="stylesheet" href="home.css?v=16">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Страхове бюро «Компаньйон»">
+<meta property="og:locale" content="uk_UA">
+<meta property="og:title" content="Корпоративне ДМС — розбір програми перед продовженням">
+<meta property="og:description" content="Розбираємо чинну програму ДМС і показуємо, що варто змінити до продовження договору. Безоплатно.">
+<meta property="og:image" content="https://icompanion.com.ua/presentation-assets/og-companion.jpg">
+<style>
+:root{--l-ink:#0f1c2e;--l-blue:#245dce;--l-lime:#c5f16b;--l-line:#dce3eb;--l-muted:#536478;--l-paper:#f5f7fa}
+body{margin:0;background:#fff;color:var(--l-ink);font-family:var(--c-font)}
+.l-shell{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+@media(max-width:700px){.l-shell{width:calc(100% - 32px)}}
+
+/* Шапка без меню: з реклами кожне зайве посилання — це вихід зі сторінки. */
+.l-top{border-bottom:1px solid var(--l-line);background:#fff}
+.l-top-inner{display:flex;align-items:center;gap:20px;min-height:76px}
+.l-top img{width:150px;height:auto;display:block}
+.l-phone{margin-left:auto;font-weight:700;font-size:1.0625rem;color:var(--l-ink);text-decoration:none;white-space:nowrap}
+.l-phone span{display:block;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--l-muted)}
+
+.l-hero{background:var(--l-ink);color:#fff;padding:62px 0 70px}
+.l-hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px;align-items:start}
+@media(max-width:980px){.l-hero-grid{grid-template-columns:minmax(0,1fr);gap:36px}.l-hero{padding:44px 0 52px}}
+@media(max-width:560px){.l-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.l-eyebrow{display:flex;align-items:center;gap:10px;margin:0 0 20px;font-size:.8125rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--l-lime)}
+.l-eyebrow i{width:9px;height:9px;border-radius:50%;background:var(--l-lime);flex:0 0 auto}
+.l-hero h1{margin:0;font-size:clamp(2.15rem,4vw,3.05rem);line-height:1.09;letter-spacing:-.03em;max-width:16ch}
+.l-hero h1 span{display:block;color:#8fb4ff}
+.l-hero-lead{margin:22px 0 0;max-width:52ch;color:#c3cede;font-size:1.0625rem;line-height:1.62}
+.l-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 20px;margin:32px 0 0;padding:24px 0 0;border-top:1px solid rgba(233,240,248,.16)}
+.l-fact b{display:block;font-size:1.5rem;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.l-fact span{font-size:.8125rem;color:#a9b7c9}
+
+.l-form{background:#fff;color:var(--l-ink);border-radius:11px;padding:28px}
+/* Форма приходить із класом головної — знімаємо її власну підкладку, щоб не
+   виходила коробка в коробці. */
+.l-form .b-meeting-form{background:none;border:0;padding:0;margin:0;box-shadow:none;border-radius:0;display:block}
+.l-form h2{margin:0 0 6px;font-size:1.25rem;letter-spacing:-.02em}
+.l-form-note{margin:0 0 20px;font-size:.9375rem;color:var(--l-muted);line-height:1.5}
+.l-field{display:grid;gap:6px;margin-bottom:13px}
+.l-field label{font-size:.8125rem;font-weight:600;color:var(--l-muted)}
+.l-field input,.l-field textarea{width:100%;padding:12px 13px;border:1px solid var(--l-line);border-radius:7px;font:inherit;font-size:.9375rem;color:var(--l-ink);background:#fff}
+.l-field input:focus,.l-field textarea:focus{outline:2px solid var(--l-blue);outline-offset:-1px;border-color:var(--l-blue)}
+.l-consent{display:flex;gap:10px;align-items:flex-start;margin:16px 0 18px;font-size:.8125rem;line-height:1.5;color:var(--l-muted)}
+.l-consent input{margin:2px 0 0;flex:0 0 auto}
+.l-consent a{color:var(--l-blue)}
+.l-submit{width:100%;justify-content:center;gap:12px}
+.l-status{margin:12px 0 0;font-size:.875rem;line-height:1.5;color:var(--l-muted);min-height:1.2em}
+.l-honey{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.l-section{padding:74px 0}
+.l-section--paper{background:var(--l-paper)}
+.l-kicker{margin:0 0 12px;font-size:.8125rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--l-blue)}
+.l-section h2{margin:0 0 14px;font-size:clamp(1.65rem,2.8vw,2.2rem);line-height:1.16;letter-spacing:-.028em;max-width:20ch}
+.l-section-lead{margin:0 0 38px;max-width:60ch;color:var(--l-muted);font-size:1.0625rem;line-height:1.62}
+
+.l-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin:0;padding:0;list-style:none}
+@media(max-width:860px){.l-steps{grid-template-columns:1fr;gap:22px}}
+.l-steps li{border-top:2px solid var(--l-ink);padding-top:20px}
+.l-steps b{display:block;font-size:.8125rem;color:var(--l-blue);letter-spacing:.06em;margin-bottom:14px}
+.l-steps h3{margin:0 0 8px;font-size:1.1rem;line-height:1.3;letter-spacing:-.015em}
+.l-steps p{margin:0;color:var(--l-muted);font-size:.9375rem;line-height:1.6}
+
+.l-clients{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:30px 26px;margin:0;padding:0;list-style:none;align-items:center}
+@media(max-width:860px){.l-clients{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.l-clients li{display:grid;place-items:center;min-height:56px}
+.l-clients img{width:auto;max-width:100%;filter:grayscale(1);opacity:.75}
+
+.l-proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
+@media(max-width:860px){.l-proof{grid-template-columns:1fr}}
+.l-proof li{background:#fff;border:1px solid #d5dfec;border-radius:9px;padding:22px 24px}
+.l-proof h3{margin:0 0 7px;font-size:1.0625rem;line-height:1.32;letter-spacing:-.015em}
+.l-proof p{margin:0;color:var(--l-muted);font-size:.9375rem;line-height:1.6}
+
+.l-faq{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.l-faq li{background:#fff;border:1px solid #d5dfec;border-radius:9px;padding:22px 24px}
+.l-faq h3{margin:0 0 7px;font-size:1.0625rem;line-height:1.32}
+.l-faq p{margin:0;color:var(--l-muted);font-size:.9375rem;line-height:1.6}
+
+.l-final{background:var(--l-ink);color:#fff;padding:70px 0}
+.l-final-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:56px;align-items:start}
+@media(max-width:980px){.l-final-grid{grid-template-columns:1fr;gap:32px}}
+.l-final-copy h2{margin:0;color:#fff;font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.14;letter-spacing:-.028em;max-width:16ch}
+/* Заголовок форми лишається темним: картка біла, білий текст на ній зникав. */
+.l-final-copy p{margin:18px 0 0;color:#c3cede;font-size:1.0625rem;line-height:1.62;max-width:46ch}
+.l-final-meta{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(233,240,248,.16);color:#a9b7c9;font-size:.9375rem;line-height:1.7}
+.l-final-meta a{color:#fff}
+
+.l-foot{background:#0a1523;color:#8b9bb0;padding:30px 0;font-size:.8125rem;line-height:1.7}
+.l-foot a{color:#c3cede}
+.l-foot-row{display:flex;flex-wrap:wrap;gap:8px 26px}
+</style>
+</head>
+<body>
+
+<header class="l-top">
+  <div class="l-shell l-top-inner">
+    <img src="presentation-assets/companion-logo.png?v=2" alt="Страхове бюро «Компаньйон»" width="2172" height="724">
+    <a class="l-phone" href="tel:+380501452605"><span>Зателефонувати</span>+38 (050) 145 2605</a>
+  </div>
+</header>
+
+<section class="l-hero">
+  <div class="l-shell l-hero-grid">
+    <div>
+      <p class="l-eyebrow"><i aria-hidden="true"></i>Корпоративне медичне страхування</p>
+      <h1>Договір ДМС добігає кінця? <span>Подивимось на нього разом.</span></h1>
+      <p class="l-hero-lead">Розберемо чинну програму, доступну статистику звернень і зворотний зв’язок працівників — і покажемо, що варто змінити до продовження. Безоплатно, до того як ви побачите будь-які пропозиції страхових.</p>
+      <div class="l-facts">
+        <div class="l-fact"><b>11</b><span>років на ринку</span></div>
+        <div class="l-fact"><b>70+</b><span>компаній-клієнтів</span></div>
+        <div class="l-fact"><b>15 678</b><span>застрахованих людей</span></div>
+        <div class="l-fact"><b>97%</b><span>договорів продовжуються</span></div>
+      </div>
+    </div>
+
+    <div class="l-form">
+      <h2>Розбір вашої програми</h2>
+      <p class="l-form-note">Залиште контакти — зв’яжемося протягом робочого дня, уточнимо запит і погодимо зручний час.</p>
+      <form class="b-meeting-form" id="lead-form" novalidate>
+        <input type="hidden" name="interest" value="Лендинг ДМС">
+        <div class="l-field"><label for="l-name">Ваше ім’я *</label><input id="l-name" name="name" type="text" autocomplete="name" required maxlength="100" placeholder="Як до вас звертатися"></div>
+        <div class="l-field"><label for="l-company">Компанія *</label><input id="l-company" name="company" type="text" autocomplete="organization" required maxlength="160" placeholder="Назва компанії"></div>
+        <div class="l-field"><label for="l-contact">Телефон або email *</label><input id="l-contact" name="contact" type="text" required maxlength="180" placeholder="Зручний контакт для відповіді"></div>
+        <div class="l-field"><label for="l-message">Кілька слів про програму</label><textarea id="l-message" name="message" rows="2" maxlength="2000" placeholder="Наприклад: 150 працівників, договір до березня"></textarea></div>
+        <label class="l-consent"><input name="consent" type="checkbox" required><span>Погоджуюся на обробку цих контактів для відповіді на мій запит. <a href="privacy.html" target="_blank" rel="noreferrer">Персональні дані</a></span></label>
+        <div class="l-honey" aria-hidden="true"><label for="l-website">Ваш сайт</label><input id="l-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <button class="b-button l-submit" type="submit">Отримати розбір <span aria-hidden="true">↗</span></button>
+        <p class="b-form-status l-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-shell">
+    <p class="l-kicker">Як це відбувається</p>
+    <h2>Три кроки, і жоден із них вам нічого не коштує</h2>
+    <p class="l-section-lead">Комісію за укладений договір платить страхова компанія, тож окремої оплати з вашого боку немає. Якщо зручніше навпаки — працюємо за гонорар від вас, і тоді комісію у страхової обнуляємо. Модель обираєте ви, до того як побачите пропозиції.</p>
+    <ol class="l-steps">
+      <li><b>01</b><h3>Розбираємо те, що є</h3><p>Чинні умови, ліміти й винятки, статистику звернень і виплат, зворотний зв’язок працівників. Показуємо, де програма не робить того, за що компанія платить.</p></li>
+      <li><b>02</b><h3>Виводимо на ринок</h3><p>Для великого тендеру залучаємо 10–15 страхових із 18, з якими працюємо. Зводимо покриття, винятки, вартість і сервіс так, щоб їх можна було порівняти.</p></li>
+      <li><b>03</b><h3>Лишаємось після підписання</h3><p>Ведемо страхові питання, зміни в програмі та складні звернення. HR лишається точкою погодження, а не оператором.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="l-section l-section--paper">
+  <div class="l-shell">
+    <p class="l-kicker">Серед клієнтів Бюро</p>
+    <h2>Компанії, які продовжують із нами не перший рік</h2>
+    <ul class="l-clients">
+      <li><img src="presentation-assets/clients/nova-poshta.jpg" alt="Nova Poshta International" style="height:44px" width="286" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/royal-canin.jpg" alt="Royal Canin" style="height:44px" width="287" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/meest.jpg" alt="Meest Express" style="height:46px" width="257" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/djangostars.jpg" alt="Djangostars" style="height:31px" width="573" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/asnova.jpg" alt="Аснова Холдинг" style="height:54px" width="101" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/sav-service.jpg" alt="SAV Service" style="height:45px" width="275" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/smart.jpg" alt="Smart" style="height:39px" width="360" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/upeco.jpg" alt="UPECO" style="height:40px" width="345" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/mlp.jpg" alt="Multinational Logistics Partnership" style="height:49px" width="220" height="116" loading="lazy" decoding="async"></li>
+      <li><img src="presentation-assets/clients/logistic-plus.jpg" alt="Logistic Plus" style="height:40px" width="340" height="116" loading="lazy" decoding="async"></li>
+    </ul>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-shell">
+    <p class="l-kicker">Чому нам можна вірити</p>
+    <h2>Те, що можна перевірити, а не тільки прочитати</h2>
+    <ul class="l-proof">
+      <li><h3>Реєстр Національного банку</h3><p>ТОВ «СТРАХОВЕ БЮРО «КОМПАНЬЙОН», ЄДРПОУ 39337363, реєстр страхових брокерів № 35. Це державний запис, його можна звірити.</p></li>
+      <li><h3>Наша відповідальність застрахована</h3><p>Договір № LBT0076943 у СК «Колоннейд Україна», ліміт 1 500 000 грн на кожен випадок, чинний до 10 червня 2027 року. Якщо через нашу помилку компанія зазнає збитку, його відшкодовує страхова.</p></li>
+      <li><h3>Ми не пов’язані зі страховими</h3><p>Не володіємо частками у їхньому капіталі, і жодна з них не володіє часткою в нас. Розмір комісії на нашу рекомендацію не впливає — критерії вибору узгоджуємо з вами до старту тендеру.</p></li>
+      <li><h3>Поліс у телефоні працівника</h3><p>Застосунок «Компаньйон» показує покриття, ліміти й винятки та контакти асистансу — людина не шукає це в листах і чатах.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="l-section l-section--paper">
+  <div class="l-shell">
+    <p class="l-kicker">Питання, з яких зазвичай починають</p>
+    <h2>Коротко про те, що питають першим</h2>
+    <ul class="l-faq">
+      <li><h3>Скільки часу займає тендер?</h3><p>Повний цикл — близько місяця. Терміновий запуск можливий орієнтовно за два тижні, коли коло страхових вужче.</p></li>
+      <li><h3>Від скількох людей це має сенс?</h3><p>Корпоративні програми медичного страхування ведемо для команд від 50 людей.</p></li>
+      <li><h3>У нас уже є ДМС. Є сенс щось міняти?</h3><p>Спершу ми це й перевіряємо. Якщо змінювати нічого — скажемо прямо, і ви продовжите чинний договір спокійно.</p></li>
+      <li><h3>А якщо страхова відмовить у виплаті?</h3><p>З’ясовуємо підставу, допомагаємо зібрати документи й сформулювати позицію, ведемо діалог і ініціюємо повторний розгляд, коли є на чому. Рішення ухвалює страхова — ми представляємо ваші інтереси.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="l-final">
+  <div class="l-shell l-final-grid">
+    <div class="l-final-copy">
+      <h2>Почнімо з розбору того, що у вас уже є</h2>
+      <p>Найкращий час — за місяць до кінця договору: уже є з чим порівнювати і ще вистачає часу вийти на ринок.</p>
+      <p class="l-final-meta">
+        Безоплатно · Онлайн або особисто в Києві<br>
+        Для ДМС — з керівником напряму або його заступником<br>
+        <a href="tel:+380501452605">+38 (050) 145 2605</a> · <a href="mailto:zapyt@icompanion.com.ua">zapyt@icompanion.com.ua</a>
+      </p>
+    </div>
+    <div class="l-form">
+      <h2>Залишити контакти</h2>
+      <p class="l-form-note">Той самий розбір — просто форма ближче, якщо ви дочитали до кінця.</p>
+      <form class="b-meeting-form" id="lead-form-2" novalidate>
+        <input type="hidden" name="interest" value="Лендинг ДМС — низ сторінки">
+        <div class="l-field"><label for="l2-name">Ваше ім’я *</label><input id="l2-name" name="name" type="text" autocomplete="name" required maxlength="100" placeholder="Як до вас звертатися"></div>
+        <div class="l-field"><label for="l2-company">Компанія *</label><input id="l2-company" name="company" type="text" autocomplete="organization" required maxlength="160" placeholder="Назва компанії"></div>
+        <div class="l-field"><label for="l2-contact">Телефон або email *</label><input id="l2-contact" name="contact" type="text" required maxlength="180" placeholder="Зручний контакт для відповіді"></div>
+        <label class="l-consent"><input name="consent" type="checkbox" required><span>Погоджуюся на обробку цих контактів для відповіді на мій запит. <a href="privacy.html" target="_blank" rel="noreferrer">Персональні дані</a></span></label>
+        <div class="l-honey" aria-hidden="true"><label for="l2-website">Ваш сайт</label><input id="l2-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <button class="b-button l-submit" type="submit">Домовитися про зустріч <span aria-hidden="true">↗</span></button>
+        <p class="b-form-status l-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="l-foot">
+  <div class="l-shell">
+    <div class="l-foot-row">
+      <span>ТОВ «Страхове бюро «Компаньйон» · ЄДРПОУ 39337363 · Реєстр страхових брокерів № 35</span>
+      <span>Київ, вул. Юрія Іллєнка, 81, офіс 302</span>
+    </div>
+    <div class="l-foot-row">
+      <a href="regulatory.html">Розкриття інформації</a>
+      <a href="insurance-products.html">Страхові продукти</a>
+      <a href="privacy.html">Персональні дані</a>
+      <a href="index.html">Основний сайт</a>
+    </div>
+  </div>
+</footer>
+
+<script src="form.js?v=1"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "dbe716f5a0a24f30960e4ae47744e73a"}'></script>
+</body>
+</html>
