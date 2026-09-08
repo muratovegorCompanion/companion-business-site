@@ -246,11 +246,17 @@
     .support-note { border-left: 3px solid var(--lime); padding-left: 20px; margin-top: 24px; color: var(--muted); }
     .renewal { background: #fff; }
     .faq { max-width: 850px; margin-top: 30px; }
-    .faq details { border-top: 1px solid var(--line); padding: 22px 0; }
-    .faq details:last-child { border-bottom: 1px solid var(--line); }
-    .faq summary { cursor: pointer; font-size: 1.125rem; font-weight: 650; }
+    /* Питання — такі самі картки, як решта сторінки. Рідний маркер ▼ прибираємо
+       й малюємо свій плюс, який на відкритій картці стає мінусом. */
+    .faq { display: grid; gap: 16px; margin-top: 38px; }
+    .faq details { border: 1px solid var(--line); border-radius: 16px; background: #fff; padding: 24px 28px; }
+    .faq summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; cursor: pointer; font-size: 1.125rem; line-height: 1.35; font-weight: 650; list-style: none; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; flex: 0 0 auto; color: var(--blue); font-size: 1.5rem; line-height: 1; font-weight: 500; }
+    .faq details[open] summary::after { content: "\2212"; }
     .faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
-    .faq details p { color: var(--muted-dark); margin-top: 14px; }
+    .faq details p { color: var(--muted-dark); margin-top: 16px; }
+    @media (max-width: 760px) { .faq details { padding: 20px 22px; } }
   .dms-hero-secondary{display:inline-block;margin-left:18px;color:#c9d6ea;font-weight:600;font-size:15px;text-decoration:none;border-bottom:1px solid rgba(201,214,234,.4)}.dms-hero-secondary:hover{color:#fff;border-bottom-color:#fff}@media(max-width:700px){.dms-hero-secondary{display:block;margin:16px 0 0}}
       .beyond { background: var(--paper); }
     .service-card--wide { grid-column: 1 / -1; }
@@ -295,7 +301,7 @@
         <div><p class="kicker">01 / Починаємо з вашої команди</p><h2 class="section-title" id="approach-title">Програма під ваші потреби та бюджет</h2></div>
         <div class="broker-copy">
           <p class="lead">З’ясовуємо, де працюють ваші люди, які клініки їм зручні, що важливо у покритті та які витрати компанія планує на страхування.</p>
-          <p class="broker-note">Якщо ДМС уже є, аналізуємо чинні умови, доступну статистику звернень і виплат та зворотний зв’язок працівників. Якщо запускаєте програму вперше — допомагаємо сформувати вимоги.</p>
+          <p class="broker-note">Якщо ДМС вже є, аналізуємо чинні умови, доступну статистику звернень і виплат та зворотний зв’язок працівників. Якщо запускаєте програму вперше — допомагаємо сформувати вимоги.</p>
         </div>
       </div>
     </section>
@@ -373,7 +379,7 @@
 <section class="section result" id="questions" aria-labelledby="questions-title">
       <div class="wrap"><p class="kicker">Перед стартом</p><h2 class="section-title" id="questions-title">Що варто знати</h2>
         <div class="faq">
-          <details><summary>У нас уже є ДМС. Чи можете ви допомогти?</summary><p>Так. Почнемо з аналізу чинної програми та питань, які виникають у працівників і HR. Узгодимо, який супровід потрібен зараз і що варто підготувати до наступного тендеру.</p></details>
+          <details><summary>У нас вже є ДМС. Чи можете ви допомогти?</summary><p>Так. Почнемо з аналізу чинної програми та питань, які виникають у працівників і HR. Узгодимо, який супровід потрібен зараз і що варто підготувати до наступного тендеру.</p></details>
           <details><summary>З чого почати обговорення нової програми?</summary><p>Достатньо описати команду, міста роботи, бажане покриття та орієнтовний бюджет. Якщо є чинна програма, її умови допоможуть зробити порівняння предметнішим.</p></details>
           <details><summary>Хто організовує медичну допомогу?</summary><p>Порядок звернення визначає ваша програма; зазвичай допомогу координує асистанс страхової компанії. Ми пояснюємо цей порядок і підключаємося, коли потрібні роз’яснення або підтримка у взаємодії зі страховою компанією.</p></details>
           <details><summary>Чи потрібно створювати окремий страховий відділ?</summary><p>Ми беремо на себе підбір умов, супровід програми та роботу зі страховими зверненнями. Ви отримуєте зовнішню команду без витрат на утримання власного відділу. Обсяг співпраці й умови обговорюємо до початку роботи.</p></details>
