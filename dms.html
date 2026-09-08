@@ -63,11 +63,8 @@
        ліворуч від тексту крізь усі шість секцій, а на кожному стику ставимо
        стрілку. Лайм світлий, тож він підказує напрям, а не кричить. */
     .step-flow { position: relative; }
-    .step-flow::before, .step-flow::after { content: ""; position: absolute; left: max(11px, calc((100% - var(--max)) / 2 - 24px)); }
-    .step-flow::before { top: 0; bottom: 0; width: 2px; background: var(--c-lime); opacity: .6; }
-    .step-flow::after { bottom: -6px; width: 10px; height: 10px; margin-left: -4px; border-right: 2px solid var(--c-lime); border-bottom: 2px solid var(--c-lime); transform: rotate(45deg); }
+    .step-flow::before { content: ""; position: absolute; left: max(11px, calc((100% - var(--max)) / 2 - 24px)); top: 0; bottom: 0; width: 2px; opacity: .6; background: repeating-linear-gradient(180deg, var(--c-lime) 0 16px, transparent 16px 28px); }
     .broker.step-flow::before { top: 30px; }
-    .beyond.step-flow::after { display: none; }
     .section-title {
       max-width: 750px;
       margin: 16px 0 22px;
