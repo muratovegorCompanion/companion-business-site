@@ -59,12 +59,15 @@
     .hero .kicker, .claims .kicker, .final .kicker { color: var(--lime); }
     .section { padding: 88px 0; }
 
-    /* Кроки 01–06 — це один процес, а не набір розділів. Тонка лаймова лінія
-       зі стрілкою на початку кожного наступного кроку веде погляд далі вниз.
-       Лайм світлий, тож на білому він підказує, а не кричить. */
-    .step-link { position: relative; height: 92px; margin: -104px 0 22px; }
-    .step-link::before { content: ""; position: absolute; left: 1px; top: 0; width: 2px; height: 100%; border-radius: 2px; background: linear-gradient(180deg, rgba(197, 241, 107, 0), var(--c-lime)); }
-    .step-link::after { content: ""; position: absolute; left: -2px; bottom: 1px; width: 9px; height: 9px; border-right: 2px solid var(--c-lime); border-bottom: 2px solid var(--c-lime); transform: rotate(45deg); }
+    /* Кроки 01–06 — це один процес, а не набір розділів. Лаймова лінія йде
+       ліворуч від тексту крізь усі шість секцій, а на кожному стику ставимо
+       стрілку. Лайм світлий, тож він підказує напрям, а не кричить. */
+    .step-flow { position: relative; }
+    .step-flow::before, .step-flow::after { content: ""; position: absolute; left: max(11px, calc((100% - var(--max)) / 2 - 24px)); }
+    .step-flow::before { top: 0; bottom: 0; width: 2px; background: var(--c-lime); opacity: .6; }
+    .step-flow::after { bottom: -6px; width: 10px; height: 10px; margin-left: -4px; border-right: 2px solid var(--c-lime); border-bottom: 2px solid var(--c-lime); transform: rotate(45deg); }
+    .broker.step-flow::before { top: 30px; }
+    .beyond.step-flow::after { display: none; }
     .section-title {
       max-width: 750px;
       margin: 16px 0 22px;
@@ -222,7 +225,6 @@
       .service-grid, .medical-grid { grid-template-columns: minmax(0, 1fr); }
       .tender-timing { grid-template-columns: minmax(0, 1fr); }
       .service-card { padding: 24px; }
-      .step-link { height: 62px; margin: -72px 0 16px; }
       .service-card-head { gap: 14px; }
       .service-card h3 { font-size: 1.1875rem; }
       .expert-card { max-width: 400px; width: 100%; margin-inline: auto; }
@@ -305,7 +307,7 @@
       <div class="wrap hero-app"><div class="hero-app-shots phone-pair phone-pair--dark"><figure><img src="presentation-assets/policy.png" alt="Екран «Мій поліс» у застосунку Компаньйон: номер поліса, застраховані особи та перелік покриття" width="1290" height="2796" loading="lazy" decoding="async"></figure><figure><img src="presentation-assets/chat.png" alt="Екран ШІ-чату у застосунку Компаньйон: підказки щодо покриття, лімітів і відмови" width="1290" height="2796" loading="lazy" decoding="async"></figure></div><div class="hero-app-copy"><span class="hero-app-kicker">Компаньйон для вашої команди</span><strong>Страховий поліс і допомога — у телефоні працівника.</strong><p>Застрахована людина може переглянути покриття, ліміти та винятки, знайти контакти асистансу й звернутися по підтримку без пошуку в документах і чатах.</p><ul class="hero-app-features"><li>Умови поліса</li><li>Покриття та ліміти</li><li>Контакти допомоги</li><li>Чат-помічник</li></ul><a href="app.html">Детальніше про застосунок ↗</a></div></div>
     </section>
 
-    <section class="section broker" aria-labelledby="approach-title">
+    <section class="section broker step-flow" aria-labelledby="approach-title">
       <div class="wrap broker-grid">
         <div><p class="kicker">01 / Починаємо з вашої команди</p><h2 class="section-title" id="approach-title">Програма під ваші потреби та бюджет</h2></div>
         <div class="broker-copy">
@@ -315,8 +317,7 @@
       </div>
     </section>
 
-    <section class="section services" id="program" aria-labelledby="program-title">
-      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
+    <section class="section services step-flow" id="program" aria-labelledby="program-title">
       <div class="wrap">
         <div class="section-head"><p class="kicker">02 / Аналітика та тендер</p><h2 class="section-title" id="program-title">Порівнюємо зміст програми, а не лише ціну</h2><p class="lead">Перетворюємо різні пропозиції страхових компаній на зрозумілий вибір. Пояснюємо, що ви отримуєте за запропонований бюджет і де є обмеження.</p></div>
         <div class="service-grid">
@@ -330,8 +331,7 @@
       </div>
     </section>
 
-    <section class="section medical" id="support" aria-labelledby="support-title">
-      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
+    <section class="section medical step-flow" id="support" aria-labelledby="support-title">
       <div class="wrap medical-grid">
         <figure class="expert-card">
           <img class="expert-photo" src="presentation-assets/team/anatolii-portrait.jpg" alt="Анатолій Артюшенко" width="385" height="443" loading="lazy">
@@ -351,8 +351,7 @@
       </div>
     </section>
 
-    <section class="section claims" aria-labelledby="claims-title">
-      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
+    <section class="section claims step-flow" aria-labelledby="claims-title">
       <div class="wrap claims-grid">
         <div><p class="kicker">04 / Врегулювання страхових випадків</p><h2 class="section-title" id="claims-title">Ми завжди на стороні клієнта</h2><p class="claims-intro">Допомогу не погодили, виникло запитання щодо покриття або затягнувся розгляд документів? Допомагаємо з’ясувати причину та пройти наступні кроки.</p><p class="support-note">Відстоюємо ваші інтереси на підставі умов договору. Рішення про покриття чи виплату ухвалює страхова компанія.</p></div>
         <ol class="claim-list">
@@ -364,8 +363,7 @@
       </div>
     </section>
 
-    <section class="section renewal" id="renewal" aria-labelledby="renewal-title">
-      <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
+    <section class="section renewal step-flow" id="renewal" aria-labelledby="renewal-title">
       <div class="wrap broker-grid">
         <div><p class="kicker">05 / Розвиток програми</p><h2 class="section-title" id="renewal-title">Готуємо наступний рік за фактами</h2><p class="lead">Перед пролонгацією дивимося, як програмою користувалися насправді: що залишити, що розширити, а що переглянути.</p></div>
         <div class="broker-copy"><ul class="medical-points">
@@ -376,9 +374,8 @@
       </div>
     </section>
 
-    <section class="section beyond" aria-labelledby="beyond-title">
-  <div class="wrap"><p class="step-link" aria-hidden="true"></p></div>
-      <div class="wrap">
+    <section class="section beyond step-flow" aria-labelledby="beyond-title">
+  <div class="wrap">
     <div class="section-head"><p class="kicker">06 / Понад страхову програму</p><h2 class="section-title" id="beyond-title">Частина роботи не вміщується в поліс</h2><p class="lead">Договір закриває медицину. Але у команди виникають задачі, для яких у страховій програмі рядка немає, — і їх теж хтось має вирішувати.</p></div>
     <div class="service-grid">
       <article class="service-card"><span class="card-number">Застосунок</span><h3>Своя програма — у телефоні працівника</h3><p>Умови покриття, ліміти, перелік клінік і порядок звернення — під рукою й без запиту до HR. Плюс чат-бот у месенджері, якщо компанії так зручніше.</p></article>
