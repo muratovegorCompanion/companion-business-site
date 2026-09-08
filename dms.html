@@ -251,7 +251,14 @@
     .faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
     .faq details p { color: var(--muted-dark); margin-top: 14px; }
   .dms-hero-secondary{display:inline-block;margin-left:18px;color:#c9d6ea;font-weight:600;font-size:15px;text-decoration:none;border-bottom:1px solid rgba(201,214,234,.4)}.dms-hero-secondary:hover{color:#fff;border-bottom-color:#fff}@media(max-width:700px){.dms-hero-secondary{display:block;margin:16px 0 0}}
-  </style>
+      .beyond { background: var(--paper); }
+    .service-card--wide { grid-column: 1 / -1; }
+    /* .btn-secondary білий — він для темного героя. На світлій картці такий
+       напис зникає, тому тут окремий варіант. */
+    .beyond .btn-secondary { margin-top: 18px; border-color: var(--line); color: var(--ink); }
+    .beyond .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+    @media (max-width: 760px) { .service-card--wide { grid-column: auto; } }
+</style>
 </head>
 <body>
   <main>
@@ -348,7 +355,20 @@
       </div>
     </section>
 
-    <section class="section result" id="questions" aria-labelledby="questions-title">
+    <section class="section beyond" aria-labelledby="beyond-title">
+  <div class="wrap">
+    <div class="section-head"><p class="kicker">06 / Понад страхову програму</p><h2 class="section-title" id="beyond-title">Частина роботи не вміщується в поліс</h2><p class="lead">Договір закриває медицину. Але у команди виникають задачі, для яких у страховій програмі рядка немає, — і їх теж хтось має вирішувати.</p></div>
+    <div class="service-grid">
+      <article class="service-card"><span class="card-number">Чат-бот</span><h3>Відповідь за договором у месенджері</h3><p>Працівник питає в зручному застосунку й отримує актуальні умови своєї програми, не чекаючи робочого дня. Налаштовуємо під компанію, зокрема під HR-процеси.</p></article>
+      <article class="service-card"><span class="card-number">Психологи та тренінги</span><h3>Підтримка, якої немає в полісі</h3><p>Групові й індивідуальні сесії онлайн і офлайн, коуч-сесії, семінари, хелс-коучинг. Підключається окремо від договору.</p></article>
+      <article class="service-card"><span class="card-number">За межами України</span><h3>Коли лікуватися треба не тут</h3><p>Пошук клініки, віддалений консиліум, «друга думка», консьєрж-супровід поїздки. Окремо — обслуговування експатів.</p></article>
+      <article class="service-card"><span class="card-number">Воєнні ризики</span><h3>Покриття для цивільних і військових</h3><p>Запускаємо й підтримуємо додаткові види страхування, яких корпоративна програма не передбачає.</p></article>
+      <article class="service-card service-card--wide"><span class="card-number">Індивідуальне страхування</span><h3>Те, що працівник купує для себе</h3><p>Будь-який вид страхування з ринку — на умовах, які ми виводимо для ваших людей тендером, поза корпоративним договором. Сюди ж потрапляють нестандартні задачі: організація вакцинації, перелік перевірених лікарів, дні здоров’я.</p><a class="btn btn-secondary" href="dodatkovi-rishennya.html">Що ще ми робимо понад програму</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="section result" id="questions" aria-labelledby="questions-title">
       <div class="wrap"><p class="kicker">Перед стартом</p><h2 class="section-title" id="questions-title">Що варто знати</h2>
         <div class="faq">
           <details><summary>У нас уже є ДМС. Чи можете ви допомогти?</summary><p>Так. Почнемо з аналізу чинної програми та питань, які виникають у працівників і HR. Узгодимо, який супровід потрібен зараз і що варто підготувати до наступного тендеру.</p></details>
