@@ -27,6 +27,7 @@
   // Reuse the Android buttons already present in the page markup.
   for (const actions of document.querySelectorAll('.hero .actions, .final .actions')) {
     if (!actions.querySelector('.btn-android')) actions.append(makeLink('android'));
-    if (!actions.querySelector('.btn-ios')) actions.append(makeLink('ios'));
+    // Кнопку iPhone більше не додаємо: версії ще немає, і неактивна
+    // кнопка лякала людей. Замість неї — рядок тексту в розмітці.
   }
 })();
