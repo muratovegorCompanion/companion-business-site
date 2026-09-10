@@ -182,9 +182,14 @@ const shareShell = (html, file) => {
   // у нечитабельну смужку. Тепер квадратний знак.
   if (!html.includes('cloudflareinsights.com'))
     html = html.replace('</body>', `${CF_BEACON}</body>`);
+  // Розміри кратні 48: Google бере в видачу тільки такі, 64×64 він ігнорував
+  // і малював поруч із посиланням глобус. Плюс /favicon.ico у корені — туди
+  // робот іде першим, і там був 404.
   html = html.replace(/<link rel="icon"[^>]*>/g, '')
              .replace('</head>',
-               '<link rel="icon" type="image/png" sizes="64x64" href="presentation-assets/icon-64.png">'
+               '<link rel="icon" href="/favicon.ico" sizes="32x32 48x48">'
+             + '<link rel="icon" type="image/png" sizes="96x96" href="presentation-assets/icon-96.png">'
+             + '<link rel="icon" type="image/png" sizes="144x144" href="presentation-assets/icon-144.png">'
              + '<link rel="apple-touch-icon" href="presentation-assets/icon-180.png"></head>');
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
              .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=16"');
@@ -267,7 +272,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','android-download.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
   // Посадкова під рекламу копіюється як є: спільне меню й підвал їй
   // протипоказані — з реклами кожне зайве посилання це вихід зі сторінки.
-  'korporatyvne-dms.html','form.js']) {
+  'korporatyvne-dms.html','form.js','favicon.ico']) {
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
