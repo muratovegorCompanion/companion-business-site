@@ -94,8 +94,10 @@ const orgJsonLd = JSON.stringify({
   image:OG_IMAGE,
   telephone:'+380501452605',
   email:'zapyt@icompanion.com.ua',
-  address:{'@type':'PostalAddress',streetAddress:'вул. Юрія Іллєнка, 81, офіс 302',
-    addressLocality:'Київ',postalCode:'04050',addressCountry:'UA'},
+  // Адреси приймальні немає: зустрічі онлайн або в офісі клієнта. Тому в
+  // розмітці лишається тільки місто й країна обслуговування — вигаданої
+  // поштової адреси тут бути не повинно, це дані для пошуковика й карт.
+  address:{'@type':'PostalAddress',addressLocality:'Київ',addressCountry:'UA'},
   areaServed:{'@type':'Country',name:'Україна'},
   openingHours:'Mo-Fr 09:00-18:00',
   foundingDate:'2014',
