@@ -289,7 +289,19 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
 .b-clients-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:34px 26px; margin:0; padding:0; list-style:none; }
 .b-clients-grid li { display:grid; place-items:center; min-height:64px; }
 /* висота в кожного своя — щоб широкі й високі знаки важили на око однаково */
-.b-clients-grid img { width:auto; max-width:100%; }
+/* П'ятнадцять чужих логотипів — це п'ятнадцять чужих палітр в одній сітці:
+   червоне, синє, зелене, помаранчеве поруч читалися як звалище картинок.
+   Знебарвлення прибирає цей шум, і блок сприймається як один список імен.
+   contrast піднімає світлі знаки (smart, lizard soft), які в сірому гаснуть. */
+.b-clients-grid img { width:auto; max-width:100%;
+  filter:grayscale(1) contrast(1.08) opacity(.72);
+  transition:filter .18s ease; }
+/* На наведення знак повертає свій колір — упізнати Nova Poshta по червоному
+   швидше, ніж прочитати. Лише там, де є справжнє наведення: на тачскрині
+   hover «залипає» і одна картка лишалася б кольоровою посеред сірих. */
+@media (hover:hover) {
+  .b-clients-grid img:hover { filter:grayscale(0) contrast(1) opacity(1); }
+}
 @media (max-width:900px) { .b-clients-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px 20px; } }
 @media (max-width:560px) { .b-clients-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .b-clients-link { display:inline-flex; margin-top:30px; }
