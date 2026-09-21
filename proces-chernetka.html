@@ -208,6 +208,8 @@ html.has3d .stage{pointer-events:none}
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 (function(){
   // Сцена з макету Єгора, але без того, що там заважало: без назв страхових
@@ -224,17 +226,24 @@ html.has3d .stage{pointer-events:none}
   document.documentElement.classList.add('has3d');
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.outputEncoding = THREE.sRGBEncoding;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .92;
   // Одна тіньова карта 1024 на десяток коробок — дешево, а сцена одразу
   // перестає бути «наліпками»: предмети стоять на столі, а не висять.
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   var scene = new THREE.Scene();
+  // Освітлення оточення (PMREM із RoomEnvironment): бліки на папці й м'які
+  // переходи на папері беруться звідси, лампи лише дають напрям і тінь.
+  if (THREE.RoomEnvironment && THREE.PMREMGenerator){
+    var pm = new THREE.PMREMGenerator(renderer); pm.compileEquirectangularShader();
+    scene.environment = pm.fromScene(new THREE.RoomEnvironment(), .04).texture;
+    scene.environment.encoding = THREE.sRGBEncoding;
+  }
   var cam = new THREE.PerspectiveCamera(34, 1, .1, 60);
   cam.position.set(0, 3.6, 9.2);
 
-  scene.add(new THREE.HemisphereLight(0xfdfdff, 0xb9c2cc, .55));
-  var key = new THREE.DirectionalLight(0xfff4e6, 1.15);
+  scene.add(new THREE.HemisphereLight(0xfdfdff, 0xb9c2cc, .25));
+  var key = new THREE.DirectionalLight(0xfff4e6, .95);
   key.position.set(-4.5, 8, 6); key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024); key.shadow.radius = 4; key.shadow.bias = -0.0008;
   var sc = key.shadow.camera; sc.left = -7; sc.right = 7; sc.top = 7; sc.bottom = -7; sc.near = 1; sc.far = 30;
@@ -304,7 +313,7 @@ html.has3d .stage{pointer-events:none}
   }
   var edge = new THREE.MeshStandardMaterial({color:0xe6e8e6, roughness:.95});
   var backM = new THREE.MeshStandardMaterial({color:0xf3f4f2, roughness:.95});
-  function paper(t){ return new THREE.MeshStandardMaterial({map:t, roughness:.92, metalness:0}); }
+  function paper(t){ return new THREE.MeshStandardMaterial({map:t, roughness:.88, metalness:0, envMapIntensity:.35}); }
 
   var group = new THREE.Group(); scene.add(group);
   var geo = new THREE.BoxGeometry(1.9, 2.6, .012);
@@ -325,7 +334,9 @@ html.has3d .stage{pointer-events:none}
     var g = new THREE.ExtrudeGeometry(sh, {depth:d, bevelEnabled:true, bevelThickness:.02, bevelSize:.02, bevelSegments:3, curveSegments:8});
     g.translate(0,0,-d/2); return g;
   }
-  var folderMat = new THREE.MeshStandardMaterial({color:NAVY, roughness:.72, metalness:.05});
+  // Оточення на повну засвічувало папку до блакитної — тому інтенсивність
+  // мала, а колір темніший за токен: після тонування він і виходить у синій.
+  var folderMat = new THREE.MeshStandardMaterial({color:0x10223f, roughness:.62, metalness:.06, envMapIntensity:.3});
   var folder = new THREE.Mesh(roundedBox(2.2, 2.95, .16, .12), folderMat);
   folder.castShadow = true; folder.receiveShadow = true;
   var tab = new THREE.Mesh(roundedBox(.72, .24, .17, .06), new THREE.MeshStandardMaterial({color:LIME, roughness:.55}));
