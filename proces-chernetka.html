@@ -38,6 +38,13 @@ a{color:inherit}
 .stage{position:sticky;top:24px;align-self:start}
 .stage-inner{position:relative;background:#fff;border:1px solid var(--c-line);border-radius:20px;aspect-ratio:1;overflow:hidden}
 .stage-inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* Полотно 3D лежить під сторінкою на весь екран. Група об'єктів зсунута
+   вліво (див. скрипт), тому на десктопі сцена живе в лівій колонці, а
+   текст читається праворуч. Коли 3D увімкнено, бокс зі стоп-кадром ховаємо. */
+#scene{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:none}
+html.has3d #scene{display:block}
+html.has3d .stage-inner{visibility:hidden}
+html.has3d .stage{pointer-events:none}
 .stage-cap{margin-top:14px;font-size:.8125rem;color:var(--c-muted);min-height:2.6em}
 .stage-cap b{color:var(--c-ink);display:block;font-size:.9375rem;letter-spacing:.02em;text-transform:uppercase}
 
@@ -62,18 +69,14 @@ a{color:inherit}
   .stage{position:sticky;top:0;z-index:5;background:var(--c-white);padding:10px 0 12px;border-bottom:1px solid var(--c-line)}
   .stage-inner{aspect-ratio:16/7}
   .stage-cap{min-height:0;margin-top:8px}
+  /* На телефоні сцена лягає під текст напівпрозоро; липкої смужки не треба */
+  html.has3d .stage{position:static;border:0;padding:0;background:transparent}
+  html.has3d .stage-inner{display:none}
+  html.has3d #scene{opacity:.38}
   .station{padding:40px 0}
 }
 
-/* ── Перемикання ілюстрацій ───────────────────────────────────────────── */
-/* Активна картинка проявляється і трохи «під'їжджає» знизу — цього руху
-   досить, щоб зміна етапу читалась як подія, а не як підміна файлу. */
-.scene{opacity:0;transform:translateY(10px) scale(.97);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
-.scene.on{opacity:1;transform:none}
 
-@media (prefers-reduced-motion:reduce){
-  .scene{transition:none!important;transform:none!important}
-}
 
 .note{margin:56px 0 72px;padding:24px;border:1px dashed var(--c-line);border-radius:14px;color:var(--c-muted);font-size:.9375rem}
 .note b{color:var(--c-ink)}
@@ -90,6 +93,7 @@ a{color:inherit}
   </div>
 </header>
 
+<canvas id="scene" aria-hidden="true"></canvas>
 <main>
 <section class="hero">
   <div class="shell">
@@ -103,13 +107,10 @@ a{color:inherit}
 
     <div class="stage">
       <div class="stage-inner">
-        <!-- Три фото в одній серії (Higgsfield, z_image): той самий стіл, світло
-             з вікна зліва, лаймовий акцент. Текст на паперах у розфокусі — нічого
-             не читається, назв страхових немає. Ідентифікатори ті самі, що були
-             в SVG-сцен, тому скрипт нижче не змінювався. -->
-        <img class="scene" id="scene1" src="presentation-assets/process/analityka.jpg" width="1200" height="1200" alt="Звіт із діаграмою на столі, поруч окуляри, калькулятор і ручка" loading="eager" decoding="async">
-        <img class="scene" id="scene2" src="presentation-assets/process/tender.jpg" width="1200" height="1200" alt="П'ять пропозицій розкладено віялом, одна відзначена зеленою закладкою" loading="lazy" decoding="async">
-        <img class="scene" id="scene3" src="presentation-assets/process/suprovid.jpg" width="1200" height="1200" alt="Підписаний договір із печаткою і телефон із полісом на екрані" loading="lazy" decoding="async">
+        <!-- Запасний кадр: показується лише коли 3D не запускаємо —
+             «зменшити рух» у системі або немає WebGL. Інакше бокс схований,
+             а сцену малює полотно #scene, закріплене на весь екран. -->
+        <img class="scene-fallback" src="presentation-assets/process/analityka.jpg" width="1200" height="1200" alt="Звіт із діаграмою на столі, поруч окуляри, калькулятор і ручка">
       </div>
       <p class="stage-cap" id="cap"><b>Аналітика</b>Дивимося, що насправді відбувається з вашою програмою.</p>
     </div>
@@ -162,22 +163,19 @@ a{color:inherit}
 </section>
 
 <div class="shell">
-  <p class="note"><b>Що це.</b> Чернетка механіки: малюнок ліворуч прилипає і перемальовується під станцію, яку ви читаєте. Ілюстрації — звичайні фото по 100–200 КБ, без WebGL і відео, щоб не грілися телефони й не сідала батарея. Текст читається і без анімації: якщо в системі увімкнено «зменшити рух», усе показується одразу, статично.</p>
+  <p class="note"><b>Що це.</b> Чернетка механіки: малюнок ліворуч прилипає і перемальовується під станцію, яку ви читаєте. Сцена тривимірна і промотується скролом: зупинилися — завмерла, відмотали назад — повернулася. Без тіней і важких текстур, малюється лише поки рухається. Якщо в системі увімкнено «зменшити рух» або немає WebGL — замість сцени стоп-кадр, текст читається так само.</p>
 </div>
 </main>
 
 <script>
 (function(){
   var stations = [].slice.call(document.querySelectorAll('.station'));
-  var scenes = {1:document.getElementById('scene1'),2:document.getElementById('scene2'),3:document.getElementById('scene3')};
   var cap = document.getElementById('cap');
   var current = null;
 
   function show(st){
     if (!st || st === current) return;
     current = st;
-    var n = st.dataset.scene;
-    for (var k in scenes) scenes[k].classList.toggle('on', k === n);
     stations.forEach(function(s){ s.classList.toggle('is-active', s === st); });
     var parts = (st.dataset.cap || '').split('|');
     cap.innerHTML = '<b>' + parts[0] + '</b>' + (parts[1] || '');
@@ -206,6 +204,209 @@ a{color:inherit}
   addEventListener('scroll', onScroll, {passive:true});
   addEventListener('resize', onScroll, {passive:true});
   pick();
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  // Сцена з макету Єгора, але без того, що там заважало: без назв страхових
+  // і тарифів на бланках (брокеру під наглядом НБУ вигадані тарифи чужих
+  // компаній ні до чого), без тіньових карт 2048² і дванадцяти текстур —
+  // це гріло телефон. Малюємо лише поки є рух.
+  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (reduce || !window.THREE) return;
+  var canvas = document.getElementById('scene');
+  var renderer;
+  try { renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true}); }
+  catch (e) { return; }
+  document.documentElement.classList.add('has3d');
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+
+  var scene = new THREE.Scene();
+  var cam = new THREE.PerspectiveCamera(36, 1, .1, 60);
+  cam.position.set(0, 0, 9.5);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xc9d3e0, .95));
+  var key = new THREE.DirectionalLight(0xffffff, .75); key.position.set(5, 8, 7); scene.add(key);
+  var rim = new THREE.DirectionalLight(0xc5f16b, .22); rim.position.set(-6, 2, -4); scene.add(rim);
+
+  var NAVY = 0x142a46, LIME = 0xc5f16b;
+
+  // Бланк без жодного слова: смужки замість тексту, маленька плашка замість
+  // логотипа. Один малюнок на всі пропозиції — вони й мають бути схожими,
+  // сенс сцени в тому, що їх кладуть поруч і порівнюють.
+  function sheet(kind){
+    var c = document.createElement('canvas'); c.width = 256; c.height = 352;
+    var x = c.getContext('2d');
+    x.fillStyle = '#ffffff'; x.fillRect(0,0,256,352);
+    x.fillStyle = '#142a46'; x.fillRect(0,0,256,6);
+    x.fillStyle = '#dce3eb'; x.fillRect(22,26,58,10);
+    x.fillStyle = '#c9d2dd';
+    var y = 56; for (var i=0;i<14;i++){ x.fillRect(22, y, 120 + ((i*53)%90), 5); y += 14; if (i%5===4) y += 8; }
+    if (kind === 'report'){
+      x.fillStyle = '#ffffff'; x.fillRect(16,120,224,150);
+      var bars=[46,74,58,98], cols=['#a6c7ff','#245dce','#a6c7ff','#c5f16b'];
+      for (var b=0;b<4;b++){ x.fillStyle = cols[b]; x.fillRect(40+b*46, 250-bars[b], 26, bars[b]); }
+      x.fillStyle = '#dce3eb'; x.fillRect(36,252,190,2);
+    }
+    if (kind === 'final'){ x.fillStyle = '#edf8d6'; x.fillRect(22,300,110,22); }
+    var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return t;
+  }
+  function shadowTex(){
+    var c = document.createElement('canvas'); c.width = c.height = 128;
+    var x = c.getContext('2d'), g = x.createRadialGradient(64,64,10,64,64,64);
+    g.addColorStop(0,'rgba(20,42,70,.28)'); g.addColorStop(1,'rgba(20,42,70,0)');
+    x.fillStyle = g; x.fillRect(0,0,128,128);
+    return new THREE.CanvasTexture(c);
+  }
+
+  var side = new THREE.MeshStandardMaterial({color:0xe8ebf1, roughness:.9});
+  var back = new THREE.MeshStandardMaterial({color:0xf6f8fb, roughness:.92});
+  function paper(t){ return new THREE.MeshStandardMaterial({map:t, roughness:.85}); }
+
+  var group = new THREE.Group(); scene.add(group);
+  var geo = new THREE.BoxGeometry(1.9, 2.6, .035);
+  var texDoc = sheet('doc'), texFinal = sheet('final'), texReport = sheet('report');
+  var N = 9, FINAL = 4, WIN = [1, 4, 7];
+  var docs = [];
+  for (var i=0;i<N;i++){
+    var m = new THREE.Mesh(geo, [side,side,side,side, paper(i===FINAL?texFinal:texDoc), back]);
+    group.add(m); docs.push(m);
+  }
+  var report = new THREE.Mesh(geo, [side,side,side,side, paper(texReport), back]); group.add(report);
+
+  var folder = new THREE.Mesh(new THREE.BoxGeometry(2.2, 2.95, .16),
+    new THREE.MeshStandardMaterial({color:NAVY, roughness:.6, metalness:.08}));
+  var tab = new THREE.Mesh(new THREE.BoxGeometry(.7, .22, .17), new THREE.MeshStandardMaterial({color:LIME, roughness:.5}));
+  tab.position.set(-.6, 1.56, 0); folder.add(tab); group.add(folder);
+
+  var seal = new THREE.Mesh(new THREE.CylinderGeometry(.32,.32,.07,40),
+    new THREE.MeshStandardMaterial({color:LIME, roughness:.35, metalness:.1}));
+  seal.rotation.x = Math.PI/2; seal.visible = false; group.add(seal);
+
+  var ground = new THREE.Mesh(new THREE.PlaneGeometry(9,9),
+    new THREE.MeshBasicMaterial({map:shadowTex(), transparent:true, depthWrite:false}));
+  ground.rotation.x = -Math.PI/2; ground.position.y = -2.1; ground.scale.setScalar(.6); scene.add(ground);
+
+  var lerp = function(a,b,t){ return a+(b-a)*t; };
+  var ease = function(t){ return t<0?0:t>1?1:t*t*(3-2*t); };
+  var seg = function(p,a,b){ return ease((p-a)/(b-a)); };
+
+  var mx=0, my=0, sideX=-2.6, mobile=false, gs=.58;
+  addEventListener('pointermove', function(e){ mx=e.clientX/innerWidth*2-1; my=e.clientY/innerHeight*2-1; wake(); }, {passive:true});
+
+  function resize(){
+    renderer.setSize(innerWidth, innerHeight);
+    cam.aspect = innerWidth/innerHeight; cam.updateProjectionMatrix();
+    mobile = innerWidth <= 900;
+    // Сітка 3×3 бланків у натуральну величину не влазила в ліву колонку
+    // і лізла під текст — тому вся група зменшена, а на телефоні ще трохи.
+    sideX = mobile ? 0 : -2.6;
+    gs = mobile ? .5 : .58;
+    ground.position.x = sideX;
+    wake();
+  }
+
+  // Прогрес не по всій сторінці, а по колонці станцій: 0 — лінія читання
+  // на першій станції, 1 — низ блоку «І знову аналітика». Межі станцій
+  // беремо з розмітки, тому таймлайн не залежить від висоти текстів.
+  var st = [1,2,3,4].map(function(i){ return document.getElementById('st'+i); });
+  var B = [0, .3, .62, .86, 1];
+  function measure(){
+    var line = scrollY + innerHeight*.4, tops = st.map(function(e){ return e.getBoundingClientRect().top + scrollY; });
+    var end = tops[3] + st[3].offsetHeight*.55, span = end - tops[0];
+    B = tops.map(function(t){ return (t - tops[0]) / span; }); B.push(1);
+    // Далі за низ сторінки не догортаєш. Якщо середина останнього блоку
+    // недосяжна для лінії читання, прогрес розтягуємо так, щоб одиниця
+    // припадала на реально досяжну точку, — межі станцій при цьому не
+    // зсуваються, інакше коло починало замикатися ще на «Супроводі».
+    var reach = document.documentElement.scrollHeight - innerHeight + innerHeight*.4;
+    var pmax = Math.min(1, (reach - tops[0]) / span);
+    var p = (line - tops[0]) / span / pmax;
+    return Math.min(1, Math.max(0, p));
+  }
+  function pose(p, t){
+    // Станція 1 — аналітика: з папки піднімається звіт із діаграмою.
+    var a1 = seg(p, B[0], B[0] + (B[1]-B[0])*.55);
+    // Станція 2 — тендер: звіт ховається, віяло пропозицій -> троє -> одна.
+    var s2 = B[1], w2 = B[2]-B[1];
+    var a2 = seg(p, s2, s2 + w2*.18);          // звіт назад
+    var fan = seg(p, s2 + w2*.12, s2 + w2*.5); // віяло
+    var pick = seg(p, s2 + w2*.5, s2 + w2*.78); // залишаються троє
+    var one = seg(p, s2 + w2*.78, s2 + w2*1.0); // фіналіст уперед
+    // Станція 3 — супровід: печатка лягає на фіналіста.
+    var s3 = B[2], w3 = B[3]-B[2];
+    var stamp = seg(p, s3, s3 + w3*.45);
+    // Коло: усе складається в папку, папка повертається на початок.
+    var fold = seg(p, B[3], 1);
+
+    group.position.x = sideX;
+    group.scale.setScalar(gs);
+    group.rotation.y = lerp(-.14, .12, p) + mx*.05;
+    group.rotation.x = my*.03;
+
+    folder.position.set(0, lerp(0,-2.2,fan)*(1-fold) + lerp(0,0,fold), lerp(0,-1.2,fan)*(1-fold));
+    folder.rotation.z = lerp(.05, 0, fan);
+    var fs = lerp(1, .82, fan) + lerp(0,.18,fold); folder.scale.setScalar(fs);
+
+    // звіт
+    var ry = lerp(-.3, 1.15, a1) * (1-a2);
+    report.position.set(.15, ry, lerp(-.05, .35, a1)*(1-a2));
+    report.rotation.set(0, Math.sin(t*.0008)*.02, lerp(.06, -.02, a1));
+    report.visible = a1 > .02 && a2 < .98;
+
+    for (var i=0;i<N;i++){
+      var d = docs[i], a = (i/(N-1))*2-1;
+      var f = {x:a*2.9, y:.4 - Math.abs(a)*.45, z:-.4 - Math.abs(a)*.7, rz:-a*.32, ry:a*.22};
+      var col = i%3, row = (i/3)|0;
+      var g = {x:(col-1)*2.15, y:(1-row)*2.85 - .2, z:0, rz:0, ry:0};
+      var P = {x:lerp(f.x,g.x,fan*.6+fan*.4), y:lerp(f.y,g.y,fan), z:lerp(f.z,g.z,fan), rz:lerp(f.rz,g.rz,fan), ry:lerp(f.ry,g.ry,fan)};
+      var isW = WIN.indexOf(i) >= 0, isF = i === FINAL;
+      if (pick > 0){
+        if (!isW){ P.y -= pick*5.5; P.z -= pick*2; P.rz += a*pick*.5; }
+        else { var wi = WIN.indexOf(i); P.x = lerp(P.x,(wi-1)*2.3,pick); P.y = lerp(P.y,.1,pick); P.z = lerp(P.z,.3,pick); P.rz *= 1-pick; }
+      }
+      if (one > 0){
+        if (isF){ P.x = lerp(P.x,0,one); P.y = lerp(P.y,0,one); P.z = lerp(P.z,1.4,one); }
+        else if (isW){ var wj = WIN.indexOf(i); P.x = lerp(P.x,(wj-1)*2.3,one); P.z -= one*1.4; P.y = lerp(P.y,-.35,one); }
+      }
+      if (fold > 0){ P.x = lerp(P.x,0,fold); P.y = lerp(P.y,0,fold); P.z = lerp(P.z,-.25,fold); P.rz *= 1-fold; P.ry *= 1-fold; }
+      var vis = fan;
+      var fl = Math.sin(t*.0011 + i*1.7)*.05;
+      d.position.set(P.x*vis, P.y*vis + fl*vis, P.z*vis);
+      d.rotation.set(0, P.ry + Math.sin(t*.0008+i)*.02, P.rz);
+      d.scale.setScalar(lerp(.25,1,vis) * (isF ? 1 + .12*one : 1));
+      d.visible = vis > .02 && !(pick >= 1 && !isW && fold < .05);
+    }
+
+    var fin = docs[FINAL];
+    seal.visible = stamp > 0 && fold < .98;
+    if (seal.visible){
+      seal.position.set(fin.position.x + .45, fin.position.y - .8, fin.position.z + .08 + (1-stamp)*2.2);
+      seal.scale.setScalar(lerp(1.7, 1, stamp) * (1-fold*.6));
+      seal.rotation.z = t*.0005;
+    }
+    cam.position.x = mx*.25; cam.position.y = -my*.2;
+    cam.lookAt(sideX*.7, 0, 0);
+  }
+
+  // Малюємо, лише поки є до чого дійти: інерція докручує прогрес,
+  // а коли все зійшлося — кадр не оновлюється і батарея не витрачається.
+  var sp = 0, target = 0, running = false, awake = true;
+  function frame(t){
+    running = true;
+    sp += (target - sp) * .1;
+    pose(sp, t);
+    renderer.render(scene, cam);
+    if (Math.abs(target - sp) > .0006 || awake) { awake = false; requestAnimationFrame(frame); }
+    else running = false;
+  }
+  function wake(){ awake = true; if (!running) requestAnimationFrame(frame); }
+  function onScroll(){ target = measure(); wake(); }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', function(){ resize(); onScroll(); }, {passive:true});
+  resize(); target = measure(); sp = target; wake();
 })();
 </script>
 </body>
