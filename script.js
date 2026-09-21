@@ -116,7 +116,12 @@ if(presentationFrame){
         const phone=/^\+?[\d\s().-]+$/.test(v)&&digits.length>=10&&digits.length<=15;
         contact.setCustomValidity(email||phone?'':'Вкажіть коректний email або номер телефону з кодом країни.');
       }
-      if(!form.reportValidity())return;
+      if(!form.reportValidity()){
+        // Поле, що не пройшло, злегка здригається — видно, де саме помилка
+        const bad=form.querySelector(':invalid');
+        if(bad){bad.classList.remove('m-shake');void bad.offsetWidth;bad.classList.add('m-shake');}
+        return;
+      }
       if(!endpoint){
         if(status)status.textContent='Заявку не надіслано. Щоб погодити зустріч, зателефонуйте: +38 (050) 145 2605.';
         return;
@@ -132,10 +137,12 @@ if(presentationFrame){
         if(!response.ok)throw new Error('Delivery failed');
         const result=await response.json();
         if(result.accepted!==true)throw new Error('Delivery not confirmed');
-        if(status)status.textContent='Дякуємо! Ми отримали ваш запит і зв’яжемося з вами.';
+        if(status){status.textContent='Дякуємо! Ми отримали ваш запит і зв’яжемося з вами.';
+          const ok=document.createElement('span');ok.className='m-check';ok.setAttribute('aria-hidden','true');status.prepend(ok);}
         form.reset();
       }catch{
         if(status)status.textContent='Не вдалося надіслати запит. Ваші дані залишилися у формі. Спробуйте ще раз або зателефонуйте: +38 (050) 145 2605.';
+        form.classList.remove('m-shake');void form.offsetWidth;form.classList.add('m-shake');
       }finally{ button.disabled=false; form.removeAttribute('aria-busy'); }
     });
   });

@@ -6,7 +6,7 @@ window.CompanionHome = {
         <div class="shell b-hero-grid">
           <div class="b-hero-copy">
             <p class="b-eyebrow"><span class="b-dot" aria-hidden="true"></span> Страхове бюро «Компаньйон»</p>
-            <h1 id="hero-heading">Страхування, яке допомагає бізнесу <span>рухатися впевнено.</span></h1>
+            <h1 id="hero-heading"><span class="b-line">Страхування, яке</span> <span class="b-line">допомагає бізнесу</span> <span class="b-line"><span>рухатися впевнено.</span></span></h1>
             <p class="b-intro">Організовуємо тендер, пояснюємо ринок і залишаємося поруч після вибору. Ви бачите варіанти та самі обираєте страхову компанію.</p>
             <div class="b-actions"><a class="b-button" href="#meeting">Домовитися про зустріч <span aria-hidden="true">↗</span></a><a class="b-text-link" href="#solutions">Знайти своє рішення <span aria-hidden="true">↓</span></a></div>
             <p class="b-micro">Безоплатно · Онлайн або особисто в Києві</p>

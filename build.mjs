@@ -194,11 +194,15 @@ const shareShell = (html, file) => {
              + '<link rel="icon" type="image/png" sizes="144x144" href="presentation-assets/icon-144.png">'
              + '<link rel="apple-touch-icon" href="presentation-assets/icon-180.png"></head>');
   html = html.replace(/href="styles\.css(\?[^"]*)?"/g, 'href="styles.css?v=6"')
-             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=17"');
+             .replace(/href="home\.css(\?[^"]*)?"/g, 'href="home.css?v=18"');
   // Підвал згортається у смужку з телефоном; логіка — у footer.js,
   // він же прибирає підвал у вбудованій копії (iframe).
   if (!html.includes('footer.js'))
     html = html.replace('</head>', '<script src="footer.js?v=3" defer></script></head>');
+  // Дрібні інтеракції — одним файлом на всі сторінки, після стилів сторінки,
+  // щоб перебивати їхні transition там, де треба.
+  if (!html.includes('motion.css'))
+    html = html.replace('</head>', '<link rel="stylesheet" href="motion.css?v=1"><script src="motion.js?v=2" defer></script></head>');
   return openGraph(canonical(html, file), file);
 };
 
@@ -274,7 +278,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','android-download.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
   // Посадкова під рекламу копіюється як є: спільне меню й підвал їй
   // протипоказані — з реклами кожне зайве посилання це вихід зі сторінки.
-  'korporatyvne-dms.html','form.js','favicon.ico',
+  'korporatyvne-dms.html','form.js','favicon.ico','motion.css','motion.js',
   // Чернетка станцій процесу: копіюється як є, у карту сайту й меню не
   // потрапляє, всередині стоїть noindex. Прибрати, коли механіку перенесемо
   // на yak-my-pratsyuyemo.html.

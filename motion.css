@@ -1,0 +1,74 @@
+/* Дрібні інтеракції, спільні для всіх сторінок. Підключається збіркою після
+   стилів сторінки. Правило одне: без скрипта і з «зменшити рух» усе видно
+   одразу — жоден стан спокою не ховає контент. */
+
+/* 1. Заголовок головної входить рядками */
+.b-line { display:inline-block; }
+html.js .b-hero h1 .b-line { opacity:0; transform:translateY(.45em); animation:m-rise .8s cubic-bezier(.2,.8,.2,1) forwards; }
+html.js .b-hero h1 .b-line:nth-child(2) { animation-delay:.12s; }
+html.js .b-hero h1 .b-line:nth-child(3) { animation-delay:.24s; }
+html.js .b-hero .b-intro, html.js .b-hero .b-actions, html.js .b-hero .b-micro { opacity:0; animation:m-rise .8s cubic-bezier(.2,.8,.2,1) forwards; }
+html.js .b-hero .b-intro { animation-delay:.34s; }
+html.js .b-hero .b-actions { animation-delay:.44s; }
+html.js .b-hero .b-micro { animation-delay:.52s; }
+@keyframes m-rise { to { opacity:1; transform:none; } }
+
+/* 2. Секції проявляються, коли входять в екран */
+html.js .m-rv { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+html.js .m-rv.m-in { opacity:1; transform:none; }
+
+/* 3. Акордеони: тіло розгортається плавно (висоту веде скрипт), знак обертається */
+.b-insight-mark::before, .b-insight-mark::after { transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .2s ease; }
+.b-insight[open] .b-insight-mark::before { transform:translate(-50%,-50%) rotate(180deg); }
+details.m-acc > :not(summary) { overflow:hidden; }
+details summary { transition:color .18s ease; }
+
+/* 4. Картки напрямів: підйом і стрілка їде */
+.b-solution { transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.b-solution:hover { transform:translateY(-3px); box-shadow:0 14px 34px rgba(20,42,70,.09); border-color:#c9d6e8; }
+.b-text-link span { display:inline-block; transition:transform .22s cubic-bezier(.2,.8,.2,1); }
+.b-solution:hover .b-text-link span, .b-text-link:hover span { transform:translateX(5px); }
+.b-text-link[href="#solutions"]:hover span { transform:translateY(4px); }
+
+/* 5. Кроки процесу: лінія прочерчується, номер загоряється */
+html.js .b-steps li { position:relative; border-top-color:transparent; }
+html.js .b-steps li::before { content:""; position:absolute; left:0; top:-1px; height:1px; width:0; background:#536176; transition:width .8s cubic-bezier(.2,.8,.2,1); }
+html.js .b-steps li.m-in::before { width:100%; }
+html.js .b-steps .b-step-no { color:#7f8ea3; transition:color .4s ease .5s; }
+html.js .b-steps li.m-in .b-step-no { color:var(--c-lime); }
+html.js .b-steps li:nth-child(2)::before { transition-delay:.25s; }
+html.js .b-steps li:nth-child(3)::before { transition-delay:.5s; }
+html.js .b-steps li:nth-child(2) .b-step-no { transition-delay:.75s; }
+html.js .b-steps li:nth-child(3) .b-step-no { transition-delay:1s; }
+
+/* 6. Шапка отримує тінь, коли сторінка пішла вниз */
+.site-header, .dms-top, .services-top, .app-top, .partners-top { transition:box-shadow .25s ease; }
+html.m-scrolled .site-header, html.m-scrolled .dms-top, html.m-scrolled .services-top, html.m-scrolled .app-top, html.m-scrolled .partners-top { box-shadow:0 6px 24px rgba(20,42,70,.10); }
+.site-header .brand img { transition:transform .25s ease; transform-origin:left center; }
+html.m-scrolled .site-header .brand img { transform:scale(.92); }
+
+/* 7. Форма: галочка на успіх, здригання на помилку */
+.b-form-status { display:flex; align-items:center; gap:10px; }
+.m-check { width:20px; height:20px; border-radius:50%; background:var(--c-lime); position:relative; flex:none; animation:m-pop .45s cubic-bezier(.2,.8,.2,1); }
+.m-check::after { content:""; position:absolute; left:7px; top:4px; width:5px; height:9px; border:solid var(--c-lime-ink); border-width:0 2px 2px 0; transform:rotate(45deg); }
+@keyframes m-pop { from { transform:scale(.3); opacity:0; } to { transform:none; opacity:1; } }
+.m-shake { animation:m-shake .5s ease; }
+@keyframes m-shake { 10%,90% { transform:translateX(-2px); } 20%,80% { transform:translateX(3px); } 30%,50%,70% { transform:translateX(-5px); } 40%,60% { transform:translateX(5px); } }
+
+/* 8. Стрілка «Знайти своє рішення» злегка киває */
+html.js .b-text-link[href="#solutions"] span { animation:m-bob 1.9s ease-in-out .9s infinite; }
+@keyframes m-bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(4px); } }
+
+/* Кнопки: коротке «натискання» */
+.b-button, .header-meeting, .dms-btn, .btn { transition:transform .16s ease, box-shadow .16s ease, background .16s ease; }
+.b-button:active, .header-meeting:active { transform:translateY(1px) scale(.99); }
+
+@media (prefers-reduced-motion:reduce) {
+  html.js .b-hero h1 .b-line, html.js .b-hero .b-intro, html.js .b-hero .b-actions, html.js .b-hero .b-micro { animation:none; opacity:1; transform:none; }
+  html.js .m-rv { opacity:1; transform:none; transition:none; }
+  html.js .b-steps li { border-top-color:#536176; } html.js .b-steps li::before { display:none; }
+  html.js .b-steps .b-step-no { color:var(--c-lime); transition:none; }
+  html.js .b-text-link[href="#solutions"] span { animation:none; }
+  .m-shake, .m-check { animation:none; }
+  .b-solution, .b-text-link span, .site-header .brand img { transition:none; }
+}
