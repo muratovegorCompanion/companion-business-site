@@ -31,52 +31,29 @@ a{color:inherit}
 
 /* ── Станції ─────────────────────────────────────────────────────────── */
 .proc{padding-bottom:40px}
-.proc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start}
-/* Сцена «прилипає»: поки читаєш станцію, малюнок лишається перед очима
-   і перемальовується під неї. У цьому весь сенс — текст і картинка
-   говорять про одне й те саме в одну мить. */
+/* Кожна станція — власна доріжка: ліворуч липке відео, праворуч текст.
+   Відео не грає саме, його час веде скрол (scrollvideo.js). */
+.track{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start;padding:64px 0;border-top:1px solid var(--c-line)}
+.track:first-of-type{border-top:0;padding-top:8px}
 .stage{position:sticky;top:24px;align-self:start}
 .stage-inner{position:relative;background:#fff;border:1px solid var(--c-line);border-radius:20px;aspect-ratio:1;overflow:hidden}
-.stage-inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-/* Полотно 3D лежить під сторінкою на весь екран. Група об'єктів зсунута
-   вліво (див. скрипт), тому на десктопі сцена живе в лівій колонці, а
-   текст читається праворуч. Коли 3D увімкнено, бокс зі стоп-кадром ховаємо. */
-#scene{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:none}
-html.has3d #scene{display:block}
-html.has3d .stage-inner{visibility:hidden}
-html.has3d .stage{pointer-events:none}
-.stage-cap{margin-top:14px;font-size:.8125rem;color:var(--c-muted);min-height:2.6em}
+.stage-inner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.stage-cap{margin-top:14px;font-size:.8125rem;color:var(--c-muted)}
 .stage-cap b{color:var(--c-ink);display:block;font-size:.9375rem;letter-spacing:.02em;text-transform:uppercase}
-
-.stations{display:grid;gap:0}
-.station{padding:56px 0;border-top:1px solid var(--c-line)}
-.station:first-child{border-top:0;padding-top:8px}
-.station-num{font-size:.8125rem;font-weight:700;letter-spacing:.14em;color:var(--c-muted);transition:color .3s}
-.station.is-active .station-num{color:var(--c-blue)}
+.station-num{font-size:.8125rem;font-weight:700;letter-spacing:.14em;color:var(--c-blue)}
 .station h2{font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.2;letter-spacing:-.01em;margin-top:10px;font-weight:700}
 .station>p{margin-top:14px;color:var(--c-muted)}
 .station ul{margin-top:20px;list-style:none;display:grid;gap:12px}
 .station li{padding-left:26px;position:relative;color:var(--c-ink)}
 .station li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:9px;border-radius:2px;background:var(--c-lime);transform:rotate(45deg)}
-.station-loop{background:var(--c-navy);color:var(--c-white);border-radius:20px;padding:36px;margin-top:40px;border-top:0}
+.station-loop{background:var(--c-navy);color:var(--c-white);border-radius:20px;padding:36px;margin:0 0 40px}
 .station-loop h2{color:var(--c-white)}
 .station-loop p{color:var(--c-muted-dark);margin-top:12px}
-
 @media(max-width:900px){
-  .proc-grid{grid-template-columns:1fr;gap:28px}
-  /* На вузькому екрані сцена лишається зверху смужкою: так вона не з'їдає
-     пів-екрана під текстом і не змушує гортати наосліп. */
-  .stage{position:sticky;top:0;z-index:5;background:var(--c-white);padding:10px 0 12px;border-bottom:1px solid var(--c-line)}
-  .stage-inner{aspect-ratio:16/7}
-  .stage-cap{min-height:0;margin-top:8px}
-  /* На телефоні сцена лягає під текст напівпрозоро; липкої смужки не треба */
-  html.has3d .stage{position:static;border:0;padding:0;background:transparent}
-  html.has3d .stage-inner{display:none}
-  html.has3d #scene{opacity:.38}
-  .station{padding:40px 0}
+  .track{grid-template-columns:1fr;gap:22px;padding:40px 0}
+  .stage{position:static}
+  .stage-inner{aspect-ratio:4/3}
 }
-
-
 
 .note{margin:56px 0 72px;padding:24px;border:1px dashed var(--c-line);border-radius:14px;color:var(--c-muted);font-size:.9375rem}
 .note b{color:var(--c-ink)}
@@ -93,31 +70,29 @@ html.has3d .stage{pointer-events:none}
   </div>
 </header>
 
-<canvas id="scene" aria-hidden="true"></canvas>
 <main>
 <section class="hero">
   <div class="shell">
     <h1>Три етапи, які повертаються на початок.</h1>
-    <p>Робота брокера не закінчується підписанням договору. Наприкінці року супровід знову приводить нас до аналітики — і коло починається спочатку. Гортайте: малюнок ліворуч показує етап, про який ідеться.</p>
+    <p>Робота брокера не закінчується підписанням договору. Наприкінці року супровід знову приводить нас до аналітики — і коло починається спочатку. Гортайте: відео ліворуч промотується разом зі сторінкою — зупинитесь, і кадр зупиниться.</p>
   </div>
 </section>
 
 <section class="proc">
-  <div class="shell proc-grid">
-
-    <div class="stage">
-      <div class="stage-inner">
-        <!-- Запасний кадр: показується лише коли 3D не запускаємо —
-             «зменшити рух» у системі або немає WebGL. Інакше бокс схований,
-             а сцену малює полотно #scene, закріплене на весь екран. -->
-        <img class="scene-fallback" src="presentation-assets/process/analityka.jpg" width="1200" height="1200" alt="Звіт із діаграмою на столі, поруч окуляри, калькулятор і ручка">
+    <div class="shell track" data-scrub-track>
+      <div class="stage">
+        <div class="stage-inner">
+          <!-- Відео не грає саме: його час веде скрол, див. scrollvideo.js.
+               poster — перший кадр, він лишається, якщо скрипта немає або
+               в системі увімкнено «зменшити рух». -->
+          <video data-scrub muted playsinline preload="auto" width="1000" height="1000"
+                 poster="presentation-assets/process/analityka-poster.jpg" aria-label="Порожній аркуш на столі поступово заповнюється звітом: росте діаграма, з’являється таблиця">
+            <source src="presentation-assets/process/analityka.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="stage-cap"><b>Аналітика</b>Дивимося, що насправді відбувається з вашою програмою.</p>
       </div>
-      <p class="stage-cap" id="cap"><b>Аналітика</b>Дивимося, що насправді відбувається з вашою програмою.</p>
-    </div>
-
-    <div class="stations">
-
-      <article class="station" id="st1" data-scene="1" data-cap="Аналітика|Дивимося, що насправді відбувається з вашою програмою.">
+      <article class="station" id="st1">
         <p class="station-num">ЕТАП 01</p>
         <h2>Аналітика</h2>
         <p>Перш ніж щось пропонувати, ми розбираємо чинну програму — цифрами, а не враженнями.</p>
@@ -128,8 +103,21 @@ html.has3d .stage{pointer-events:none}
           <li>Готуємо звіт і рекомендації</li>
         </ul>
       </article>
-
-      <article class="station" id="st2" data-scene="2" data-cap="Тендер|Запит іде ринком і повертається пропозиціями, які можна порівняти.">
+    </div>
+    <div class="shell track" data-scrub-track>
+      <div class="stage">
+        <div class="stage-inner">
+          <!-- Відео не грає саме: його час веде скрол, див. scrollvideo.js.
+               poster — перший кадр, він лишається, якщо скрипта немає або
+               в системі увімкнено «зменшити рух». -->
+          <video data-scrub muted playsinline preload="auto" width="1000" height="1000"
+                 poster="presentation-assets/process/tender-poster.jpg" aria-label="Стопка документів розкладається віялом на п’ять пропозицій, зайві відходять, лишається одна — з печаткою">
+            <source src="presentation-assets/process/tender.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="stage-cap"><b>Тендер</b>Запит іде ринком і повертається пропозиціями, які можна порівняти.</p>
+      </div>
+      <article class="station" id="st2">
         <p class="station-num">ЕТАП 02</p>
         <h2>Тендер</h2>
         <p>Один запит іде до десяти-п'ятнадцяти страхових компаній. Далі — зводимо відповіді так, щоб їх можна було читати поруч.</p>
@@ -138,10 +126,24 @@ html.has3d .stage{pointer-events:none}
           <li>Збираємо й аналізуємо пропозиції</li>
           <li>Зводимо порівняння: покриття, винятки, вартість, сервіс</li>
           <li>Відбираємо фіналістів — вибір залишається за вами</li>
+          <li>Погоджуємо умови з обраною страховою компанією</li>
         </ul>
       </article>
-
-      <article class="station" id="st3" data-scene="3" data-cap="Супровід|Договір підписано — і саме тут починається щоденна робота.">
+    </div>
+    <div class="shell track" data-scrub-track>
+      <div class="stage">
+        <div class="stage-inner">
+          <!-- Відео не грає саме: його час веде скрол, див. scrollvideo.js.
+               poster — перший кадр, він лишається, якщо скрипта немає або
+               в системі увімкнено «зменшити рух». -->
+          <video data-scrub muted playsinline preload="auto" width="1000" height="1000"
+                 poster="presentation-assets/process/suprovid-poster.jpg" aria-label="На рахунок лягає печатка — страхова компанія підтверджує оплату">
+            <source src="presentation-assets/process/suprovid.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="stage-cap"><b>Супровід</b>Договір підписано — і саме тут починається щоденна робота.</p>
+      </div>
+      <article class="station" id="st3">
         <p class="station-num">ЕТАП 03</p>
         <h2>Супровід</h2>
         <p>Підписаний договір — не фініш. Далі програма має працювати для людей, а не лежати в пошті у HR.</p>
@@ -152,316 +154,21 @@ html.has3d .stage{pointer-events:none}
           <li>Автоматизуємо рутину, зокрема через застосунок</li>
         </ul>
       </article>
-
-      <article class="station station-loop" id="st4" data-scene="3" data-cap="Коло замкнулося|Рік роботи стає матеріалом для наступної аналітики.">
+    </div>
+    <div class="shell">
+      <article class="station station-loop" id="st4">
         <h2>І знову аналітика</h2>
         <p>Наприкінці року ми маємо те, чого не було на старті: статистику саме вашої компанії. Вона і стає основою для наступного кола — з неї видно, що в програмі зайве, а чого бракує.</p>
       </article>
-
     </div>
-  </div>
-</section>
+  </section>
 
 <div class="shell">
-  <p class="note"><b>Що це.</b> Чернетка механіки: малюнок ліворуч прилипає і перемальовується під станцію, яку ви читаєте. Сцена тривимірна і промотується скролом: зупинилися — завмерла, відмотали назад — повернулася. Без тіней і важких текстур, малюється лише поки рухається. Якщо в системі увімкнено «зменшити рух» або немає WebGL — замість сцени стоп-кадр, текст читається так само.</p>
+  <p class="note"><b>Що це.</b> Чернетка механіки: малюнок ліворуч прилипає і перемальовується під станцію, яку ви читаєте. Кожен етап — короткий ролик, знятий з тієї самої сцени: той самий стіл, те саме світло. Відео не грає саме — його час прив’язаний до положення сторінки: зупинилися, і кадр стоїть; відмотали назад — документи збираються назад у стопку. Якщо в системі увімкнено «зменшити рух», лишається перший кадр, текст читається так само.</p>
 </div>
 </main>
 
-<script>
-(function(){
-  var stations = [].slice.call(document.querySelectorAll('.station'));
-  var cap = document.getElementById('cap');
-  var current = null;
+<script src="scrollvideo.js?v=1" defer></script>
 
-  function show(st){
-    if (!st || st === current) return;
-    current = st;
-    stations.forEach(function(s){ s.classList.toggle('is-active', s === st); });
-    var parts = (st.dataset.cap || '').split('|');
-    cap.innerHTML = '<b>' + parts[0] + '</b>' + (parts[1] || '');
-  }
-
-  // Активна та станція, чий заголовок найближчий до лінії читання (верхня
-  // третина екрана). Спершу тут стояв IntersectionObserver, але при швидкому
-  // гортанні в один колбек прилітало кілька станцій одразу, і бралася
-  // остання в масиві — підпис устигав перемкнутися на «Супровід», поки
-  // малюнок ще показував аналітику. Порівняння відстаней такого не дає.
-  var ticking = false;
-  function pick(){
-    ticking = false;
-    var line = innerHeight * 0.33, best = null, bestD = Infinity;
-    stations.forEach(function(s){
-      var d = Math.abs(s.getBoundingClientRect().top - line);
-      if (d < bestD){ bestD = d; best = s; }
-    });
-    show(best);
-  }
-  function onScroll(){
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(pick);
-  }
-  addEventListener('scroll', onScroll, {passive:true});
-  addEventListener('resize', onScroll, {passive:true});
-  pick();
-})();
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script>
-(function(){
-  // Сцена з макету Єгора, але без того, що там заважало: без назв страхових
-  // і тарифів на бланках, без дванадцяти важких текстур. Реалістичність тут
-  // не з поліграфії, а з фізики: одна м'яка тінь на стіл, папір із
-  // фактурою і правдоподібною версткою, папка з фаскою, камера трохи згори —
-  // як на фото, що показував Єгор. Малюємо лише поки є рух.
-  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if (reduce || !window.THREE) return;
-  var canvas = document.getElementById('scene');
-  var renderer;
-  try { renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true}); }
-  catch (e) { return; }
-  document.documentElement.classList.add('has3d');
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-  renderer.outputEncoding = THREE.sRGBEncoding;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .92;
-  // Одна тіньова карта 1024 на десяток коробок — дешево, а сцена одразу
-  // перестає бути «наліпками»: предмети стоять на столі, а не висять.
-  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-  var scene = new THREE.Scene();
-  // Освітлення оточення (PMREM із RoomEnvironment): бліки на папці й м'які
-  // переходи на папері беруться звідси, лампи лише дають напрям і тінь.
-  if (THREE.RoomEnvironment && THREE.PMREMGenerator){
-    var pm = new THREE.PMREMGenerator(renderer); pm.compileEquirectangularShader();
-    scene.environment = pm.fromScene(new THREE.RoomEnvironment(), .04).texture;
-    scene.environment.encoding = THREE.sRGBEncoding;
-  }
-  var cam = new THREE.PerspectiveCamera(34, 1, .1, 60);
-  cam.position.set(0, 3.6, 9.2);
-
-  scene.add(new THREE.HemisphereLight(0xfdfdff, 0xb9c2cc, .25));
-  var key = new THREE.DirectionalLight(0xfff4e6, .95);
-  key.position.set(-4.5, 8, 6); key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024); key.shadow.radius = 4; key.shadow.bias = -0.0008;
-  var sc = key.shadow.camera; sc.left = -7; sc.right = 7; sc.top = 7; sc.bottom = -7; sc.near = 1; sc.far = 30;
-  scene.add(key);
-  var fill = new THREE.DirectionalLight(0xdfe9ff, .35); fill.position.set(6, 3, 4); scene.add(fill);
-
-  var NAVY = 0x1c3357, LIME = 0xc5f16b;
-
-  // Бланк без жодного слова, але зверстаний як справжній: шапка з плашкою
-  // замість логотипа, абзаци «тексту» рядками різної довжини й тону, таблиця
-  // з тонкими лініями, номер сторінки. Плюс легкий тон паперу і зерно —
-  // саме це відрізняє папір від білого прямокутника.
-  function grain(x, w, h, a){
-    var img = x.getImageData(0,0,w,h), d = img.data;
-    for (var i=0;i<d.length;i+=4){ var n = (Math.random()-.5)*a; d[i]+=n; d[i+1]+=n; d[i+2]+=n; }
-    x.putImageData(img,0,0);
-  }
-  function para(x, X, Y, W, lines, lh, col){
-    x.fillStyle = col;
-    for (var i=0;i<lines;i++){
-      var w = W * (i === lines-1 ? .45 + Math.random()*.3 : .88 + Math.random()*.12);
-      x.fillRect(X, Y + i*lh, w, lh*.42);
-    }
-    return Y + lines*lh;
-  }
-  function sheet(kind){
-    var c = document.createElement('canvas'); c.width = 512; c.height = 704;
-    var x = c.getContext('2d');
-    var g = x.createLinearGradient(0,0,512,704); g.addColorStop(0,'#fbfbfa'); g.addColorStop(1,'#f1f2f0');
-    x.fillStyle = g; x.fillRect(0,0,512,704);
-    x.fillStyle = '#1c3357'; x.fillRect(48,44,58,14);
-    x.fillStyle = '#9aa6b4'; x.fillRect(116,46,120,5); x.fillRect(116,55,84,4);
-    x.fillStyle = '#2b3a4e'; x.fillRect(48,96,300,7);
-    x.fillStyle = '#c7ccd3'; x.fillRect(48,116,416,1);
-    var y = 134;
-    y = para(x, 48, y, 416, 6, 15, '#5f6b7a') + 14;
-    if (kind === 'report'){
-      x.fillStyle = '#ffffff'; x.fillRect(48, y, 416, 190); x.strokeStyle = '#d9dee4'; x.strokeRect(48.5, y+.5, 415, 189);
-      var bars=[62,104,80,142,118], cols=['#a6c7ff','#245dce','#a6c7ff','#c5f16b','#245dce'];
-      for (var b=0;b<5;b++){ x.fillStyle = cols[b]; x.fillRect(84+b*76, y+170-bars[b], 40, bars[b]); }
-      x.fillStyle = '#c7ccd3'; x.fillRect(70, y+171, 372, 1);
-      y += 206;
-      y = para(x, 48, y, 416, 5, 15, '#5f6b7a') + 10;
-    } else {
-      // таблиця умов: 5 рядків, 3 колонки, тонкі лінії
-      var rows = 6, rh = 24, tw = 416;
-      x.strokeStyle = '#d3d9e0'; x.lineWidth = 1;
-      for (var r=0;r<=rows;r++){ x.beginPath(); x.moveTo(48, y + r*rh + .5); x.lineTo(48+tw, y + r*rh + .5); x.stroke(); }
-      [0, 190, 320, 416].forEach(function(cx){ x.beginPath(); x.moveTo(48+cx+.5, y); x.lineTo(48+cx+.5, y+rows*rh); x.stroke(); });
-      x.fillStyle = '#eef1f4'; x.fillRect(49, y+1, tw-1, rh-1);
-      for (var r2=0;r2<rows;r2++){
-        x.fillStyle = r2 ? '#6b7683' : '#2b3a4e';
-        x.fillRect(60, y + r2*rh + 9, 90 + (r2*37)%60, 5);
-        x.fillRect(250, y + r2*rh + 9, 40, 5); x.fillRect(340, y + r2*rh + 9, 52, 5);
-      }
-      y += rows*rh + 18;
-      y = para(x, 48, y, 416, 7, 15, '#5f6b7a') + 10;
-      if (kind === 'final'){
-        x.strokeStyle = '#245dce'; x.lineWidth = 2.2; x.beginPath();
-        x.moveTo(70, 626); x.bezierCurveTo(95, 596, 118, 640, 146, 616); x.bezierCurveTo(166, 600, 182, 634, 214, 620); x.stroke();
-        x.fillStyle = '#9aa6b4'; x.fillRect(70, 640, 150, 1); x.fillRect(70, 648, 70, 4);
-      }
-    }
-    x.fillStyle = '#9aa6b4'; x.fillRect(248, 672, 16, 4);
-    grain(x, 512, 704, 9);
-    var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = 4; return t;
-  }
-  var edge = new THREE.MeshStandardMaterial({color:0xe6e8e6, roughness:.95});
-  var backM = new THREE.MeshStandardMaterial({color:0xf3f4f2, roughness:.95});
-  function paper(t){ return new THREE.MeshStandardMaterial({map:t, roughness:.88, metalness:0, envMapIntensity:.35}); }
-
-  var group = new THREE.Group(); scene.add(group);
-  var geo = new THREE.BoxGeometry(1.9, 2.6, .012);
-  var texDoc = sheet('doc'), texFinal = sheet('final'), texReport = sheet('report');
-  var N = 9, FINAL = 4, WIN = [1, 4, 7];
-  var docs = [];
-  function mkDoc(t){ var m = new THREE.Mesh(geo, [edge,edge,edge,edge, paper(t), backM]); m.castShadow = true; m.receiveShadow = true; return m; }
-  for (var i=0;i<N;i++){ var d0 = mkDoc(i===FINAL?texFinal:texDoc); group.add(d0); docs.push(d0); }
-  var report = mkDoc(texReport); group.add(report);
-
-  // Папка: закруглені кути й фаска — те, чого не дає гола коробка.
-  function roundedBox(w, h, d, r){
-    var sh = new THREE.Shape();
-    sh.moveTo(-w/2 + r, -h/2); sh.lineTo(w/2 - r, -h/2); sh.quadraticCurveTo(w/2, -h/2, w/2, -h/2 + r);
-    sh.lineTo(w/2, h/2 - r); sh.quadraticCurveTo(w/2, h/2, w/2 - r, h/2);
-    sh.lineTo(-w/2 + r, h/2); sh.quadraticCurveTo(-w/2, h/2, -w/2, h/2 - r);
-    sh.lineTo(-w/2, -h/2 + r); sh.quadraticCurveTo(-w/2, -h/2, -w/2 + r, -h/2);
-    var g = new THREE.ExtrudeGeometry(sh, {depth:d, bevelEnabled:true, bevelThickness:.02, bevelSize:.02, bevelSegments:3, curveSegments:8});
-    g.translate(0,0,-d/2); return g;
-  }
-  // Оточення на повну засвічувало папку до блакитної — тому інтенсивність
-  // мала, а колір темніший за токен: після тонування він і виходить у синій.
-  var folderMat = new THREE.MeshStandardMaterial({color:0x10223f, roughness:.62, metalness:.06, envMapIntensity:.3});
-  var folder = new THREE.Mesh(roundedBox(2.2, 2.95, .16, .12), folderMat);
-  folder.castShadow = true; folder.receiveShadow = true;
-  var tab = new THREE.Mesh(roundedBox(.72, .24, .17, .06), new THREE.MeshStandardMaterial({color:LIME, roughness:.55}));
-  tab.position.set(-.6, 1.57, 0); tab.castShadow = true; folder.add(tab); group.add(folder);
-
-  var seal = new THREE.Group();
-  var sealBody = new THREE.Mesh(new THREE.CylinderGeometry(.32,.34,.06,48), new THREE.MeshStandardMaterial({color:LIME, roughness:.45, metalness:.05}));
-  var sealRing = new THREE.Mesh(new THREE.TorusGeometry(.22,.028,12,48), new THREE.MeshStandardMaterial({color:0x8fb536, roughness:.5}));
-  sealRing.rotation.x = Math.PI/2; sealRing.position.y = .032;
-  sealBody.castShadow = true; seal.add(sealBody); seal.add(sealRing);
-  seal.rotation.x = Math.PI/2; seal.visible = false; group.add(seal);
-
-  // Стіл невидимий: ShadowMaterial показує лише тінь, що на нього падає.
-  // Текстурована площина виглядала сірою плитою під усією сторінкою, і
-  // текст правої колонки лягав на неї — гірше, ніж без столу взагалі.
-  var desk = new THREE.Mesh(new THREE.PlaneGeometry(40,40), new THREE.ShadowMaterial({opacity:.2}));
-  desk.rotation.x = -Math.PI/2; desk.position.y = -2.15; desk.receiveShadow = true; scene.add(desk);
-
-  var lerp = function(a,b,t){ return a+(b-a)*t; };
-  var ease = function(t){ return t<0?0:t>1?1:t*t*(3-2*t); };
-  var seg = function(p,a,b){ return ease((p-a)/(b-a)); };
-
-  var mx=0, my=0, sideX=-2.6, mobile=false, gs=.58;
-  addEventListener('pointermove', function(e){ mx=e.clientX/innerWidth*2-1; my=e.clientY/innerHeight*2-1; wake(); }, {passive:true});
-
-  function resize(){
-    renderer.setSize(innerWidth, innerHeight);
-    cam.aspect = innerWidth/innerHeight; cam.updateProjectionMatrix();
-    mobile = innerWidth <= 900;
-    sideX = mobile ? 0 : -2.6;
-    gs = mobile ? .5 : .58;
-    wake();
-  }
-
-  var st = [1,2,3,4].map(function(i){ return document.getElementById('st'+i); });
-  var B = [0, .3, .62, .86, 1];
-  function measure(){
-    var line = scrollY + innerHeight*.4, tops = st.map(function(e){ return e.getBoundingClientRect().top + scrollY; });
-    var end = tops[3] + st[3].offsetHeight*.55, span = end - tops[0];
-    B = tops.map(function(t){ return (t - tops[0]) / span; }); B.push(1);
-    var reach = document.documentElement.scrollHeight - innerHeight + innerHeight*.4;
-    var pmax = Math.min(1, (reach - tops[0]) / span);
-    var p = (line - tops[0]) / span / pmax;
-    return Math.min(1, Math.max(0, p));
-  }
-
-  function pose(p, t){
-    var a1 = seg(p, B[0], B[0] + (B[1]-B[0])*.55);
-    var s2 = B[1], w2 = B[2]-B[1];
-    var a2 = seg(p, s2, s2 + w2*.18);
-    var fan = seg(p, s2 + w2*.12, s2 + w2*.5);
-    var pick = seg(p, s2 + w2*.5, s2 + w2*.78);
-    var one = seg(p, s2 + w2*.78, s2 + w2*1.0);
-    var s3 = B[2], w3 = B[3]-B[2];
-    var stamp = seg(p, s3, s3 + w3*.45);
-    var fold = seg(p, B[3], 1);
-
-    group.position.set(sideX, -.35, 0);
-    group.scale.setScalar(gs);
-    // Легкий нахил назад: аркуші стоять на столі, як притулені до чогось,
-    // а не висять у повітрі; камера дивиться трохи згори.
-    group.rotation.y = lerp(-.16, .14, p) + mx*.05;
-    group.rotation.x = -.22 + my*.03;
-
-    folder.position.set(0, lerp(0,-2.2,fan)*(1-fold), lerp(0,-1.2,fan)*(1-fold));
-    folder.rotation.z = lerp(.05, 0, fan);
-    var fs = lerp(1, .82, fan) + lerp(0,.18,fold); folder.scale.setScalar(fs);
-
-    var ry = lerp(-.3, 1.15, a1) * (1-a2);
-    report.position.set(.15, ry, lerp(-.05, .35, a1)*(1-a2));
-    report.rotation.set(0, Math.sin(t*.0008)*.02, lerp(.06, -.02, a1));
-    report.visible = a1 > .02 && a2 < .98;
-
-    for (var i=0;i<N;i++){
-      var d = docs[i], a = (i/(N-1))*2-1;
-      var f = {x:a*2.9, y:.4 - Math.abs(a)*.45, z:-.4 - Math.abs(a)*.7, rz:-a*.32, ry:a*.22};
-      var col = i%3, row = (i/3)|0;
-      var g = {x:(col-1)*2.15, y:(1-row)*2.85 - .2, z:0, rz:0, ry:0};
-      var P = {x:lerp(f.x,g.x,fan), y:lerp(f.y,g.y,fan), z:lerp(f.z,g.z,fan), rz:lerp(f.rz,g.rz,fan), ry:lerp(f.ry,g.ry,fan)};
-      var isW = WIN.indexOf(i) >= 0, isF = i === FINAL;
-      if (pick > 0){
-        if (!isW){ P.y -= pick*5.5; P.z -= pick*2; P.rz += a*pick*.5; }
-        else { var wi = WIN.indexOf(i); P.x = lerp(P.x,(wi-1)*1.9,pick); P.y = lerp(P.y,.1,pick); P.z = lerp(P.z,.3,pick); P.rz *= 1-pick; }
-      }
-      if (one > 0){
-        if (isF){ P.x = lerp(P.x,0,one); P.y = lerp(P.y,0,one); P.z = lerp(P.z,1.4,one); }
-        else if (isW){ var wj = WIN.indexOf(i); P.x = lerp(P.x,(wj-1)*1.9,one); P.z -= one*1.4; P.y = lerp(P.y,-.35,one); }
-      }
-      if (fold > 0){ P.x = lerp(P.x,0,fold); P.y = lerp(P.y,0,fold); P.z = lerp(P.z,-.25,fold); P.rz *= 1-fold; P.ry *= 1-fold; }
-      var vis = fan;
-      var fl = Math.sin(t*.0011 + i*1.7)*.05;
-      d.position.set(P.x*vis, P.y*vis + fl*vis, P.z*vis);
-      d.rotation.set(0, P.ry + Math.sin(t*.0008+i)*.02, P.rz);
-      d.scale.setScalar(lerp(.25,1,vis) * (isF ? 1 + .12*one : 1));
-      d.visible = vis > .02 && !(pick >= 1 && !isW && fold < .05);
-    }
-
-    var fin = docs[FINAL];
-    seal.visible = stamp > 0 && fold < .98;
-    if (seal.visible){
-      seal.position.set(fin.position.x + .45, fin.position.y - .8, fin.position.z + .06 + (1-stamp)*2.2);
-      seal.scale.setScalar(lerp(1.7, 1, stamp) * (1-fold*.6));
-      seal.rotation.y = t*.0005;
-    }
-    cam.position.x = mx*.25; cam.position.y = 3.6 - my*.2;
-    // Камера дивиться майже в центр: що ближче точка погляду до групи, то
-    // правіше група на екрані — тому коефіцієнт малий, сцена лишається зліва.
-    cam.lookAt(sideX*.25, -.4, 0);
-  }
-
-  var sp = 0, target = 0, running = false, awake = true;
-  function frame(t){
-    running = true;
-    sp += (target - sp) * .1;
-    pose(sp, t);
-    renderer.render(scene, cam);
-    if (Math.abs(target - sp) > .0006 || awake) { awake = false; requestAnimationFrame(frame); }
-    else running = false;
-  }
-  function wake(){ awake = true; if (!running) requestAnimationFrame(frame); }
-  function onScroll(){ target = measure(); wake(); }
-  addEventListener('scroll', onScroll, {passive:true});
-  addEventListener('resize', function(){ resize(); onScroll(); }, {passive:true});
-  resize(); target = measure(); sp = target; wake();
-})();
-</script>
 </body>
 </html>
