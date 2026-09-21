@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Чернетка. Сторінка навмисно закрита від пошуковиків і не стоїть у меню
+     та в карті сайту: її призначення — показати механіку станцій, перш ніж
+     переносити її на yak-my-pratsyuyemo.html. -->
+<meta name="robots" content="noindex,nofollow">
+<title>Чернетка: станції процесу — Компаньйон</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32 48x48">
+<link rel="stylesheet" href="tokens.css?v=7">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--c-font);color:var(--c-ink);background:var(--c-white);line-height:1.6;-webkit-font-smoothing:antialiased}
+.shell{width:min(var(--c-shell),calc(100% - 48px));margin-inline:auto}
+@media(max-width:640px){.shell{width:calc(100% - 32px)}}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--c-blue);outline-offset:3px;border-radius:4px}
+
+.draft{background:var(--c-lime-soft);color:var(--c-lime-ink);font-size:.8125rem;font-weight:600;padding:9px 0;text-align:center}
+.top{border-bottom:1px solid var(--c-line);padding:16px 0}
+.top .shell{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top img{height:26px;width:auto}
+.top a.back{font-size:.875rem;color:var(--c-muted);text-decoration:none}
+.top a.back:hover{color:var(--c-ink)}
+
+.hero{padding:64px 0 40px}
+.hero h1{font-size:clamp(1.9rem,4.4vw,3.05rem);line-height:1.1;letter-spacing:-.02em;max-width:17ch;font-weight:800}
+.hero p{margin-top:20px;font-size:1.0625rem;color:var(--c-muted);max-width:56ch}
+
+/* ── Станції ─────────────────────────────────────────────────────────── */
+.proc{padding-bottom:40px}
+.proc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start}
+/* Сцена «прилипає»: поки читаєш станцію, малюнок лишається перед очима
+   і перемальовується під неї. У цьому весь сенс — текст і картинка
+   говорять про одне й те саме в одну мить. */
+.stage{position:sticky;top:24px;align-self:start}
+.stage-inner{background:var(--c-paper);border:1px solid var(--c-line);border-radius:20px;padding:20px;aspect-ratio:1;display:grid;place-items:center}
+.stage svg{width:100%;height:100%;display:block}
+.stage-cap{margin-top:14px;font-size:.8125rem;color:var(--c-muted);min-height:2.6em}
+.stage-cap b{color:var(--c-ink);display:block;font-size:.9375rem;letter-spacing:.02em;text-transform:uppercase}
+
+.stations{display:grid;gap:0}
+.station{padding:56px 0;border-top:1px solid var(--c-line)}
+.station:first-child{border-top:0;padding-top:8px}
+.station-num{font-size:.8125rem;font-weight:700;letter-spacing:.14em;color:var(--c-muted);transition:color .3s}
+.station.is-active .station-num{color:var(--c-blue)}
+.station h2{font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.2;letter-spacing:-.01em;margin-top:10px;font-weight:700}
+.station>p{margin-top:14px;color:var(--c-muted)}
+.station ul{margin-top:20px;list-style:none;display:grid;gap:12px}
+.station li{padding-left:26px;position:relative;color:var(--c-ink)}
+.station li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:9px;border-radius:2px;background:var(--c-lime);transform:rotate(45deg)}
+.station-loop{background:var(--c-navy);color:var(--c-white);border-radius:20px;padding:36px;margin-top:40px;border-top:0}
+.station-loop h2{color:var(--c-white)}
+.station-loop p{color:var(--c-muted-dark);margin-top:12px}
+
+@media(max-width:900px){
+  .proc-grid{grid-template-columns:1fr;gap:28px}
+  /* На вузькому екрані сцена лишається зверху смужкою: так вона не з'їдає
+     пів-екрана під текстом і не змушує гортати наосліп. */
+  .stage{position:sticky;top:0;z-index:5;background:var(--c-white);padding:10px 0 12px;border-bottom:1px solid var(--c-line)}
+  .stage-inner{aspect-ratio:16/7;padding:10px}
+  .stage-cap{min-height:0;margin-top:8px}
+  .station{padding:40px 0}
+}
+
+/* ── Сцени всередині SVG ─────────────────────────────────────────────── */
+.scene{opacity:0;transition:opacity .45s ease}
+.scene.on{opacity:1}
+.scene *{transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.scene .step{opacity:0}
+.scene.on .step{opacity:1}
+/* Поява елементів по черзі — щоб сцена читалась як дія, а не як картинка */
+.scene.on .d1{transition-delay:.05s}.scene.on .d2{transition-delay:.18s}
+.scene.on .d3{transition-delay:.31s}.scene.on .d4{transition-delay:.44s}
+.scene.on .d5{transition-delay:.57s}.scene.on .d6{transition-delay:.70s}
+.bar{transform:scaleY(0);transform-origin:bottom;transform-box:fill-box}
+.scene.on .bar{transform:scaleY(1)}
+.fly{transform:translateX(-56px);transform-box:fill-box}
+.scene.on .fly{transform:none}
+.fly-r{transform:translateX(56px);transform-box:fill-box}
+.scene.on .fly-r{transform:none}
+.pop{transform:scale(.6);transform-origin:center;transform-box:fill-box}
+.scene.on .pop{transform:none}
+.dim{opacity:.28!important}
+.stamp{transform:scale(2.4) rotate(-18deg);transform-origin:center;transform-box:fill-box;opacity:0}
+.scene.on .stamp{transform:rotate(-12deg);opacity:1;transition-delay:.62s}
+
+@media (prefers-reduced-motion:reduce){
+  .scene,.scene *{transition:none!important}
+  .bar,.fly,.fly-r,.pop{transform:none!important}
+  .stamp{transform:rotate(-12deg)!important;opacity:1!important}
+}
+
+.note{margin:56px 0 72px;padding:24px;border:1px dashed var(--c-line);border-radius:14px;color:var(--c-muted);font-size:.9375rem}
+.note b{color:var(--c-ink)}
+</style>
+</head>
+<body>
+
+<div class="draft">Чернетка для оцінки — сторінка закрита від пошуковиків і не стоїть у меню</div>
+
+<header class="top">
+  <div class="shell">
+    <a href="https://icompanion.com.ua/"><img src="presentation-assets/companion-logo.png?v=2" alt="Страхове бюро Компаньйон" width="2172" height="724"></a>
+    <a class="back" href="https://icompanion.com.ua/yak-my-pratsyuyemo.html">Нинішня сторінка «Як працюємо» ↗</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="shell">
+    <h1>Три етапи, які повертаються на початок.</h1>
+    <p>Робота брокера не закінчується підписанням договору. Наприкінці року супровід знову приводить нас до аналітики — і коло починається спочатку. Гортайте: малюнок ліворуч показує етап, про який ідеться.</p>
+  </div>
+</section>
+
+<section class="proc">
+  <div class="shell proc-grid">
+
+    <div class="stage">
+      <div class="stage-inner">
+        <svg viewBox="0 0 400 400" role="img" aria-labelledby="sceneTitle">
+          <title id="sceneTitle">Схема етапу роботи брокера</title>
+
+          <!-- 1. Аналітика: з цифр і відповідей народжується звіт -->
+          <g class="scene" id="scene1">
+            <rect x="58" y="44" width="284" height="312" rx="14" fill="#fff" stroke="var(--c-line)" stroke-width="2"/>
+            <rect class="step d1" x="88" y="74" width="120" height="10" rx="5" fill="var(--c-ink)"/>
+            <rect class="step d1" x="88" y="94" width="72" height="8" rx="4" fill="var(--c-line)"/>
+            <g transform="translate(0,0)">
+              <rect class="step bar d2" x="92"  y="150" width="30" height="84"  rx="5" fill="var(--c-blue-soft)"/>
+              <rect class="step bar d3" x="134" y="126" width="30" height="108" rx="5" fill="var(--c-blue)"/>
+              <rect class="step bar d4" x="176" y="168" width="30" height="66"  rx="5" fill="var(--c-blue-soft)"/>
+              <rect class="step bar d5" x="218" y="110" width="30" height="124" rx="5" fill="var(--c-lime)"/>
+            </g>
+            <line class="step d5" x1="88" y1="242" x2="312" y2="242" stroke="var(--c-line)" stroke-width="2"/>
+            <circle class="step pop d5" cx="288" cy="146" r="26" fill="none" stroke="var(--c-ink)" stroke-width="3"/>
+            <line class="step d5" x1="306" y1="165" x2="322" y2="182" stroke="var(--c-ink)" stroke-width="3" stroke-linecap="round"/>
+            <rect class="step d6" x="88" y="268" width="224" height="52" rx="10" fill="var(--c-lime-soft)"/>
+            <text class="step d6" x="108" y="300" font-family="Inter,sans-serif" font-size="17" font-weight="700" fill="var(--c-lime-ink)">Звіт і рекомендації</text>
+          </g>
+
+          <!-- 2. Тендер: запит розходиться ринком і повертається пропозиціями -->
+          <g class="scene" id="scene2">
+            <rect class="step d1" x="150" y="36" width="100" height="62" rx="10" fill="var(--c-ink)"/>
+            <text class="step d1" x="200" y="73" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#fff">ТЗ</text>
+            <g stroke="var(--c-line)" stroke-width="2" stroke-dasharray="5 6" fill="none">
+              <path class="step d2" d="M175 98 L92 152"/>
+              <path class="step d2" d="M200 98 L200 148"/>
+              <path class="step d2" d="M225 98 L308 152"/>
+            </g>
+            <g class="step fly d3">
+              <rect x="56" y="152" width="76" height="58" rx="9" fill="#fff" stroke="var(--c-line)" stroke-width="2"/>
+              <rect x="68" y="168" width="42" height="7" rx="3.5" fill="var(--c-line)"/>
+              <rect x="68" y="182" width="52" height="7" rx="3.5" fill="var(--c-line)"/>
+            </g>
+            <g class="step pop d4">
+              <rect x="162" y="148" width="76" height="58" rx="9" fill="#fff" stroke="var(--c-blue)" stroke-width="2.5"/>
+              <rect x="174" y="164" width="42" height="7" rx="3.5" fill="var(--c-blue-soft)"/>
+              <rect x="174" y="178" width="52" height="7" rx="3.5" fill="var(--c-blue-soft)"/>
+            </g>
+            <g class="step fly-r d3">
+              <rect x="268" y="152" width="76" height="58" rx="9" fill="#fff" stroke="var(--c-line)" stroke-width="2"/>
+              <rect x="280" y="168" width="42" height="7" rx="3.5" fill="var(--c-line)"/>
+              <rect x="280" y="182" width="52" height="7" rx="3.5" fill="var(--c-line)"/>
+            </g>
+            <text class="step d5" x="200" y="252" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="var(--c-muted)">пропозиції поруч, умова до умови</text>
+            <g class="step d6">
+              <rect x="88" y="278" width="224" height="58" rx="10" fill="var(--c-lime-soft)"/>
+              <text x="200" y="306" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="var(--c-lime-ink)">Фіналісти — на ваш вибір</text>
+              <text x="200" y="325" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="var(--c-lime-ink)">рішення ухвалюєте ви</text>
+            </g>
+          </g>
+
+          <!-- 3. Супровід: договір живе, і рік замикає коло -->
+          <g class="scene" id="scene3">
+            <rect class="step d1" x="46" y="52" width="176" height="220" rx="12" fill="#fff" stroke="var(--c-line)" stroke-width="2"/>
+            <rect class="step d1" x="70" y="80" width="92" height="9" rx="4.5" fill="var(--c-ink)"/>
+            <rect class="step d2" x="70" y="102" width="128" height="7" rx="3.5" fill="var(--c-line)"/>
+            <rect class="step d2" x="70" y="118" width="108" height="7" rx="3.5" fill="var(--c-line)"/>
+            <rect class="step d3" x="70" y="140" width="128" height="7" rx="3.5" fill="var(--c-line)"/>
+            <circle class="step stamp" cx="160" cy="216" r="34" fill="none" stroke="var(--c-lime)" stroke-width="5"/>
+            <text class="step stamp" x="160" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="var(--c-lime-ink)">ДІЄ</text>
+            <g class="step pop d5">
+              <rect x="256" y="96" width="92" height="164" rx="16" fill="var(--c-navy)"/>
+              <rect x="268" y="118" width="68" height="34" rx="7" fill="var(--c-navy-soft)"/>
+              <rect x="278" y="128" width="40" height="6" rx="3" fill="var(--c-lime)"/>
+              <rect x="268" y="162" width="68" height="26" rx="7" fill="var(--c-navy-soft)"/>
+              <rect x="268" y="198" width="68" height="26" rx="7" fill="var(--c-navy-soft)"/>
+              <text x="302" y="248" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="var(--c-muted-dark)">поліс у телефоні</text>
+            </g>
+            <path class="step d6" d="M330 300 C330 344 232 352 200 352 C168 352 78 344 72 306" fill="none" stroke="var(--c-blue)" stroke-width="2.5" stroke-dasharray="6 7"/>
+            <path class="step d6" d="M72 306 l-7 12 m7-12 l11 5" fill="none" stroke="var(--c-blue)" stroke-width="2.5" stroke-linecap="round"/>
+            <text class="step d6" x="200" y="378" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="var(--c-blue)">через рік — знову аналітика</text>
+          </g>
+        </svg>
+      </div>
+      <p class="stage-cap" id="cap"><b>Аналітика</b>Дивимося, що насправді відбувається з вашою програмою.</p>
+    </div>
+
+    <div class="stations">
+
+      <article class="station" id="st1" data-scene="1" data-cap="Аналітика|Дивимося, що насправді відбувається з вашою програмою.">
+        <p class="station-num">ЕТАП 01</p>
+        <h2>Аналітика</h2>
+        <p>Перш ніж щось пропонувати, ми розбираємо чинну програму — цифрами, а не враженнями.</p>
+        <ul>
+          <li>Збираємо статистику витрат на страхування і отриманих виплат</li>
+          <li>Розбираємо, що покриває програма, які клініки й пакети доступні</li>
+          <li>Опитуємо працівників про те, як програма працює насправді</li>
+          <li>Готуємо звіт і рекомендації</li>
+        </ul>
+      </article>
+
+      <article class="station" id="st2" data-scene="2" data-cap="Тендер|Запит іде ринком і повертається пропозиціями, які можна порівняти.">
+        <p class="station-num">ЕТАП 02</p>
+        <h2>Тендер</h2>
+        <p>Один запит іде до десяти-п'ятнадцяти страхових компаній. Далі — зводимо відповіді так, щоб їх можна було читати поруч.</p>
+        <ul>
+          <li>Формуємо технічне завдання і коло страхових компаній</li>
+          <li>Збираємо й аналізуємо пропозиції</li>
+          <li>Зводимо порівняння: покриття, винятки, вартість, сервіс</li>
+          <li>Відбираємо фіналістів — вибір залишається за вами</li>
+        </ul>
+      </article>
+
+      <article class="station" id="st3" data-scene="3" data-cap="Супровід|Договір підписано — і саме тут починається щоденна робота.">
+        <p class="station-num">ЕТАП 03</p>
+        <h2>Супровід</h2>
+        <p>Підписаний договір — не фініш. Далі програма має працювати для людей, а не лежати в пошті у HR.</p>
+        <ul>
+          <li>Презентуємо програму команді</li>
+          <li>Адмініструємо договір і списки застрахованих</li>
+          <li>Ведемо звернення та претензії</li>
+          <li>Автоматизуємо рутину, зокрема через застосунок</li>
+        </ul>
+      </article>
+
+      <article class="station station-loop" id="st4" data-scene="3" data-cap="Коло замкнулося|Рік роботи стає матеріалом для наступної аналітики.">
+        <h2>І знову аналітика</h2>
+        <p>Наприкінці року ми маємо те, чого не було на старті: статистику саме вашої компанії. Вона і стає основою для наступного кола — з неї видно, що в програмі зайве, а чого бракує.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="shell">
+  <p class="note"><b>Що це.</b> Чернетка механіки: малюнок ліворуч прилипає і перемальовується під станцію, яку ви читаєте. Сцени плоскі (SVG), без WebGL — щоб не грілися телефони й не сідала батарея. Текст читається і без анімації: якщо в системі увімкнено «зменшити рух», усе показується одразу, статично.</p>
+</div>
+</main>
+
+<script>
+(function(){
+  var stations = [].slice.call(document.querySelectorAll('.station'));
+  var scenes = {1:document.getElementById('scene1'),2:document.getElementById('scene2'),3:document.getElementById('scene3')};
+  var cap = document.getElementById('cap');
+  var current = null;
+
+  function show(st){
+    if (!st || st === current) return;
+    current = st;
+    var n = st.dataset.scene;
+    for (var k in scenes) scenes[k].classList.toggle('on', k === n);
+    stations.forEach(function(s){ s.classList.toggle('is-active', s === st); });
+    var parts = (st.dataset.cap || '').split('|');
+    cap.innerHTML = '<b>' + parts[0] + '</b>' + (parts[1] || '');
+  }
+
+  // Активна та станція, чий заголовок найближчий до лінії читання (верхня
+  // третина екрана). Спершу тут стояв IntersectionObserver, але при швидкому
+  // гортанні в один колбек прилітало кілька станцій одразу, і бралася
+  // остання в масиві — підпис устигав перемкнутися на «Супровід», поки
+  // малюнок ще показував аналітику. Порівняння відстаней такого не дає.
+  var ticking = false;
+  function pick(){
+    ticking = false;
+    var line = innerHeight * 0.33, best = null, bestD = Infinity;
+    stations.forEach(function(s){
+      var d = Math.abs(s.getBoundingClientRect().top - line);
+      if (d < bestD){ bestD = d; best = s; }
+    });
+    show(best);
+  }
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(pick);
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', onScroll, {passive:true});
+  pick();
+})();
+</script>
+</body>
+</html>

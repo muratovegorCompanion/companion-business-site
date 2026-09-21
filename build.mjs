@@ -274,7 +274,11 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','android-download.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
   // Посадкова під рекламу копіюється як є: спільне меню й підвал їй
   // протипоказані — з реклами кожне зайве посилання це вихід зі сторінки.
-  'korporatyvne-dms.html','form.js','favicon.ico']) {
+  'korporatyvne-dms.html','form.js','favicon.ico',
+  // Чернетка станцій процесу: копіюється як є, у карту сайту й меню не
+  // потрапляє, всередині стоїть noindex. Прибрати, коли механіку перенесемо
+  // на yak-my-pratsyuyemo.html.
+  'proces-chernetka.html']) {
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
