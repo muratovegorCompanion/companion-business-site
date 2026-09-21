@@ -37,7 +37,7 @@ a{color:inherit}
    говорять про одне й те саме в одну мить. */
 .stage{position:sticky;top:24px;align-self:start}
 .stage-inner{position:relative;background:#fff;border:1px solid var(--c-line);border-radius:20px;aspect-ratio:1;overflow:hidden}
-.stage-inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.stage-inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .stage-cap{margin-top:14px;font-size:.8125rem;color:var(--c-muted);min-height:2.6em}
 .stage-cap b{color:var(--c-ink);display:block;font-size:.9375rem;letter-spacing:.02em;text-transform:uppercase}
 
@@ -103,12 +103,13 @@ a{color:inherit}
 
     <div class="stage">
       <div class="stage-inner">
-        <!-- Три ілюстрації в одному стилі (Higgsfield, z_image): та сама синя
-             папка, що на сторінці страхових компаній. Ідентифікатори ті самі,
-             що були в SVG-сцен, тому скрипт нижче не змінювався. -->
-        <img class="scene" id="scene1" src="presentation-assets/process/analityka.jpg" width="1000" height="1000" alt="Відкрита папка, з неї висунуто аркуш із діаграмою, поруч лупа" loading="eager" decoding="async">
-        <img class="scene" id="scene2" src="presentation-assets/process/tender.jpg" width="1000" height="1000" alt="Папка з кількома пропозиціями, одна відзначена зеленою закладкою" loading="lazy" decoding="async">
-        <img class="scene" id="scene3" src="presentation-assets/process/suprovid.jpg" width="1000" height="1000" alt="Закрита папка з печаткою і телефон із полісом на екрані" loading="lazy" decoding="async">
+        <!-- Три фото в одній серії (Higgsfield, z_image): той самий стіл, світло
+             з вікна зліва, лаймовий акцент. Текст на паперах у розфокусі — нічого
+             не читається, назв страхових немає. Ідентифікатори ті самі, що були
+             в SVG-сцен, тому скрипт нижче не змінювався. -->
+        <img class="scene" id="scene1" src="presentation-assets/process/analityka.jpg" width="1200" height="1200" alt="Звіт із діаграмою на столі, поруч окуляри, калькулятор і ручка" loading="eager" decoding="async">
+        <img class="scene" id="scene2" src="presentation-assets/process/tender.jpg" width="1200" height="1200" alt="П'ять пропозицій розкладено віялом, одна відзначена зеленою закладкою" loading="lazy" decoding="async">
+        <img class="scene" id="scene3" src="presentation-assets/process/suprovid.jpg" width="1200" height="1200" alt="Підписаний договір із печаткою і телефон із полісом на екрані" loading="lazy" decoding="async">
       </div>
       <p class="stage-cap" id="cap"><b>Аналітика</b>Дивимося, що насправді відбувається з вашою програмою.</p>
     </div>
@@ -161,7 +162,7 @@ a{color:inherit}
 </section>
 
 <div class="shell">
-  <p class="note"><b>Що це.</b> Чернетка механіки: малюнок ліворуч прилипає і перемальовується під станцію, яку ви читаєте. Ілюстрації — звичайні картинки по 70–100 КБ, без WebGL і відео, щоб не грілися телефони й не сідала батарея. Текст читається і без анімації: якщо в системі увімкнено «зменшити рух», усе показується одразу, статично.</p>
+  <p class="note"><b>Що це.</b> Чернетка механіки: малюнок ліворуч прилипає і перемальовується під станцію, яку ви читаєте. Ілюстрації — звичайні фото по 100–200 КБ, без WebGL і відео, щоб не грілися телефони й не сідала батарея. Текст читається і без анімації: якщо в системі увімкнено «зменшити рух», усе показується одразу, статично.</p>
 </div>
 </main>
 
