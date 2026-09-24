@@ -8,7 +8,7 @@
   -webkit-font-smoothing:antialiased;overflow-x:clip
 }
 .nh *{box-sizing:border-box}
-.nh h1,.nh h2,.nh h3,.nh p,.nh ul{margin:0}
+.nh :where(h1,h2,h3,p,ul){margin:0}
 .nh img,.nh video{display:block;max-width:100%}
 .nh a{color:inherit;text-decoration:none}
 .nh-wrap{max-width:var(--nh-wrap);margin:0 auto;padding:0 var(--nh-gut)}

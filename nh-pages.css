@@ -243,10 +243,12 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh-loop svg{flex:0 0 auto}
 .nh-in .nh-loop svg,.nh-loop.nh-in svg{animation:nh-spin 2.4s var(--nh-ease) 1}
 @keyframes nh-spin{from{transform:rotate(-270deg)}to{transform:none}}
-.nh-cycle-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;padding-top:28px;border-top:1px solid var(--nh-line)}
-.nh-cycle-meta strong{display:block;font-size:clamp(26px,2.8vw,36px);font-weight:600;letter-spacing:-.02em}
+.nh-cycle-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.nh-cycle-meta strong{display:block;font-size:clamp(26px,2.8vw,36px);font-weight:600;letter-spacing:-.02em;line-height:1.1;margin-bottom:6px}
+.nh-cycle-meta div{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:20px;padding:22px 24px}
 .nh-cycle-meta span{color:var(--nh-muted);font-size:15px}
-.nh-three{margin-top:34px;font-size:15px;color:var(--nh-muted);border-left:3px solid var(--nh-lime);padding-left:14px}
+.nh .nh-three{margin-top:18px;display:flex;gap:16px;align-items:center;background:#edf8d6;color:#31480f;border-radius:20px;padding:20px 24px;font-size:16px;font-weight:500}
+.nh-three::before{content:"3";flex:0 0 40px;height:40px;border-radius:50%;background:var(--nh-lime);color:var(--nh-ink);display:grid;place-items:center;font-weight:700;font-size:18px}
 
 /* дві картки-примітки поруч */
 .nh-notes2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
