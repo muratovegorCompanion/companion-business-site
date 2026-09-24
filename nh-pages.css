@@ -322,3 +322,28 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh-bigfact strong{font-size:clamp(64px,9vw,120px);font-weight:600;letter-spacing:-.05em;line-height:.85;color:var(--nh-blue)}
 .nh-bigfact span{max-width:30ch;color:var(--nh-muted);font-size:16px;padding-bottom:6px}
 @media (max-width:980px){.nh-result{grid-template-columns:1fr}.nh-result-img{min-height:240px}}
+
+/* ===== «Застосунок» ===== */
+.nh-apphero{padding:clamp(56px,8vw,110px) 0 clamp(64px,8vw,110px);background:
+  radial-gradient(60% 70% at 85% 30%,rgba(196,240,107,.35),transparent 70%),
+  radial-gradient(50% 60% at 70% 90%,rgba(41,104,229,.18),transparent 70%),var(--nh-bg);overflow:hidden}
+.nh-apphero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
+.nh-apphero h1{font-size:clamp(40px,5.6vw,76px);margin:18px 0 22px;letter-spacing:-.035em;line-height:1.02}
+.nh-apphero h1 em.nh-s{color:var(--nh-blue)}
+.nh-apphero .nh-phones img{border-color:#fff;box-shadow:0 40px 80px -30px rgba(14,26,51,.45)}
+.nh-app-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:30px}
+.nh .nh-app-actions .apk-note,.nh .nh-app-actions .ios-note{flex:0 0 100%;width:100%;max-width:52ch;font-size:13.5px;line-height:1.6;color:var(--nh-muted);margin:4px 0 0}
+.nh .nh-app-actions .apk-note{margin-top:10px}
+.nh .nh-btn-outline{background:transparent;color:var(--nh-ink);border:1.5px solid var(--nh-ink)}
+.nh .nh-btn-outline:hover{background:var(--nh-ink);color:#fff}
+.nh .nh-btn-outline-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.7)}
+.nh .nh-btn-outline-light:hover{background:rgba(255,255,255,.14)}
+.nh .platform-icon{width:18px;height:18px}
+.nh-helpcards{display:grid;gap:14px;margin-top:6px}
+.nh-helpcards article{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:20px;padding:22px 24px}
+.nh-helpcards h3{font-size:20px;margin-bottom:8px}
+.nh-helpcards p{color:var(--nh-muted);font-size:15.5px}
+.nh-cta-app{grid-template-columns:1fr}
+.nh .nh-cta-app .apk-note,.nh .nh-cta-app .ios-note{color:rgba(255,255,255,.8)}
+@media (max-width:980px){.nh-apphero-grid{grid-template-columns:1fr}}
+.nh-break{flex-basis:100%;height:0}
