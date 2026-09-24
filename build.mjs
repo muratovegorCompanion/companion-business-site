@@ -289,7 +289,10 @@ for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home
   'proces-chernetka.html']) {
   await copyFile(join(root, file), join(output, file));
 }
-for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
+// vartist-dms.html: чернетка на вичитку. Свідомо не в PAGES (отже, не в карті
+// сайту) і не в NAV (отже, не в меню) — усередині стоїть noindex. Після
+// вичитки експертами додати до PAGES і прибрати noindex зі сторінки.
+for (const file of ['logistyka.html','yak-my-pratsyuyemo.html','vartist-dms.html',
   'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','vidmova-u-vyplati.html','dodatkovi-rishennya.html','404.html','regulatory.html','privacy.html','insurance-products.html']) {
   await writeFile(join(output, file), shareShell(await readFile(join(root, file), 'utf8'), file));
 }

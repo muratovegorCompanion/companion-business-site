@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="uk" data-meeting-endpoint="https://companion-meeting-form.icompanion.workers.dev">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Чернетка на вичитку. Доки текст не перевірили експерти, сторінка закрита
+     від пошуковиків і не стоїть ні в меню, ні в карті сайту. Зняти noindex
+     і додати до PAGES у build.mjs — після вичитки. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Чому на однаковий запит страхові дають різні ціни, з чого складається програма ДМС і скільки це коштує насправді. На цифрах реальних тендерів.">
+<meta name="theme-color" content="#142a46">
+<title>Скільки коштує корпоративне ДМС — Страхове бюро «Компаньйон»</title>
+<link rel="icon" href="presentation-assets/companion-logo.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="home.css">
+<style>
+/* Сторінка говорить мовою головної: та сама сітка, ті самі рамки й радіуси.
+   Своє тут лише одне — ряди цифр, бо такого блоку на сайті ще не було. */
+.vt{padding:78px 0 96px}
+.vt h1{margin:14px 0 0;font-size:clamp(2.1rem,4.2vw,3.05rem);line-height:1.08;letter-spacing:-.03em;max-width:19ch}
+.vt h1 span{display:block;color:var(--b-blue)}
+.vt-lead{margin:22px 0 0;max-width:58ch;color:var(--b-muted);font-size:1.0625rem;line-height:1.65}
+.vt-body{max-width:64ch;margin-top:52px}
+.vt-body h2{margin:56px 0 0;font-size:clamp(1.4rem,2.5vw,1.85rem);line-height:1.2;letter-spacing:-.02em}
+.vt-body h2:first-child{margin-top:0}
+.vt-body h3{margin:34px 0 0;font-size:1.0625rem;letter-spacing:-.01em}
+.vt-body p{margin:16px 0 0;line-height:1.7}
+.vt-body ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.vt-body li{padding-left:24px;position:relative;line-height:1.6}
+.vt-body li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:2px;background:var(--b-lime);transform:rotate(45deg)}
+.vt-body strong{font-weight:700}
+
+/* Ряд цифр із тендера. Моноширинні цифри, щоб стовпчик читався як стовпчик. */
+.vt-nums{margin:26px 0 0;padding:24px;border:1px solid var(--b-line);border-radius:16px;background:#fff}
+.vt-nums-cap{margin:0 0 14px;font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--b-muted)}
+.vt-row{display:flex;flex-wrap:wrap;gap:8px}
+.vt-row b{font-variant-numeric:tabular-nums;font-weight:700;font-size:1.0625rem;padding:7px 12px;border-radius:9px;background:var(--b-bg,#f4f6f9);color:var(--b-ink)}
+.vt-row b.lo{background:#e8f3ea;color:#1f5c33}
+.vt-row b.hi{background:#fdecec;color:#8c2f2f}
+.vt-nums-note{margin:14px 0 0;font-size:.9375rem;color:var(--b-muted);line-height:1.55}
+
+.vt-callout{margin:30px 0 0;padding:24px 26px;border-radius:16px;background:var(--b-navy,#142a46);color:#fff}
+.vt-callout p{margin:0;line-height:1.65;font-size:1.0625rem}
+.vt-callout p + p{margin-top:12px;color:#c9d4e3}
+
+.vt-quote{margin:30px 0 0;padding-left:20px;border-left:3px solid var(--b-lime);font-size:1.0625rem;line-height:1.65}
+.vt-quote cite{display:block;margin-top:10px;font-style:normal;font-size:.875rem;color:var(--b-muted)}
+
+.vt-box{margin:26px 0 0;padding:24px;border:1px solid var(--b-line);border-radius:16px}
+.vt-box h3{margin:0 0 4px}
+
+/* Форма — та сама механіка, що на лендингу: клас b-meeting-form ловить form.js */
+.vt-form{margin:64px 0 0;padding:32px;border:1px solid var(--b-line);border-radius:20px;background:#fff}
+.vt-form h2{margin:0}
+.vt-form p{margin:14px 0 0;color:var(--b-muted);line-height:1.65}
+.vt-form form{margin-top:26px;display:grid;gap:16px;max-width:520px}
+.vt-field{display:grid;gap:6px}
+.vt-field label{font-size:.875rem;font-weight:600}
+.vt-field input,.vt-field textarea{font:inherit;padding:12px 14px;border:1px solid var(--b-line);border-radius:10px;background:#fff;color:var(--b-ink)}
+.vt-field input:focus-visible,.vt-field textarea:focus-visible{outline:3px solid var(--b-blue);outline-offset:2px}
+.vt-consent{display:flex;gap:10px;align-items:flex-start;font-size:.875rem;color:var(--b-muted);line-height:1.5}
+.vt-consent input{margin-top:3px;flex:none}
+.vt-form button{justify-self:start;font:inherit;font-weight:700;padding:13px 26px;border:0;border-radius:10px;background:var(--b-blue);color:#fff;cursor:pointer}
+.vt-form button:disabled{opacity:.6;cursor:default}
+.b-form-status{margin:14px 0 0;font-size:.9375rem;color:var(--b-muted);line-height:1.5}
+@media(max-width:640px){.vt{padding:56px 0 72px}.vt-form{padding:22px}.vt-nums{padding:18px}}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="shell header-inner"><a class="brand" href="index.html" aria-label="Страхове бюро «Компаньйон» — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро «Компаньйон»" width="2172" height="724"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav" class="site-nav" aria-label="Сайт"><a href="index.html#solutions">Напрями</a><a href="dms.html">Медичне страхування</a><a href="logistyka.html">Логістика</a><a href="yak-my-pratsyuyemo.html">Як працюємо</a><a href="about.html">Про нас</a><a href="app.html">Застосунок</a><a class="header-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>
+<main>
+<section class="vt">
+  <div class="shell">
+    <p class="section-kicker">Вартість</p>
+    <h1>Скільки коштує корпоративне ДМС <span>і чому вам не називають цифру</span></h1>
+    <p class="vt-lead">Запитайте вартість програми — і почуєте «розрахуємо індивідуально». Це не відмовка: єдиної ціни справді немає. Нижче — з чого вона складається, на цифрах реальних тендерів.</p>
+
+    <div class="vt-body">
+
+      <h2>Чому однієї цифри не існує</h2>
+      <p>Внесок на одну людину на рік буває і 8 тисяч гривень, і 50 тисяч. Різниця шестикратна — не тому, що хтось наживається, а тому що це різні набори послуг.</p>
+      <p>Назви програм тут не допомагають. У кожної страхової вони свої й нічого не означають: «Стандарт» в одній компанії та «Стандарт» в іншій — дві різні програми з різним наповненням.</p>
+      <p><strong>Тут не продається коробка. Тут збирається набір під конкретну компанію.</strong></p>
+
+      <h2>Що відбувається, коли запит іде ринком</h2>
+      <p>Ось реальний тендер. Компанія визначила бюджет — 9 500 грн на людину на рік, страхова сума 150 000 грн. Запит пішов до дев'яти страхових компаній.</p>
+
+      <div class="vt-nums">
+        <p class="vt-nums-cap">Ціна програми, грн на людину на рік</p>
+        <div class="vt-row">
+          <b class="lo">8 900</b><b>9 300</b><b>9 370</b><b>9 460</b><b>9 500</b><b>9 500</b><b>9 616</b><b>10 189</b><b class="hi">10 370</b>
+        </div>
+        <p class="vt-nums-note">Різниця між найдешевшою і найдорожчою — 16%. Здається, все зрозуміло: бери найдешевшу.</p>
+      </div>
+
+      <div class="vt-nums">
+        <p class="vt-nums-cap">Та сама дев'ятка. Доплата за профогляд, грн</p>
+        <div class="vt-row">
+          <b class="lo">360</b><b>1 500</b><b>1 500</b><b>1 876</b><b>2 500</b><b>2 583</b><b>2 688</b><b class="hi">4 500</b>
+        </div>
+        <p class="vt-nums-note">У дванадцять разів. За одну й ту саму опцію — п'ять консультацій чи видів діагностики.</p>
+      </div>
+
+      <div class="vt-callout">
+        <p>Страхова, яка дала найнижчу ціну за програму, просить за профогляд найбільше.</p>
+        <p>Компанія, яка чесно порівняла дев'ять пропозицій за ціною полісу й обрала найдешевшу, на доплатах втратить більше, ніж зекономила.</p>
+      </div>
+
+      <p>Це не випадковість одного тендера. Закономірність проста: <strong>що дешевша базова програма, то дорожчі опції до неї.</strong></p>
+
+      <h2>Іноді та сама опція просто безкоштовна</h2>
+      <p>Інший тендер, агропромислова компанія на 444 особи. Дивимося опції за доплату — і виявляється, що частина страхових дає їх як бонус, у межах основної ціни.</p>
+      <ul>
+        <li>Психологічна підтримка: у трьох компаній — бонус, у решти — від 250 до 2 256 грн</li>
+        <li>Фізіотерапія: у трьох — бонус, в інших — від 1 370 до 1 901 грн</li>
+        <li>Збільшення індивідуального ліміту: від 350 до 980 грн за той самий крок</li>
+      </ul>
+      <p>Тобто питання не лише «скільки коштує», а й «що вже входить». Дві програми з однаковою ціною можуть відрізнятися на кілька тисяч гривень на людину — просто одна віддає опції даром, а інша за них бере.</p>
+
+      <h2>З чого збирається програма</h2>
+      <p>Коли компанія ще не знає свого бюджету, ми не називаємо «правильну» суму. Ми показуємо конструктор.</p>
+
+      <div class="vt-box">
+        <h3>База — те, що має бути в будь-якій робочій програмі</h3>
+        <ul>
+          <li>поліклініка</li>
+          <li>стаціонар</li>
+          <li>медикаменти</li>
+          <li>невідкладна допомога</li>
+          <li>критичні стани</li>
+          <li>мінімальна стоматологія та профогляд</li>
+        </ul>
+        <p>Ця частина рахується у двох-трьох варіантах — щоб було видно, як змінює ціну рівень клінік.</p>
+      </div>
+
+      <div class="vt-box">
+        <h3>Опції, які додаються за доплату</h3>
+        <ul>
+          <li>розширений профогляд</li>
+          <li>вищий ліміт на стоматологію</li>
+          <li>індивідуальний ліміт на винятки</li>
+        </ul>
+        <p>Вартість кожного шматка видно окремо. Ви самі вирішуєте, де зупинитися: не «ось програма за стільки», а «ось із чого вона складається».</p>
+      </div>
+
+      <h2>Що найбільше рухає ціну</h2>
+      <p><strong>Клас клінік.</strong> Головний чинник. Мережеві клініки преміумрівня коштують дорого — саме вони найчастіше роблять програму непідйомною.</p>
+      <p><strong>Ліміти за додатковими опціями.</strong> Стоматологія, профогляд, індивідуальний ліміт на винятки.</p>
+      <p><strong>Включення того, що зазвичай у винятках</strong> — дерматологія, ендокринологія та подібні напрями.</p>
+      <p><strong>Ваша власна збитковість.</strong> Скільки виплат було торік. Про це зазвичай не думають: ціна наступного року залежить не так від ринку, як від вашої ж статистики. Тому аналітика програми — не звіт заради звіту, а спосіб впливати на ціну наступного тендера.</p>
+
+      <h2>Чому дві схожі пропозиції відрізняються вдвічі</h2>
+      <p>У тендері для ІТ-компанії на 277 осіб базовий рівень програми коштував від 471 до 954 доларів на людину. Рівно вдвічі — за програму того самого класу.</p>
+      <p>Різницю дають речі, яких не видно в ціні:</p>
+      <ul>
+        <li>франшиза на окремі клініки</li>
+        <li>гірший перелік винятків</li>
+        <li>застереження про збитковість у договорі</li>
+        <li>різна кількість клінік зі стовідсотковим покриттям</li>
+      </ul>
+      <p>Останнє варте окремої уваги. В одному з тендерів пропозиція за 8 320 грн давала десять клінік із повним покриттям, а за 9 354 грн — чотири. Дорожче й вужче водночас. За самою лише ціною цього не побачити.</p>
+
+      <h2>Від скількох людей це має сенс</h2>
+      <p><strong>Від 50 осіб.</strong> Нижче не вдасться отримати умови кращі, ніж людина купила б собі сама. Формально застрахувати можна й менший колектив, але економічного сенсу в цьому небагато.</p>
+
+      <h2>Чи будуть доплати потім</h2>
+      <p>Прихованих доплат немає. Обслуговування йде рівно за підписаним договором: що записано — те й працює.</p>
+      <p>Доплата виникає в одному випадку — коли протягом року приходять нові співробітники і їх треба дострахувати. Це передбачено за замовчуванням. Усі інші умови переглядаються на наступний рік, під час продовження.</p>
+
+      <h2>Що не покриє жодна програма</h2>
+      <p>Це варто сказати прямо, бо інакше розчарування неминуче.</p>
+      <p><strong>Хоч який бюджет ви закладете, щось залишиться непокритим.</strong> Абсолютно все включити не можна в жодну програму — ні за 10 тисяч, ні за 50.</p>
+      <p>І ще: сто відсотків побажань усіх застрахованих не задовольнить жоден договір. Незадоволені окремі люди будуть завжди — комусь не вистачить клініки поруч із домом, комусь ліміту на стоматологію. Це нормально. Питання не в тому, щоб догодити всім, а в тому, щоб більшість отримала те, що їй справді потрібно.</p>
+
+      <div class="vt-quote">
+        Ми не називаємо програми «хорошими» чи «поганими» — це неправильно. Хороша програма та, яка влаштовує конкретну компанію.
+        <cite>З внутрішньої практики бюро</cite>
+      </div>
+
+      <h2>Що відбувається на продовженні</h2>
+      <p>Окрема історія, про яку варто знати заздалегідь: <strong>на продовженні ринок розходиться, і передбачити напрямок неможливо.</strong></p>
+      <p>Фармацевтична компанія, 433 особи: жодна страхова не запропонувала ціну торішнього рівня. Найкраща пропозиція була дорожчою на 22%, найгірша — майже на 49%.</p>
+      <p>Агропромислова компанія, 444 особи, той самий період: дві страхові дали ціну на рівні минулого року, ще одна попросила на 35% більше, ще одна — на 51%.</p>
+      <p>ІТ-компанія на 100 осіб: усі пропозиції виявилися дорожчими за чинні умови — від 48% до 105%.</p>
+      <p>Спільного правила немає. Саме тому ціну на продовженні не можна вгадати — її можна тільки запитати в ринку. Компанія, яка просто продовжує договір у своєї страхової, бачить одну цифру й не знає, де вона в цьому діапазоні.</p>
+
+    </div>
+
+    <div class="vt-form">
+      <h2>Скільки це коштує у вас</h2>
+      <p>Назвати вашу цифру без вхідних даних чесно не вийде. Але порахувати її швидко — можна. Потрібні три речі: скільки людей страхуємо, в яких містах вони працюють і який бюджет ви розглядаєте. Якщо орієнтиру ще немає — так і напишіть, порахуємо кілька варіантів.</p>
+      <p>Далі ми збираємо конструктор, розсилаємо запит ринком і показуємо зведену таблицю: що пропонує кожна страхова, скільки коштує кожна опція і де різниця не в ціні, а в дрібному шрифті. Вибір залишається за вами.</p>
+      <form class="b-meeting-form" novalidate>
+        <input type="hidden" name="interest" value="Вартість ДМС">
+        <div class="vt-field"><label for="v-name">Ваше ім'я *</label><input id="v-name" name="name" type="text" autocomplete="name" required maxlength="100" placeholder="Як до вас звертатися"></div>
+        <div class="vt-field"><label for="v-company">Компанія *</label><input id="v-company" name="company" type="text" autocomplete="organization" required maxlength="160" placeholder="Назва компанії"></div>
+        <div class="vt-field"><label for="v-contact">Телефон або email *</label><input id="v-contact" name="contact" type="text" required maxlength="180" placeholder="Зручний контакт для відповіді"></div>
+        <div class="vt-field"><label for="v-message">Кілька слів про програму</label><textarea id="v-message" name="message" rows="2" maxlength="2000" placeholder="Наприклад: 150 працівників, договір до березня"></textarea></div>
+        <label class="vt-consent"><input name="consent" type="checkbox" required><span>Погоджуюся на обробку цих контактів для відповіді на запит</span></label>
+        <button type="submit">Порахувати вартість</button>
+        <p class="b-form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+  </div>
+</section>
+</main>
+<script src="form.js?v=1" defer></script>
+</body>
+</html>
