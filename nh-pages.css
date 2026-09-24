@@ -222,3 +222,83 @@ body.nh-page{margin:0;background:#F6F5F0}
 }
 /* без анімації (немає скрипта або «менше руху») схеми одразу в кінцевому стані */
 .nh:not(.nh-anim) .nh-mini i,.nh:not(.nh-anim) .nh-bar i{transform:none}
+
+/* ===== «Як ми працюємо» і «Про нас» ===== */
+/* орієнтири у першому екрані */
+.nh-hero-facts{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.nh-hero-facts div{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:16px 20px;max-width:280px}
+.nh-hero-facts strong{display:block;font-size:30px;font-weight:600;letter-spacing:-.02em;color:var(--nh-lime);line-height:1.1}
+.nh-hero-facts span{font-size:14px;color:rgba(255,255,255,.8)}
+
+/* цикл «аналітика → тендер → супровід → знову аналітика» */
+.nh-cycle{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;position:relative}
+.nh-cycle-card{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:24px;padding:28px 28px 30px;position:relative}
+.nh-cycle-card:not(:last-child)::after{content:"→";position:absolute;right:-34px;top:50%;translate:0 -50%;width:26px;height:26px;border-radius:50%;background:var(--nh-blue);color:#fff;display:grid;place-items:center;font-size:14px}
+.nh-cycle-card b{font-size:13px;color:var(--nh-blue);letter-spacing:.12em;font-weight:600}
+.nh-cycle-card h3{font-size:26px;margin:8px 0 16px;letter-spacing:.02em}
+.nh-cycle-card ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.nh-cycle-card li{display:flex;gap:10px;color:var(--nh-muted);font-size:15.5px}
+.nh-cycle-card li::before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--nh-lime);margin-top:9px;box-shadow:0 0 0 3px rgba(196,240,107,.25)}
+.nh-loop{margin:26px auto 0;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:600;font-size:15px;color:#31480f;background:#edf8d6;border-radius:999px;padding:12px 22px;width:max-content;max-width:100%}
+.nh-loop svg{flex:0 0 auto}
+.nh-in .nh-loop svg,.nh-loop.nh-in svg{animation:nh-spin 2.4s var(--nh-ease) 1}
+@keyframes nh-spin{from{transform:rotate(-270deg)}to{transform:none}}
+.nh-cycle-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;padding-top:28px;border-top:1px solid var(--nh-line)}
+.nh-cycle-meta strong{display:block;font-size:clamp(26px,2.8vw,36px);font-weight:600;letter-spacing:-.02em}
+.nh-cycle-meta span{color:var(--nh-muted);font-size:15px}
+.nh-three{margin-top:34px;font-size:15px;color:var(--nh-muted);border-left:3px solid var(--nh-lime);padding-left:14px}
+
+/* дві картки-примітки поруч */
+.nh-notes2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
+.nh-notes2 div{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:20px;padding:24px 26px}
+.nh-notes2 b{display:block;font-size:19px;margin-bottom:8px}
+.nh-notes2 p{color:var(--nh-muted);font-size:15.5px}
+.nh-notes2 .nh-link{margin-top:12px}
+
+/* список з позначками у темному/світлому блоці */
+.nh-checks{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.nh-checks li{display:flex;gap:12px;align-items:flex-start}
+.nh-checks li::before{content:"";flex:0 0 22px;height:22px;border-radius:50%;margin-top:2px;background:var(--nh-lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E1A33' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/12px no-repeat}
+
+/* «Про нас»: факти про бюро */
+.nh-about-facts{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:18px}
+.nh-afact{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:22px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:10px}
+.nh-afact h3{font-size:20px}
+.nh-afact p{color:var(--nh-muted);font-size:15.5px}
+.nh-split-bar{display:flex;height:44px;border-radius:14px;overflow:hidden;margin:6px 0 4px;font-size:14px;font-weight:600}
+.nh-split-bar span{display:flex;align-items:center;padding:0 14px;white-space:nowrap}
+.nh-split-bar span:first-child{flex:75;background:var(--nh-blue);color:#fff}
+.nh-split-bar span:last-child{flex:25;background:var(--nh-lime);color:var(--nh-ink)}
+
+/* принципи */
+.nh-principles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.nh-principle{background:var(--nh-navy-2);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:28px}
+.nh-principle b{display:block;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:500;font-size:44px;color:var(--nh-lime);line-height:1;margin-bottom:14px}
+.nh-principle h3{font-size:22px;margin-bottom:10px}
+.nh-principle p{color:rgba(255,255,255,.75);font-size:15.5px}
+.nh-principle .nh-link{margin-top:14px;color:#fff}
+
+/* команда */
+.nh-team{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.nh-person{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.nh-person figure{margin:0;aspect-ratio:4/5;background:#5d6168;overflow:hidden}
+.nh-person figure img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 1.2s var(--nh-ease)}
+.nh-person:hover figure img{transform:scale(1.04)}
+.nh-person-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.nh-person h3{font-size:21px}
+.nh-role{font-size:13px;font-weight:600;color:var(--nh-blue);letter-spacing:.02em}
+.nh-quote-s{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:16.5px;line-height:1.5;color:var(--nh-ink);flex:1}
+.nh-person details{border-top:1px solid var(--nh-line);padding-top:10px}
+.nh-person summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--nh-blue);list-style:none}
+.nh-person summary::-webkit-details-marker{display:none}
+.nh-person summary::after{content:" +"}
+.nh-person details[open] summary::after{content:" −"}
+.nh-person details p{font-size:14px;color:var(--nh-muted);margin-top:8px}
+
+@media (max-width:1100px){.nh-team{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:980px){
+  .nh-cycle,.nh-cycle-meta,.nh-notes2,.nh-about-facts,.nh-principles{grid-template-columns:1fr}
+  .nh-cycle{gap:34px}
+  .nh-cycle-card:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-30px;translate:-50% 0}
+}
+@media (max-width:560px){.nh-team{grid-template-columns:1fr}}

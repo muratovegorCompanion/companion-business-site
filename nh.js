@@ -68,4 +68,14 @@
 
   // Відео першого екрана на внутрішніх сторінках
   document.querySelectorAll('.nh-phero video').forEach(v=>{ if(still){ v.removeAttribute('autoplay'); v.pause(); } });
+
+  // Невеликі ролики (кроки процесу): вантажимо й граємо лише коли на екрані.
+  const clips=[...root.querySelectorAll('video[data-nh-autoplay]')];
+  if(clips.length && !still && 'IntersectionObserver' in window){
+    const vio=new IntersectionObserver(es=>es.forEach(e=>{
+      const v=e.target;
+      if(e.isIntersecting){ v.play().catch(()=>{}); } else { v.pause(); }
+    }),{threshold:.35});
+    clips.forEach(v=>vio.observe(v));
+  }
 })();
