@@ -203,6 +203,10 @@ const shareShell = (html, file) => {
   // щоб перебивати їхні transition там, де треба.
   if (!html.includes('motion.css'))
     html = html.replace('</head>', '<link rel="stylesheet" href="motion.css?v=1"><script src="motion.js?v=2" defer></script></head>');
+  // Тег Google Ads: рахує заявки, надіслані з форми. Один файл на всі
+  // сторінки; сам виклик конверсії живе в обробниках форми.
+  if (!html.includes('analytics.js'))
+    html = html.replace('</head>', '<script src="analytics.js?v=1" defer></script></head>');
   return openGraph(canonical(html, file), file);
 };
 
@@ -278,7 +282,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','android-download.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
   // Посадкова під рекламу копіюється як є: спільне меню й підвал їй
   // протипоказані — з реклами кожне зайве посилання це вихід зі сторінки.
-  'korporatyvne-dms.html','form.js','nh.css','nh.js','nh-pages.css','favicon.ico','motion.css','motion.js','scrollvideo.js',
+  'korporatyvne-dms.html','form.js','nh.css','nh.js','nh-pages.css','favicon.ico','motion.css','motion.js','scrollvideo.js','analytics.js',
   // Чернетка станцій процесу: копіюється як є, у карту сайту й меню не
   // потрапляє, всередині стоїть noindex. Прибрати, коли механіку перенесемо
   // на yak-my-pratsyuyemo.html.

@@ -66,6 +66,9 @@
         if (status) {
           status.textContent = 'Дякуємо! Ми отримали ваш запит і зв’яжемося з вами.';
         }
+        // Заявка дійсно доїхала до воркера — тільки тепер рахуємо її
+        // як конверсію в Google Ads (див. analytics.js).
+        if (window.companionLead) window.companionLead();
         form.reset();
       } catch {
         if (status) {

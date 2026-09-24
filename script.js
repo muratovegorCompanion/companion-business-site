@@ -139,6 +139,9 @@ if(presentationFrame){
         if(result.accepted!==true)throw new Error('Delivery not confirmed');
         if(status){status.textContent='Дякуємо! Ми отримали ваш запит і зв’яжемося з вами.';
           const ok=document.createElement('span');ok.className='m-check';ok.setAttribute('aria-hidden','true');status.prepend(ok);}
+        // Заявка дійсно доїхала до воркера — тільки тепер рахуємо її
+        // як конверсію в Google Ads (див. analytics.js).
+        if(window.companionLead)window.companionLead();
         form.reset();
       }catch{
         if(status)status.textContent='Не вдалося надіслати запит. Ваші дані залишилися у формі. Спробуйте ще раз або зателефонуйте: +38 (050) 145 2605.';
