@@ -4,7 +4,7 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh-page .nh{min-height:40vh}
 
 /* перший екран сторінки */
-.nh-phero{min-height:min(82svh,820px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate;background:#1b2b48}
+.nh-phero{min-height:calc(100svh - 92px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate;background:#1b2b48}
 .nh-phero-media{position:absolute;inset:0;z-index:-2}
 .nh-phero-media img,.nh-phero-media video{width:100%;height:100%;object-fit:cover}
 .nh-phero::after{content:"";position:absolute;inset:0;z-index:-1;background:
@@ -217,6 +217,7 @@ body.nh-page{margin:0;background:#F6F5F0}
   .nh-overlap{margin-top:-48px}
 }
 @media (max-width:640px){
+  .nh-phero{min-height:calc(100svh - 74px)}
   .nh-phero .nh-wrap{padding-top:80px;padding-bottom:40px}
   .nh-phones img:last-child{margin-top:24px}
 }
