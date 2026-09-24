@@ -1,4 +1,4 @@
-/* Головна, вересень 2026 («спокій у русі»). Тексти й факти — ті самі, що були на попередній версії.
+/* Головна, вересень 2026 («спокій у русі»). Порядок: напрями → цикл роботи → щоденний сервіс і застосунок → продовження → FAQ → зустріч.
    Стилі — nh.css, поведінка — nh.js. FAQ лишається в розмітці b-insight: з неї build.mjs збирає FAQPage. */
 window.CompanionHome = {
   render() {
@@ -10,7 +10,7 @@ window.CompanionHome = {
     <h1 id="hero-heading" class="nh-rv nh-d1">Страхування, яке допомагає бізнесу рухатися <em class="nh-s">впевнено.</em></h1>
     <p class="nh-lead nh-rv nh-d2">Організовуємо тендер, пояснюємо ринок і залишаємося поруч після вибору. Ви бачите варіанти та самі обираєте страхову компанію.</p>
     <div class="nh-hero-cta nh-rv nh-d3"><a class="nh-btn nh-btn-primary" href="#meeting">Домовитися про зустріч <span class="nh-ar" aria-hidden="true">↗</span></a><a class="nh-btn nh-btn-ghost" href="#solutions">Знайти своє рішення <span aria-hidden="true">↓</span></a></div>
-    <p class="nh-hero-note nh-rv nh-d3">Безоплатно · Онлайн або особисто в Києві</p>
+    <p class="nh-hero-note nh-rv nh-d3">Безоплатна перша зустріч · Онлайн або особисто в Києві</p>
     <div class="nh-stats" aria-label="Компаньйон у цифрах">
       <div class="nh-stat"><b data-count="11">11</b><span>років на ринку</span></div>
       <div class="nh-stat"><b data-count="97" data-suffix="%">97%</b><span>договорів продовжуються</span></div>
@@ -57,7 +57,44 @@ window.CompanionHome = {
     <div class="nh-family nh-rv"><span>Потрібне страхування для себе чи родини?</span><a class="nh-link" href="services.html">Переглянути всі сервіси ↗</a></div>
   </div>
 </section>
-<section style="padding-bottom:clamp(80px,11vw,150px)" aria-labelledby="renewal-heading">
+<section class="nh-sec nh-process" id="process" aria-labelledby="process-heading">
+  <div class="nh-wrap">
+    <div class="nh-head">
+      <div><span class="nh-num nh-rv">02 / Як працюємо</span><h2 id="process-heading" class="nh-rv nh-d1">Показуємо ринок. Рішення <em class="nh-s">завжди за вами.</em></h2></div>
+      <p class="nh-lead nh-rv nh-d2">А після вибору лишаємося поруч увесь рік — і до наступного продовження приходимо вже з досвідом цього.</p>
+    </div>
+    <span class="nh-phase nh-rv">До вибору</span>
+    <div class="nh-steps" id="nh-steps">
+      <div class="nh-rail" aria-hidden="true"><i></i></div>
+      <div class="nh-step nh-rv"><span class="nh-dot" aria-hidden="true"></span><b>01</b><h3>Розуміємо задачу</h3><p>Команда, міста, бюджет, чинні договори — і що саме не влаштовує зараз. Критерії вибору погоджуємо до виходу на ринок.</p></div>
+      <div class="nh-step nh-rv nh-d1"><span class="nh-dot" aria-hidden="true"></span><b>02</b><h3>Показуємо ринок</h3><p>Для великого тендеру залучаємо 10–15 страхових компаній. Зводимо пропозиції поруч і пояснюємо різницю в покритті, винятках, клініках і сервісі.</p></div>
+      <div class="nh-step nh-rv nh-d2"><span class="nh-dot" aria-hidden="true"></span><b>03</b><h3>Ви обираєте</h3><p>Даємо рекомендацію з аргументами, а рішення ухвалюєте ви — так, щоб його можна було пояснити керівництву й команді.</p></div>
+    </div>
+    <span class="nh-phase nh-rv">Після вибору</span>
+    <div class="nh-steps">
+      <div class="nh-rail" aria-hidden="true"><i></i></div>
+      <div class="nh-step nh-rv"><span class="nh-dot" aria-hidden="true"></span><b>04</b><h3>Запускаємо</h3><p>Супроводжуємо договір і списки застрахованих. У медичному страхуванні працівники отримують застосунок зі своєю програмою.</p></div>
+      <div class="nh-step nh-rv nh-d1"><span class="nh-dot" aria-hidden="true"></span><b>05</b><h3>Супроводжуємо щодня</h3><p>Закріплена команда веде зміни в програмі, питання працівників і складні звернення — зокрема відмови у виплаті.</p></div>
+      <div class="nh-step nh-rv nh-d2"><span class="nh-dot" aria-hidden="true"></span><b>06</b><h3>Готуємо наступний рік</h3><p>Дивимося на доступну статистику звернень і зворотний зв’язок працівників. З цим приходимо до продовження.</p></div>
+    </div>
+    <p class="nh-loop nh-rv"><span aria-hidden="true">↻</span>Наступний тендер починається не з нуля, а з досвіду року.</p>
+  </div>
+</section>
+<section class="nh-sec nh-support" id="support" aria-labelledby="support-heading">
+  <div class="nh-wrap nh-sup">
+    <div class="nh-sup-l">
+      <span class="nh-num nh-rv">03 / Щоденний сервіс</span>
+      <h2 id="support-heading" class="nh-rv nh-d1">Після вибору не залишаємо вас <em class="nh-s" style="color:var(--nh-lime)">сам на сам.</em></h2>
+      <p class="nh-lead nh-rv nh-d2">За кожною компанією закріплена команда супроводу. Документи, списки, зміни в програмі й складні звернення беремо на себе — HR лишається точкою погодження, а не оператором.</p>
+      <a class="nh-link nh-rv" href="about.html" style="align-self:flex-start">Познайомитися з командою ↗</a>
+      <div class="nh-rv"><span class="nh-eyebrow">Ваш формат супроводу</span><div class="nh-fmt"><div><b>Команда</b><p>веде страхові питання та координує потрібні наступні кроки. Для медичного страхування — керівник напряму або його заступник.</p></div><div><b>Зв’язок</b><p>телефон, месенджери, email і застосунок — там, де зручно вам і команді.</p></div></div></div>
+      <p class="nh-fine nh-rv">Строки та порядок відповіді для конкретної програми погоджуємо до початку роботи.</p>
+      <div class="nh-rv"><p style="font-weight:600">Спілкуємося там, де вам зручно</p><div class="nh-channels"><span>Телефон</span><span>Telegram</span><span>Viber</span><span>WhatsApp</span><span>Email</span><span>Застосунок Компаньйон</span></div></div>
+    </div>
+    <article class="nh-appcard nh-rv nh-d1"><img src="presentation-assets/home/app.jpg" alt="" loading="lazy" width="880" height="1168"><div class="nh-appcard-in"><span class="nh-k">Застосунок для медичного страхування</span><h3>Своя програма — у телефоні кожного працівника.</h3><p>Покриття й винятки, клініки на карті, контакти асистансу, родичі. І ШІ-помічник, який відповідає за документами саме вашої програми.</p><a class="nh-link" href="app.html">Детальніше про застосунок ↗</a></div></article>
+  </div>
+</section>
+<section style="padding:clamp(80px,11vw,150px) 0" aria-labelledby="renewal-heading">
   <div class="nh-wrap"><div class="nh-renew nh-rv">
     <div class="nh-renew-img"><img src="presentation-assets/home/renewal.jpg" alt="" loading="lazy" width="1168" height="880"></div>
     <div class="nh-renew-txt">
@@ -72,38 +109,10 @@ window.CompanionHome = {
 <section class="nh-sec" id="faq" style="padding-top:0" aria-labelledby="faq-heading">
   <div class="nh-wrap">
     <div class="nh-head">
-      <div><span class="nh-num nh-rv">02 / Часті питання</span><h2 id="faq-heading" class="nh-rv nh-d1">Що зазвичай питають на <em class="nh-s">першій зустрічі.</em></h2></div>
+      <div><span class="nh-num nh-rv">04 / Часті питання</span><h2 id="faq-heading" class="nh-rv nh-d1">Що зазвичай питають на <em class="nh-s">першій зустрічі.</em></h2></div>
       <p class="nh-lead nh-rv nh-d2">Коротко відповідаємо на те, з чого починають розмову керівники, HR і операційні команди.</p>
     </div>
-    <div class="nh-faq"><div class="nh-faq-col"><details class="b-insight"><summary><small>Медичне страхування</small><h3>У нас вже є ДМС. Чи є сенс щось міняти?</h3></summary><div class="b-insight-body"><p>Аналізуємо чинну програму, доступну статистику звернень і зворотний зв’язок працівників — і показуємо, що варто переглянути перед продовженням договору.</p><a href="dms.html">Як влаштоване медичне страхування ↗</a><a href="perevirka-dms.html">Чек-лист: що перевірити перед продовженням ↗</a></div></details><details class="b-insight"><summary><small>Логістика</small><h3>Що страхують у логістиці, крім вантажу?</h3></summary><div class="b-insight-body"><p>Відповідальність перевізника і складські ризики. Спершу розбираємо маршрут і договори, а вже потім виходимо на ринок.</p><a href="logistyka.html">Логістика ↗</a></div></details><details class="b-insight"><summary><small>Відповідальність Бюро</small><h3>А якщо помилитеся ви?</h3></summary><div class="b-insight-body"><p>Наша професійна відповідальність застрахована: договір № LBT0076943 у СК «Колоннейд Україна», ліміт 1 500 000 грн на кожен випадок, чинний до 10 червня 2027 року. Якщо через нашу помилку ваша компанія зазнає збитку, його відшкодовує страхова компанія.</p><a href="regulatory.html">Регуляторна інформація ↗</a></div></details><details class="b-insight"><summary><small>Виплати</small><h3>Що буде, якщо страхова відмовить у виплаті?</h3></summary><div class="b-insight-body"><p>З’ясовуємо підставу відмови, допомагаємо зібрати документи та сформулювати аргументовану позицію, ведемо діалог зі страховою компанією і ініціюємо повторний розгляд, коли є на чому. Рішення ухвалює страхова компанія — ми представляємо ваші інтереси в цьому діалозі.</p><a href="vidmova-u-vyplati.html">Що робити, якщо відмовили ↗</a></div></details><details class="b-insight"><summary><small>Розмір компанії</small><h3>Від скількох людей це має сенс?</h3></summary><div class="b-insight-body"><p>Корпоративні програми медичного страхування ведемо для команд від 50 людей. Для майна, відповідальності та логістики обмежень за розміром компанії немає.</p></div></details><details class="b-insight"><summary><small>Другий рік</small><h3>Що ми отримаємо через рік?</h3></summary><div class="b-insight-body"><p>Повертаємось до результатів програми: узагальнена статистика звернень і витрат, зворотний зв’язок працівників, рекомендації що зберегти, розширити або переглянути перед продовженням договору. Наступний тендер готуємо з урахуванням цього досвіду.</p></div></details><details class="b-insight"><summary><small>Супровід</small><h3>Хто конкретно буде нашим контактом?</h3></summary><div class="b-insight-body"><p>За кожною компанією закріплена команда супроводу, а не загальна скринька. Для медичного страхування це керівник напряму або його заступник.</p></div></details></div><div class="nh-faq-col"><details class="b-insight"><summary><small>Процес</small><h3>Скільки часу займає тендер?</h3></summary><div class="b-insight-body"><p>Повний цикл — близько місяця. Терміновий запуск можливий орієнтовно за два тижні, коли коло страхових компаній вужче.</p><a href="yak-my-pratsyuyemo.html">Як ми працюємо ↗</a></div></details><details class="b-insight"><summary><small>Вартість</small><h3>Скільки коштують ваші послуги?</h3></summary><div class="b-insight-body"><p>Розмір комісії на нашу рекомендацію не впливає — критерії вибору ми узгоджуємо з вами до старту тендеру. За замовчуванням нашу роботу оплачує страхова компанія комісією за укладений договір, тож окремої оплати з вашого боку немає. Друга модель — гонорар від вас; тоді комісію у страхової компанії ми обнуляємо. Модель обираєте ви, до того як побачите пропозиції.</p></div></details><details class="b-insight"><summary><small>Незалежність</small><h3>Ви ж однаково приведете «свою» страхову?</h3></summary><div class="b-insight-body"><p>Ми не володіємо частками у страхових компаніях, і вони не володіють часткою в нас. Для великого тендеру залучаємо 10–15 страхових компаній, показуємо пропозиції поруч і пояснюємо відмінності. Остаточний вибір за вами.</p></div></details><details class="b-insight"><summary><small>Навантаження</small><h3>Скільки часу це забере у нашого HR?</h3></summary><div class="b-insight-body"><p>Тендер, комунікацію зі страховою компанією, списки застрахованих і складні звернення беремо на себе. HR лишається точкою погодження, а не оператором. Створювати окремий страховий відділ не потрібно.</p></div></details><details class="b-insight"><summary><small>Географія</small><h3>Ви ж у Києві, а наші люди по всій Україні?</h3></summary><div class="b-insight-body"><p>Команда Бюро працює з Києва — тут же головні офіси страхових компаній. Спірні питання вирішуємо напряму з тими, хто ухвалює рішення, а не через регіональні представництва. Саме покриття діє по всій Україні та за її межами: територія, перелік клінік і порядок звернення визначаються обраною програмою.</p></div></details><details class="b-insight"><summary><small>Початок</small><h3>Що потрібно від нас, щоб почати?</h3></summary><div class="b-insight-body"><p>Опис команди, міста роботи, бажане покриття та орієнтовний бюджет. Якщо програма вже діє — її умови, щоб порівняння було предметним. Решту робимо ми.</p></div></details></div></div>
-  </div>
-</section>
-<section class="nh-sec nh-process" id="process" aria-labelledby="process-heading">
-  <div class="nh-wrap">
-    <div class="nh-head">
-      <div><span class="nh-num nh-rv">03 / Як працюємо</span><h2 id="process-heading" class="nh-rv nh-d1">Показуємо ринок. Рішення <em class="nh-s">завжди за вами.</em></h2></div>
-      <p class="nh-lead nh-rv nh-d2">Щоб ви могли пояснити свій вибір керівництву й команді, ми робимо пропозиції зрозумілими та порівнюваними.</p>
-    </div>
-    <div class="nh-steps" id="nh-steps">
-      <div class="nh-rail" aria-hidden="true"><i></i></div>
-      <div class="nh-step nh-rv"><span class="nh-dot" aria-hidden="true"></span><b>01</b><h3>Розуміємо вашу задачу</h3><p>Обговорюємо ризики, чинні договори, бюджет і критерії, за якими ви оцінюватимете результат.</p></div>
-      <div class="nh-step nh-rv nh-d1"><span class="nh-dot" aria-hidden="true"></span><b>02</b><h3>Показуємо ринок</h3><p>Готуємо запит, порівнюємо покриття, винятки, вартість і сервіс. Пояснюємо відмінності між варіантами.</p></div>
-      <div class="nh-step nh-rv nh-d2"><span class="nh-dot" aria-hidden="true"></span><b>03</b><h3>Супроводжуємо після вибору</h3><p>Допомагаємо запустити програму, працювати зі змінами в договорі та складними страховими питаннями.</p></div>
-    </div>
-  </div>
-</section>
-<section class="nh-sec nh-support" id="support" aria-labelledby="support-heading">
-  <div class="nh-wrap nh-sup">
-    <div class="nh-sup-l">
-      <span class="nh-num nh-rv">04 / Супровід після підписання</span>
-      <h2 id="support-heading" class="nh-rv nh-d1">Після вибору не залишаємо вас <em class="nh-s" style="color:var(--nh-lime)">сам на сам.</em></h2>
-      <p class="nh-lead nh-rv nh-d2">Для кожної компанії формуємо команду супроводу та зрозумілий порядок роботи. Допомагаємо з документами, змінами в програмі та складними зверненнями.</p>
-      <a class="nh-link nh-rv" href="about.html" style="align-self:flex-start">Познайомитися з командою ↗</a>
-      <div class="nh-rv"><span class="nh-eyebrow">Ваш формат супроводу</span><div class="nh-fmt"><div><b>Команда</b><p>веде страхові питання та координує потрібні наступні кроки.</p></div><div><b>Зв’язок</b><p>телефон, месенджери, email і застосунок — там, де зручно вам і команді.</p></div></div></div>
-      <p class="nh-fine nh-rv">Строки та порядок відповіді для конкретної програми погоджуємо до початку роботи.</p>
-      <div class="nh-rv"><p style="font-weight:600">Спілкуємося там, де вам зручно</p><div class="nh-channels"><span>Телефон</span><span>Telegram</span><span>Viber</span><span>WhatsApp</span><span>Email</span><span>Застосунок Компаньйон</span></div></div>
-    </div>
-    <article class="nh-appcard nh-rv nh-d1"><img src="presentation-assets/home/app.jpg" alt="" loading="lazy" width="880" height="1168"><div class="nh-appcard-in"><span class="nh-k">Застосунок для медичного страхування</span><h3>Поліс і контакти допомоги — у телефоні працівника.</h3><p>Важлива частина сервісу: людина бачить покриття та швидше розуміє, куди звертатися.</p><a class="nh-link" href="app.html">Детальніше про застосунок ↗</a></div></article>
+    <div class="nh-faq"><div class="nh-faq-col"><details class="b-insight"><summary><small>Медичне страхування</small><h3>У нас вже є ДМС. Чи є сенс щось міняти?</h3></summary><div class="b-insight-body"><p>Аналізуємо чинну програму, доступну статистику звернень і зворотний зв’язок працівників — і показуємо, що варто переглянути перед продовженням договору.</p><a href="dms.html">Як влаштоване медичне страхування ↗</a><a href="perevirka-dms.html">Чек-лист: що перевірити перед продовженням ↗</a></div></details><details class="b-insight"><summary><small>Відповідальність Бюро</small><h3>А якщо помилитеся ви?</h3></summary><div class="b-insight-body"><p>Наша професійна відповідальність застрахована: договір № LBT0076943 у СК «Колоннейд Україна», ліміт 1 500 000 грн на кожен випадок, чинний до 10 червня 2027 року. Якщо через нашу помилку ваша компанія зазнає збитку, його відшкодовує страхова компанія.</p><a href="regulatory.html">Регуляторна інформація ↗</a></div></details><details class="b-insight"><summary><small>Виплати</small><h3>Що буде, якщо страхова відмовить у виплаті?</h3></summary><div class="b-insight-body"><p>З’ясовуємо підставу відмови, допомагаємо зібрати документи та сформулювати аргументовану позицію, ведемо діалог зі страховою компанією і ініціюємо повторний розгляд, коли є на чому. Рішення ухвалює страхова компанія — ми представляємо ваші інтереси в цьому діалозі.</p><a href="vidmova-u-vyplati.html">Що робити, якщо відмовили ↗</a></div></details><details class="b-insight"><summary><small>Розмір компанії</small><h3>Від скількох людей це має сенс?</h3></summary><div class="b-insight-body"><p>Корпоративні програми медичного страхування ведемо для команд від 50 людей. Для майна, відповідальності та логістики обмежень за розміром компанії немає.</p></div></details></div><div class="nh-faq-col"><details class="b-insight"><summary><small>Вартість</small><h3>Скільки коштують ваші послуги?</h3></summary><div class="b-insight-body"><p>Розмір комісії на нашу рекомендацію не впливає — критерії вибору ми узгоджуємо з вами до старту тендеру. За замовчуванням нашу роботу оплачує страхова компанія комісією за укладений договір, тож окремої оплати з вашого боку немає. Друга модель — гонорар від вас; тоді комісію у страхової компанії ми обнуляємо. Модель обираєте ви, до того як побачите пропозиції.</p></div></details><details class="b-insight"><summary><small>Незалежність</small><h3>Ви ж однаково приведете «свою» страхову?</h3></summary><div class="b-insight-body"><p>Ми не володіємо частками у страхових компаніях, і вони не володіють часткою в нас. Для великого тендеру залучаємо 10–15 страхових компаній, показуємо пропозиції поруч і пояснюємо відмінності. Остаточний вибір за вами.</p></div></details><details class="b-insight"><summary><small>Навантаження</small><h3>Скільки часу це забере у нашого HR?</h3></summary><div class="b-insight-body"><p>Тендер, комунікацію зі страховою компанією, списки застрахованих і складні звернення беремо на себе. HR лишається точкою погодження, а не оператором. Створювати окремий страховий відділ не потрібно.</p></div></details><details class="b-insight"><summary><small>Географія</small><h3>Ви ж у Києві, а наші люди по всій Україні?</h3></summary><div class="b-insight-body"><p>Команда Бюро працює з Києва — тут же головні офіси страхових компаній. Спірні питання вирішуємо напряму з тими, хто ухвалює рішення, а не через регіональні представництва. Саме покриття діє по всій Україні та за її межами: територія, перелік клінік і порядок звернення визначаються обраною програмою.</p></div></details></div></div>
   </div>
 </section>
 <section class="nh-sec" id="meeting" aria-labelledby="meeting-heading">
@@ -112,7 +121,8 @@ window.CompanionHome = {
       <span class="nh-eyebrow nh-rv">Почнемо зі знайомства</span>
       <h2 id="meeting-heading" class="nh-rv nh-d1">Розкажіть, що важливо <em class="nh-s">вашій компанії.</em></h2>
       <p class="nh-lead nh-rv nh-d2">Залиште контакти, і ми погодимо зручний час зустрічі. Обговоримо вашу ситуацію, потрібну інформацію та наступні кроки.</p>
-      <ul class="nh-perks nh-rv nh-d3"><li>Безоплатна зустріч</li><li>Онлайн або особисто в Києві</li><li>Для ДМС — з керівником напряму або його заступником</li></ul>
+      <ul class="nh-perks nh-rv nh-d3"><li>Безоплатна перша зустріч</li><li>Онлайн або особисто в Києві</li><li>Для ДМС — з керівником напряму або його заступником</li></ul>
+      <p class="nh-soft nh-rv nh-d3">Ще не готові до зустрічі? <a class="nh-link" href="perevirka-dms.html">Почніть із чек-листа перед продовженням ДМС ↗</a></p>
     </div>
     <form class="b-meeting-form nh-form nh-rv nh-d1" id="meeting-form">
       <div class="nh-row">

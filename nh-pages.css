@@ -347,3 +347,13 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh .nh-cta-app .apk-note,.nh .nh-cta-app .ios-note{color:rgba(255,255,255,.8)}
 @media (max-width:980px){.nh-apphero-grid{grid-template-columns:1fr}}
 .nh-break{flex-basis:100%;height:0}
+
+/* Смуга «як ведемо програму» на сторінці медичного страхування */
+.nh-path{margin-top:clamp(28px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding:18px 22px;border-radius:18px;background:var(--nh-paper);border:1px solid var(--nh-line)}
+.nh-path-k{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--nh-blue)}
+.nh-path ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;counter-reset:p}
+.nh-path li{display:flex;align-items:center;gap:8px}
+.nh-path li+li::before{content:"→";color:var(--nh-muted)}
+.nh-path a{display:inline-block;padding:8px 14px;border-radius:999px;background:var(--nh-bg);color:var(--nh-ink);font-size:15px;font-weight:500;text-decoration:none;transition:background .25s}
+.nh-path a:hover{background:var(--nh-lime)}
+@media (max-width:700px){.nh-path ol{flex-direction:column;align-items:flex-start}.nh-path li+li::before{content:"↓"}}
