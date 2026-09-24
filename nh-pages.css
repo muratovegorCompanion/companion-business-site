@@ -304,3 +304,21 @@ body.nh-page{margin:0;background:#F6F5F0}
   .nh-cycle-card:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-30px;translate:-50% 0}
 }
 @media (max-width:560px){.nh-team{grid-template-columns:1fr}}
+
+/* ===== «Послуги» ===== */
+/* ланцюг без виділеної останньої ланки + окремий підсумок */
+.nh-chain.nh-plain .nh-link-node:last-child{background:var(--nh-navy-2);color:#fff;border-color:rgba(255,255,255,.08)}
+.nh-chain.nh-plain .nh-link-node:last-child b{color:var(--nh-lime)}
+.nh-chain.nh-plain .nh-link-node:last-child p{color:rgba(255,255,255,.72)}
+.nh-result{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:28px;overflow:hidden;background:var(--nh-lime);color:var(--nh-ink)}
+.nh-result-txt{padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;justify-content:center;gap:14px}
+.nh-result-txt::before{content:"";width:52px;height:52px;border-radius:50%;background:var(--nh-ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C4F06B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/24px no-repeat}
+.nh-result h3{font-size:clamp(26px,3vw,38px)}
+.nh-result p{font-size:17px;color:rgba(14,26,51,.8)}
+.nh-result-img{min-height:320px;position:relative}
+.nh-result-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* великий факт поруч із фото */
+.nh-bigfact{margin:8px 0 4px;display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap}
+.nh-bigfact strong{font-size:clamp(64px,9vw,120px);font-weight:600;letter-spacing:-.05em;line-height:.85;color:var(--nh-blue)}
+.nh-bigfact span{max-width:30ch;color:var(--nh-muted);font-size:16px;padding-bottom:6px}
+@media (max-width:980px){.nh-result{grid-template-columns:1fr}.nh-result-img{min-height:240px}}
