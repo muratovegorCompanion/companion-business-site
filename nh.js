@@ -39,14 +39,33 @@
     track.addEventListener('scroll',()=>requestAnimationFrame(sync),{passive:true});
   }
 
-  // Лінія між кроками «Як працюємо» прорисовується разом зі скролом.
-  const steps=document.getElementById('nh-steps');
-  if(steps && !still){
-    const paint=()=>{
+  // Лінія між кроками прорисовується разом зі скролом (на сторінці їх може бути кілька).
+  const rails=[...root.querySelectorAll('.nh-steps')];
+  if(rails.length && !still){
+    const paint=()=>rails.forEach(steps=>{
       const r=steps.getBoundingClientRect();
       const p=Math.min(1,Math.max(0,(innerHeight*.8-r.top)/(r.height+innerHeight*.3)));
       steps.style.setProperty('--p',p.toFixed(3));
-    };
+    });
     addEventListener('scroll',paint,{passive:true}); addEventListener('resize',paint); paint();
   }
+
+  // Перемикач ролей (логістика): вкладки з клавіатурою за стандартом ARIA.
+  root.querySelectorAll('[role="tablist"]').forEach(list=>{
+    const tabs=[...list.querySelectorAll('[role="tab"]')];
+    const select=t=>tabs.forEach(x=>{
+      const on=x===t; x.setAttribute('aria-selected',String(on)); x.tabIndex=on?0:-1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden=!on;
+    });
+    tabs.forEach((t,i)=>{
+      t.addEventListener('click',()=>select(t));
+      t.addEventListener('keydown',e=>{
+        const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0; if(!d) return;
+        const n=tabs[(i+d+tabs.length)%tabs.length]; select(n); n.focus(); e.preventDefault();
+      });
+    });
+  });
+
+  // Відео першого екрана на внутрішніх сторінках
+  document.querySelectorAll('.nh-phero video').forEach(v=>{ if(still){ v.removeAttribute('autoplay'); v.pause(); } });
 })();

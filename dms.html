@@ -6,440 +6,200 @@
   <meta name="description" content="Корпоративне медичне страхування з Компаньйон: аналіз програми, тендер, підтримка працівників і HR, супровід страхових випадків.">
   <title>Медичне страхування для бізнесу — Компаньйон</title>
   <link rel="icon" type="image/png" href="presentation-assets/companion-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nh.css?v=2">
+  <link rel="stylesheet" href="nh-pages.css?v=1">
+  <link rel="preload" as="image" href="presentation-assets/dms/hero.jpg">
   <style>
-    :root {
-      color-scheme: light;
-      --navy: var(--c-navy);
-      --navy-soft: var(--c-navy-soft);
-      --paper: var(--c-paper);
-      --white: var(--c-white);
-      --ink: var(--c-ink);
-      --muted: var(--c-muted-dark);
-      --muted-dark: var(--c-muted);
-      --blue: var(--c-blue);
-      --blue-light: var(--c-blue-soft);
-      --lime: var(--c-lime);
-      --line: var(--c-line);
-      --line-dark: var(--c-line-dark);
-      --max: var(--c-shell);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--c-font);
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    a:focus-visible { outline: 3px solid currentColor; outline-offset: 5px; }
-    svg { display: block; }
-    h1, h2, h3, p { margin: 0; }
-    h1, h2, h3 {
-      word-break: normal;
-      overflow-wrap: normal;
-      hyphens: none;
-      text-wrap: balance;
-    }
-    h1, h2 { font-weight: 700; letter-spacing: -.025em; }
-    h3 { font-weight: 650; letter-spacing: -.015em; }
-    section { scroll-margin-top: 24px; }
-    .wrap { width: min(var(--max), calc(100% - 64px)); margin-inline: auto; }
-    .hero-grid > *, .broker-grid > *, .service-grid > *,
-    .claims-grid > *, .medical-grid > *, .outcome-flow > * { min-width: 0; }
-    .kicker {
-      color: var(--blue);
-      font-size: .875rem;
-      font-weight: 750;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-    }
-    .hero .kicker, .claims .kicker, .final .kicker { color: var(--lime); }
-    .section { padding: 88px 0; }
-
-    /* Кроки 01–06 — це один процес, а не набір розділів. Лаймова лінія йде
-       ліворуч від тексту крізь усі шість секцій, а на кожному стику ставимо
-       стрілку. Лайм світлий, тож він підказує напрям, а не кричить. */
-    .step-flow { position: relative; }
-    /* Кроки 01–06 — таймлайн: рейка ліворуч від тексту й кружок з номером
-       на початку кожного кроку. Номер дає лічильник, тож у розмітці кікерів
-       цифр немає і вони не розʼїдуться. На вузькому екрані рейці немає де
-       стояти — там номер повертається в сам кікер. */
-    body { counter-reset: step; }
-    .step-flow { position: relative; counter-increment: step; }
-    .step-flow .kicker::before { content: counter(step, decimal-leading-zero) " / "; }
-
-    @media (min-width: 1024px) {
-      .step-flow > .wrap { padding-left: 92px; }
-      .step-flow .kicker::before { content: none; }
-      .step-flow::before, .step-flow::after { content: ""; position: absolute; left: calc(max(32px, (100% - var(--max)) / 2) + 27px); }
-      .step-flow::before { top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--c-lime); opacity: .5; }
-      .step-flow::after {
-        content: counter(step, decimal-leading-zero);
-        top: 70px; transform: translateX(-50%);
-        display: grid; place-items: center; width: 54px; height: 54px;
-        border: 2px solid var(--c-lime); border-radius: 50%; background: #fff;
-        color: var(--ink); font-size: .9375rem; font-weight: 750; font-variant-numeric: tabular-nums;
-      }
-      .services.step-flow::after { top: 50px; }
-      /* фото у цій секції вище за текст — інакше кікер поїде вниз від кружка */
-      .medical-grid > div { align-self: start; }
-      .claims.step-flow::after { background: var(--navy); color: var(--c-lime); }
-      .beyond.step-flow::before { bottom: 0; }
-    }
-    .section-title {
-      max-width: 750px;
-      margin: 16px 0 22px;
-      font-size: clamp(2rem, 3.7vw, 3.25rem);
-      line-height: 1.12;
-    }
-    .lead { max-width: 700px; font-size: 1.125rem; color: var(--muted-dark); }
-    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 30px; }
-    /* посилання на чек-лист стоїть після кнопок; свій відступ воно тримає
-       через gap, інакше після переносу рядка з’їжджає праворуч */
-    .actions a.dms-hero-secondary { margin-left: 0; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 14px 22px;
-      border: 1px solid transparent;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 650;
-      text-align: center;
-      line-height: 1.4;
-      transition: background .18s ease, border-color .18s ease;
-    }
-    .btn-primary { background: var(--blue); color: #fff; }
-    .btn-primary:hover { background: #2056c2; }
-    .btn-secondary { border-color: #65809f; color: #fff; }
-    .btn-secondary:hover { border-color: var(--lime); background: #182a41; }
-
-    /* The dark introduction carries the brand; the content below stays calm. */
-    .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--navy); color: #fff; padding: 94px 0 90px; }
-    .hero::before {
-      content: ""; position: absolute; z-index: -1;
-      width: 720px; height: 720px; border: 1px solid #203751;
-      border-radius: 50%; left: -420px; top: -130px;
-    }
-    .hero::after {
-      content: ""; position: absolute; z-index: -1;
-      width: 500px; height: 500px; border-radius: 50%;
-      right: -240px; bottom: -300px; background: #112239;
-    }
-    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: center; gap: 64px; }
-    .hero h1 { margin: 22px 0 26px; font-size: clamp(2.25rem, 5.1vw, 4.25rem); line-height: 1.08; }
-    .hero-lead { max-width: 590px; color: var(--muted); font-size: 1.1875rem; }
-    .coverage-panel { padding: 30px; border: 1px solid var(--line-dark); border-radius: 20px; background: #102037; }
-    .panel-label { color: var(--blue-light); font-size: .875rem; }
-    .coverage-panel h2 { margin: 14px 0 28px; font-size: 1.625rem; line-height: 1.2; }
-    .coverage-list { list-style: none; margin: 0; padding: 0; }
-    .coverage-list li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 16px; padding: 19px 0; border-top: 1px solid var(--line-dark); }
-    .coverage-number { color: var(--lime); font-size: .875rem; font-variant-numeric: tabular-nums; padding-top: 3px; }
-    .coverage-list strong { display: block; font-size: 1.125rem; font-weight: 650; }
-    .coverage-list p { margin-top: 3px; font-size: 1rem; color: var(--muted); }
-    .hero-app { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 54px; align-items: center; margin-top: 40px; }
-    .hero-app-copy { order: 1; min-width: 0; }
-    .hero-app .phone-pair { order: 2; }
-    .hero-app-mark { display: none; }
-    .hero-app-kicker { display: block; color: var(--lime); font-size: .8125rem; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
-    .hero-app strong { display: block; margin-top: 9px; font-size: clamp(1.45rem, 2.3vw, 2rem); line-height: 1.16; font-weight: 650; letter-spacing: -.025em; }
-    .hero-app p { max-width: 610px; margin-top: 12px; color: var(--muted); font-size: 1rem; }
-    .hero-app-features { display: flex; flex-wrap: wrap; gap: 9px; padding: 0; margin: 18px 0 22px; list-style: none; }
-    .hero-app-features li { padding: 7px 10px; border: 1px solid #3c5b7d; border-radius: 999px; color: #d6e4f5; font-size: .8125rem; }
-    .hero-app a { display: inline-flex; align-items: center; min-height: 46px; padding: 11px 16px; border-radius: 8px; background: var(--lime); color: var(--navy); font-size: .9375rem; font-weight: 700; }
-    .hero-app a:hover { background: var(--c-lime); }
-
-    .broker { padding-bottom: 70px; }
-    .broker-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: start; }
-    .broker .section-title { margin-bottom: 0; }
-    .broker-copy { padding-top: 34px; }
-    .broker-copy p + p { margin-top: 20px; }
-    .broker-copy .broker-note { padding-left: 20px; border-left: 3px solid var(--blue); color: var(--ink); font-size: 1rem; }
-
-    .services { padding-top: 68px; border-top: 1px solid var(--line); }
-    .section-head { max-width: 770px; }
-    .service-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 38px; }
-    .service-card { padding: 30px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
-    .service-card-head { display: flex; align-items: center; gap: 18px; }
-    .service-icon { display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center; border-radius: 12px; background: #eaf1ff; color: #215bbf; }
-    .service-card:nth-child(4) .service-icon { background: var(--c-lime-soft); color: var(--c-lime-ink); }
-    .service-icon svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-    .service-card h3 { font-size: 1.375rem; line-height: 1.3; }
-    .service-card p { margin-top: 20px; color: var(--muted-dark); }
-    /* Чотири кроки тендеру — теж послідовність. Кружок з номером той самий,
-       що на рейці сторінки, тільки менший; у рядку кроки зʼєднані рискою. */
-    .services .service-grid { counter-reset: tstep; gap: 46px; }
-    .services .service-card { counter-increment: tstep; position: relative; padding-top: 40px; }
-    .services .service-card::before {
-      content: counter(tstep, decimal-leading-zero);
-      position: absolute; top: -21px; left: 30px;
-      display: grid; place-items: center; width: 42px; height: 42px;
-      border: 2px solid var(--c-lime); border-radius: 50%; background: #fff;
-      color: var(--ink); font-size: .8125rem; font-weight: 750; font-variant-numeric: tabular-nums;
-    }
-    @media (min-width: 1024px) {
-      .services .service-card:nth-child(odd)::after { content: ""; position: absolute; top: 0; left: calc(100% + 4px); width: 38px; height: 2px; background: var(--c-lime); opacity: .5; }
-    }
-    .tender-timing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 20px; }
-    .tender-timing > div { padding: 24px 28px; border: 1px solid #c9d5e5; border-radius: 14px; background: #f4f8fd; }
-    .tender-timing span { display: block; color: var(--blue); font-size: .8125rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
-    .tender-timing strong { display: block; margin-top: 7px; color: var(--ink); font-size: 1.625rem; line-height: 1.2; letter-spacing: -.035em; }
-    .tender-timing p { margin-top: 8px; color: var(--muted-dark); font-size: .9375rem; }
-
-    .claims { background: var(--navy); color: #fff; }
-    .claims-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 80px; align-items: start; }
-    .claims .section-title { color: #fff; }
-    .claims-intro { color: var(--muted); font-size: 1.125rem; }
-    .claim-list { list-style: none; counter-reset: claim; margin: 4px 0 0; padding: 0; }
-    .claim { position: relative; display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 20px; counter-increment: claim; padding-bottom: 28px; }
-    .claim:last-child { padding-bottom: 0; }
-    .claim::before { content: "0" counter(claim); display: grid; place-items: center; width: 42px; height: 42px; background: #172d47; border: 1px solid #46607f; border-radius: 50%; color: var(--lime); font-size: .875rem; font-weight: 650; }
-    .claim:not(:last-child)::after { content: ""; position: absolute; left: 20px; top: 47px; bottom: 5px; width: 1px; background: var(--line-dark); }
-    .claim h3 { margin: 5px 0 8px; font-size: 1.25rem; line-height: 1.35; }
-    .claim p { font-size: 1rem; color: var(--muted); }
-
-    .medical { background: #fff; }
-    .medical-grid { display: grid; grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); align-items: center; gap: 72px; }
-    .expert-card { margin: 0; overflow: hidden; border: 1px solid #d0dff5; border-radius: 20px; background: #edf3fd; }
-    .expert-photo { display: block; width: 100%; height: auto; aspect-ratio: 385 / 443; object-fit: cover; object-position: center top; background: #454550; }
-    .expert-caption { padding: 26px; }
-    .expert-name { display: block; color: var(--ink); font-size: 1.5rem; line-height: 1.25; font-weight: 650; letter-spacing: -.02em; }
-    .expert-role { margin-top: 10px; color: var(--blue); font-size: .9375rem; line-height: 1.5; }
-    .expert-exp { margin-top: 16px; color: var(--ink); font-size: .9375rem; font-weight: 650; line-height: 1.5; }
-    .expert-education { margin-top: 20px; padding-top: 18px; border-top: 1px solid #d0dff5; color: var(--muted-dark); font-size: .9375rem; line-height: 1.6; }
-    .expert-education span { display: block; margin-top: 8px; }
-    .team-education { margin-top: 20px; color: var(--ink); font-size: 1.0625rem; }
-    .medical-points { display: grid; gap: 14px; margin: 25px 0 0; padding: 0; list-style: none; color: var(--muted-dark); }
-    .medical-points li { padding-left: 20px; border-left: 3px solid var(--c-lime); }
-    .medical-points strong { color: var(--ink); font-weight: 650; }
-
-    .result { border-top: 1px solid var(--line); }
-    .result .section-head { max-width: 770px; }
-    .outcome { margin-top: 36px; }
-    .outcome-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 0; margin: 0; }
-    .outcome-step { position: relative; display: flex; align-items: center; justify-content: center; padding: 18px 12px; border: 1px solid #c9d5e5; border-radius: 12px; background: #fff; color: var(--ink); font-size: 1rem; font-weight: 650; text-align: center; }
-    .outcome-step:not(:last-child)::after { content: "+"; position: absolute; right: -20px; color: #426189; font-size: 1.25rem; font-weight: 400; }
-    .flow-join { color: var(--blue); text-align: center; font-size: 1.75rem; line-height: 1; padding: 16px 0; }
-    .outcome-result { display: flex; align-items: center; gap: 20px; padding: 28px 32px; border-radius: 16px; background: var(--navy-soft); color: #fff; }
-    .outcome-mark { flex: 0 0 44px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--c-lime-line); border-radius: 50%; color: var(--lime); font-size: 1.4rem; }
-    .outcome-result h3 { font-size: 1.375rem; line-height: 1.35; }
-    .outcome-result p { margin-top: 6px; color: var(--muted); font-size: 1rem; }
-
-    .final { padding: 76px 0 84px; background: var(--navy); color: #fff; }
-    .final-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 62px; align-items: center; max-width: 940px; margin-inline: auto; }
-    .final-copy h2 { max-width: 640px; margin: 16px 0 20px; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.15; }
-    .final-copy > p { max-width: 570px; color: var(--muted); font-size: 1.125rem; }
-    .meeting-expert { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 18px; align-items: center; padding: 16px; border: 1px solid #3c5b7d; border-radius: 16px; background: #112843; text-align: left; }
-    .meeting-expert img { display: block; width: 96px; height: 118px; object-fit: cover; object-position: center top; border-radius: 10px; }
-    .meeting-expert-label { display: block; color: var(--lime); font-size: .75rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
-    .meeting-expert strong { display: block; margin-top: 7px; font-size: 1.125rem; line-height: 1.25; }
-    .meeting-expert span:last-child { display: block; margin-top: 6px; color: var(--muted); font-size: .875rem; line-height: 1.45; }
-
-    @media (max-width: 960px) {
-      .hero-grid, .broker-grid, .claims-grid { grid-template-columns: minmax(0, 1fr); gap: 38px; }
-      .hero h1 { max-width: 650px; }
-      .coverage-panel { max-width: 620px; }
-      .broker-copy { padding-top: 0; }
-      .broker .section-title { max-width: 640px; }
-      .medical-grid { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 36px; }
-    }
-    @media (max-width: 700px) {
-      .wrap { width: calc(100% - 40px); }
-      .hero { padding: 60px 0; }
-      .hero h1 { font-size: clamp(2rem, 8.5vw, 3.125rem); }
-      .hero-lead, .lead, .claims-intro { font-size: 1.0625rem; }
-      .section { padding: 58px 0; }
-      .section-title { font-size: clamp(1.875rem, 7.5vw, 2.5rem); }
-      .actions { flex-direction: column; align-items: stretch; }
-      .btn { width: 100%; }
-      .coverage-panel { padding: 24px; }
-      .hero-app { grid-template-columns: 1fr; gap: 22px; margin-top: 28px; }
-      .hero-app a { justify-content: center; width: 100%; }
-      .service-grid, .medical-grid { grid-template-columns: minmax(0, 1fr); }
-      .tender-timing { grid-template-columns: minmax(0, 1fr); }
-      .service-card { padding: 24px; }
-      .service-card-head { gap: 14px; }
-      .service-card h3 { font-size: 1.1875rem; }
-      .expert-card { max-width: 400px; width: 100%; margin-inline: auto; }
-      .expert-caption { padding: 24px; }
-      .claim { gap: 16px; }
-      .outcome-flow { grid-template-columns: minmax(0, 1fr); gap: 22px; }
-      .outcome-step:not(:last-child)::after { right: auto; left: 50%; bottom: -26px; transform: translateX(-50%); }
-      .outcome-result { padding: 24px; align-items: flex-start; gap: 14px; }
-      .outcome-result h3 { font-size: 1.1875rem; }
-      .outcome-mark { width: 32px; height: 32px; flex-basis: 32px; }
-      .final { padding: 58px 0 64px; }
-      .final-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-      .final-copy { text-align: center; }
-      .final-copy h2, .final-copy > p { margin-inline: auto; }
-      .final-copy .actions { justify-content: center; }
-      .meeting-expert { max-width: 400px; width: 100%; margin-inline: auto; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .btn { transition: none; }
-    }
-
-    .section-links { display: flex; flex-wrap: wrap; gap: 12px 26px; margin-top: 32px; color: var(--blue-light); font-size: .9375rem; }
-    .section-links a { text-decoration: underline; text-underline-offset: 5px; }
-    .card-number { display: block; margin-bottom: 18px; color: var(--blue); font-weight: 700; font-variant-numeric: tabular-nums; }
-    .detail-points { padding-left: 20px; color: var(--muted-dark); margin: 18px 0 0; }
-    .detail-points li + li { margin-top: 8px; }
-    .soft-note { margin-top: 24px; font-size: .9375rem; color: var(--muted-dark); }
-    .support-note { border-left: 3px solid var(--lime); padding-left: 20px; margin-top: 24px; color: var(--muted); }
-    .renewal { background: #fff; }
-    /* Питання — такі самі картки, як решта сторінки. Рідний маркер ▼ прибираємо
-       й малюємо свій плюс, який на відкритій картці стає мінусом. */
-    .faq { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 20px; margin-top: 38px; }
-    .faq details { border: 1px solid var(--line); border-radius: 16px; background: #fff; padding: 24px 28px; }
-    .faq summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; cursor: pointer; font-size: 1.125rem; line-height: 1.35; font-weight: 650; list-style: none; }
-    .faq summary::-webkit-details-marker { display: none; }
-    .faq summary::after { content: "+"; flex: 0 0 auto; color: var(--blue); font-size: 1.5rem; line-height: 1; font-weight: 500; }
-    .faq details[open] summary::after { content: "\2212"; }
-    .faq summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
-    .faq details p { color: var(--muted-dark); margin-top: 16px; }
-    @media (max-width: 980px) { .faq { grid-template-columns: 1fr; } }
-    @media (max-width: 760px) { .faq details { padding: 20px 22px; } }
-  .dms-hero-secondary{display:inline-block;margin-left:18px;color:#c9d6ea;font-weight:600;font-size:15px;text-decoration:none;border-bottom:1px solid rgba(201,214,234,.4)}.dms-hero-secondary:hover{color:#fff;border-bottom-color:#fff}@media(max-width:700px){.dms-hero-secondary{display:block;margin:16px 0 0}}
-      .beyond { background: var(--paper); }
-    .service-card--wide { grid-column: 1 / -1; }
-    /* .btn-secondary білий — він для темного героя. На світлій картці такий
-       напис зникає, тому тут окремий варіант. */
-    .beyond .btn-secondary { margin-top: 18px; border-color: var(--line); color: var(--ink); }
-    .beyond .btn-secondary:hover { color: var(--lime); }
-    @media (max-width: 760px) { .service-card--wide { grid-column: auto; } }
-</style>
+    /* Сторінка зібрана на nh.css / nh-pages.css. Тут лише базові відступи документа. */
+    html{scroll-behavior:smooth;scroll-padding-top:150px}
+    body{margin:0;background:#F6F5F0}
+  </style>
 </head>
 <body>
-  <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="kicker">Наша спеціалізація / Корпоративне ДМС</p>
-          <h1 id="hero-title">Медичне страхування з турботою про вашу команду</h1>
-          <p class="hero-lead">Допомагаємо бізнесу обрати програму добровільного медичного страхування та зробити її зрозумілою для працівників. Від першого порівняння пропозицій до щоденної підтримки — ми на вашій стороні.</p>
-          <div class="actions">
-            <a class="btn btn-primary" href="index.html#meeting" target="_top">Обговорити програму ДМС</a>
-            <a class="btn btn-secondary" href="#support">Як ми підтримуємо команду</a>
-            <a class="dms-hero-secondary" href="perevirka-dms.html">Чек-лист: що перевірити перед продовженням ↗</a>
+  <main class="nh" id="content">
+
+    <section class="nh-phero" aria-labelledby="hero-title">
+      <div class="nh-phero-media" aria-hidden="true"><img src="presentation-assets/dms/hero.jpg" alt="" width="1344" height="752"></div>
+      <div class="nh-wrap">
+        <span class="nh-eyebrow nh-rv">Наша спеціалізація / Корпоративне ДМС</span>
+        <h1 id="hero-title" class="nh-rv nh-d1">Медичне страхування з <em class="nh-s">турботою</em> про вашу команду</h1>
+        <p class="nh-lead nh-rv nh-d2">Допомагаємо бізнесу обрати програму добровільного медичного страхування та зробити її зрозумілою для працівників. Від першого порівняння пропозицій до щоденної підтримки — ми на вашій стороні.</p>
+        <div class="nh-hero-cta nh-rv nh-d3">
+          <a class="nh-btn nh-btn-primary" href="index.html#meeting" target="_top">Обговорити програму ДМС <span class="nh-ar" aria-hidden="true">↗</span></a>
+          <a class="nh-btn nh-btn-ghost" href="#support">Як ми підтримуємо команду <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="nh-rv nh-d3" style="margin-top:22px"><a class="nh-link" href="perevirka-dms.html">Чек-лист: що перевірити перед продовженням ↗</a></p>
+      </div>
+    </section>
+
+    <nav class="nh-subnav" aria-label="Розділи сторінки">
+      <div class="nh-wrap"><a href="#coverage">Для кого</a><a href="#program">Підбір програми</a><a href="#support">Щоденна підтримка</a><a href="#claims">Врегулювання</a><a href="#renewal">Аналітика і продовження</a><a href="#beyond">Понад поліс</a><a href="#questions">Запитання</a></div>
+    </nav>
+
+    <section class="nh-sec" id="coverage" aria-labelledby="coverage-title">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num nh-rv">Одна програма — спільна турбота</span><h2 id="coverage-title" class="nh-rv nh-d1">Кожен розуміє, на що може <em class="nh-s">розраховувати</em></h2></div>
+        </div>
+        <div class="nh-pcards">
+          <article class="nh-pcard nh-rv"><figure><img src="presentation-assets/dms/employee.jpg" alt="" loading="lazy" width="1168" height="880"></figure><div class="nh-pcard-body"><b>01</b><h3>Працівник</h3><p>Знає, як скористатися полісом і до кого звернутися по підтримку.</p></div></article>
+          <article class="nh-pcard nh-rv nh-d1"><figure><img src="presentation-assets/dms/hr.jpg" alt="" loading="lazy" width="1168" height="880"></figure><div class="nh-pcard-body"><b>02</b><h3>HR-команда</h3><p>Тримає процес під контролем, не витрачаючи на нього дні: зміни у програмі, складні звернення й звітність ведемо ми, за HR лишається рішення.</p></div></article>
+          <article class="nh-pcard nh-rv nh-d2"><figure><img src="presentation-assets/dms/business.jpg" alt="" loading="lazy" width="1168" height="880"></figure><div class="nh-pcard-body"><b>03</b><h3>Бізнес</h3><p>Тримає витрати під контролем: ціна перевірена тендером, вибір страхової прозорий, а супровід веде цілий відділ фахівців на аутсорсі — на чолі з вашим HR.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="app-title">
+      <div class="nh-wrap">
+        <div class="nh-app nh-rv">
+          <div>
+            <span class="nh-k">Компаньйон для вашої команди</span>
+            <h2 id="app-title">Страховий поліс і допомога — у телефоні працівника.</h2>
+            <p>Застрахована людина може переглянути покриття, ліміти та винятки, знайти контакти асистансу й звернутися по підтримку без пошуку в документах і чатах.</p>
+            <div class="nh-app-tags"><span>Умови поліса</span><span>Покриття та ліміти</span><span>Контакти допомоги</span><span>Чат-помічник</span></div>
+            <a class="nh-link" href="app.html">Детальніше про застосунок ↗</a>
           </div>
-          <nav class="section-links" aria-label="Розділи сторінки">
-            <a href="#program">Підбір програми</a><a href="#renewal">Аналітика і продовження</a><a href="#questions">Запитання</a>
-          </nav>
-        </div>
-        <aside class="coverage-panel" aria-labelledby="coverage-title">
-          <p class="panel-label">Одна програма — спільна турбота</p>
-          <h2 id="coverage-title">Кожен розуміє, на що може розраховувати</h2>
-          <ul class="coverage-list">
-            <li><span class="coverage-number" aria-hidden="true">01</span><div><strong>Працівник</strong><p>Знає, як скористатися полісом і до кого звернутися по підтримку.</p></div></li>
-            <li><span class="coverage-number" aria-hidden="true">02</span><div><strong>HR-команда</strong><p>Тримає процес під контролем, не витрачаючи на нього дні: зміни у програмі, складні звернення й звітність ведемо ми, за HR лишається рішення.</p></div></li>
-            <li><span class="coverage-number" aria-hidden="true">03</span><div><strong>Бізнес</strong><p>Тримає витрати під контролем: ціна перевірена тендером, вибір страхової прозорий, а супровід веде цілий відділ фахівців на аутсорсі — на чолі з вашим HR.</p></div></li>
-          </ul>
-        </aside>
-      </div>
-      <div class="wrap hero-app"><div class="hero-app-shots phone-pair phone-pair--dark"><figure><img src="presentation-assets/policy.png" alt="Екран «Мій поліс» у застосунку Компаньйон: номер поліса, застраховані особи та перелік покриття" width="1290" height="2796" loading="lazy" decoding="async"></figure><figure><img src="presentation-assets/chat.png" alt="Екран ШІ-чату у застосунку Компаньйон: підказки щодо покриття, лімітів і відмови" width="1290" height="2796" loading="lazy" decoding="async"></figure></div><div class="hero-app-copy"><span class="hero-app-kicker">Компаньйон для вашої команди</span><strong>Страховий поліс і допомога — у телефоні працівника.</strong><p>Застрахована людина може переглянути покриття, ліміти та винятки, знайти контакти асистансу й звернутися по підтримку без пошуку в документах і чатах.</p><ul class="hero-app-features"><li>Умови поліса</li><li>Покриття та ліміти</li><li>Контакти допомоги</li><li>Чат-помічник</li></ul><a href="app.html">Детальніше про застосунок ↗</a></div></div>
-    </section>
-
-    <section class="section broker step-flow" aria-labelledby="approach-title">
-      <div class="wrap broker-grid">
-        <div><p class="kicker">Починаємо з вашої команди</p><h2 class="section-title" id="approach-title">Програма під ваші потреби та бюджет</h2></div>
-        <div class="broker-copy">
-          <p class="lead">З’ясовуємо, де працюють ваші люди, які клініки їм зручні, що важливо у покритті та які витрати компанія планує на страхування.</p>
-          <p class="broker-note">Якщо ДМС вже є, аналізуємо чинні умови, доступну статистику звернень і виплат та зворотний зв’язок працівників. Якщо запускаєте програму вперше — допомагаємо сформувати вимоги.</p>
+          <div class="nh-phones">
+            <img src="presentation-assets/policy.png" alt="Екран «Мій поліс» у застосунку Компаньйон: номер поліса, застраховані особи та перелік покриття" width="1290" height="2796" loading="lazy" decoding="async">
+            <img src="presentation-assets/chat.png" alt="Екран ШІ-чату у застосунку Компаньйон: підказки щодо покриття, лімітів і відмови" width="1290" height="2796" loading="lazy" decoding="async">
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section services step-flow" id="program" aria-labelledby="program-title">
-      <div class="wrap">
-        <div class="section-head"><p class="kicker">Аналітика та тендер</p><h2 class="section-title" id="program-title">Порівнюємо зміст програми, а не лише ціну</h2><p class="lead">Перетворюємо різні пропозиції страхових компаній на зрозумілий вибір. Пояснюємо, що ви отримуєте за запропонований бюджет і де є обмеження.</p></div>
-        <div class="service-grid">
-          <article class="service-card"><span class="card-number">Вимоги</span><h3>Формуємо запит до страхових компаній</h3><p>Узгоджуємо покриття, категорії застрахованих, географію та бюджет. Готуємо єдине завдання для учасників тендеру.</p></article>
-          <article class="service-card"><span class="card-number">Порівняння</span><h3>Розбираємо умови по суті</h3><ul class="detail-points"><li>Медичні послуги, ліміти та виключення.</li><li>Перелік клінік і порядок звернення.</li><li>Умови погодження допомоги та відшкодування витрат.</li><li>Вартість і порядок оплати.</li></ul></article>
-          <article class="service-card"><span class="card-number">Переговори</span><h3>Допомагаємо обрати партнера</h3><p>Обговорюємо пропозиції з фіналістами, уточнюємо спірні умови та готуємо рекомендацію. Остаточне рішення залишається за вами.</p></article>
-          <article class="service-card"><span class="card-number">Запуск</span><h3>Готуємо команду до користування</h3><p>Супроводжуємо узгодження договору та списків застрахованих. Пояснюємо працівникам можливості програми, контакти й порядок дій.</p></article>
+    <section class="nh-sec" aria-labelledby="approach-title">
+      <div class="nh-wrap nh-split">
+        <div class="nh-split-txt">
+          <span class="nh-num nh-rv">Починаємо з вашої команди</span>
+          <h2 id="approach-title" class="nh-rv nh-d1">Програма під ваші потреби та <em class="nh-s">бюджет</em></h2>
+          <p class="nh-rv nh-d2">З’ясовуємо, де працюють ваші люди, які клініки їм зручні, що важливо у покритті та які витрати компанія планує на страхування.</p>
+          <p class="nh-rv nh-d2">Якщо ДМС вже є, аналізуємо чинні умови, доступну статистику звернень і виплат та зворотний зв’язок працівників. Якщо запускаєте програму вперше — допомагаємо сформувати вимоги.</p>
         </div>
-        <div class="tender-timing" aria-label="Строки тендеру"><div><span>Повноцінний тендер</span><strong>Близько місяця</strong><p>Достатньо часу, щоб залучити ринок, зіставити умови та спокійно узгодити рішення всередині компанії.</p></div><div><span>Терміновий запит</span><strong>Від двох тижнів</strong><p>Можливий, коли звужуємо коло учасників до приблизно п’яти страхових компаній і швидко отримуємо потрібні дані від вас.</p></div></div>
-        <p class="soft-note">Конкретне покриття, доступні клініки, ліміти та порядок отримання допомоги визначаються обраною програмою і договором страхування.</p>
+        <div class="nh-split-img nh-rv nh-d1"><img src="presentation-assets/dms/medic.jpg" alt="" loading="lazy" width="1168" height="880"></div>
       </div>
     </section>
 
-    <section class="section medical step-flow" id="support" aria-labelledby="support-title">
-      <div class="wrap medical-grid">
-        <figure class="expert-card">
-          <img class="expert-photo" src="presentation-assets/team/anatolii-portrait.jpg" alt="Анатолій Артюшенко" width="385" height="443" loading="lazy">
-          <figcaption class="expert-caption">
-            <strong class="expert-name">Анатолій Артюшенко</strong>
-            <p class="expert-role">Старший партнер, директор з особистих видів страхування</p>
-            <p class="expert-exp">Понад 17 років у медичному страхуванні</p>
-            <p class="expert-education">Національний медичний університет імені О. О. Богомольця<span>Лікар невідкладних станів, лікар загального профілю.</span></p>
-          </figcaption>
+    <section class="nh-sec nh-process" id="program" aria-labelledby="program-title" style="padding-top:clamp(64px,8vw,110px)">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num nh-rv">Аналітика та тендер</span><h2 id="program-title" class="nh-rv nh-d1">Порівнюємо зміст програми, а не лише <em class="nh-s">ціну</em></h2></div>
+          <p class="nh-lead nh-rv nh-d2">Перетворюємо різні пропозиції страхових компаній на зрозумілий вибір. Пояснюємо, що ви отримуєте за запропонований бюджет і де є обмеження.</p>
+        </div>
+        <div class="nh-steps nh-4">
+          <div class="nh-rail" aria-hidden="true"><i></i></div>
+          <div class="nh-step nh-rv"><span class="nh-dot" aria-hidden="true"></span><b>Вимоги</b><h3>Формуємо запит до страхових компаній</h3><p>Узгоджуємо покриття, категорії застрахованих, географію та бюджет. Готуємо єдине завдання для учасників тендеру.</p></div>
+          <div class="nh-step nh-rv nh-d1"><span class="nh-dot" aria-hidden="true"></span><b>Порівняння</b><h3>Розбираємо умови по суті</h3><ul><li>Медичні послуги, ліміти та виключення.</li><li>Перелік клінік і порядок звернення.</li><li>Умови погодження допомоги та відшкодування витрат.</li><li>Вартість і порядок оплати.</li></ul></div>
+          <div class="nh-step nh-rv nh-d2"><span class="nh-dot" aria-hidden="true"></span><b>Переговори</b><h3>Допомагаємо обрати партнера</h3><p>Обговорюємо пропозиції з фіналістами, уточнюємо спірні умови та готуємо рекомендацію. Остаточне рішення залишається за вами.</p></div>
+          <div class="nh-step nh-rv nh-d3"><span class="nh-dot" aria-hidden="true"></span><b>Запуск</b><h3>Готуємо команду до користування</h3><p>Супроводжуємо узгодження договору та списків застрахованих. Пояснюємо працівникам можливості програми, контакти й порядок дій.</p></div>
+        </div>
+        <div class="nh-timing">
+          <div class="nh-rv"><b>Повноцінний тендер</b><strong>Близько місяця</strong><p>Достатньо часу, щоб залучити ринок, зіставити умови та спокійно узгодити рішення всередині компанії.</p></div>
+          <div class="nh-rv nh-d1"><b>Терміновий запит</b><strong>Від двох тижнів</strong><p>Можливий, коли звужуємо коло учасників до приблизно п’яти страхових компаній і швидко отримуємо потрібні дані від вас.</p></div>
+        </div>
+        <p class="nh-note">Конкретне покриття, доступні клініки, ліміти та порядок отримання допомоги визначаються обраною програмою і договором страхування.</p>
+      </div>
+    </section>
+
+    <section class="nh-sec" id="support" aria-labelledby="support-title">
+      <div class="nh-wrap nh-expert">
+        <figure class="nh-expert-photo nh-rv">
+          <img src="presentation-assets/team/anatolii-portrait.jpg" alt="Анатолій Артюшенко" width="385" height="443" loading="lazy">
+          <figcaption><b>Анатолій Артюшенко</b>Старший партнер, директор з особистих видів страхування</figcaption>
         </figure>
-        <div><p class="kicker">Щоденна підтримка</p><h2 class="section-title" id="support-title">Люди, які розуміють і медицину, і страхові умови</h2>
-          <p class="lead">Наші фахівці допомагають розібратися в медичних документах, умовах покриття та відповіді страхової компанії. Беруть участь у комунікації зі страховою компанією й асистансом.</p>
-          <p class="team-education">Директор напряму ДМС та фахівці команди мають медичну освіту.</p>
-          <ul class="medical-points"><li><strong>Для працівників</strong> — пояснення порядку звернення, допомога зі страховими питаннями та супровід складних ситуацій.</li><li><strong>Для HR</strong> — координація звернень, допомога зі змінами у списках застрахованих і документообігом.</li></ul>
-          <p class="soft-note">Наша роль — страховий супровід і представництво ваших інтересів. Діагностику та лікування здійснюють медичні заклади.</p>
+        <div class="nh-expert-txt">
+          <span class="nh-num nh-rv">Щоденна підтримка</span>
+          <h2 id="support-title" class="nh-rv nh-d1">Люди, які розуміють і <em class="nh-s">медицину,</em> і страхові умови</h2>
+          <div class="nh-expert-big nh-rv nh-d2"><strong>17+</strong><span>Понад 17 років у медичному страхуванні. Національний медичний університет імені О. О. Богомольця. Лікар невідкладних станів, лікар загального профілю.</span></div>
+          <p class="nh-rv">Наші фахівці допомагають розібратися в медичних документах, умовах покриття та відповіді страхової компанії. Беруть участь у комунікації зі страховою компанією й асистансом.</p>
+          <p class="nh-rv"><b style="color:var(--nh-ink)">Директор напряму ДМС та фахівці команди мають медичну освіту.</b></p>
+          <div class="nh-duo nh-rv"><div><b>Для працівників</b> — пояснення порядку звернення, допомога зі страховими питаннями та супровід складних ситуацій.</div><div><b>Для HR</b> — координація звернень, допомога зі змінами у списках застрахованих і документообігом.</div></div>
+          <p class="nh-fine-dark nh-rv">Наша роль — страховий супровід і представництво ваших інтересів. Діагностику та лікування здійснюють медичні заклади.</p>
         </div>
       </div>
     </section>
 
-    <section class="section claims step-flow" aria-labelledby="claims-title">
-      <div class="wrap claims-grid">
-        <div><p class="kicker">Врегулювання страхових випадків</p><h2 class="section-title" id="claims-title">Ми завжди на стороні клієнта</h2><p class="claims-intro">Допомогу не погодили, виникло запитання щодо покриття або затягнувся розгляд документів? Допомагаємо з’ясувати причину та пройти наступні кроки.</p><p class="support-note">Відстоюємо ваші інтереси на підставі умов договору. Рішення про покриття чи виплату ухвалює страхова компанія.</p></div>
-        <ol class="claim-list">
-          <li class="claim"><div><h3>З’ясовуємо обставини</h3><p>Вивчаємо звернення, умови програми, наявні документи та пояснення страхової компанії.</p></div></li>
-          <li class="claim"><div><h3>Допомагаємо підготувати звернення</h3><p>Уточнюємо, яких документів бракує, допомагаємо сформулювати запит або аргументовану скаргу.</p></div></li>
-          <li class="claim"><div><h3>Ведемо діалог зі страховою компанією</h3><p>Просимо пояснити підстави рішення та, коли є аргументи, ініціюємо повторний розгляд.</p></div></li>
-          <li class="claim"><div><h3>Тримаємо вас у курсі</h3><p>Стежимо за розглядом звернення, пояснюємо відповідь і подальші дії. За погодженого відшкодування супроводжуємо питання виплати.</p></div></li>
-        </ol>
+    <section class="nh-sec nh-dark" id="claims" aria-labelledby="claims-title">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num nh-rv">Врегулювання страхових випадків</span><h2 id="claims-title" class="nh-rv nh-d1">Ми завжди на стороні <em class="nh-s" style="color:var(--nh-lime)">клієнта</em></h2></div>
+          <p class="nh-lead nh-rv nh-d2">Допомогу не погодили, виникло запитання щодо покриття або затягнувся розгляд документів? Допомагаємо з’ясувати причину та пройти наступні кроки.</p>
+        </div>
+        <div class="nh-steps nh-4">
+          <div class="nh-rail" aria-hidden="true"><i></i></div>
+          <div class="nh-step nh-rv"><span class="nh-dot" aria-hidden="true"></span><b>01</b><h3>З’ясовуємо обставини</h3><p>Вивчаємо звернення, умови програми, наявні документи та пояснення страхової компанії.</p></div>
+          <div class="nh-step nh-rv nh-d1"><span class="nh-dot" aria-hidden="true"></span><b>02</b><h3>Допомагаємо підготувати звернення</h3><p>Уточнюємо, яких документів бракує, допомагаємо сформулювати запит або аргументовану скаргу.</p></div>
+          <div class="nh-step nh-rv nh-d2"><span class="nh-dot" aria-hidden="true"></span><b>03</b><h3>Ведемо діалог зі страховою компанією</h3><p>Просимо пояснити підстави рішення та, коли є аргументи, ініціюємо повторний розгляд.</p></div>
+          <div class="nh-step nh-rv nh-d3"><span class="nh-dot" aria-hidden="true"></span><b>04</b><h3>Тримаємо вас у курсі</h3><p>Стежимо за розглядом звернення, пояснюємо відповідь і подальші дії. За погодженого відшкодування супроводжуємо питання виплати.</p></div>
+        </div>
+        <p class="nh-fine-dark" style="margin-top:40px">Відстоюємо ваші інтереси на підставі умов договору. Рішення про покриття чи виплату ухвалює страхова компанія.</p>
       </div>
     </section>
 
-    <section class="section renewal step-flow" id="renewal" aria-labelledby="renewal-title">
-      <div class="wrap broker-grid">
-        <div><p class="kicker">Розвиток програми</p><h2 class="section-title" id="renewal-title">Готуємо наступний рік за фактами</h2><p class="lead">Перед пролонгацією дивимося, як програмою користувалися насправді: що залишити, що розширити, а що переглянути.</p></div>
-        <div class="broker-copy"><ul class="medical-points">
-          <li><strong>Дивимося на використання.</strong> Аналізуємо доступну узагальнену статистику витрат, звернень і виплат.</li>
-          <li><strong>Чуємо працівників.</strong> Враховуємо зворотний зв’язок і допомагаємо провести опитування щодо програми.</li>
-          <li><strong>Готуємо рекомендації.</strong> Пояснюємо можливі зміни покриття, переліку клінік і бюджету перед продовженням договору.</li>
-        </ul></div>
-      </div>
-    </section>
-
-    <section class="section beyond step-flow" aria-labelledby="beyond-title">
-  <div class="wrap">
-    <div class="section-head"><p class="kicker">Понад страхову програму</p><h2 class="section-title" id="beyond-title">Частина роботи не вміщується в поліс</h2><p class="lead">Договір закриває медицину. Але у команди виникають задачі, для яких у страховій програмі рядка немає, — і їх теж хтось має вирішувати.</p></div>
-    <div class="service-grid">
-      <article class="service-card"><span class="card-number">Застосунок</span><h3>Своя програма — у телефоні працівника</h3><p>Умови покриття, ліміти, перелік клінік і порядок звернення — під рукою й без запиту до HR. Плюс чат-бот у месенджері, якщо компанії так зручніше.</p></article>
-      <article class="service-card"><span class="card-number">Психологи та тренінги</span><h3>Підтримка, якої немає в полісі</h3><p>Групові й індивідуальні сесії онлайн і офлайн, коуч-сесії, семінари, хелс-коучинг. Підключається окремо від договору.</p></article>
-      <article class="service-card"><span class="card-number">За межами України</span><h3>Коли лікуватися треба не тут</h3><p>Пошук клініки, віддалений консиліум, «друга думка», консьєрж-супровід поїздки. Окремо — обслуговування експатів.</p></article>
-      <article class="service-card"><span class="card-number">Воєнні ризики</span><h3>Покриття для цивільних і військових</h3><p>Запускаємо й підтримуємо додаткові види страхування, яких корпоративна програма не передбачає.</p></article>
-      <article class="service-card service-card--wide"><span class="card-number">Індивідуальне страхування</span><h3>Те, що працівник купує для себе</h3><p>Будь-який вид страхування з ринку — на умовах, які ми виводимо для ваших людей тендером, поза корпоративним договором. Сюди ж потрапляють нестандартні задачі: організація вакцинації, перелік перевірених лікарів, дні здоров’я.</p><a class="btn btn-secondary" href="dodatkovi-rishennya.html">Що ще ми робимо понад програму</a></article>
-    </div>
-  </div>
-</section>
-
-<section class="section result" id="questions" aria-labelledby="questions-title">
-      <div class="wrap"><p class="kicker">Перед стартом</p><h2 class="section-title" id="questions-title">Що варто знати</h2>
-        <div class="faq">
-          <details><summary>У нас вже є ДМС. Чи можете ви допомогти?</summary><p>Так. Почнемо з аналізу чинної програми та питань, які виникають у працівників і HR. Узгодимо, який супровід потрібен зараз і що варто підготувати до наступного тендеру.</p></details>
-          <details><summary>З чого почати обговорення нової програми?</summary><p>Достатньо описати команду, міста роботи, бажане покриття та орієнтовний бюджет. Якщо є чинна програма, її умови допоможуть зробити порівняння предметнішим.</p></details>
-          <details><summary>Хто організовує медичну допомогу?</summary><p>Порядок звернення визначає ваша програма; зазвичай допомогу координує асистанс страхової компанії. Ми пояснюємо цей порядок і підключаємося, коли потрібні роз’яснення або підтримка у взаємодії зі страховою компанією.</p></details>
-          <details><summary>Чи потрібно створювати окремий страховий відділ?</summary><p>Ми беремо на себе підбір умов, супровід програми та роботу зі страховими зверненнями. Ви отримуєте зовнішню команду без витрат на утримання власного відділу. Обсяг співпраці й умови обговорюємо до початку роботи.</p></details>
+    <section class="nh-sec" id="renewal" aria-labelledby="renewal-title">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num nh-rv">Розвиток програми</span><h2 id="renewal-title" class="nh-rv nh-d1">Готуємо наступний рік за <em class="nh-s">фактами</em></h2></div>
+          <p class="nh-lead nh-rv nh-d2">Перед пролонгацією дивимося, як програмою користувалися насправді: що залишити, що розширити, а що переглянути.</p>
+        </div>
+        <div class="nh-facts">
+          <article class="nh-fact nh-rv"><div class="nh-mini" aria-hidden="true"><i style="height:45%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:90%"></i><i style="height:62%"></i></div><h3>Дивимося на використання</h3><p>Аналізуємо доступну узагальнену статистику витрат, звернень і виплат.</p></article>
+          <article class="nh-fact nh-rv nh-d1"><div class="nh-mini nh-talk" aria-hidden="true"><i></i><i></i><i></i></div><h3>Чуємо працівників</h3><p>Враховуємо зворотний зв’язок і допомагаємо провести опитування щодо програми.</p></article>
+          <article class="nh-fact nh-rv nh-d2"><div class="nh-mini nh-recs" aria-hidden="true"><i>Залишити</i><i>Розширити</i><i>Переглянути</i></div><h3>Готуємо рекомендації</h3><p>Пояснюємо можливі зміни покриття, переліку клінік і бюджету перед продовженням договору.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="final" aria-labelledby="contact-title">
-      <div class="wrap final-copy"><p class="kicker">Ми робимо страхування зрозумілим</p><h2 id="contact-title">Подбаємо про вашу команду</h2><p>Залиште контакти — ми зв’яжемося протягом 24 годин, уточнимо ваш запит і погодимо зручний час робочої зустрічі.</p>
-        <div class="actions"><a class="btn btn-primary" href="index.html#meeting" target="_top">Обговорити медичне страхування</a><a class="btn btn-secondary" href="index.html?page=services" target="_top">Усі сервіси Компаньйон</a></div></div>
+    <section class="nh-sec" id="beyond" aria-labelledby="beyond-title" style="padding-top:0">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num nh-rv">Понад страхову програму</span><h2 id="beyond-title" class="nh-rv nh-d1">Частина роботи не вміщується в <em class="nh-s">поліс</em></h2></div>
+          <p class="nh-lead nh-rv nh-d2">Договір закриває медицину. Але у команди виникають задачі, для яких у страховій програмі рядка немає, — і їх теж хтось має вирішувати.</p>
+        </div>
+        <div class="nh-tiles">
+          <article class="nh-tile nh-rv"><img src="presentation-assets/home/app.jpg" alt="" loading="lazy" width="880" height="1168"><div class="nh-tile-in"><span class="nh-tag">Застосунок</span><h3>Своя програма — у телефоні працівника</h3><p>Умови покриття, ліміти, перелік клінік і порядок звернення — під рукою й без запиту до HR. Плюс чат-бот у месенджері, якщо компанії так зручніше.</p></div></article>
+          <article class="nh-tile nh-rv nh-d1"><img src="presentation-assets/dms/psych.jpg" alt="" loading="lazy" width="1168" height="880"><div class="nh-tile-in"><span class="nh-tag">Психологи та тренінги</span><h3>Підтримка, якої немає в полісі</h3><p>Групові й індивідуальні сесії онлайн і офлайн, коуч-сесії, семінари, хелс-коучинг. Підключається окремо від договору.</p></div></article>
+          <article class="nh-tile nh-rv"><img src="presentation-assets/dms/abroad.jpg" alt="" loading="lazy" width="1168" height="880"><div class="nh-tile-in"><span class="nh-tag">За межами України</span><h3>Коли лікуватися треба не тут</h3><p>Пошук клініки, віддалений консиліум, «друга думка», консьєрж-супровід поїздки. Окремо — обслуговування експатів.</p></div></article>
+          <article class="nh-tile nh-rv nh-d1"><img src="presentation-assets/dms/war.jpg" alt="" loading="lazy" width="1168" height="880"><div class="nh-tile-in"><span class="nh-tag">Воєнні ризики</span><h3>Покриття для цивільних і військових</h3><p>Запускаємо й підтримуємо додаткові види страхування, яких корпоративна програма не передбачає.</p></div></article>
+          <article class="nh-tile nh-rv nh-d2"><img src="presentation-assets/dms/individual.jpg" alt="" loading="lazy" width="1168" height="880"><div class="nh-tile-in"><span class="nh-tag">Індивідуальне страхування</span><h3>Те, що працівник купує для себе</h3><p>Будь-який вид страхування з ринку — на умовах, які ми виводимо для ваших людей тендером, поза корпоративним договором. Сюди ж потрапляють нестандартні задачі: організація вакцинації, перелік перевірених лікарів, дні здоров’я.</p></div></article>
+        </div>
+        <div class="nh-more-row"><a class="nh-link" href="dodatkovi-rishennya.html">Що ще ми робимо понад програму ↗</a></div>
+      </div>
+    </section>
+
+    <section class="nh-sec" id="questions" aria-labelledby="questions-title" style="padding-top:0">
+      <div class="nh-wrap">
+        <div class="nh-head"><div><span class="nh-num nh-rv">Перед стартом</span><h2 id="questions-title" class="nh-rv nh-d1">Що варто <em class="nh-s">знати</em></h2></div></div>
+        <div class="nh-faq">
+          <div class="nh-faq-col">
+            <details><summary><h3>У нас вже є ДМС. Чи можете ви допомогти?</h3></summary><div class="b-insight-body"><p>Так. Почнемо з аналізу чинної програми та питань, які виникають у працівників і HR. Узгодимо, який супровід потрібен зараз і що варто підготувати до наступного тендеру.</p></div></details>
+            <details><summary><h3>Хто організовує медичну допомогу?</h3></summary><div class="b-insight-body"><p>Порядок звернення визначає ваша програма; зазвичай допомогу координує асистанс страхової компанії. Ми пояснюємо цей порядок і підключаємося, коли потрібні роз’яснення або підтримка у взаємодії зі страховою компанією.</p></div></details>
+          </div>
+          <div class="nh-faq-col">
+            <details><summary><h3>З чого почати обговорення нової програми?</h3></summary><div class="b-insight-body"><p>Достатньо описати команду, міста роботи, бажане покриття та орієнтовний бюджет. Якщо є чинна програма, її умови допоможуть зробити порівняння предметнішим.</p></div></details>
+            <details><summary><h3>Чи потрібно створювати окремий страховий відділ?</h3></summary><div class="b-insight-body"><p>Ми беремо на себе підбір умов, супровід програми та роботу зі страховими зверненнями. Ви отримуєте зовнішню команду без витрат на утримання власного відділу. Обсяг співпраці й умови обговорюємо до початку роботи.</p></div></details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-bottom:clamp(80px,10vw,130px)" aria-labelledby="contact-title">
+      <div class="nh-wrap">
+        <div class="nh-cta nh-rv">
+          <div>
+            <span class="nh-eyebrow">Ми робимо страхування зрозумілим</span>
+            <h2 id="contact-title">Подбаємо про вашу команду</h2>
+            <p>Залиште контакти — ми зв’яжемося протягом 24 годин, уточнимо ваш запит і погодимо зручний час робочої зустрічі.</p>
+          </div>
+          <div class="nh-cta-acts">
+            <a class="nh-btn nh-btn-light" href="index.html#meeting" target="_top">Обговорити медичне страхування <span class="nh-ar" aria-hidden="true">↗</span></a>
+            <a class="nh-link" href="services.html" target="_top">Усі сервіси Компаньйон ↗</a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
+  <script src="nh.js?v=2"></script>
 </body>
 </html>
