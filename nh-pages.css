@@ -281,7 +281,7 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh-principle .nh-link{margin-top:14px;color:#fff}
 
 /* команда */
-.nh-team{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.nh-team{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .nh-person{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
 .nh-person figure{margin:0;aspect-ratio:4/5;background:#5d6168;overflow:hidden}
 .nh-person figure img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 1.2s var(--nh-ease)}
@@ -297,7 +297,7 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh-person details[open] summary::after{content:" −"}
 .nh-person details p{font-size:14px;color:var(--nh-muted);margin-top:8px}
 
-@media (max-width:1100px){.nh-team{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:980px){.nh-team{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:980px){
   .nh-cycle,.nh-cycle-meta,.nh-notes2,.nh-about-facts,.nh-principles{grid-template-columns:1fr}
   .nh-cycle{gap:34px}
