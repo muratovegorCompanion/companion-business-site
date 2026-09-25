@@ -22,23 +22,24 @@
 
   // Доплати за опції — мінімум і максимум із реальних пропозицій.
   // Там, де частина страхових віддає опцію безкоштовно, мінімум — нуль.
+  // Середня доплата по ринку — з наших тендерів. Показуємо одне число,
+  // а не розкид: розкид цікавий у прикладах вище, а тут людині потрібен
+  // орієнтир, з яким можна рахувати.
   const OPTIONS = {
-    checkup3:   { min:  250, max: 3500 },
-    checkup5:   { min:  360, max: 4500 },
-    prophylax:  { min:  986, max: 3976 },
-    kids:       { min: 1750, max: 2100 },
-    dental:     { min: 1300, max: 2600 },
-    exclusion:  { min: 1256, max: 2022 },
-    combined:   { min:  496, max: 2800 },
-    individual: { min:  350, max:  980 },
-    onco:       { min:  480, max: 1800 },
-    pregnancy:  { min: 1400, max: 2000 },
-    chronic:    { min:  820, max: 1960 },
-    psy:        { min:    0, max: 2256 },
-    physio:     { min:    0, max: 1901 },
-    second:     { min:    0, max:  260 },
-    sedative:   { min:   22, max:  716 },
-    saline:     { min:    0, max:  150 },
+    checkup:    2200,
+    prophylax:  2500,
+    kids:       1900,
+    dental:     2100,   // ліміт 3 000 грн; доплата — близько 70% від ліміту
+    exclusion:  1400,   // за кожну 1 000 грн ліміту
+    combined:   1500,
+    onco:        700,
+    pregnancy:  1700,
+    chronic:    1400,
+    psy:        1100,
+    physio:      800,
+    second:       80,
+    sedative:    350,
+    saline:       60,
   };
 
   const money = (value) =>
@@ -61,22 +62,13 @@
     let picked = 0;
 
     root.querySelectorAll('input[name="opt"]:checked').forEach((box) => {
-      const option = OPTIONS[box.value];
-      if (!option) return;
-      min += option.min;
-      max += option.max;
+      const surcharge = OPTIONS[box.value];
+      if (!surcharge) return;
+      min += surcharge;
+      max += surcharge;
       picked += 1;
     });
 
-    // Профогляд на п'ять консультацій включає в себе обсяг трьох:
-    // рахувати обидві опції разом було б подвійним нарахуванням.
-    const three = root.querySelector('input[value="checkup3"]');
-    const five  = root.querySelector('input[value="checkup5"]');
-    if (three && five && three.checked && five.checked) {
-      min -= OPTIONS.checkup3.min;
-      max -= OPTIONS.checkup3.max;
-      picked -= 1;
-    }
 
     outPerson.textContent = `${money(min)} – ${money(max)}`;
 
@@ -92,10 +84,9 @@
   const LABELS = {
     city: 'міські та помірного рівня', mid: 'середній рівень',
     high: 'високий рівень', premium: 'брендові мережі',
-    checkup3: 'профогляд (3)', checkup5: 'профогляд (5)',
-    prophylax: 'комбінований ліміт на профілактику', kids: 'вакцинація дітей',
-    dental: 'вищий ліміт на стоматологію', exclusion: 'ліміт на винятки',
-    combined: 'комбінований ліміт', individual: 'вищий індивідуальний ліміт',
+    checkup: 'профогляд', prophylax: 'комбінований ліміт на профілактику',
+    kids: 'вакцинація дітей', dental: 'ліміт на стоматологію 3 000 грн',
+    exclusion: 'ліміт на винятки', combined: 'комбінований ліміт',
     onco: 'серцево-судинні та онкологія', pregnancy: 'ведення вагітності',
     chronic: 'хронічні поза загостренням', psy: 'психологічна підтримка',
     physio: 'фізіотерапія', second: 'друга думка лікаря',

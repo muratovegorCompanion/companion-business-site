@@ -218,7 +218,7 @@
         <div class="vt-invite nh-rv">
           <div>
             <b>Порахуйте самі</b>
-            <p>Оберіть рівень клінік і потрібні опції — побачите, як рухається орієнтовний внесок. 16 позицій, усі ціни з наших тендерів.</p>
+            <p>Оберіть рівень клінік і потрібні опції — побачите, як рухається орієнтовний внесок. 14 позицій, усі ціни з наших тендерів.</p>
           </div>
           <button type="button" class="vt-open" data-calc-open>Відкрити конструктор <span aria-hidden="true">→</span></button>
         </div>
@@ -314,49 +314,47 @@
           <fieldset>
             <legend><i>Крок 1</i>Рівень клінік<small>Головний чинник. Саме він, а не страхова сума, визначає ціну програми.</small></legend>
             <div class="vt-tiers">
-              <label class="vt-tier"><input type="radio" name="tier" value="city" checked><div><b>Міські та помірного рівня</b><span>Державні заклади й комерційні клініки помірного цінового рівня</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="mid"><div><b>Середній рівень</b><span>Комерційні клініки середнього цінового сегмента</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="high"><div><b>Високий рівень</b><span>Клініки високого цінового рівня, близькі до брендових</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="premium"><div><b>Брендові мережі</b><span>Відомі мережеві клініки преміумсегмента</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="city" checked><div><b>Міські та помірного рівня</b><span>Державні й відомчі заклади, Благомед, Євмакс, Полі-клініка</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="mid"><div><b>Середній рівень</b><span>Альфа-Віта, Амеда, Оксфорд Медікал, Гармонія здоров'я</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="high"><div><b>Високий рівень</b><span>МЦ ІНГО, Інто-Сана, Адоніс, ВІВА, Наш доктор</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="premium"><div><b>Брендові мережі</b><span>Добробут, Медіком, Борис, Оберіг</span></div></label>
             </div>
           </fieldset>
 
           <fieldset>
-            <legend><i>Крок 2</i>Опції за доплату<small>У дужках — реальний розкид цін між страховими в наших тендерах.</small></legend>
+            <legend><i>Крок 2</i>Опції за доплату<small>Ціни — середні по ринку з наших тендерів. У кожної страхової вони свої.</small></legend>
             <p class="vt-group">Профілактика</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup3"><span><b>Профогляд, 3 позиції</b><i>250 – 3 500 грн — різниця у 14 разів</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup5"><span><b>Профогляд, 5 позицій</b><i>360 – 4 500 грн — різниця у 12 разів</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="prophylax"><span><b>Комбінований ліміт на профілактику</b><i>986 – 3 976 грн</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="kids"><span><b>Вакцинація дітей</b><i>1 750 – 2 100 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup"><span><b>Профогляд</b><i>≈ 2 200 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="prophylax"><span><b>Комбінований ліміт на профілактику</b><i>≈ 2 500 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="kids"><span><b>Вакцинація дітей</b><i>≈ 1 900 грн</i></span></label>
             </div>
 
             <p class="vt-group">Ліміти</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Вищий ліміт на стоматологію</b><i>1 300 – 2 600 грн</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Індивідуальний ліміт на винятки</b><i>1 256 – 2 022 грн за кожну 1 000 ліміту</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="combined"><span><b>Збільшення комбінованого ліміту</b><i>496 – 2 800 грн — розкид майже у шість разів</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="individual"><span><b>Вищий індивідуальний ліміт</b><i>350 – 980 грн за крок</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Ліміт на стоматологію 3 000 грн</b><i>≈ 2 100 грн — доплата становить близько 70% від ліміту</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Індивідуальний ліміт на винятки</b><i>≈ 1 400 грн за кожну 1 000 грн ліміту</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="combined"><span><b>Збільшення комбінованого ліміту</b><i>≈ 1 500 грн</i></span></label>
             </div>
 
-            <p class="vt-group">Напрями лікування, які зазвичай у винятках</p>
+            <p class="vt-group">Напрями, які зазвичай у винятках</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="onco"><span><b>Серцево-судинні та онкологія</b><i>0 – 1 800 грн: у частини страхових — бонус</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="pregnancy"><span><b>Ведення вагітності</b><i>1 400 – 2 000 грн</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="chronic"><span><b>Хронічні поза загостренням</b><i>820 – 1 960 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="onco"><span><b>Серцево-судинні та онкологія</b><i>≈ 700 грн — у частини страхових безкоштовно</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="pregnancy"><span><b>Ведення вагітності</b><i>≈ 1 700 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="chronic"><span><b>Хронічні поза загостренням</b><i>≈ 1 400 грн</i></span></label>
             </div>
 
             <p class="vt-group">Підтримка</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="psy"><span><b>Психологічна підтримка</b><i>0 – 2 256 грн: частина страхових дає безкоштовно</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="physio"><span><b>Фізіотерапія</b><i>0 – 1 901 грн: у трьох із семи — бонус</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="second"><span><b>Друга думка лікаря</b><i>0 – 260 грн — альтернативна консультація</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="psy"><span><b>Психологічна підтримка</b><i>≈ 1 100 грн — у частини страхових безкоштовно</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="physio"><span><b>Фізіотерапія</b><i>≈ 800 грн — у трьох із семи бонусом</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="second"><span><b>Друга думка лікаря</b><i>≈ 80 грн</i></span></label>
             </div>
 
             <p class="vt-group">Дрібниці, про які згадують уже після підписання</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="sedative"><span><b>Заспокійливі та снодійні</b><i>22 – 716 грн. Так, це окрема опція</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="saline"><span><b>Сольові розчини та дрібні засоби</b><i>0 – 150 грн. Теж окрема</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="sedative"><span><b>Заспокійливі та снодійні</b><i>≈ 350 грн. Так, це окрема опція</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="saline"><span><b>Сольові розчини та дрібні засоби</b><i>≈ 60 грн. Теж окрема</i></span></label>
             </div>
           </fieldset>
 
