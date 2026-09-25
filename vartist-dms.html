@@ -43,7 +43,43 @@
     .vt-form button{justify-self:start;font:inherit;font-weight:700;padding:14px 26px;border:0;border-radius:12px;background:var(--nh-lime);color:var(--nh-navy);cursor:pointer}
     .vt-form button:disabled{opacity:.55;cursor:default}
     .b-form-status{margin:0;font-size:.9375rem;line-height:1.5;color:rgba(255,255,255,.78)}
-    @media(max-width:640px){.vt-quotes{padding:18px}}
+
+    /* Конструктор. Живе на тому самому папері, що й решта карток системи. */
+    .vt-calc{margin:28px 0 0;padding:clamp(22px,3vw,34px);background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:var(--nh-r)}
+    .vt-calc fieldset{margin:0 0 30px;padding:0;border:0}
+    .vt-calc legend{padding:0;font-size:1.0625rem;font-weight:700;letter-spacing:-.01em}
+    .vt-calc legend small{display:block;margin-top:5px;font-size:.875rem;font-weight:400;color:var(--nh-muted);letter-spacing:0}
+    .vt-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+    .vt-tier{position:relative;display:block;padding:16px 18px;border:1px solid var(--nh-line);border-radius:14px;cursor:pointer;transition:border-color .15s,background .15s}
+    .vt-tier:hover{border-color:rgba(41,104,229,.45)}
+    .vt-tier input{position:absolute;opacity:0;width:0;height:0}
+    .vt-tier b{display:block;font-size:.9375rem;margin-bottom:4px}
+    .vt-tier span{display:block;font-size:.8125rem;line-height:1.45;color:var(--nh-muted)}
+    .vt-tier:has(input:checked){border-color:var(--nh-blue);background:rgba(41,104,229,.05);box-shadow:inset 0 0 0 1px var(--nh-blue)}
+    .vt-tier:has(input:focus-visible){outline:3px solid var(--nh-blue);outline-offset:2px}
+    .vt-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:16px}
+    .vt-opt{display:flex;gap:11px;align-items:flex-start;padding:13px 15px;border:1px solid var(--nh-line);border-radius:12px;cursor:pointer;transition:border-color .15s,background .15s}
+    .vt-opt:hover{border-color:rgba(41,104,229,.45)}
+    .vt-opt input{margin-top:2px;flex:none;accent-color:var(--nh-blue);width:17px;height:17px}
+    .vt-opt:has(input:checked){border-color:var(--nh-blue);background:rgba(41,104,229,.05)}
+    .vt-opt b{display:block;font-size:.9375rem;font-weight:600}
+    .vt-opt i{display:block;font-style:normal;font-size:.8125rem;color:var(--nh-muted);margin-top:3px}
+    .vt-people{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}
+    .vt-people input{font:inherit;font-variant-numeric:tabular-nums;width:120px;padding:11px 13px;border:1px solid var(--nh-line);border-radius:11px;background:#fff;color:var(--nh-ink)}
+    .vt-people span{font-size:.875rem;color:var(--nh-muted)}
+    .vt-out{padding:24px;border-radius:18px;background:var(--nh-navy);color:#fff}
+    .vt-out-k{margin:0 0 6px;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+    .vt-out-sum{margin:0;font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+    .vt-out-sum em{font-style:normal;font-size:.5em;font-weight:600;color:rgba(255,255,255,.65);letter-spacing:0}
+    .vt-out-row{margin:18px 0 0;padding-top:16px;border-top:1px solid rgba(255,255,255,.16);font-size:.9375rem;color:rgba(255,255,255,.78);line-height:1.55}
+    .vt-out-row b{color:#fff;font-variant-numeric:tabular-nums}
+    .vt-disclaim{margin:18px 0 0;padding:16px 18px;border-radius:12px;background:rgba(196,240,107,.14);border:1px solid rgba(196,240,107,.4);font-size:.875rem;line-height:1.6}
+    .vt-missed{margin:26px 0 0}
+    .vt-missed h3{margin:0 0 14px;font-size:1.0625rem}
+    .vt-missed ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+    .vt-missed li{padding:13px 15px;border:1px dashed var(--nh-line);border-radius:12px;font-size:.875rem;line-height:1.5}
+    .vt-missed li b{display:block;font-size:.9375rem;margin-bottom:3px}
+    @media(max-width:640px){.vt-quotes{padding:18px}.vt-calc{padding:18px}.vt-out{padding:18px}}
   </style>
 </head>
 <body>
@@ -129,6 +165,71 @@
       </div>
     </section>
 
+    <section id="calc" aria-labelledby="calc-title">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num nh-rv">Спробуйте самі</span><h2 id="calc-title" class="nh-rv nh-d1">Зберіть програму й подивіться, <em class="nh-s">як рухається ціна</em></h2></div>
+        </div>
+        <p class="nh-rv">Числа нижче — з наших зведених тендерів 2026-27: п'ять компаній, дев'ять програм, 67 пропозицій страхових. Це не тариф, а показ того, що саме робить програму дорожчою.</p>
+
+        <div class="vt-calc nh-rv" data-calc>
+          <fieldset>
+            <legend>Рівень клінік<small>Головний чинник. Саме він, а не страхова сума, визначає ціну програми.</small></legend>
+            <div class="vt-tiers">
+              <label class="vt-tier"><input type="radio" name="tier" value="city" checked><b>Міські та помірного рівня</b><span>Державні заклади й комерційні клініки помірного цінового рівня</span></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="mid"><b>Середній рівень</b><span>Комерційні клініки середнього цінового сегмента</span></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="high"><b>Високий рівень</b><span>Клініки високого цінового рівня, близькі до брендових</span></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="premium"><b>Брендові мережі</b><span>Відомі мережеві клініки преміумсегмента</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Опції за доплату<small>У дужках — реальний розкид цін між страховими в наших тендерах.</small></legend>
+            <div class="vt-opts">
+              <label class="vt-opt"><input type="checkbox" name="opt" value="checkup3"><span><b>Профогляд, 3 позиції</b><i>250 – 3 500 грн — різниця у 14 разів</i></span></label>
+              <label class="vt-opt"><input type="checkbox" name="opt" value="checkup5"><span><b>Профогляд, 5 позицій</b><i>360 – 4 500 грн — різниця у 12 разів</i></span></label>
+              <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Вищий ліміт на стоматологію</b><i>1 300 – 2 600 грн</i></span></label>
+              <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Індивідуальний ліміт на винятки</b><i>1 256 – 2 022 грн за кожну 1 000 ліміту</i></span></label>
+              <label class="vt-opt"><input type="checkbox" name="opt" value="psy"><span><b>Психологічна підтримка</b><i>0 – 2 256 грн: частина страхових дає безкоштовно</i></span></label>
+              <label class="vt-opt"><input type="checkbox" name="opt" value="physio"><span><b>Фізіотерапія</b><i>0 – 1 901 грн: у трьох із семи — бонус</i></span></label>
+              <label class="vt-opt"><input type="checkbox" name="opt" value="pregnancy"><span><b>Ведення вагітності</b><i>1 400 – 2 000 грн</i></span></label>
+              <label class="vt-opt"><input type="checkbox" name="opt" value="kids"><span><b>Вакцинація дітей</b><i>1 750 – 2 100 грн</i></span></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Скільки людей<small>Від 50 осіб — нижче корпоративна програма втрачає економічний сенс.</small></legend>
+            <div class="vt-people">
+              <input type="number" min="50" max="5000" step="10" value="100" data-calc-people aria-label="Кількість застрахованих осіб">
+              <span>осіб у програмі</span>
+            </div>
+          </fieldset>
+
+          <div class="vt-out" data-calc-out hidden>
+            <p class="vt-out-k">Орієнтовний внесок</p>
+            <p class="vt-out-sum"><span data-calc-person>—</span> <em>грн на людину на рік</em></p>
+            <p class="vt-out-row">На колектив із <b data-calc-count>100</b> осіб — приблизно <b data-calc-total>—</b> грн на рік.</p>
+          </div>
+
+          <p class="vt-disclaim"><b>Це орієнтир, а не розрахунок і не оферта.</b> Точну цифру дає тільки тендер: ми розсилаємо запит ринком і зводимо відповіді. У наших тендерах дев'ять із десяти пропозицій укладалися в ±30% від такого орієнтира — але траплялося й більше. Ще один чинник не на вашу користь у цій таблиці: як брокер ми домовляємося про знижки, тож підсумкова ціна нерідко виходить нижчою за показану тут.</p>
+
+          <div class="vt-missed">
+            <h3>Чого в цьому конструкторі немає — а в договорі є</h3>
+            <ul>
+              <li><b>Застереження про збитковість</b>Дозволяє страховій переглянути умови, якщо виплат забагато. Є не в усіх.</li>
+              <li><b>Валютне застереження</b>В одному з наших тендерів воно було лише в однієї страхової з десяти — і це прямий ризик для бюджету.</li>
+              <li><b>Франшиза на окремі клініки</b>Програма виглядає дешевшою, але частину візитів людина оплачує сама.</li>
+              <li><b>Перенесення залишків ліміту</b>Невикористане цього року — згорає чи переходить далі.</li>
+              <li><b>Перерахунок для новачків</b>Як рахують ліміт і платіж тому, хто прийшов у середині року.</li>
+              <li><b>Компенсація власних витрат</b>Одні страхові повертають гроші за самостійно оплачене лікування, інші ні.</li>
+              <li><b>Звітність за відмовами</b>Щомісяця, щокварталу — чи «у звітах це не відображається».</li>
+              <li><b>Перелік винятків</b>Найважливіше. Саме тут з'ясовується, що половина потрібного не покривається — і саме його ніхто не читає до підписання.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="nh-sec" id="drivers" aria-labelledby="drivers-title">
       <div class="nh-wrap">
         <div class="nh-head">
@@ -202,6 +303,7 @@
 
   </main>
   <script src="nh.js?v=3" defer></script>
+  <script src="vartist.js?v=1" defer></script>
   <script src="form.js?v=1" defer></script>
 </body>
 </html>
