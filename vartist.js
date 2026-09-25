@@ -40,6 +40,10 @@
     second:       80,
     sedative:    350,
     saline:       60,
+    refund:        0,   // у п'яти страхових із шести не впливає на вартість
+    fullcover:  1200,   // повне покриття дорогих клінік замість часткового
+    cutclinic: -1700,   // мінус-опція: знизити покриття брендової клініки
+    cutonco:    -800,   // мінус-опція: корпоративний ліміт замість повного
   };
 
   const money = (value) =>
@@ -70,6 +74,8 @@
     });
 
 
+    min = Math.max(min, 4000);
+    max = Math.max(max, min + 1000);
     outPerson.textContent = `${money(min)} – ${money(max)}`;
 
     const headcount = Math.max(50, parseInt(people.value, 10) || 50);
@@ -91,6 +97,8 @@
     chronic: 'лікування хронічних хвороб', psy: 'консультації психолога',
     physio: 'фізіотерапія', second: 'друга думка лікаря',
     sedative: 'заспокійливі та снодійні', saline: 'сольові розчини',
+    refund: 'компенсація власних витрат', fullcover: 'повне покриття дорогих клінік',
+    cutclinic: 'знижене покриття брендової клініки', cutonco: 'спільний ліміт на новоутворення',
   };
 
   const go = root.querySelector('[data-calc-go]');

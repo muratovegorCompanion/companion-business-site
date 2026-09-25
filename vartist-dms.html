@@ -98,6 +98,10 @@
     .vt-tier span{display:block;font-size:.8125rem;line-height:1.45;color:var(--nh-muted)}
     .vt-tier:has(input:checked){border-color:var(--nh-blue);background:rgba(41,104,229,.05);box-shadow:inset 0 0 0 1px var(--nh-blue)}
     .vt-tier:has(input:focus-visible){outline:3px solid var(--nh-blue);outline-offset:2px}
+    .vt-group-save{color:#1F5C33}
+    .vt-opt-save{border-color:rgba(31,92,51,.3)}
+    .vt-opt-save:has(input:checked){border-color:#1F5C33;background:rgba(31,92,51,.06)}
+    .vt-opt-save input{accent-color:#1F5C33}
     .vt-group{margin:22px 0 0;font-size:.8125rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--nh-muted)}
     .vt-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:16px}
     .vt-opt{display:flex;gap:11px;align-items:flex-start;padding:13px 15px;border:1px solid var(--nh-line);border-radius:12px;cursor:pointer;transition:border-color .15s,background .15s}
@@ -218,7 +222,7 @@
         <div class="vt-invite nh-rv">
           <div>
             <b>Порахуйте самі</b>
-            <p>Оберіть рівень клінік і потрібні опції — побачите, як рухається орієнтовний внесок. 14 позицій, усі ціни з наших тендерів.</p>
+            <p>Оберіть рівень клінік і потрібні опції — побачите, як рухається орієнтовний внесок. 18 позицій, усі ціни з наших тендерів.</p>
           </div>
           <button type="button" class="vt-open" data-calc-open>Відкрити конструктор <span aria-hidden="true">→</span></button>
         </div>
@@ -351,10 +355,22 @@
                 <label class="vt-opt"><input type="checkbox" name="opt" value="second"><span><b>Друга думка іншого лікаря</b><i>≈ 80 грн — консультація для перевірки діагнозу</i></span></label>
             </div>
 
+            <p class="vt-group">Зручність</p>
+            <div class="vt-opts">
+                <label class="vt-opt"><input type="checkbox" name="opt" value="refund"><span><b>Повернення грошей, витрачених самостійно</b><i>зазвичай безкоштовно — людина лікувалася за свої, страхова компенсує</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="fullcover"><span><b>Повне покриття дорогих клінік</b><i>≈ 1 200 грн — інакше частину візиту людина доплачує сама</i></span></label>
+            </div>
+
             <p class="vt-group">Дрібниці, про які згадують уже після підписання</p>
             <div class="vt-opts">
                 <label class="vt-opt"><input type="checkbox" name="opt" value="sedative"><span><b>Заспокійливі та снодійні ліки</b><i>≈ 350 грн. Так, без цієї опції їх не оплатять</i></span></label>
                 <label class="vt-opt"><input type="checkbox" name="opt" value="saline"><span><b>Сольові розчини для носа й горла</b><i>≈ 60 грн. Теж окремою опцією</i></span></label>
+            </div>
+
+            <p class="vt-group vt-group-save">А так програму можна здешевити</p>
+            <div class="vt-opts">
+                <label class="vt-opt vt-opt-save"><input type="checkbox" name="opt" value="cutclinic"><span><b>Найдорожча мережа — не на всі 100%</b><i>мінус ≈ 1 700 грн: візит до неї людина частково оплачує сама</i></span></label>
+                <label class="vt-opt vt-opt-save"><input type="checkbox" name="opt" value="cutonco"><span><b>Спільний ліміт на новоутворення замість особистого</b><i>мінус ≈ 800 грн: запас один на весь колектив</i></span></label>
             </div>
           </fieldset>
 
