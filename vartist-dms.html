@@ -82,6 +82,12 @@
     .vt-modal .vt-calc{margin:0;border:0;padding:0;background:transparent}
     @media(max-width:640px){.vt-modal{width:100%;max-width:100%;max-height:100vh;height:100vh;border-radius:0}}
     /* Конструктор. Живе на тому самому папері, що й решта карток системи. */
+    .vt-cov{display:grid;gap:11px}
+    .vt-cov-row{display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,2fr) auto;gap:14px;align-items:center;font-size:.9375rem}
+    .vt-bar{height:10px;border-radius:99px;background:rgba(14,26,51,.08);overflow:hidden}
+    .vt-bar i{display:block;height:100%;border-radius:99px;background:var(--nh-blue)}
+    .vt-cov-row b{font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+    @media(max-width:560px){.vt-cov-row{grid-template-columns:1fr auto;gap:6px}.vt-bar{grid-column:1/-1}}
     .vt-calc{margin:28px 0 0;padding:clamp(22px,3vw,34px);background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:var(--nh-r)}
     .vt-calc fieldset{margin:0 0 30px;padding:0;border:0}
     .vt-hint{margin:0 0 26px;padding:13px 16px;border-radius:12px;background:rgba(41,104,229,.07);font-size:.9375rem;line-height:1.5;color:var(--nh-ink)}
@@ -211,6 +217,31 @@
           <article class="nh-tile nh-rv"><img src="presentation-assets/dms/employee.jpg" alt="" loading="lazy" width="1168" height="880"><div class="nh-tile-in"><span class="nh-tag">База</span><h3>Те, що має бути в будь-якій робочій програмі</h3><p>Поліклініка, стаціонар, медикаменти, невідкладна допомога, критичні стани, мінімальна стоматологія та профогляд. Рахуємо у двох-трьох варіантах — щоб було видно, як змінює ціну рівень клінік.</p></div></article>
           <article class="nh-tile nh-rv nh-d1"><img src="presentation-assets/dms/individual.jpg" alt="" loading="lazy" width="1168" height="880"><div class="nh-tile-in"><span class="nh-tag">Опції за доплату</span><h3>Те, що додається за вашим вибором</h3><p>Розширений профогляд, вищий ліміт на стоматологію, індивідуальний ліміт на винятки. Вартість кожного шматка видно окремо — ви самі вирішуєте, де зупинитися.</p></div></article>
         </div>
+      </div>
+    </section>
+
+    <section class="nh-sec" id="franchise" aria-labelledby="franchise-title">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num nh-rv">Франшиза</span><h2 id="franchise-title" class="nh-rv nh-d1">Чому людину <em class="nh-s">просять доплатити</em></h2></div>
+        </div>
+        <p class="nh-rv">Найчастіша претензія до програми звучить так: «мені не знайшли клініку поруч, та ще й просять доплатити». Людина вважає, що її обдурили. Насправді вона зіткнулася з франшизою — і про неї варто знати заздалегідь.</p>
+        <p class="nh-rv">Франшиза означає, що клініки покриваються не однаково. Ось як це виглядає в реальній програмі:</p>
+
+        <div class="vt-quotes nh-rv">
+          <span class="vt-quotes-k">Покриття за категоріями клінік</span>
+          <div class="vt-cov">
+            <div class="vt-cov-row"><span>Брендові мережі</span><div class="vt-bar"><i style="width:70%"></i></div><b>70%</b></div>
+            <div class="vt-cov-row"><span>Високий ціновий рівень</span><div class="vt-bar"><i style="width:80%"></i></div><b>80%</b></div>
+            <div class="vt-cov-row"><span>Середній і помірний рівень</span><div class="vt-bar"><i style="width:100%"></i></div><b>100%</b></div>
+            <div class="vt-cov-row"><span>Державні заклади</span><div class="vt-bar"><i style="width:100%"></i></div><b>100%</b></div>
+          </div>
+          <small>Решту людина оплачує сама: у брендовій клініці це 30% вартості візиту, у високій — 20%.</small>
+        </div>
+
+        <p class="nh-rv">Це не підступ, а спосіб вкластися в бюджет: програма з повним покриттям дорогих мереж коштує помітно більше. Питання лише в тому, щоб команда знала про це до першого візиту, а не після.</p>
+
+        <div class="nh-callout nh-rv"><div><b>А ось на що справді варто дивитися</b><p>Скільки саме клінік покриваються повністю. У тендері для ІТ-компанії ми порівняли пропозиції за програмою одного класу: в однієї страхової 88 клінік Києва без доплати, в іншої — 326. Майже вчетверо більше за ті самі гроші. У таблиці порівняння цін цієї колонки немає, якщо її туди не поставити.</p></div></div>
       </div>
     </section>
 
@@ -358,7 +389,7 @@
             <p class="vt-group">Зручність</p>
             <div class="vt-opts">
                 <label class="vt-opt"><input type="checkbox" name="opt" value="refund"><span><b>Повернення грошей, витрачених самостійно</b><i>зазвичай безкоштовно — людина лікувалася за свої, страхова компенсує</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="fullcover"><span><b>Повне покриття дорогих клінік</b><i>≈ 1 200 грн — інакше частину візиту людина доплачує сама</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="fullcover"><span><b>Без доплат у дорогих клініках</b><i>≈ 1 200 грн — інакше в брендових людина платить 30% сама, у високих 20%</i></span></label>
             </div>
 
             <p class="vt-group">Дрібниці, про які згадують уже після підписання</p>
