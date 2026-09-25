@@ -79,6 +79,36 @@
     out.hidden = false;
   }
 
+  // Кнопка веде до форми й переносить туди зібрану конфігурацію: менеджер
+  // одразу бачить, що саме людина обрала, і не починає розмову з нуля.
+  const LABELS = {
+    city: 'міські та помірного рівня', mid: 'середній рівень',
+    high: 'високий рівень', premium: 'брендові мережі',
+    checkup3: 'профогляд (3)', checkup5: 'профогляд (5)',
+    dental: 'вищий ліміт на стоматологію', exclusion: 'індивідуальний ліміт на винятки',
+    psy: 'психологічна підтримка', physio: 'фізіотерапія',
+    pregnancy: 'ведення вагітності', kids: 'вакцинація дітей',
+  };
+
+  const go = root.querySelector('[data-calc-go]');
+  if (go) go.addEventListener('click', () => {
+    const form = document.querySelector('.b-meeting-form');
+    const note = form && form.elements.message;
+    if (note && !note.value.trim()) {
+      const tier = root.querySelector('input[name="tier"]:checked');
+      const picked = [...root.querySelectorAll('input[name="opt"]:checked')]
+        .map((box) => LABELS[box.value]).filter(Boolean);
+      const parts = [`${people.value} осіб`, `клініки: ${LABELS[tier.value]}`];
+      if (picked.length) parts.push(`опції: ${picked.join(', ')}`);
+      parts.push(`орієнтир ${outPerson.textContent} грн/особу`);
+      note.value = `Зібрав у конструкторі — ${parts.join('; ')}.`;
+    }
+    const target = document.querySelector('#contact');
+    if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    const name = form && form.elements.name;
+    if (name) setTimeout(() => name.focus({preventScroll: true}), 600);
+  });
+
   root.addEventListener('change', recount);
   root.addEventListener('input', (event) => {
     if (event.target === people) recount();
