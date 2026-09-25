@@ -75,8 +75,12 @@
     root.querySelectorAll('input[name="opt"]:checked').forEach((box) => {
       const surcharge = OPTIONS[box.value];
       if (!surcharge) return;
-      min += surcharge;
-      max += surcharge;
+      // Стоматологія і запас на непокрите рахуються за кожну 1 000 грн ліміту,
+      // тож ціна множиться на обраний розмір.
+      const limit = root.querySelector(`[data-lim="${box.value}"]`);
+      const steps = limit ? Number(limit.value) / 1000 : 1;
+      min += surcharge * steps;
+      max += surcharge * steps;
       picked += 1;
     });
 
@@ -114,6 +118,11 @@
     cutonco: 'спільний ліміт на новоутворення',
   };
 
+  // Клік по списку не має перемикати саму опцію — він усередині label.
+  root.querySelectorAll('[data-lim]').forEach((select) => {
+    select.addEventListener('click', (event) => event.stopPropagation());
+  });
+
   const go = root.querySelector('[data-calc-go]');
   if (go) go.addEventListener('click', () => {
     const form = document.querySelector('.b-meeting-form');
@@ -121,7 +130,12 @@
     if (note && !note.value.trim()) {
       const tier = root.querySelector('input[name="tier"]:checked');
       const picked = [...root.querySelectorAll('input[name="opt"]:checked')]
-        .map((box) => LABELS[box.value]).filter(Boolean);
+        .map((box) => {
+          const label = LABELS[box.value];
+          if (!label) return null;
+          const limit = root.querySelector(`[data-lim="${box.value}"]`);
+          return limit ? `${label} на ${Number(limit.value).toLocaleString('uk-UA')} грн` : label;
+        }).filter(Boolean);
       const parts = [`${people.value} осіб`, `клініки: ${LABELS[tier.value]}`];
       if (picked.length) parts.push(`опції: ${picked.join(', ')}`);
       parts.push(`орієнтир ${outPerson.textContent} грн/особу`);

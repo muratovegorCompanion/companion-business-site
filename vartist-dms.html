@@ -114,6 +114,10 @@
     .vt-opt:hover{border-color:rgba(41,104,229,.45)}
     .vt-opt input{margin-top:2px;flex:none;accent-color:var(--nh-blue);width:17px;height:17px}
     .vt-opt:has(input:checked){border-color:var(--nh-blue);background:rgba(41,104,229,.05)}
+    .vt-lim{display:none;margin-top:10px;align-items:center;gap:9px;font-size:.8125rem;color:var(--nh-muted)}
+    .vt-opt:has(input:checked) .vt-lim{display:flex}
+    .vt-lim select{font:inherit;font-size:.875rem;padding:7px 10px;border:1px solid var(--nh-line);border-radius:9px;background:#fff;color:var(--nh-ink)}
+    .vt-lim select:focus-visible{outline:3px solid var(--nh-blue);outline-offset:2px}
     .vt-opt b{display:block;font-size:.9375rem;font-weight:600}
     .vt-opt i{display:block;font-style:normal;font-size:.8125rem;color:var(--nh-muted);margin-top:3px}
     .vt-people{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}
@@ -372,8 +376,8 @@
 
             <p class="vt-group">Ліміти</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Стоматологія</b><i>≈ 1 000 грн за кожну 1 000 грн ліміту. Для великих колективів дешевше — близько 700</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Гроші на те, що програма зазвичай не покриває</b><i>≈ 1 400 грн за кожну 1 000 грн такого запасу</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Стоматологія</b><i>≈ 1 000 грн за кожну 1 000 грн ліміту. Великим колективам рахують дешевше — близько 700</i><span class="vt-lim"><label for="lim-dental">Ліміт на рік</label><select id="lim-dental" data-lim="dental"><option value="1000">1 000 грн</option><option value="2000">2 000 грн</option><option value="3000" selected>3 000 грн</option><option value="4000">4 000 грн</option><option value="5000">5 000 грн</option></select></span></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Гроші на те, що програма зазвичай не покриває</b><i>≈ 1 400 грн за кожну 1 000 грн такого запасу</i><span class="vt-lim"><label for="lim-exclusion">Запас на рік</label><select id="lim-exclusion" data-lim="exclusion"><option value="1000">1 000 грн</option><option value="2000" selected>2 000 грн</option><option value="3000">3 000 грн</option><option value="4000">4 000 грн</option><option value="5000">5 000 грн</option></select></span></span></label>
             </div>
 
             <p class="vt-group">Напрями, яких немає в базовій програмі</p>
