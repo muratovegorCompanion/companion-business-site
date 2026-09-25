@@ -23,14 +23,22 @@
   // Доплати за опції — мінімум і максимум із реальних пропозицій.
   // Там, де частина страхових віддає опцію безкоштовно, мінімум — нуль.
   const OPTIONS = {
-    checkup3:  { min:  250, max: 3500 },
-    checkup5:  { min:  360, max: 4500 },
-    dental:    { min: 1300, max: 2600 },
-    exclusion: { min: 1256, max: 2022 },
-    psy:       { min:    0, max: 2256 },
-    physio:    { min:    0, max: 1901 },
-    pregnancy: { min: 1400, max: 2000 },
-    kids:      { min: 1750, max: 2100 },
+    checkup3:   { min:  250, max: 3500 },
+    checkup5:   { min:  360, max: 4500 },
+    prophylax:  { min:  986, max: 3976 },
+    kids:       { min: 1750, max: 2100 },
+    dental:     { min: 1300, max: 2600 },
+    exclusion:  { min: 1256, max: 2022 },
+    combined:   { min:  496, max: 2800 },
+    individual: { min:  350, max:  980 },
+    onco:       { min:  480, max: 1800 },
+    pregnancy:  { min: 1400, max: 2000 },
+    chronic:    { min:  820, max: 1960 },
+    psy:        { min:    0, max: 2256 },
+    physio:     { min:    0, max: 1901 },
+    second:     { min:    0, max:  260 },
+    sedative:   { min:   22, max:  716 },
+    saline:     { min:    0, max:  150 },
   };
 
   const money = (value) =>
@@ -85,9 +93,13 @@
     city: 'міські та помірного рівня', mid: 'середній рівень',
     high: 'високий рівень', premium: 'брендові мережі',
     checkup3: 'профогляд (3)', checkup5: 'профогляд (5)',
-    dental: 'вищий ліміт на стоматологію', exclusion: 'індивідуальний ліміт на винятки',
-    psy: 'психологічна підтримка', physio: 'фізіотерапія',
-    pregnancy: 'ведення вагітності', kids: 'вакцинація дітей',
+    prophylax: 'комбінований ліміт на профілактику', kids: 'вакцинація дітей',
+    dental: 'вищий ліміт на стоматологію', exclusion: 'ліміт на винятки',
+    combined: 'комбінований ліміт', individual: 'вищий індивідуальний ліміт',
+    onco: 'серцево-судинні та онкологія', pregnancy: 'ведення вагітності',
+    chronic: 'хронічні поза загостренням', psy: 'психологічна підтримка',
+    physio: 'фізіотерапія', second: 'друга думка лікаря',
+    sedative: 'заспокійливі та снодійні', saline: 'сольові розчини',
   };
 
   const go = root.querySelector('[data-calc-go]');
@@ -103,10 +115,37 @@
       parts.push(`орієнтир ${outPerson.textContent} грн/особу`);
       note.value = `Зібрав у конструкторі — ${parts.join('; ')}.`;
     }
+    if (modal && modal.open) modal.close();
     const target = document.querySelector('#contact');
     if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
     const name = form && form.elements.name;
     if (name) setTimeout(() => name.focus({preventScroll: true}), 600);
+  });
+
+  // Відкриття та закриття вікна. Нативний <dialog> сам дає Esc, фокус-пастку
+  // й затемнення тла — свого коду для цього не треба.
+  const modal = document.querySelector('#vt-modal');
+  const openers = document.querySelectorAll('[data-calc-open]');
+  let lastFocused = null;
+
+  openers.forEach((button) => button.addEventListener('click', () => {
+    if (!modal) return;
+    lastFocused = button;
+    modal.showModal();
+    const first = modal.querySelector('input[name="tier"]');
+    if (first) first.focus({preventScroll: true});
+  }));
+
+  const closeBtn = modal && modal.querySelector('[data-calc-close]');
+  if (closeBtn) closeBtn.addEventListener('click', () => modal.close());
+
+  // Клік повз вміст закриває вікно: звичний жест, якого від модалки чекають.
+  if (modal) modal.addEventListener('click', (event) => {
+    if (event.target === modal) modal.close();
+  });
+
+  if (modal) modal.addEventListener('close', () => {
+    if (lastFocused) lastFocused.focus({preventScroll: true});
   });
 
   root.addEventListener('change', recount);

@@ -44,6 +44,43 @@
     .vt-form button:disabled{opacity:.55;cursor:default}
     .b-form-status{margin:0;font-size:.9375rem;line-height:1.5;color:rgba(255,255,255,.78)}
 
+
+    /* Зона конструктора. Темне тло на всю ширину — щоб перехід від тексту
+       до інтерактиву було видно здалеку, а не помічалося випадково. */
+    .vt-zone{position:relative}
+    .vt-zone::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--nh-lime),transparent);opacity:.7}
+    .vt-badge{display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:99px;background:rgba(196,240,107,.16);border:1px solid rgba(196,240,107,.45);color:var(--nh-lime);font-size:.8125rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .vt-badge i{width:8px;height:8px;border-radius:50%;background:var(--nh-lime);animation:vtPulse 2s var(--nh-ease) infinite}
+    @keyframes vtPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
+    @media(prefers-reduced-motion:reduce){.vt-badge i{animation:none}}
+    .vt-zone .nh-head h2{color:#fff}
+    .vt-zone > .nh-wrap > p{color:rgba(255,255,255,.72)}
+
+    /* Конструктор відкривається вікном поверх сторінки: так одразу видно,
+       що це інструмент, а не ще один блок тексту. */
+    .vt-invite{margin:26px 0 0;padding:clamp(22px,3vw,30px);display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;border-radius:var(--nh-r);background:rgba(255,255,255,.06);border:1px solid rgba(196,240,107,.35)}
+    .vt-invite b{display:block;font-size:1.25rem;letter-spacing:-.01em;color:#fff}
+    .vt-invite p{margin:8px 0 0;max-width:52ch;color:rgba(255,255,255,.72);line-height:1.6}
+    .vt-open{font:inherit;font-weight:700;font-size:1.0625rem;padding:16px 30px;border:0;border-radius:14px;background:var(--nh-lime);color:var(--nh-navy);cursor:pointer;transition:transform .15s var(--nh-ease)}
+    .vt-open:hover{transform:translateY(-2px)}
+    .vt-open:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+    /* Змінні оголошені на .nh, а <dialog> живе поза ним — тож повторюємо тут
+       ті, що потрібні конструктору. Інакше вікно лишається без тла. */
+    .vt-modal{--nh-bg:#F6F5F0;--nh-paper:#fff;--nh-ink:#0E1A33;--nh-muted:#5A6479;--nh-line:rgba(14,26,51,.12);--nh-blue:#2968E5;--nh-lime:#C4F06B;--nh-navy:#0B1934;--nh-r:22px;--nh-ease:cubic-bezier(.2,.7,.2,1);
+      font-family:inherit;width:min(980px,calc(100% - 32px));max-height:min(88vh,980px);padding:0;border:0;border-radius:var(--nh-r);background:var(--nh-bg);color:var(--nh-ink);overflow:hidden}
+    .vt-modal::backdrop{background:rgba(8,20,45,.72);backdrop-filter:blur(3px)}
+    .vt-modal[open]{display:flex;flex-direction:column;animation:vtIn .22s var(--nh-ease)}
+    @keyframes vtIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    @media(prefers-reduced-motion:reduce){.vt-modal[open]{animation:none}}
+    .vt-modal-top{flex:none;display:flex;gap:16px;align-items:flex-start;justify-content:space-between;padding:22px clamp(18px,3vw,30px);background:var(--nh-navy);color:#fff}
+    .vt-modal-top h2{margin:12px 0 0;font-size:clamp(1.3rem,2.6vw,1.75rem);letter-spacing:-.02em}
+    .vt-close{flex:none;width:40px;height:40px;border:1px solid rgba(255,255,255,.28);border-radius:11px;background:transparent;color:#fff;font-size:1rem;cursor:pointer}
+    .vt-close:hover{background:rgba(255,255,255,.1)}
+    .vt-close:focus-visible{outline:3px solid var(--nh-lime);outline-offset:2px}
+    .vt-modal-body{overflow:auto;-webkit-overflow-scrolling:touch;padding:clamp(16px,3vw,26px)}
+    .vt-modal .vt-calc{margin:0;border:0;padding:0;background:transparent}
+    @media(max-width:640px){.vt-modal{width:100%;max-width:100%;max-height:100vh;height:100vh;border-radius:0}}
     /* Конструктор. Живе на тому самому папері, що й решта карток системи. */
     .vt-calc{margin:28px 0 0;padding:clamp(22px,3vw,34px);background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:var(--nh-r)}
     .vt-calc fieldset{margin:0 0 30px;padding:0;border:0}
@@ -61,6 +98,7 @@
     .vt-tier span{display:block;font-size:.8125rem;line-height:1.45;color:var(--nh-muted)}
     .vt-tier:has(input:checked){border-color:var(--nh-blue);background:rgba(41,104,229,.05);box-shadow:inset 0 0 0 1px var(--nh-blue)}
     .vt-tier:has(input:focus-visible){outline:3px solid var(--nh-blue);outline-offset:2px}
+    .vt-group{margin:22px 0 0;font-size:.8125rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--nh-muted)}
     .vt-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:16px}
     .vt-opt{display:flex;gap:11px;align-items:flex-start;padding:13px 15px;border:1px solid var(--nh-line);border-radius:12px;cursor:pointer;transition:border-color .15s,background .15s}
     .vt-opt:hover{border-color:rgba(41,104,229,.45)}
@@ -149,7 +187,7 @@
         <div class="nh-head">
           <div><span class="nh-num nh-rv">Опції</span><h2 id="options-title" class="nh-rv nh-d1">Іноді та сама послуга просто <em class="nh-s">безкоштовна</em></h2></div>
         </div>
-        <p class="nh-rv">Інший тендер, агропромислова компанія на 444 особи. Дивимося опції за доплату — і виявляється, що частина страхових дає їх у межах основної ціни.</p>
+        <p class="nh-rv">Інший тендер, агропромислова компанія на 400+ осіб. Дивимося опції за доплату — і виявляється, що частина страхових дає їх у межах основної ціни.</p>
         <div class="nh-facts">
           <article class="nh-fact nh-rv"><h3>Психологічна підтримка</h3><p>У трьох компаній — бонус, без доплати. В інших — від 250 до 2 256 грн на людину.</p></article>
           <article class="nh-fact nh-rv nh-d1"><h3>Фізіотерапія</h3><p>У трьох — бонус. У решти — від 1 370 до 1 901 грн.</p></article>
@@ -172,70 +210,20 @@
       </div>
     </section>
 
-    <section id="calc" aria-labelledby="calc-title">
+    <section class="nh-sec nh-dark vt-zone" id="calc" aria-labelledby="calc-title">
       <div class="nh-wrap">
         <div class="nh-head">
-          <div><span class="nh-num nh-rv">Спробуйте самі</span><h2 id="calc-title" class="nh-rv nh-d1">Зберіть програму й подивіться, <em class="nh-s">як рухається ціна</em></h2></div>
+          <div><span class="vt-badge nh-rv"><i aria-hidden="true"></i>Інтерактивний конструктор</span><h2 id="calc-title" class="nh-rv nh-d1">Зберіть програму й подивіться, <em class="nh-s">як рухається ціна</em></h2></div>
         </div>
-        <p class="nh-rv">Числа нижче — з наших зведених тендерів 2026-27: п'ять компаній, дев'ять програм, 67 пропозицій страхових. Це не тариф, а показ того, що саме робить програму дорожчою.</p>
-
-        <div class="vt-calc nh-rv" data-calc>
-          <p class="vt-hint">Позначайте те, що вам потрібно — сума перераховується одразу.</p>
-          <fieldset>
-            <legend><i>Крок 1</i>Рівень клінік<small>Головний чинник. Саме він, а не страхова сума, визначає ціну програми.</small></legend>
-            <div class="vt-tiers">
-              <label class="vt-tier"><input type="radio" name="tier" value="city" checked><div><b>Міські та помірного рівня</b><span>Державні заклади й комерційні клініки помірного цінового рівня</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="mid"><div><b>Середній рівень</b><span>Комерційні клініки середнього цінового сегмента</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="high"><div><b>Високий рівень</b><span>Клініки високого цінового рівня, близькі до брендових</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="premium"><div><b>Брендові мережі</b><span>Відомі мережеві клініки преміумсегмента</span></div></label>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend><i>Крок 2</i>Опції за доплату<small>У дужках — реальний розкид цін між страховими в наших тендерах.</small></legend>
-            <div class="vt-opts">
-              <label class="vt-opt"><input type="checkbox" name="opt" value="checkup3"><span><b>Профогляд, 3 позиції</b><i>250 – 3 500 грн — різниця у 14 разів</i></span></label>
-              <label class="vt-opt"><input type="checkbox" name="opt" value="checkup5"><span><b>Профогляд, 5 позицій</b><i>360 – 4 500 грн — різниця у 12 разів</i></span></label>
-              <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Вищий ліміт на стоматологію</b><i>1 300 – 2 600 грн</i></span></label>
-              <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Індивідуальний ліміт на винятки</b><i>1 256 – 2 022 грн за кожну 1 000 ліміту</i></span></label>
-              <label class="vt-opt"><input type="checkbox" name="opt" value="psy"><span><b>Психологічна підтримка</b><i>0 – 2 256 грн: частина страхових дає безкоштовно</i></span></label>
-              <label class="vt-opt"><input type="checkbox" name="opt" value="physio"><span><b>Фізіотерапія</b><i>0 – 1 901 грн: у трьох із семи — бонус</i></span></label>
-              <label class="vt-opt"><input type="checkbox" name="opt" value="pregnancy"><span><b>Ведення вагітності</b><i>1 400 – 2 000 грн</i></span></label>
-              <label class="vt-opt"><input type="checkbox" name="opt" value="kids"><span><b>Вакцинація дітей</b><i>1 750 – 2 100 грн</i></span></label>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend><i>Крок 3</i>Скільки людей<small>Від 50 осіб — нижче корпоративна програма втрачає економічний сенс.</small></legend>
-            <div class="vt-people">
-              <input type="number" min="50" max="5000" step="10" value="100" data-calc-people aria-label="Кількість застрахованих осіб">
-              <span>осіб у програмі</span>
-            </div>
-          </fieldset>
-
-          <div class="vt-out" data-calc-out hidden>
-            <p class="vt-out-k">Орієнтовний внесок</p>
-            <p class="vt-out-sum"><span data-calc-person>—</span> <em>грн на людину на рік</em></p>
-            <p class="vt-out-row">На колектив із <b data-calc-count>100</b> осіб — приблизно <b data-calc-total>—</b> грн на рік.</p>
-            <button type="button" class="vt-go" data-calc-go>Отримати точний розрахунок <span aria-hidden="true">↓</span></button>
+        <div class="vt-invite nh-rv">
+          <div>
+            <b>Порахуйте самі</b>
+            <p>Оберіть рівень клінік і потрібні опції — побачите, як рухається орієнтовний внесок. 16 позицій, усі ціни з наших тендерів.</p>
           </div>
-
-          <p class="vt-disclaim"><b>Це орієнтир, а не розрахунок і не оферта.</b> Точну цифру дає тільки тендер: ми розсилаємо запит ринком і зводимо відповіді. У наших тендерах дев'ять із десяти пропозицій укладалися в ±30% від такого орієнтира — але траплялося й більше. Ще один чинник не на вашу користь у цій таблиці: як брокер ми домовляємося про знижки, тож підсумкова ціна нерідко виходить нижчою за показану тут.</p>
-
-          <div class="vt-missed">
-            <h3>Чого в цьому конструкторі немає — а в договорі є</h3>
-            <ul>
-              <li><b>Застереження про збитковість</b>Дозволяє страховій переглянути умови, якщо виплат забагато. Є не в усіх.</li>
-              <li><b>Валютне застереження</b>В одному з наших тендерів воно було лише в однієї страхової з десяти — і це прямий ризик для бюджету.</li>
-              <li><b>Франшиза на окремі клініки</b>Програма виглядає дешевшою, але частину візитів людина оплачує сама.</li>
-              <li><b>Перенесення залишків ліміту</b>Невикористане цього року — згорає чи переходить далі.</li>
-              <li><b>Перерахунок для новачків</b>Як рахують ліміт і платіж тому, хто прийшов у середині року.</li>
-              <li><b>Компенсація власних витрат</b>Одні страхові повертають гроші за самостійно оплачене лікування, інші ні.</li>
-              <li><b>Звітність за відмовами</b>Щомісяця, щокварталу — чи «у звітах це не відображається».</li>
-              <li><b>Перелік винятків</b>Найважливіше. Саме тут з'ясовується, що половина потрібного не покривається — і саме його ніхто не читає до підписання.</li>
-            </ul>
-          </div>
+          <button type="button" class="vt-open" data-calc-open>Відкрити конструктор <span aria-hidden="true">→</span></button>
         </div>
+        <p class="nh-rv">Числа в конструкторі — з наших зведених тендерів 2026-27: п'ять компаній, дев'ять програм, 67 пропозицій страхових. Це не тариф, а показ того, що саме робить програму дорожчою.</p>
+
       </div>
     </section>
 
@@ -260,9 +248,9 @@
         </div>
         <p class="nh-rv">Найпоширеніше очікування — що ціна трохи зросте разом з інфляцією. Дані цього не підтверджують. Три тендери того самого періоду:</p>
         <div class="nh-facts">
-          <article class="nh-fact nh-rv"><h3>Фармацевтична, 433 особи</h3><p>Жодна страхова не дала ціну торішнього рівня. Найкраща пропозиція дорожча на 22%, найгірша — майже на 49%.</p></article>
-          <article class="nh-fact nh-rv nh-d1"><h3>Агропромислова, 444 особи</h3><p>Дві страхові запропонували ціну на рівні минулого року. Ще одна попросила на 35% більше, ще одна — на 51%.</p></article>
-          <article class="nh-fact nh-rv nh-d2"><h3>ІТ-компанія, 100 осіб</h3><p>Усі пропозиції дорожчі за чинні умови — від 48% до 105%.</p></article>
+          <article class="nh-fact nh-rv"><h3>Фармацевтична, 400+ осіб</h3><p>Жодна страхова не дала ціну торішнього рівня. Найкраща пропозиція дорожча на 22%, найгірша — майже на 49%.</p></article>
+          <article class="nh-fact nh-rv nh-d1"><h3>Агропромислова, 400+ осіб</h3><p>Дві страхові запропонували ціну на рівні минулого року. Ще одна попросила на 35% більше, ще одна — на 51%.</p></article>
+          <article class="nh-fact nh-rv nh-d2"><h3>ІТ-компанія, 100+ осіб</h3><p>Усі пропозиції дорожчі за чинні умови — від 48% до 105%.</p></article>
         </div>
         <div class="nh-callout nh-rv"><div><b>Спільного правила немає</b><p>Ціну на продовженні не можна вгадати — її можна тільки запитати в ринку. Компанія, яка просто продовжує договір у своєї страхової, бачить одну цифру й не знає, де вона в цьому діапазоні.</p></div></div>
       </div>
@@ -311,6 +299,101 @@
     </section>
 
   </main>
+
+  <dialog class="vt-modal" id="vt-modal" aria-labelledby="vt-modal-title">
+    <div class="vt-modal-top">
+      <div>
+        <span class="vt-badge"><i aria-hidden="true"></i>Конструктор програми</span>
+        <h2 id="vt-modal-title">Зберіть програму</h2>
+      </div>
+      <button type="button" class="vt-close" data-calc-close aria-label="Закрити конструктор">✕</button>
+    </div>
+    <div class="vt-modal-body">
+      <div class="vt-calc" data-calc>
+          <p class="vt-hint">Позначайте те, що вам потрібно — сума перераховується одразу.</p>
+          <fieldset>
+            <legend><i>Крок 1</i>Рівень клінік<small>Головний чинник. Саме він, а не страхова сума, визначає ціну програми.</small></legend>
+            <div class="vt-tiers">
+              <label class="vt-tier"><input type="radio" name="tier" value="city" checked><div><b>Міські та помірного рівня</b><span>Державні заклади й комерційні клініки помірного цінового рівня</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="mid"><div><b>Середній рівень</b><span>Комерційні клініки середнього цінового сегмента</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="high"><div><b>Високий рівень</b><span>Клініки високого цінового рівня, близькі до брендових</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="premium"><div><b>Брендові мережі</b><span>Відомі мережеві клініки преміумсегмента</span></div></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><i>Крок 2</i>Опції за доплату<small>У дужках — реальний розкид цін між страховими в наших тендерах.</small></legend>
+            <p class="vt-group">Профілактика</p>
+            <div class="vt-opts">
+                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup3"><span><b>Профогляд, 3 позиції</b><i>250 – 3 500 грн — різниця у 14 разів</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup5"><span><b>Профогляд, 5 позицій</b><i>360 – 4 500 грн — різниця у 12 разів</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="prophylax"><span><b>Комбінований ліміт на профілактику</b><i>986 – 3 976 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="kids"><span><b>Вакцинація дітей</b><i>1 750 – 2 100 грн</i></span></label>
+            </div>
+
+            <p class="vt-group">Ліміти</p>
+            <div class="vt-opts">
+                <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Вищий ліміт на стоматологію</b><i>1 300 – 2 600 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Індивідуальний ліміт на винятки</b><i>1 256 – 2 022 грн за кожну 1 000 ліміту</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="combined"><span><b>Збільшення комбінованого ліміту</b><i>496 – 2 800 грн — розкид майже у шість разів</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="individual"><span><b>Вищий індивідуальний ліміт</b><i>350 – 980 грн за крок</i></span></label>
+            </div>
+
+            <p class="vt-group">Напрями лікування, які зазвичай у винятках</p>
+            <div class="vt-opts">
+                <label class="vt-opt"><input type="checkbox" name="opt" value="onco"><span><b>Серцево-судинні та онкологія</b><i>0 – 1 800 грн: у частини страхових — бонус</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="pregnancy"><span><b>Ведення вагітності</b><i>1 400 – 2 000 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="chronic"><span><b>Хронічні поза загостренням</b><i>820 – 1 960 грн</i></span></label>
+            </div>
+
+            <p class="vt-group">Підтримка</p>
+            <div class="vt-opts">
+                <label class="vt-opt"><input type="checkbox" name="opt" value="psy"><span><b>Психологічна підтримка</b><i>0 – 2 256 грн: частина страхових дає безкоштовно</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="physio"><span><b>Фізіотерапія</b><i>0 – 1 901 грн: у трьох із семи — бонус</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="second"><span><b>Друга думка лікаря</b><i>0 – 260 грн — альтернативна консультація</i></span></label>
+            </div>
+
+            <p class="vt-group">Дрібниці, про які згадують уже після підписання</p>
+            <div class="vt-opts">
+                <label class="vt-opt"><input type="checkbox" name="opt" value="sedative"><span><b>Заспокійливі та снодійні</b><i>22 – 716 грн. Так, це окрема опція</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="saline"><span><b>Сольові розчини та дрібні засоби</b><i>0 – 150 грн. Теж окрема</i></span></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><i>Крок 3</i>Скільки людей<small>Від 50 осіб — нижче корпоративна програма втрачає економічний сенс.</small></legend>
+            <div class="vt-people">
+              <input type="number" min="50" max="5000" step="10" value="100" data-calc-people aria-label="Кількість застрахованих осіб">
+              <span>осіб у програмі</span>
+            </div>
+          </fieldset>
+
+          <div class="vt-out" data-calc-out hidden>
+            <p class="vt-out-k">Орієнтовний внесок</p>
+            <p class="vt-out-sum"><span data-calc-person>—</span> <em>грн на людину на рік</em></p>
+            <p class="vt-out-row">На колектив із <b data-calc-count>100</b> осіб — приблизно <b data-calc-total>—</b> грн на рік.</p>
+            <button type="button" class="vt-go" data-calc-go>Отримати точний розрахунок <span aria-hidden="true">↓</span></button>
+          </div>
+
+          <p class="vt-disclaim"><b>Це орієнтир, а не розрахунок і не оферта.</b> Точну цифру дає тільки тендер: ми розсилаємо запит ринком і зводимо відповіді. У наших тендерах дев'ять із десяти пропозицій укладалися в ±30% від такого орієнтира — але траплялося й більше. Ще один чинник не на вашу користь у цій таблиці: як брокер ми домовляємося про знижки, тож підсумкова ціна нерідко виходить нижчою за показану тут.</p>
+
+          <div class="vt-missed">
+            <h3>Чого в цьому конструкторі немає — а в договорі є</h3>
+            <ul>
+              <li><b>Застереження про збитковість</b>Дозволяє страховій переглянути умови, якщо виплат забагато. Є не в усіх.</li>
+              <li><b>Валютне застереження</b>В одному з наших тендерів воно було лише в однієї страхової з десяти — і це прямий ризик для бюджету.</li>
+              <li><b>Франшиза на окремі клініки</b>Програма виглядає дешевшою, але частину візитів людина оплачує сама.</li>
+              <li><b>Перенесення залишків ліміту</b>Невикористане цього року — згорає чи переходить далі.</li>
+              <li><b>Перерахунок для новачків</b>Як рахують ліміт і платіж тому, хто прийшов у середині року.</li>
+              <li><b>Компенсація власних витрат</b>Одні страхові повертають гроші за самостійно оплачене лікування, інші ні.</li>
+              <li><b>Звітність за відмовами</b>Щомісяця, щокварталу — чи «у звітах це не відображається».</li>
+              <li><b>Перелік винятків</b>Найважливіше. Саме тут з'ясовується, що половина потрібного не покривається — і саме його ніхто не читає до підписання.</li>
+            </ul>
+          </div>
+        </div>
+    </div>
+  </dialog>
+
   <script src="nh.js?v=3" defer></script>
   <script src="vartist.js?v=1" defer></script>
   <script src="form.js?v=1" defer></script>
