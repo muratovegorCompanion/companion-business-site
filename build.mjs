@@ -238,6 +238,13 @@ if (!dms.includes('class="dms-top"')) dms = dms.replace('<body>', `<body>\n  ${d
 if (!dms.includes("querySelector('.dms-top-menu')")) dms = dms.replace('</body>', `  <script>const dmsMenu=document.querySelector('.dms-top-menu'),dmsNav=document.querySelector('#dms-top-nav');if(dmsMenu&&dmsNav){dmsMenu.addEventListener('click',()=>{const open=dmsNav.classList.toggle('open');dmsMenu.setAttribute('aria-expanded',String(open));});}</script>\n</body>`);
 await writeFile(join(output, 'dms.html'), shareShell(dms, 'dms.html'));
 
+let vartist = await readFile(join(root, 'vartist-dms.html'), 'utf8');
+const vartistHeader = `<header class="vt-top"><div class="vt-top-inner"><a class="vt-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="vt-top-menu" type="button" aria-expanded="false" aria-controls="vt-top-nav">Меню</button>${standaloneNav('vt','dms.html')}</div></header>`;
+vartist = vartist.replace('</style>', `${standaloneGeometry('vt')}  </style>`);
+if (!vartist.includes('class="vt-top"')) vartist = vartist.replace('<body>', `<body>\n  ${vartistHeader}`);
+if (!vartist.includes("querySelector('.vt-top-menu')")) vartist = vartist.replace('</body>', `  <script>const vtMenu=document.querySelector('.vt-top-menu'),vtNav=document.querySelector('#vt-top-nav');if(vtMenu&&vtNav)vtMenu.addEventListener('click',()=>{const open=vtNav.classList.toggle('open');vtMenu.setAttribute('aria-expanded',open?'true':'false')});</script>\n</body>`);
+await writeFile(join(output, 'vartist-dms.html'), shareShell(vartist, 'vartist-dms.html'));
+
 let services = await readFile(join(root, 'services.html'), 'utf8');
 const servicesHeader = `<header class="services-top"><div class="services-top-inner">`
   + `<a class="services-top-logo" href="index.html" aria-label="Компаньйон — на головну">`
@@ -292,7 +299,7 @@ for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home
 // vartist-dms.html: чернетка на вичитку. Свідомо не в PAGES (отже, не в карті
 // сайту) і не в NAV (отже, не в меню) — усередині стоїть noindex. Після
 // вичитки експертами додати до PAGES і прибрати noindex зі сторінки.
-for (const file of ['logistyka.html','yak-my-pratsyuyemo.html','vartist-dms.html',
+for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
   'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','vidmova-u-vyplati.html','dodatkovi-rishennya.html','404.html','regulatory.html','privacy.html','insurance-products.html']) {
   await writeFile(join(output, file), shareShell(await readFile(join(root, file), 'utf8'), file));
 }
