@@ -42,7 +42,7 @@ window.CompanionHome = {
     </div>
   </div>
 </section>
-<section class="nh-sec" id="solutions" aria-labelledby="solutions-heading">
+<section class="nh-sec" id="solutions" style="padding-bottom:0" aria-labelledby="solutions-heading">
   <div class="nh-wrap">
     <div class="nh-head">
       <div><span class="nh-num nh-rv">01 / Напрями</span><h2 id="solutions-heading" class="nh-rv nh-d1">Захищаємо те, на чому <em class="nh-s">тримається</em> бізнес.</h2></div>
