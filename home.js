@@ -7,8 +7,8 @@ window.CompanionHome = {
   <div class="nh-hero-media" aria-hidden="true"><video id="nh-hero-video" autoplay muted loop playsinline preload="metadata" poster="presentation-assets/home/hero.jpg"><source src="presentation-assets/home/hero.mp4" type="video/mp4"></video></div>
   <div class="nh-wrap">
     <span class="nh-eyebrow nh-rv">Страхове бюро «Компаньйон»</span>
-    <h1 id="hero-heading" class="nh-rv nh-d1">Страхування, яке допомагає бізнесу рухатися <em class="nh-s">впевнено.</em></h1>
-    <p class="nh-lead nh-rv nh-d2">Організовуємо тендер, пояснюємо ринок і залишаємося поруч після вибору. Ви бачите варіанти та самі обираєте страхову компанію.</p>
+    <h1 id="hero-heading" class="nh-rv nh-d1">Порівнюємо страхові компанії для вашого бізнесу. <em class="nh-s">Обираєте ви.</em></h1>
+    <p class="nh-lead nh-rv nh-d2">Готуємо запит, збираємо пропозиції і пояснюємо різницю між ними. Після вибору супроводжуємо договір увесь рік.</p>
     <div class="nh-hero-cta nh-rv nh-d3"><a class="nh-btn nh-btn-primary" href="#meeting">Домовитися про зустріч <span class="nh-ar" aria-hidden="true">↗</span></a><a class="nh-btn nh-btn-ghost" href="#solutions">Знайти своє рішення <span aria-hidden="true">↓</span></a></div>
     <p class="nh-hero-note nh-rv nh-d3">Безоплатна перша зустріч · Онлайн або особисто в Києві</p>
     <div class="nh-stats" aria-label="Компаньйон у цифрах">
@@ -17,7 +17,6 @@ window.CompanionHome = {
       <div class="nh-stat"><b data-count="15678">15 678</b><span>застрахованих людей</span></div>
       <div class="nh-stat"><b data-count="70" data-suffix="+">70+</b><span>компаній-клієнтів</span></div>
     </div>
-    <p class="nh-stats-note">Партнерство, яке триває після підписання.</p>
   </div>
 </section>
 <section class="nh-clients" aria-label="Клієнти">
@@ -61,7 +60,7 @@ window.CompanionHome = {
   <div class="nh-wrap">
     <div class="nh-head">
       <div><span class="nh-num nh-rv">02 / Як працюємо</span><h2 id="process-heading" class="nh-rv nh-d1">Показуємо ринок. Рішення <em class="nh-s">завжди за вами.</em></h2></div>
-      <p class="nh-lead nh-rv nh-d2">А після вибору лишаємося поруч увесь рік — і до наступного продовження приходимо вже з досвідом цього.</p>
+      <p class="nh-lead nh-rv nh-d2">Три кроки до вибору страхової і три — після нього.</p>
     </div>
     <span class="nh-phase nh-rv">До вибору</span>
     <div class="nh-steps" id="nh-steps">
@@ -77,17 +76,16 @@ window.CompanionHome = {
       <div class="nh-step nh-rv nh-d1"><span class="nh-dot" aria-hidden="true"></span><b>05</b><h3>Супроводжуємо щодня</h3><p>Закріплена команда веде зміни в програмі, питання працівників і складні звернення — зокрема відмови у виплаті.</p></div>
       <div class="nh-step nh-rv nh-d2"><span class="nh-dot" aria-hidden="true"></span><b>06</b><h3>Готуємо наступний рік</h3><p>Дивимося на доступну статистику звернень і зворотний зв’язок працівників. З цим приходимо до продовження.</p></div>
     </div>
-    <p class="nh-loop nh-rv"><span aria-hidden="true">↻</span>Наступний тендер починається не з нуля, а з досвіду року.</p>
   </div>
 </section>
 <section class="nh-sec nh-support" id="support" aria-labelledby="support-heading">
   <div class="nh-wrap nh-sup">
     <div class="nh-sup-l">
       <span class="nh-num nh-rv">03 / Щоденний сервіс</span>
-      <h2 id="support-heading" class="nh-rv nh-d1">Після вибору не залишаємо вас <em class="nh-s" style="color:var(--nh-lime)">сам на сам.</em></h2>
-      <p class="nh-lead nh-rv nh-d2">За кожною компанією закріплена команда супроводу. Документи, списки, зміни в програмі й складні звернення беремо на себе — HR лишається точкою погодження, а не оператором.</p>
+      <h2 id="support-heading" class="nh-rv nh-d1">За вашою компанією закріплена команда.</h2>
+      <p class="nh-lead nh-rv nh-d2">Документи, списки, зміни в програмі й складні звернення веде вона. HR тільки погоджує.</p>
       <a class="nh-link nh-rv" href="about.html" style="align-self:flex-start">Познайомитися з командою ↗</a>
-      <div class="nh-rv"><span class="nh-eyebrow">Ваш формат супроводу</span><div class="nh-fmt"><div><b>Команда</b><p>веде страхові питання та координує потрібні наступні кроки. Для медичного страхування — керівник напряму або його заступник.</p></div><div><b>Зв’язок</b><p>телефон, месенджери, email і застосунок — там, де зручно вам і команді.</p></div></div></div>
+      <div class="nh-rv"><span class="nh-eyebrow">Ваш формат супроводу</span><div class="nh-fmt"><div><b>Команда</b><p>Для медичного страхування з вами працює керівник напряму або його заступник.</p></div><div><b>Зв’язок</b><p>телефон, месенджери, email і застосунок — там, де зручно вам і команді.</p></div></div></div>
       <p class="nh-fine nh-rv">Строки та порядок відповіді для конкретної програми погоджуємо до початку роботи.</p>
       <div class="nh-rv"><p style="font-weight:600">Спілкуємося там, де вам зручно</p><div class="nh-channels"><span>Телефон</span><span>Telegram</span><span>Viber</span><span>WhatsApp</span><span>Email</span><span>Застосунок Компаньйон</span></div></div>
     </div>
