@@ -104,7 +104,20 @@ body{margin:0;background:#fff;color:var(--l-ink);font-family:var(--c-font)}
 .l-foot a{color:#c3cede}
 .l-foot-row{display:flex;flex-wrap:wrap;gap:8px 26px}
 </style>
-<script src="analytics.js?v=1" defer></script></head>
+<script src="analytics.js?v=1" defer></script><style>
+.cv-video{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:clamp(28px,5vw,64px);align-items:center;margin-top:clamp(40px,5vw,64px)}
+.cv-video h3{margin:0 0 12px;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;letter-spacing:-.02em}
+.cv-video p{margin:0;font-size:1.0625rem;line-height:1.6;color:#536478;max-width:46ch}
+.cv-video-frame{position:relative;margin:0;border-radius:22px;overflow:hidden;background:#f6f5f0;border:1px solid rgba(14,26,51,.12);aspect-ratio:1080/1350}
+.cv-video-frame video{display:block;width:100%;height:100%;object-fit:cover}
+.cv-play{position:absolute;inset:0;border:0;background:transparent;cursor:pointer}
+.cv-play span{position:absolute;left:50%;top:24%;translate:-50% -50%;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:#245dce;color:#fff;font-size:30px;padding-left:6px;box-shadow:0 12px 30px rgba(14,26,51,.25);transition:transform .2s}
+.cv-play:hover span,.cv-play:focus-visible span{transform:scale(1.08)}
+.cv-play:focus-visible{outline:3px solid #245dce;outline-offset:-3px;border-radius:22px}
+.cv-video-frame.is-playing .cv-play{display:none}
+@media(max-width:800px){.cv-video{grid-template-columns:1fr}.cv-video-frame{max-width:420px;width:100%;justify-self:center}}
+</style>
+</head>
 <body>
 
 <header class="l-top">
@@ -156,6 +169,16 @@ body{margin:0;background:#fff;color:var(--l-ink);font-family:var(--c-font)}
       <li><b>02</b><h3>Виводимо на ринок</h3><p>Для великого тендеру залучаємо 10–15 страхових із 18, з якими працюємо. Зводимо покриття, винятки, вартість і сервіс так, щоб їх можна було порівняти.</p></li>
       <li><b>03</b><h3>Лишаємось після підписання</h3><p>Ведемо страхові питання, зміни в програмі та складні звернення. HR лишається точкою погодження, а не оператором.</p></li>
     </ol>
+    <div class="cv-video">
+      <div><h3>Весь процес — за хвилину</h3><p>Від першої розмови до наступного продовження: що ми робимо на кожному кроці і де рішення за вами.</p></div>
+      <figure class="cv-video-frame">
+        <video preload="none" playsinline width="1080" height="1350" poster="presentation-assets/video/tender-dms-poster.jpg">
+          <source src="presentation-assets/video/tender-dms.mp4" type="video/mp4">
+          <track kind="captions" src="presentation-assets/video/tender-dms.uk.vtt" srclang="uk" label="Українська">
+        </video>
+        <button class="cv-play" type="button" aria-label="Відтворити відео: як проходить тендер ДМС"><span aria-hidden="true">▶</span></button>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -249,5 +272,6 @@ body{margin:0;background:#fff;color:var(--l-ink);font-family:var(--c-font)}
 
 <script src="form.js?v=1"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "dbe716f5a0a24f30960e4ae47744e73a"}'></script>
+<script>document.querySelectorAll('.cv-video-frame').forEach(function(f){var v=f.querySelector('video'),b=f.querySelector('.cv-play');b.addEventListener('click',function(){v.controls=true;v.play()});v.addEventListener('play',function(){v.controls=true;f.classList.add('is-playing')})});</script>
 </body>
 </html>
