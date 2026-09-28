@@ -105,17 +105,18 @@ body{margin:0;background:#fff;color:var(--l-ink);font-family:var(--c-font)}
 .l-foot-row{display:flex;flex-wrap:wrap;gap:8px 26px}
 </style>
 <script src="analytics.js?v=1" defer></script><style>
-.cv-video{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:clamp(28px,5vw,64px);align-items:center;margin-top:clamp(40px,5vw,64px)}
-.cv-video h3{margin:0 0 12px;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;letter-spacing:-.02em}
-.cv-video p{margin:0;font-size:1.0625rem;line-height:1.6;color:#536478;max-width:46ch}
-.cv-video-frame{position:relative;margin:0;border-radius:22px;overflow:hidden;background:#f6f5f0;border:1px solid rgba(14,26,51,.12);aspect-ratio:1080/1350}
-.cv-video-frame video{display:block;width:100%;height:100%;object-fit:cover}
-.cv-play{position:absolute;inset:0;border:0;background:transparent;cursor:pointer}
-.cv-play span{position:absolute;left:50%;top:24%;translate:-50% -50%;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:#245dce;color:#fff;font-size:30px;padding-left:6px;box-shadow:0 12px 30px rgba(14,26,51,.25);transition:transform .2s}
+.cv-video-frame{position:relative;margin:0;border-radius:24px;overflow:hidden;background:#f6f5f0;border:1px solid rgba(14,26,51,.12);box-shadow:0 24px 60px rgba(14,26,51,.10)}
+.cv-video-frame video{display:block;width:100%;height:auto}
+.cv-video-frame .cv-v-tall{display:none}
+.cv-play{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;--py:57%}
+.cv-play span{position:absolute;left:50%;top:var(--py);translate:-50% -50%;display:grid;place-items:center;width:clamp(72px,7vw,104px);height:clamp(72px,7vw,104px);border-radius:50%;background:#245dce;color:#fff;font-size:clamp(26px,2.4vw,36px);padding-left:6px;box-shadow:0 12px 30px rgba(14,26,51,.25);transition:transform .2s}
 .cv-play:hover span,.cv-play:focus-visible span{transform:scale(1.08)}
-.cv-play:focus-visible{outline:3px solid #245dce;outline-offset:-3px;border-radius:22px}
+.cv-play:focus-visible{outline:3px solid #245dce;outline-offset:-3px;border-radius:24px}
 .cv-video-frame.is-playing .cv-play{display:none}
-@media(max-width:800px){.cv-video{grid-template-columns:1fr}.cv-video-frame{max-width:420px;width:100%;justify-self:center}}
+.cv-video-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px 48px;flex-wrap:wrap;margin:clamp(40px,5vw,64px) 0 24px}
+.cv-video-head h3{margin:0;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;letter-spacing:-.02em}
+.cv-video-head p{margin:0;font-size:1.0625rem;line-height:1.6;color:#536478;max-width:52ch}
+@media(max-width:700px){.cv-video-frame .cv-v-wide{display:none}.cv-video-frame .cv-v-tall{display:block}.cv-video-frame{max-width:440px;margin-inline:auto}.cv-play{--py:24%}}
 </style>
 </head>
 <body>
@@ -169,16 +170,18 @@ body{margin:0;background:#fff;color:var(--l-ink);font-family:var(--c-font)}
       <li><b>02</b><h3>Виводимо на ринок</h3><p>Для великого тендеру залучаємо 10–15 страхових із 18, з якими працюємо. Зводимо покриття, винятки, вартість і сервіс так, щоб їх можна було порівняти.</p></li>
       <li><b>03</b><h3>Лишаємось після підписання</h3><p>Ведемо страхові питання, зміни в програмі та складні звернення. HR лишається точкою погодження, а не оператором.</p></li>
     </ol>
-    <div class="cv-video">
-      <div><h3>Весь процес — за хвилину</h3><p>Від першої розмови до наступного продовження: що ми робимо на кожному кроці і де рішення за вами.</p></div>
-      <figure class="cv-video-frame">
-        <video preload="none" playsinline width="1080" height="1350" poster="presentation-assets/video/tender-dms-poster.jpg">
-          <source src="presentation-assets/video/tender-dms.mp4" type="video/mp4">
-          <track kind="captions" src="presentation-assets/video/tender-dms.uk.vtt" srclang="uk" label="Українська">
-        </video>
-        <button class="cv-play" type="button" aria-label="Відтворити відео: як проходить тендер ДМС"><span aria-hidden="true">▶</span></button>
-      </figure>
-    </div>
+    <div class="cv-video-head"><h3>Весь процес — за хвилину</h3><p>Від першої розмови до наступного продовження: що ми робимо на кожному кроці і де рішення за вами.</p></div>
+    <figure class="cv-video-frame">
+          <video class="cv-v-wide" preload="none" playsinline width="1920" height="1080" poster="presentation-assets/video/tender-dms-wide-poster.jpg">
+            <source src="presentation-assets/video/tender-dms-wide.mp4" type="video/mp4">
+            <track kind="captions" src="presentation-assets/video/tender-dms.uk.vtt" srclang="uk" label="Українська">
+          </video>
+          <video class="cv-v-tall" preload="none" playsinline width="1080" height="1350" poster="presentation-assets/video/tender-dms-poster.jpg">
+            <source src="presentation-assets/video/tender-dms.mp4" type="video/mp4">
+            <track kind="captions" src="presentation-assets/video/tender-dms.uk.vtt" srclang="uk" label="Українська">
+          </video>
+          <button class="cv-play" type="button" aria-label="Відтворити відео: як проходить тендер ДМС"><span aria-hidden="true">▶</span></button>
+        </figure>
   </div>
 </section>
 
@@ -272,6 +275,6 @@ body{margin:0;background:#fff;color:var(--l-ink);font-family:var(--c-font)}
 
 <script src="form.js?v=1"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "dbe716f5a0a24f30960e4ae47744e73a"}'></script>
-<script>document.querySelectorAll('.cv-video-frame').forEach(function(f){var v=f.querySelector('video'),b=f.querySelector('.cv-play');b.addEventListener('click',function(){v.controls=true;v.play()});v.addEventListener('play',function(){v.controls=true;f.classList.add('is-playing')})});</script>
+<script>document.querySelectorAll('.cv-video-frame').forEach(function(f){var b=f.querySelector('.cv-play');f.querySelectorAll('video').forEach(function(v){v.addEventListener('play',function(){v.controls=true;f.classList.add('is-playing')})});b.addEventListener('click',function(){var v=[].find.call(f.querySelectorAll('video'),function(x){return getComputedStyle(x).display!=='none'});v.controls=true;v.play()})});</script>
 </body>
 </html>
