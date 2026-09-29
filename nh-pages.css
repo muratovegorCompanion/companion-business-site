@@ -19,7 +19,7 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh-phero .nh-link{color:#fff}
 
 /* меню розділів сторінки */
-.nh-subnav{position:sticky;top:88px;z-index:5;background:rgba(246,245,240,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--nh-line)}
+.nh-subnav{position:sticky;top:88px;z-index:5;background:rgba(246,245,240,.5);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid var(--nh-line)}
 .nh-subnav .nh-wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-top:12px;padding-bottom:12px}
 .nh-subnav a{flex:0 0 auto;padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;color:var(--nh-ink);background:var(--nh-paper);border:1px solid var(--nh-line);transition:background .25s,border-color .25s}
 .nh-subnav a:hover{border-color:var(--nh-blue);color:var(--nh-blue)}
