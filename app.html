@@ -14,6 +14,15 @@
   body{margin:0;background:#F6F5F0}
   .download-notice{position:fixed;left:50%;bottom:28px;translate:-50% 0;z-index:40;background:#0E1A33;color:#fff;padding:12px 20px;border-radius:999px;font:600 14px var(--c-font);opacity:0;transition:opacity .3s}
   .download-notice.is-visible{opacity:1}
+.cv-video-frame{position:relative;margin:0;border-radius:24px;overflow:hidden;background:#f6f5f0;border:1px solid rgba(14,26,51,.12);box-shadow:0 24px 60px rgba(14,26,51,.10)}
+.cv-video-frame video{display:block;width:100%;height:auto}
+.cv-video-frame .cv-v-tall{display:none}
+.cv-play{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;--px:50%;--py:57%}
+.cv-play span{position:absolute;left:var(--px);top:var(--py);translate:-50% -50%;display:grid;place-items:center;width:clamp(72px,7vw,104px);height:clamp(72px,7vw,104px);border-radius:50%;background:#245dce;color:#fff;font-size:clamp(26px,2.4vw,36px);padding-left:6px;box-shadow:0 12px 30px rgba(14,26,51,.25);transition:transform .2s}
+.cv-play:hover span,.cv-play:focus-visible span{transform:scale(1.08)}
+.cv-play:focus-visible{outline:3px solid #245dce;outline-offset:-3px;border-radius:24px}
+.cv-video-frame.is-playing .cv-play{display:none}
+@media(max-width:700px){.cv-video-frame .cv-v-wide{display:none}.cv-video-frame .cv-v-tall{display:block}.cv-video-frame{max-width:440px;margin-inline:auto}.cv-play{--px:24%;--py:76%}}
 </style>
 </head><body>
 <header class="app-top"><div class="app-top-inner"><a class="app-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="app-top-menu" type="button" aria-expanded="false" aria-controls="app-top-nav">Меню</button><nav class="app-top-nav" id="app-top-nav" aria-label="Сайт"><a href="index.html#solutions">Напрями</a><a href="dms.html">Медичне страхування</a><a href="about.html">Про нас</a><a href="partners.html">Страхові компанії</a><a class="active" href="app.html">Застосунок</a><a class="app-top-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>
@@ -37,6 +46,23 @@
       <img src="presentation-assets/policy.png" alt="Екран полісу" width="1290" height="2796">
       <img src="presentation-assets/chat.png" alt="Екран ШІ-чату" width="1290" height="2796">
     </div>
+  </div>
+</section>
+
+<section class="nh-sec" aria-labelledby="video-title">
+  <div class="nh-wrap">
+    <div class="nh-head"><div><span class="nh-num nh-rv">Відео</span><h2 id="video-title" class="nh-rv nh-d1">Як працює застосунок — <em class="nh-s">за хвилину</em></h2></div></div>
+    <figure class="cv-video-frame">
+      <video class="cv-v-wide" preload="none" playsinline width="1920" height="1080" poster="presentation-assets/video/app-wide-poster.jpg">
+        <source src="presentation-assets/video/app-wide.mp4?v=1" type="video/mp4">
+        <track kind="captions" src="presentation-assets/video/app.uk.vtt?v=1" srclang="uk" label="Українська">
+      </video>
+      <video class="cv-v-tall" preload="none" playsinline width="1080" height="1350" poster="presentation-assets/video/app-poster.jpg">
+        <source src="presentation-assets/video/app.mp4?v=1" type="video/mp4">
+        <track kind="captions" src="presentation-assets/video/app.uk.vtt?v=1" srclang="uk" label="Українська">
+      </video>
+      <button class="cv-play" type="button" aria-label="Відтворити відео: як працює застосунок"><span aria-hidden="true">▶</span></button>
+    </figure>
   </div>
 </section>
 
@@ -101,4 +127,5 @@
 </main>
 <div class="download-notice" data-download-notice hidden>Завантаження розпочато</div><script src="android-download.js?v=4"></script><script>const menu=document.querySelector('.app-top-menu'),nav=document.querySelector('#app-top-nav');if(menu&&nav){menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});}</script>
 <script src="nh.js?v=3"></script>
+<script>document.querySelectorAll('.cv-video-frame').forEach(function(f){var b=f.querySelector('.cv-play');f.querySelectorAll('video').forEach(function(v){v.addEventListener('play',function(){v.controls=true;f.classList.add('is-playing')})});b.addEventListener('click',function(){var v=[].find.call(f.querySelectorAll('video'),function(x){return getComputedStyle(x).display!=='none'});v.controls=true;v.play()})});</script>
 </body></html>
