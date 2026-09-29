@@ -33,15 +33,15 @@
 .cv-video-head h3{margin:0;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;letter-spacing:-.02em}
 .cv-video-head p{margin:0;font-size:1.0625rem;line-height:1.6;color:#536478;max-width:52ch}
 @media(max-width:700px){.cv-video-frame .cv-v-wide{display:none}.cv-video-frame .cv-v-tall{display:block}.cv-video-frame{max-width:440px;margin-inline:auto}.cv-play{--py:24%}}
-.cv-hero{padding:clamp(48px,6vw,88px) 0 clamp(56px,7vw,96px)}
-.cv-hero-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px clamp(32px,5vw,72px);align-items:end;margin:18px 0 clamp(32px,4vw,52px)}
-.cv-hero h1{font-size:clamp(38px,5vw,72px);line-height:1.03;letter-spacing:-.035em;margin:0;max-width:15ch}
+.cv-hero{padding:clamp(28px,3.5vw,48px) 0 clamp(56px,7vw,96px)}
+.cv-hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px clamp(32px,5vw,72px);align-items:center;margin-top:clamp(28px,3.5vw,44px)}
+.cv-hero h1{font-size:clamp(32px,3.6vw,56px);line-height:1.05;letter-spacing:-.035em;margin:10px 0 clamp(22px,2.6vw,32px);max-width:30ch}
 .cv-hero .nh-lead{margin:0}
-.cv-hero .nh-hero-facts{margin-top:24px}
+.cv-hero .nh-hero-facts{margin-top:0;flex-wrap:nowrap}
 .cv-hero .nh-hero-facts div{background:#fff;border-color:rgba(14,26,51,.12);backdrop-filter:none;-webkit-backdrop-filter:none}
 .cv-hero .nh-hero-facts strong{color:#245dce}
 .cv-hero .nh-hero-facts span{color:#536478}
-@media(max-width:900px){.cv-hero-row{grid-template-columns:1fr}}
+@media(max-width:900px){.cv-hero-row{grid-template-columns:1fr}.cv-hero .nh-hero-facts{flex-wrap:wrap}}
 </style>
 </head>
 <body class="business-page">
@@ -66,16 +66,7 @@
     <section class="cv-hero" aria-labelledby="hero-title">
       <div class="nh-wrap">
         <span class="nh-eyebrow nh-rv">Як ми працюємо</span>
-        <div class="cv-hero-row">
-          <h1 id="hero-title" class="nh-rv nh-d1">Тендер без зайвого навантаження на <em class="nh-s">вашу команду.</em></h1>
-          <div>
-            <p class="nh-lead nh-rv nh-d2">Ми організовуємо процес, пояснюємо ринок і допомагаємо зробити вибір, який можна впевнено обґрунтувати керівництву та працівникам.</p>
-            <div class="nh-hero-facts nh-rv nh-d3" aria-label="Орієнтири процесу">
-          <div><strong>≈ 1 місяць</strong><span>звичайний цикл тендеру — від старту до запуску програми</span></div>
-          <div><strong>до 1 години</strong><span>перша відповідь на термінове звернення команди ДМС</span></div>
-        </div>
-          </div>
-        </div>
+        <h1 id="hero-title" class="nh-rv nh-d1">Тендер без зайвого навантаження на <em class="nh-s">вашу команду.</em></h1>
         <figure class="cv-video-frame">
           <video class="cv-v-wide" preload="none" playsinline width="1920" height="1080" poster="presentation-assets/video/tender-dms-wide-poster.jpg">
             <source src="presentation-assets/video/tender-dms-wide.mp4" type="video/mp4">
@@ -87,6 +78,13 @@
           </video>
           <button class="cv-play" type="button" aria-label="Відтворити відео: як проходить тендер ДМС"><span aria-hidden="true">▶</span></button>
         </figure>
+        <div class="cv-hero-row">
+          <p class="nh-lead nh-rv nh-d2">Ми організовуємо процес, пояснюємо ринок і допомагаємо зробити вибір, який можна впевнено обґрунтувати керівництву та працівникам.</p>
+          <div class="nh-hero-facts nh-rv nh-d3" aria-label="Орієнтири процесу">
+          <div><strong>≈ 1 місяць</strong><span>звичайний цикл тендеру — від старту до запуску програми</span></div>
+          <div><strong>до 1 години</strong><span>перша відповідь на термінове звернення команди ДМС</span></div>
+        </div>
+        </div>
       </div>
     </section>
 
