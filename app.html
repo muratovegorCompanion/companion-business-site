@@ -23,6 +23,13 @@
 .cv-play:focus-visible{outline:3px solid #245dce;outline-offset:-3px;border-radius:24px}
 .cv-video-frame.is-playing .cv-play{display:none}
 @media(max-width:700px){.cv-video-frame .cv-v-wide{display:none}.cv-video-frame .cv-v-tall{display:block}.cv-video-frame{max-width:440px;margin-inline:auto}.cv-play{--px:24%;--py:76%}}
+.cv-dark{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:#1b2b48;padding:clamp(56px,7vw,96px) 0}
+.cv-dark::before{content:"";position:absolute;inset:0;z-index:-2;background:url(presentation-assets/process/hero.jpg) center/cover no-repeat}
+.cv-dark::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,20,45,.78) 0%,rgba(8,20,45,.86) 55%,rgba(8,20,45,.94) 100%)}
+.cv-dark .nh-num{color:rgba(255,255,255,.72)}
+.cv-dark h2{color:#fff}
+.cv-dark h2 em.nh-s{color:var(--nh-lime)}
+.cv-dark .cv-video-frame{border-color:rgba(255,255,255,.18);box-shadow:0 30px 80px rgba(0,0,0,.35)}
 </style>
 </head><body>
 <header class="app-top"><div class="app-top-inner"><a class="app-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="app-top-menu" type="button" aria-expanded="false" aria-controls="app-top-nav">Меню</button><nav class="app-top-nav" id="app-top-nav" aria-label="Сайт"><a href="index.html#solutions">Напрями</a><a href="dms.html">Медичне страхування</a><a href="about.html">Про нас</a><a href="partners.html">Страхові компанії</a><a class="active" href="app.html">Застосунок</a><a class="app-top-meeting" href="index.html#meeting">Домовитися про зустріч ↗</a></nav></div></header>
@@ -49,7 +56,7 @@
   </div>
 </section>
 
-<section class="nh-sec" aria-labelledby="video-title">
+<section class="cv-dark" aria-labelledby="video-title">
   <div class="nh-wrap">
     <div class="nh-head"><div><span class="nh-num nh-rv">Відео</span><h2 id="video-title" class="nh-rv nh-d1">Як працює застосунок — <em class="nh-s">за хвилину</em></h2></div></div>
     <figure class="cv-video-frame">
