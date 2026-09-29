@@ -229,3 +229,10 @@
   .nh *,.nh *::before,.nh *::after{animation:none!important;transition:none!important}
   .nh-anim .nh-rv{opacity:1;transform:none}
 }
+
+/* Два світлі розділи поспіль: відступи не складаємо, лишаємо один (нижній попереднього).
+   Темні розділи (.nh-dark, .nh-support, .nh-reviews) мають власний фон — там подвійний відступ доречний. */
+.nh-sec:not(.nh-dark):not(.nh-support):not(.nh-reviews) + .nh-sec:not(.nh-dark):not(.nh-support):not(.nh-reviews),
+.nh-apphero + .nh-sec:not(.nh-dark):not(.nh-support):not(.nh-reviews){padding-top:0!important}
+/* Після блакитного градієнта процесу — невеликий відступ, щоб заголовок не прилипав до межі кольору */
+.nh-process + .nh-sec:not(.nh-dark):not(.nh-support):not(.nh-reviews){padding-top:clamp(48px,6vw,80px)!important}
