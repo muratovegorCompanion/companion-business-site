@@ -89,7 +89,7 @@ window.CompanionHome = {
       <p class="nh-fine nh-rv">Строки та порядок відповіді для конкретної програми погоджуємо до початку роботи.</p>
       <div class="nh-rv"><p style="font-weight:600">Спілкуємося там, де вам зручно</p><div class="nh-channels"><span>Телефон</span><span>Telegram</span><span>Viber</span><span>WhatsApp</span><span>Email</span><span>Застосунок Компаньйон</span></div></div>
     </div>
-    <article class="nh-appcard nh-rv nh-d1"><img src="presentation-assets/home/app.jpg" alt="" loading="lazy" width="880" height="1168"><div class="nh-appcard-in"><span class="nh-k">Застосунок для медичного страхування</span><h3>Своя програма — у телефоні кожного працівника.</h3><p>Покриття й винятки, клініки на карті, контакти асистансу, родичі. І ШІ-помічник, який відповідає за документами саме вашої програми.</p><a class="nh-link" href="app.html">Детальніше про застосунок ↗</a></div></article>
+    <article class="nh-appcard nh-rv nh-d1"><img src="presentation-assets/home/app.jpg?v=2" alt="" loading="lazy" width="880" height="1168"><div class="nh-appcard-in"><span class="nh-k">Застосунок для медичного страхування</span><h3>Своя програма — у телефоні кожного працівника.</h3><p>Покриття й винятки, клініки на карті, контакти асистансу, родичі. І ШІ-помічник, який відповідає за документами саме вашої програми.</p><a class="nh-link" href="app.html">Детальніше про застосунок ↗</a></div></article>
   </div>
 </section>
 <section style="padding:clamp(80px,11vw,150px) 0" aria-labelledby="renewal-heading">
