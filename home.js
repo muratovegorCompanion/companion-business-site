@@ -12,7 +12,7 @@ window.CompanionHome = {
     <div class="nh-hero-cta nh-rv nh-d3"><a class="nh-btn nh-btn-primary" href="#meeting">Домовитися про зустріч <span class="nh-ar" aria-hidden="true">↗</span></a><a class="nh-btn nh-btn-ghost" href="#solutions">Знайти своє рішення <span aria-hidden="true">↓</span></a></div>
     <p class="nh-hero-note nh-rv nh-d3">Безоплатна перша зустріч · Онлайн або особисто в Києві</p>
     <div class="nh-stats" aria-label="Компаньйон у цифрах">
-      <div class="nh-stat"><b data-count="11">11</b><span>років на ринку</span></div>
+      <div class="nh-stat"><b data-count="12">12</b><span>років на ринку</span></div>
       <div class="nh-stat"><b data-count="97" data-suffix="%">97%</b><span>договорів продовжуються</span></div>
       <div class="nh-stat"><b data-count="15678">15 678</b><span>застрахованих людей</span></div>
       <div class="nh-stat"><b data-count="70" data-suffix="+">70+</b><span>компаній-клієнтів</span></div>
@@ -87,7 +87,7 @@ window.CompanionHome = {
       <a class="nh-link nh-rv" href="about.html" style="align-self:flex-start">Познайомитися з командою ↗</a>
       <div class="nh-rv"><span class="nh-eyebrow">Ваш формат супроводу</span><div class="nh-fmt"><div><b>Команда</b><p>Для медичного страхування з вами працює керівник напряму або його заступник.</p></div><div><b>Зв’язок</b><p>телефон, месенджери, email і застосунок — там, де зручно вам і команді.</p></div></div></div>
       <p class="nh-fine nh-rv">Строки та порядок відповіді для конкретної програми погоджуємо до початку роботи.</p>
-      <div class="nh-rv"><p style="font-weight:600">Спілкуємося там, де вам зручно</p><div class="nh-channels"><span>Телефон</span><span>Telegram</span><span>Viber</span><span>WhatsApp</span><span>Email</span><span>Застосунок Компаньйон</span></div></div>
+      <div class="nh-rv"><p style="font-weight:600">Спілкуємося там, де вам зручно</p><div class="nh-channels"><span>Телефон</span><span>Telegram</span><span>Viber</span><span>WhatsApp</span><span>Email</span><a href="app.html">Застосунок Компаньйон ↗</a></div></div>
     </div>
     <article class="nh-appcard nh-rv nh-d1"><img src="presentation-assets/home/app.jpg?v=3" alt="" loading="lazy" width="880" height="1168"><div class="nh-appcard-in"><span class="nh-k">Застосунок для медичного страхування</span><h3>Своя програма — у телефоні кожного працівника.</h3><p>Покриття й винятки, клініки на карті, контакти асистансу, родичі. І ШІ-помічник, який відповідає за документами саме вашої програми.</p><a class="nh-link" href="app.html">Детальніше про застосунок ↗</a></div></article>
   </div>

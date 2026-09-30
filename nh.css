@@ -175,6 +175,8 @@
 .nh-channels{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .nh-channels span{padding:10px 16px;border:1px solid rgba(255,255,255,.2);border-radius:999px;font-size:15px}
 .nh-channels span:last-child{background:var(--nh-lime);color:var(--nh-ink);border-color:var(--nh-lime);font-weight:600}
+.nh-channels a{padding:10px 16px;border:1px solid var(--nh-lime);border-radius:999px;font-size:15px;background:var(--nh-lime);color:var(--nh-ink);font-weight:600;text-decoration:none;transition:transform .15s ease}
+.nh-channels a:hover,.nh-channels a:focus-visible{transform:translateY(-2px)}
 .nh-appcard{position:sticky;top:120px;border-radius:28px;overflow:hidden;min-height:720px;display:flex;align-items:flex-end;isolation:isolate}
 .nh-appcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
 .nh-appcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(8,20,45,.97) 0%,rgba(8,20,45,.88) 38%,rgba(8,20,45,.25) 62%,transparent 80%)}
