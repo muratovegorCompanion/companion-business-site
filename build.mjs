@@ -286,7 +286,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 
 // Файл підтвердження Google Search Console копіюємо як є: сторінкою він
 // не є, шапку й підвал у нього вклеювати не можна — Google читає його вміст.
-for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','android-download.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
+for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
   // Посадкова під рекламу копіюється як є: спільне меню й підвал їй
   // протипоказані — з реклами кожне зайве посилання це вихід зі сторінки.
   'korporatyvne-dms.html','form.js','nh.css','nh.js','nh-pages.css','favicon.ico','motion.css','motion.js','scrollvideo.js','analytics.js','vartist.js',
