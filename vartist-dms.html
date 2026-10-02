@@ -260,11 +260,11 @@
         <div class="vt-invite nh-rv">
           <div>
             <b>Порахуйте самі</b>
-            <p>Оберіть рівень клінік і потрібні опції — побачите, як рухається орієнтовний внесок. 18 позицій, усі ціни з наших тендерів.</p>
+            <p>Оберіть рівень клінік і потрібні опції — побачите, як рухається орієнтовний внесок. 10 позицій, усі ціни з наших тендерів.</p>
           </div>
           <button type="button" class="vt-open" data-calc-open>Відкрити конструктор <span aria-hidden="true">→</span></button>
         </div>
-        <p class="nh-rv">Числа в конструкторі — з наших зведених тендерів 2026-27: п'ять компаній, дев'ять програм, 67 пропозицій страхових. Це не тариф, а показ того, що саме робить програму дорожчою.</p>
+        <p class="nh-rv">Числа в конструкторі — з наших зведених тендерів 2026-27: 85 пропозицій страхових; нижня ступінь — за тендером 2025-26. Це не тариф, а показ того, що саме робить програму дорожчою.</p>
 
       </div>
     </section>
@@ -358,11 +358,10 @@
           <fieldset>
             <legend><i>Крок 1</i>Рівень клінік<small>Головний чинник. Саме він, а не страхова сума, визначає ціну програми.</small></legend>
             <div class="vt-tiers">
-              <label class="vt-tier"><input type="radio" name="tier" value="state" checked><div><b>Державні та відомчі</b><span>Лікарні, інститути, відомчі заклади</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="mild"><div><b>Недорогі комерційні</b><span>Благомед, Євмакс, Полі-клініка</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="mid"><div><b>Середній рівень</b><span>Альфа-Віта, Амеда, Оксфорд Медікал</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="high"><div><b>Високий рівень</b><span>МЦ ІНГО, Інто-Сана, Адоніс, ВІВА</span></div></label>
-              <label class="vt-tier"><input type="radio" name="tier" value="premium"><div><b>Брендові мережі</b><span>Добробут, Медіком, Борис, Оберіг</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="base" checked><div><b>Державні та недорогі приватні</b><span>Лікарні, інститути, відомчі заклади та недорогі приватні клініки. Від ≈ 8 000 грн (за тендером 2025-26)</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="mid"><div><b>До середнього рівня</b><span>Додатково: Альфа-Віта, Амеда, Оксфорд Медікал, Адоніс</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="high"><div><b>До високого рівня</b><span>Додатково: МЦ ІНГО, Інто-Сана, ВІВА, Смарт Медікал Центр</span></div></label>
+              <label class="vt-tier"><input type="radio" name="tier" value="premium"><div><b>Включно з брендовими мережами</b><span>Додатково: Добробут, Медіком, Борис, Оберіг</span></div></label>
             </div>
           </fieldset>
 
@@ -370,44 +369,28 @@
             <legend><i>Крок 2</i>Опції за доплату<small>Ціни — середні по ринку з наших тендерів. Те, що входить у стандартну програму, тут не показано: інакше вийшло б, що ви платите двічі.</small></legend>
             <p class="vt-group">Профілактика</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup"><span><b>Профілактичний огляд</b><i>≈ 2 200 грн — консультації та діагностика без скарг</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="flu"><span><b>Щеплення від грипу</b><i>≈ 1 550 грн — торік коштувало вдвічі менше</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="vitamins"><span><b>Вітаміни</b><i>≈ 600 грн — одна з найпопулярніших опцій зараз</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup"><span><b>Профілактичний огляд</b><i>≈ 1 000 грн — 3 консультації або діагностики без скарг</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="checkup5"><span><b>Розширений профілактичний огляд</b><i>≈ 1 800 грн — 5 консультацій або діагностик</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="flu"><span><b>Щеплення від грипу</b><i>≈ 600 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="vitamins"><span><b>Вітаміни</b><i>≈ 350 грн — за тендером 2024-25</i></span></label>
             </div>
 
             <p class="vt-group">Ліміти</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Стоматологія</b><i>≈ 1 000 грн за кожну 1 000 грн ліміту. Великим колективам рахують дешевше — близько 700</i><span class="vt-lim"><label for="lim-dental">Ліміт на рік</label><select id="lim-dental" data-lim="dental"><option value="1000">1 000 грн</option><option value="2000">2 000 грн</option><option value="3000" selected>3 000 грн</option><option value="4000">4 000 грн</option><option value="5000">5 000 грн</option></select></span></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Гроші на те, що програма зазвичай не покриває</b><i>≈ 1 400 грн за кожну 1 000 грн такого запасу</i><span class="vt-lim"><label for="lim-exclusion">Запас на рік</label><select id="lim-exclusion" data-lim="exclusion"><option value="1000">1 000 грн</option><option value="2000" selected>2 000 грн</option><option value="3000">3 000 грн</option><option value="4000">4 000 грн</option><option value="5000">5 000 грн</option></select></span></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="dental"><span><b>Стоматологія</b><i>≈ 800 грн за кожну 1 000 грн ліміту</i><span class="vt-lim"><label for="lim-dental">Ліміт на рік</label><select id="lim-dental" data-lim="dental"><option value="1000">1 000 грн</option><option value="2000">2 000 грн</option><option value="3000" selected>3 000 грн</option><option value="4000">4 000 грн</option><option value="5000">5 000 грн</option></select></span></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="exclusion"><span><b>Гроші на те, що програма зазвичай не покриває</b><i>≈ 900 грн за кожну 1 000 грн такого запасу</i><span class="vt-lim"><label for="lim-exclusion">Запас на рік</label><select id="lim-exclusion" data-lim="exclusion"><option value="1000">1 000 грн</option><option value="2000" selected>2 000 грн</option><option value="3000">3 000 грн</option><option value="4000">4 000 грн</option><option value="5000">5 000 грн</option></select></span></span></label>
             </div>
 
             <p class="vt-group">Напрями, яких немає в базовій програмі</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="critical"><span><b>Критичні захворювання</b><i>≈ 700 грн — онкологія, туберкульоз, діабет у межах ліміту</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="remission"><span><b>Хронічні захворювання в стадії ремісії</b><i>≈ 1 400 грн — лікування не лише під час загострення</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="ophthalm"><span><b>Офтальмологія</b><i>≈ 900 грн</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="derma"><span><b>Дерматологія</b><i>≈ 900 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="derma"><span><b>Дерматологія</b><i>≈ 500 грн</i></span></label>
             </div>
 
             <p class="vt-group">Підтримка й сервіс</p>
             <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="psy"><span><b>Консультації психолога</b><i>≈ 1 100 грн</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="fullcover"><span><b>100% покриття брендових клінік</b><i>≈ 1 200 грн — інакше людина доплачує частину візиту сама</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="pregnancy"><span><b>Ведення вагітності</b><i>≈ 400 грн — одне-три ведення на весь колектив, не на кожного</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="travel"><span><b>Поліс для відряджень за кордон</b><i>≈ 800 грн — окремий вид страхування, у ДМС не входить</i></span></label>
-            </div>
-
-            <p class="vt-group">Дрібниці, про які згадують уже після підписання</p>
-            <div class="vt-opts">
-                <label class="vt-opt"><input type="checkbox" name="opt" value="sedative"><span><b>Заспокійливі та снодійні ліки</b><i>≈ 350 грн. Так, без цієї опції їх не оплатять</i></span></label>
-                <label class="vt-opt"><input type="checkbox" name="opt" value="saline"><span><b>Сольові розчини для носа й горла</b><i>≈ 60 грн. Теж окремою опцією</i></span></label>
-            </div>
-
-            <p class="vt-group vt-group-save">А так програму можна здешевити</p>
-            <div class="vt-opts">
-                <label class="vt-opt vt-opt-save"><input type="checkbox" name="opt" value="cutmassage"><span><b>Відмовитися від масажу й мануальної терапії</b><i>мінус ≈ 900 грн: зазвичай вони входять у стандартну програму</i></span></label>
-                <label class="vt-opt vt-opt-save"><input type="checkbox" name="opt" value="cutclinic"><span><b>Найдорожча мережа — не на всі 100%</b><i>мінус ≈ 1 700 грн: візит до неї людина частково оплачує сама</i></span></label>
-                <label class="vt-opt vt-opt-save"><input type="checkbox" name="opt" value="cutonco"><span><b>Спільний ліміт на новоутворення замість особистого</b><i>мінус ≈ 800 грн: запас один на весь колектив</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="psy"><span><b>Консультації психолога</b><i>≈ 900 грн</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="psy5"><span><b>Більше консультацій психолога</b><i>≈ 1 200 грн — ліміт консультацій психолога чи психіатра з 2 до 5 на рік</i></span></label>
+                <label class="vt-opt"><input type="checkbox" name="opt" value="telemed"><span><b>Телемедицина за кордоном</b><i>≈ 800 грн — пакет «Сімейний» для співробітників, які тимчасово за кордоном</i></span></label>
             </div>
           </fieldset>
 
@@ -426,7 +409,7 @@
             <button type="button" class="vt-go" data-calc-go>Отримати точний розрахунок <span aria-hidden="true">↓</span></button>
           </div>
 
-          <p class="vt-disclaim"><b>Це орієнтир, а не розрахунок і не оферта.</b> Точну цифру дає тільки тендер: ми розсилаємо запит ринком і зводимо відповіді. У наших тендерах дев'ять із десяти пропозицій укладалися в ±30% від такого орієнтира — але траплялося й більше. Ще один чинник не на вашу користь у цій таблиці: як брокер ми домовляємося про знижки, тож підсумкова ціна нерідко виходить нижчою за показану тут.</p>
+          <p class="vt-disclaim"><b>Це орієнтир, а не розрахунок і не оферта.</b> Точну цифру дає тільки тендер: ми розсилаємо запит ринком і зводимо відповіді. У наших тендерах майже дев'ять із десяти пропозицій укладалися в ±30% від середньої ціни своєї програми — але траплялося й більше. Ще один чинник не на вашу користь у цій таблиці: як брокер ми домовляємося про знижки, тож підсумкова ціна нерідко виходить нижчою за показану тут.</p>
 
           <div class="vt-missed">
             <h3>Чого в цьому конструкторі немає — а в договорі є</h3>
@@ -446,7 +429,7 @@
   </dialog>
 
   <script src="nh.js?v=3" defer></script>
-  <script src="vartist.js?v=1" defer></script>
+  <script src="vartist.js?v=2" defer></script>
   <script src="form.js?v=1" defer></script>
 </body>
 </html>
