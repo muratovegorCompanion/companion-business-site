@@ -68,7 +68,11 @@
 
     const tier = TIERS[tierInput.value];
     const headcount = Math.max(20, parseInt(people.value, 10) || 20);
-    const discount = 1 - volumeDiscount(headcount);
+    // Нижня ступінь і так найдешевша на ринку, а її пропозиції вже включають
+    // власні знижки (5 пропозицій, 7 700–10 700): ще раз знижувати її
+    // за чисельність означало б показати ціну нижчу за найдешевшу реальну.
+    const isBase = tierInput.value === 'base';
+    const discount = isBase ? 1 : 1 - volumeDiscount(headcount);
     let min = tier.min * discount;
     let max = tier.max * discount;
     let picked = 0;
@@ -92,8 +96,10 @@
 
     const note = root.querySelector('[data-calc-discount]');
     if (note) {
-      const percent = Math.round(volumeDiscount(headcount) * 100);
-      note.textContent = percent
+      const percent = isBase ? 0 : Math.round(volumeDiscount(headcount) * 100);
+      note.textContent = isBase
+        ? 'Для цієї ступені знижку за чисельність не додаємо: ціни в ній і так найнижчі.'
+        : percent
         ? `Враховано знижку за чисельність — ${percent}% на базову програму.`
         : 'Від 20 осіб страхові дають знижку на базову програму.';
     }
