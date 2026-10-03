@@ -58,7 +58,7 @@ const syncNav=()=>{
   // Коли активний пункт із data-page, «Головна» більше не підсвічена:
   // інакше на ?page=services горіли обидва.
   if(page!=='home'){
-    const home=siteNav?.querySelector('a[href="index.html"]');
+    const home=siteNav?.querySelector('a[href="/"]');
     if(home){ home.removeAttribute('aria-current'); home.classList.remove('nav-active');
       ['transform','color','border-bottom'].forEach(k=>home.style.removeProperty(k)); }
   }
