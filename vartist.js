@@ -30,9 +30,10 @@
     premium: { min: 31000, max: 38000 },
   };
 
-  // Знижка за чисельність у розрахунок не входить: страхові дають її по-різному,
-  // а класи за кількістю осіб ще не підтверджені (цифри, що були тут раніше,
-  // власник не підтвердив). Додамо, коли будуть верні класи.
+  // Знижка за чисельність — тільки на базову програму, не на опції.
+  // Цифри назвала експертка: 20–50 осіб близько 2%, 50–100 — 5%, далі 7%.
+  const volumeDiscount = (headcount) =>
+    headcount >= 100 ? 0.07 : headcount >= 50 ? 0.05 : headcount >= 20 ? 0.02 : 0;
 
   // Доплати за опції — медіани пропозицій страхових у обычних тендерах 2026-27
   // (англійське зведення, друге коло; Тевна), без Кернела і Customer Times.
@@ -67,8 +68,13 @@
 
     const tier = TIERS[tierInput.value];
     const headcount = Math.max(20, parseInt(people.value, 10) || 20);
-    let min = tier.min;
-    let max = tier.max;
+    // Нижня ступінь і так найдешевша на ринку, а її пропозиції вже включають
+    // власні знижки (5 пропозицій, 7 700–10 700): ще раз знижувати її
+    // за чисельність означало б показати ціну нижчу за найдешевшу реальну.
+    const isBase = tierInput.value === 'base';
+    const discount = isBase ? 1 : 1 - volumeDiscount(headcount);
+    let min = tier.min * discount;
+    let max = tier.max * discount;
     let picked = 0;
 
     root.querySelectorAll('input[name="opt"]:checked').forEach((box) => {
@@ -89,7 +95,14 @@
     outPerson.textContent = `${money(min)} – ${money(max)}`;
 
     const note = root.querySelector('[data-calc-discount]');
-    if (note) note.textContent = 'Знижку за чисельність тут не враховано: від 20 осіб страхові її дають, розмір залежить від кількості осіб і страхової.';
+    if (note) {
+      const percent = isBase ? 0 : Math.round(volumeDiscount(headcount) * 100);
+      note.textContent = isBase
+        ? 'Для цієї ступені знижку за чисельність не додаємо: ціни в ній і так найнижчі.'
+        : percent
+        ? `Враховано знижку за чисельність — ${percent}% на базову програму.`
+        : 'Від 20 осіб страхові дають знижку на базову програму.';
+    }
     outTotal.textContent = `${money(min * headcount)} – ${money(max * headcount)}`;
     outCount.textContent = headcount;
 
