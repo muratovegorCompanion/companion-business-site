@@ -4,7 +4,7 @@ body.nh-page{margin:0;background:#F6F5F0}
 .nh-page .nh{min-height:40vh}
 
 /* перший екран сторінки */
-.nh-phero{min-height:calc(100svh - 92px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate;background:#1b2b48}
+.nh-phero{min-height:calc(100svh - 92px - 44px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate;background:#1b2b48}
 .nh-phero-media{position:absolute;inset:0;z-index:-2}
 .nh-phero-media img,.nh-phero-media video{width:100%;height:100%;object-fit:cover}
 .nh-phero::after{content:"";position:absolute;inset:0;z-index:-1;background:
@@ -12,11 +12,13 @@ body.nh-page{margin:0;background:#F6F5F0}
   linear-gradient(0deg,rgba(8,20,45,.75) 0%,rgba(8,20,45,0) 45%)}
 .nh-phero .nh-wrap{width:100%;padding-top:110px;padding-bottom:56px}
 .nh-phero .nh-eyebrow{color:#fff}
-.nh-phero h1{font-size:clamp(40px,6vw,84px);max-width:15ch;margin:20px 0 24px;letter-spacing:-.035em;line-height:1.02}
+.nh-phero h1{font-size:clamp(40px,min(6vw,9svh),84px);max-width:15ch;margin:20px 0 24px;letter-spacing:-.035em;line-height:1.02}
 .nh-phero h1 em.nh-s{color:var(--nh-lime)}
 .nh-phero .nh-lead{color:rgba(255,255,255,.86);max-width:52ch}
 .nh-phero .nh-hero-cta{margin:32px 0 0;align-items:center}
 .nh-phero .nh-link{color:#fff}
+/* Ноутбуки до 1440×900: кнопка героя має влізти в перший екран над смужкою підвалу */
+@media (min-width:900px) and (max-height:940px){.nh-phero .nh-wrap{padding-top:48px;padding-bottom:32px}.nh-phero h1{max-width:18ch;margin:14px 0 18px}.nh-phero .nh-hero-cta{margin-top:22px}}
 
 /* меню розділів сторінки */
 .nh-subnav{position:sticky;top:88px;z-index:5;background:rgba(246,245,240,.5);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid var(--nh-line)}
@@ -217,7 +219,7 @@ body.nh-page{margin:0;background:#F6F5F0}
   .nh-overlap{padding-top:48px}
 }
 @media (max-width:640px){
-  .nh-phero{min-height:calc(100svh - 74px)}
+  .nh-phero{min-height:calc(100svh - 74px - 44px)}
   .nh-phero .nh-wrap{padding-top:80px;padding-bottom:40px}
   .nh-phones img:last-child{margin-top:24px}
 }

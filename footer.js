@@ -9,11 +9,12 @@
   if (!body || !toggle) return;
 
   const KEY = 'companion:footer-collapsed';
-  // На вузькому екрані розгорнутий підвал з'їдає чверть висоти,
-  // тож за замовчуванням там смужка. Вибір користувача важливіший.
+  // Розгорнутий підвал з'їдає 126 px і на ноутбуці 1366×768 закривав
+  // кнопку «Домовитися про зустріч» на першому екрані, тож за замовчуванням
+  // всюди смужка з телефоном. Вибір користувача важливіший.
   let stored = null;
   try { stored = localStorage.getItem(KEY); } catch (e) {}
-  const collapsed = stored === null ? innerWidth < 900 : stored === '1';
+  const collapsed = stored === null ? true : stored === '1';
 
   // Висоту тримаємо в пікселях: анімувати height:auto не можна.
   const fit = () => {
