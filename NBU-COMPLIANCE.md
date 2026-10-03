@@ -15,6 +15,14 @@ Internal checklist for sb-companion.com. Do not publish this file as consumer-fa
 - Consumer contact details and NBU consumer-protection links.
 - Broker/regulatory links surfaced on the main site and application presentation page.
 
+## Confirmed by management (3 October 2026) and published on `regulatory.html`
+
+- Classes of insurance: the broker holds no licences for insurance classes; contracts are concluded under partner insurers' licences.
+- Separate subdivisions: none.
+- Insurance premiums: not accepted by the broker; paid directly to the insurer.
+- Insurance payouts: not made by or through the broker; paid by the insurer.
+- Assistance services: not provided by the broker itself; it only coordinates the insurer's / assistance company's services.
+
 ## Confirm before adding public wording
 
 NBU Regulation No. 173 requires the following information before an insurance contract is concluded. Some items only apply if the broker actually performs the relevant activity. These facts must be confirmed by management before publishing definitive statements.

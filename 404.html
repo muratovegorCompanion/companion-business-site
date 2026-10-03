@@ -6,9 +6,24 @@
 <script>
 (function(){
   const path = decodeURIComponent(window.location.pathname).replace(/\/+$/, '').toLowerCase();
-  if (path === '/застасунок' || path === '/застосунок') {
-    window.location.replace('/app.html');
-  }
+  // Старі адреси (Wix, перші дні на sb-companion.com) і очевидні варіанти
+  // назв ведуть на живі сторінки, а не в 404 — інакше Search Console
+  // рахує їх як «Не знайдено». Невідомі адреси лишаються справжньою 404.
+  const moved = {
+    '/застасунок': '/app.html', '/застосунок': '/app.html', '/app': '/app.html',
+    '/zastosunok': '/app.html', '/prylozhenie': '/app.html',
+    '/home': '/', '/golovna': '/', '/holovna': '/', '/index': '/',
+    '/about-us': '/about.html', '/pro-nas': '/about.html', '/o-nas': '/about.html',
+    '/contact': '/contacts.html', '/contact-us': '/contacts.html', '/kontakty': '/contacts.html',
+    '/poslugy': '/services.html', '/uslugi': '/services.html',
+    '/partnery': '/partners.html', '/strakhovi-kompanii': '/partners.html', '/insurers': '/partners.html',
+    '/medical-insurance': '/dms.html', '/medychne-strakhuvannya': '/dms.html', '/health-insurance': '/dms.html',
+    '/logistics': '/logistyka.html', '/cargo': '/logistyka.html',
+    '/how-we-work': '/yak-my-pratsyuyemo.html',
+    '/blog': '/rekomendatsii.html', '/recommendations': '/rekomendatsii.html',
+    '/privacy-policy': '/privacy.html',
+  };
+  if (moved[path]) window.location.replace(moved[path]);
 })();
 </script>
 <meta name="robots" content="noindex">
@@ -34,7 +49,7 @@
 </head>
 <body class="business-page">
 <a class="skip-link" href="#content">Перейти до основного контенту</a>
-<header class="site-header"><div class="shell header-inner"><a class="brand" href="/index.html" aria-label="Страхове бюро «Компаньйон» — на головну"><img src="/presentation-assets/companion-logo.png" alt="Страхове бюро «Компаньйон»" width="2172" height="724"></a><nav class="site-nav" aria-label="Сайт"><a href="/index.html">Головна</a></nav></div></header>
+<header class="site-header"><div class="shell header-inner"><a class="brand" href="/" aria-label="Страхове бюро «Компаньйон» — на головну"><img src="/presentation-assets/companion-logo.png" alt="Страхове бюро «Компаньйон»" width="2172" height="724"></a><nav class="site-nav" aria-label="Сайт"><a href="/">Головна</a></nav></div></header>
 
 <main id="content">
 <section class="nf">
@@ -52,7 +67,7 @@
       <a class="nf-card" href="/contacts.html"><strong>Контакти</strong><span>Телефон, пошта, месенджери та адреса офісу.</span></a>
     </div>
 
-    <a class="b-text-link nf-back" href="/index.html">На головну <span aria-hidden="true">↗</span></a>
+    <a class="b-text-link nf-back" href="/">На головну <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 </main>

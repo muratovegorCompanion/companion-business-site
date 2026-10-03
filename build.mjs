@@ -30,14 +30,17 @@ const NAV = [
   {href:'partners.html', label:'Страхові компанії'},
   {href:'app.html', label:'Застосунок'},
 ];
-const MEETING_HREF = 'index.html#meeting';
+const MEETING_HREF = '/#meeting';
 const MEETING_LABEL = 'Домовитися про зустріч ↗';
 
 const navLinks = (file, {meetingClass='header-meeting', activeAs='aria'}={}) =>
   NAV.map(item => {
     let attrs = item.page ? ` data-page="${item.page}"` : '';
     if (item.href === file) attrs += activeAs === 'aria' ? ' aria-current="page"' : ' class="active"';
-    return `<a${attrs} href="${item.href}">${item.label}</a>`;
+    // Головна веде на «/», а не на index.html: інакше Google бачить дві адреси
+    // однієї сторінки й одну з них позначає як «варіант з canonical».
+    const href = item.href === 'index.html' ? '/' : item.href;
+    return `<a${attrs} href="${href}">${item.label}</a>`;
   }).join('') + `<a class="${meetingClass}" href="${MEETING_HREF}">${MEETING_LABEL}</a>`;
 
 const sharedNav = file =>
@@ -232,14 +235,14 @@ const standaloneGeometry = (prefix) => `
 `;
 
 let dms = await readFile(join(root, 'dms.html'), 'utf8');
-const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button>${standaloneNav('dms','dms.html')}</div></header>`;
+const dmsHeader = `<header class="dms-top"><div class="dms-top-inner"><a class="dms-top-logo" href="/" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="dms-top-menu" type="button" aria-expanded="false" aria-controls="dms-top-nav">Меню</button>${standaloneNav('dms','dms.html')}</div></header>`;
 dms = dms.replace('</style>', `${standaloneGeometry('dms')}  </style>`);
 if (!dms.includes('class="dms-top"')) dms = dms.replace('<body>', `<body>\n  ${dmsHeader}`);
 if (!dms.includes("querySelector('.dms-top-menu')")) dms = dms.replace('</body>', `  <script>const dmsMenu=document.querySelector('.dms-top-menu'),dmsNav=document.querySelector('#dms-top-nav');if(dmsMenu&&dmsNav){dmsMenu.addEventListener('click',()=>{const open=dmsNav.classList.toggle('open');dmsMenu.setAttribute('aria-expanded',String(open));});}</script>\n</body>`);
 await writeFile(join(output, 'dms.html'), shareShell(dms, 'dms.html'));
 
 let vartist = await readFile(join(root, 'vartist-dms.html'), 'utf8');
-const vartistHeader = `<header class="vt-top"><div class="vt-top-inner"><a class="vt-top-logo" href="index.html" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="vt-top-menu" type="button" aria-expanded="false" aria-controls="vt-top-nav">Меню</button>${standaloneNav('vt','dms.html')}</div></header>`;
+const vartistHeader = `<header class="vt-top"><div class="vt-top-inner"><a class="vt-top-logo" href="/" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="vt-top-menu" type="button" aria-expanded="false" aria-controls="vt-top-nav">Меню</button>${standaloneNav('vt','dms.html')}</div></header>`;
 vartist = vartist.replace('</style>', `${standaloneGeometry('vt')}  </style>`);
 if (!vartist.includes('class="vt-top"')) vartist = vartist.replace('<body>', `<body>\n  ${vartistHeader}`);
 if (!vartist.includes("querySelector('.vt-top-menu')")) vartist = vartist.replace('</body>', `  <script>const vtMenu=document.querySelector('.vt-top-menu'),vtNav=document.querySelector('#vt-top-nav');if(vtMenu&&vtNav)vtMenu.addEventListener('click',()=>{const open=vtNav.classList.toggle('open');vtMenu.setAttribute('aria-expanded',open?'true':'false')});</script>\n</body>`);
@@ -247,7 +250,7 @@ await writeFile(join(output, 'vartist-dms.html'), shareShell(vartist, 'vartist-d
 
 let services = await readFile(join(root, 'services.html'), 'utf8');
 const servicesHeader = `<header class="services-top"><div class="services-top-inner">`
-  + `<a class="services-top-logo" href="index.html" aria-label="Компаньйон — на головну">`
+  + `<a class="services-top-logo" href="/" aria-label="Компаньйон — на головну">`
   + `<img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a>`
   + `<button class="services-top-menu" type="button" aria-expanded="false" aria-controls="services-top-nav">Меню</button>`
   + `${standaloneNav('services','services.html')}</div></header>`;
