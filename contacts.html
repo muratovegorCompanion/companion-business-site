@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="home.css">
   <style>
-    .contacts-hero { padding:96px 0 64px; background:var(--c-white); border-bottom:1px solid var(--b-line); }
+    .contacts-hero { padding:56px 0 40px; background:var(--c-white); border-bottom:1px solid var(--b-line); }
     .contacts-hero h1 { margin:22px 0 0; font-size:clamp(2.6rem,5vw,4.1rem); line-height:1.03; letter-spacing:-.035em; color:var(--b-ink); }
     .contacts-hero h1 span { color:var(--b-blue); }
     .contacts-hero .b-intro { margin-top:24px; }
@@ -38,8 +38,9 @@
     .contacts-legal-inner { padding-top:26px; border-top:1px solid var(--b-line); font-size:.9375rem; line-height:1.7; color:var(--b-muted); max-width:840px; }
     .contacts-legal-inner a { color:var(--b-blue); }
 
+    .contacts-page .contacts-hero + .b-section { padding-top:48px; }
     @media (max-width:950px) { .contacts-grid { grid-template-columns:1fr; gap:44px; } .contacts-card { padding:32px; } }
-    @media (max-width:700px) { .contacts-hero { padding:64px 0 46px; } }
+    @media (max-width:700px) { .contacts-hero { padding:44px 0 32px; } .contacts-page .contacts-hero + .b-section { padding-top:36px; } }
   </style>
 </head>
 <body class="business-page contacts-page">
