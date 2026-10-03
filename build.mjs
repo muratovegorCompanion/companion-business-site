@@ -78,9 +78,9 @@ const openGraph = (html, file) => {
 // ні canonical. Тепер усе це генерується разом зі сторінками.
 const PAGES = ['index.html','dms.html','logistyka.html','yak-my-pratsyuyemo.html',
   'services.html','perevirka-dms.html','vidmova-u-vyplati.html','about.html','contacts.html','partners.html',
-  'app.html','rekomendatsii.html','dodatkovi-rishennya.html','regulatory.html','insurance-products.html','privacy.html'];
+  'vartist-dms.html','app.html','rekomendatsii.html','dodatkovi-rishennya.html','regulatory.html','insurance-products.html','privacy.html'];
 const PRIORITY = {'index.html':'1.0','dms.html':'0.9','logistyka.html':'0.9',
-  'perevirka-dms.html':'0.8','vidmova-u-vyplati.html':'0.8','yak-my-pratsyuyemo.html':'0.8','services.html':'0.7'};
+  'perevirka-dms.html':'0.8','vartist-dms.html':'0.8','vidmova-u-vyplati.html':'0.8','yak-my-pratsyuyemo.html':'0.8','services.html':'0.7'};
 const pageUrl = (file) => `${SITE_URL}/${file === 'index.html' ? '' : file}`;
 
 const canonical = (html, file) =>
@@ -125,9 +125,10 @@ const jsonLdTag = (data) => `<script type="application/ld+json">${data.replace(/
 // адреси. Назви беремо ті самі, що в меню, щоб дороговказ збігався з тим,
 // що людина побачить, коли перейде.
 const NAV_LABEL = Object.fromEntries(NAV.map(item => [item.href, item.label]));
-const CRUMB_PARENT = {'perevirka-dms.html':'dms.html', 'rekomendatsii.html':'about.html'};
+const CRUMB_PARENT = {'perevirka-dms.html':'dms.html', 'vartist-dms.html':'dms.html', 'rekomendatsii.html':'about.html'};
 const CRUMB_NAME = {
   'perevirka-dms.html':'Чек-лист ДМС перед продовженням',
+  'vartist-dms.html':'Вартість ДМС',
   'vidmova-u-vyplati.html':'Відмова у виплаті',
   'rekomendatsii.html':'Відгуки клієнтів',
   'contacts.html':'Контакти',
@@ -292,16 +293,9 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
   // Посадкова під рекламу копіюється як є: спільне меню й підвал їй
   // протипоказані — з реклами кожне зайве посилання це вихід зі сторінки.
-  'korporatyvne-dms.html','form.js','nh.css','nh.js','nh-pages.css','favicon.ico','motion.css','motion.js','scrollvideo.js','analytics.js','vartist.js',
-  // Чернетка станцій процесу: копіюється як є, у карту сайту й меню не
-  // потрапляє, всередині стоїть noindex. Прибрати, коли механіку перенесемо
-  // на yak-my-pratsyuyemo.html.
-  'proces-chernetka.html']) {
+  'korporatyvne-dms.html','form.js','nh.css','nh.js','nh-pages.css','favicon.ico','motion.css','motion.js','scrollvideo.js','analytics.js','vartist.js']) {
   await copyFile(join(root, file), join(output, file));
 }
-// vartist-dms.html: чернетка на вичитку. Свідомо не в PAGES (отже, не в карті
-// сайту) і не в NAV (отже, не в меню) — усередині стоїть noindex. Після
-// вичитки експертами додати до PAGES і прибрати noindex зі сторінки.
 for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
   'about.html','contacts.html','rekomendatsii.html','perevirka-dms.html','vidmova-u-vyplati.html','dodatkovi-rishennya.html','404.html','regulatory.html','privacy.html','insurance-products.html']) {
   await writeFile(join(output, file), shareShell(await readFile(join(root, file), 'utf8'), file));
