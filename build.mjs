@@ -24,6 +24,7 @@ const NAV = [
   {href:'index.html', label:'Головна'},
   {href:'services.html', label:'Послуги'},
   {href:'dms.html', label:'Медичне страхування'},
+  {href:'vartist-dms.html', label:'Ціни'},
   {href:'logistyka.html', label:'Логістика'},
   {href:'yak-my-pratsyuyemo.html', label:'Як працюємо'},
   {href:'about.html', label:'Про нас', page:'about'},
@@ -232,6 +233,7 @@ const standaloneGeometry = (prefix) => `
     .${prefix}-top-nav .${prefix}-top-meeting{padding:10px 15px!important;background:var(--c-ink)!important;color:#fff!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:7px!important;transform:none!important}
     .${prefix}-top-menu{display:none!important;background:none!important;border:1px solid var(--c-line)!important;color:var(--c-ink)!important;border-radius:8px!important;padding:8px 11px!important;font:inherit!important;min-height:44px!important}
     @media(max-width:1420px){.${prefix}-top-inner{gap:15px!important}.${prefix}-top-logo{min-width:190px!important}.${prefix}-top-logo img{width:135px!important}.${prefix}-top-nav{gap:12px!important}}
+    @media(min-width:1280px) and (max-width:1360px){.${prefix}-top-nav{gap:8px!important}}
     @media(max-width:1279px){.${prefix}-top{height:auto!important;min-height:74px!important}.${prefix}-top-inner{width:min(100% - 36px,1240px)!important;height:auto!important;min-height:74px!important;flex-wrap:wrap!important}.${prefix}-top-logo{flex:1!important;min-width:0!important}.${prefix}-top-logo img{width:125px!important}.${prefix}-top-menu{display:block!important}.${prefix}-top-nav{display:none!important;order:4!important;width:100%!important;padding:14px 0 20px!important;flex-wrap:wrap!important;flex-direction:column!important;align-items:flex-start!important;gap:7px!important;margin-left:0!important;font-size:1rem!important}.${prefix}-top-nav a{padding:10px!important}.${prefix}-top-nav.open{display:flex!important}.${prefix}-top-nav a.active{transform:translateY(-3px)!important}.${prefix}-top-nav .${prefix}-top-meeting{display:inline-block!important}}
 `;
 
@@ -243,7 +245,7 @@ if (!dms.includes("querySelector('.dms-top-menu')")) dms = dms.replace('</body>'
 await writeFile(join(output, 'dms.html'), shareShell(dms, 'dms.html'));
 
 let vartist = await readFile(join(root, 'vartist-dms.html'), 'utf8');
-const vartistHeader = `<header class="vt-top"><div class="vt-top-inner"><a class="vt-top-logo" href="/" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="vt-top-menu" type="button" aria-expanded="false" aria-controls="vt-top-nav">Меню</button>${standaloneNav('vt','dms.html')}</div></header>`;
+const vartistHeader = `<header class="vt-top"><div class="vt-top-inner"><a class="vt-top-logo" href="/" aria-label="Компаньйон — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро Компаньйон" width="2172" height="724"></a><button class="vt-top-menu" type="button" aria-expanded="false" aria-controls="vt-top-nav">Меню</button>${standaloneNav('vt','vartist-dms.html')}</div></header>`;
 vartist = vartist.replace('</style>', `${standaloneGeometry('vt')}  </style>`);
 if (!vartist.includes('class="vt-top"')) vartist = vartist.replace('<body>', `<body>\n  ${vartistHeader}`);
 if (!vartist.includes("querySelector('.vt-top-menu')")) vartist = vartist.replace('</body>', `  <script>const vtMenu=document.querySelector('.vt-top-menu'),vtNav=document.querySelector('#vt-top-nav');if(vtMenu&&vtNav)vtMenu.addEventListener('click',()=>{const open=vtNav.classList.toggle('open');vtMenu.setAttribute('aria-expanded',open?'true':'false')});</script>\n</body>`);

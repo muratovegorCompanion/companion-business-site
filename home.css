@@ -222,6 +222,8 @@ a, button, input, textarea, select, summary { -webkit-tap-highlight-color:transp
   .b-section-head { gap:35px; }.b-time { grid-template-columns:1fr; }.b-metrics { gap:18px; }.b-metrics strong { font-size:2rem; }
   .b-section { padding:75px 0; }.b-steps { gap:22px; }.b-solution { padding:28px; }
 }
+/* Дев'ять пунктів меню ледь не влазять у 1280–1360px: тісніші проміжки замість горизонтальної прокрутки. */
+@media(min-width:1280px) and (max-width:1360px) { .site-nav { gap:11px; } }
 @media(max-width:800px) {
   .header-inner { min-height:76px; flex-wrap:wrap; }.brand { flex:1; }.menu-toggle { display:block; }.site-nav { display:none; flex-wrap:wrap; width:100%; order:4; flex-direction:column; align-items:stretch; padding:0 0 22px; margin:0; gap:7px; font-size:1rem; }.site-nav.is-open { display:flex; }.site-nav a { padding:10px; }.site-nav .header-meeting { text-align:center; }
   .b-hero-grid { grid-template-columns:1fr 0.85fr; gap:26px; }.b-hero h1 { font-size:2.8rem; }.b-intro { font-size:1rem; }
