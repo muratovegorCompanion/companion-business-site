@@ -282,6 +282,7 @@ const showOrbit = (i, { settle = false } = {}) => {
     // У центрі — чітке фото, на інших ракурсах — кадри облёту.
     orbitImg.src = settle && i === ORBIT_C ? photoSrc : (cache[i] && cache[i].complete ? cache[i].src : ORBIT_SRC(i));
   }
+  frame.classList.toggle('off-c', orbit !== ORBIT_C);
   if (settle) placeOrbit();
 };
 let drag = null;
@@ -325,6 +326,24 @@ if (ORBIT_N > 1) {
       requestAnimationFrame(step);
     }, 900);
   }, { threshold:.5 }).observe(photo);
+}
+
+/* Живий склад: коротке зациклене відео того самого кадру (камера стоїть).
+   Вантажиться після сторінки, грає лише на основному ракурсі й у кадрі. */
+const live = layers.obshchiy.querySelector('.wh-live');
+const lite = navigator.connection && navigator.connection.saveData;
+if (live && !still && !lite) {
+  addEventListener('load', () => {
+    new IntersectionObserver(([en]) => {
+      if (en.isIntersecting) {
+        if (!live.src) {
+          live.src = `sklad-media/live-${small.matches ? 720 : 1600}.mp4`;
+          live.addEventListener('playing', () => live.classList.add('is-ready'), { once:true });
+        }
+        live.play().catch(() => {});
+      } else live.pause();
+    }, { threshold:.2 }).observe(photo);
+  }, { once:true });
 }
 
 paint();
