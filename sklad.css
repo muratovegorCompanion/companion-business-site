@@ -168,3 +168,10 @@ html{scroll-padding-top:110px}
   .wh-stage.is-photo .wh-bar-top{position:relative;left:auto;right:auto;top:auto;order:-1;margin:0 var(--nh-gut) 10px}
   .wh-bar-bottom{flex-wrap:wrap}
 }
+
+/* Облёт: «Загальний» вид можна тягнути вбік. */
+.wh-photo{touch-action:pan-y;cursor:grab}
+.wh-photo:active{cursor:grabbing}
+.wh-stage.has-card .wh-photo{cursor:default}
+.wh-ph-frame.is-drag .wh-mk{opacity:0;pointer-events:none;transition:opacity .15s}
+.wh-photo .wh-mk.is-gone{opacity:0;pointer-events:none}

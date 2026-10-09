@@ -8,6 +8,7 @@ const panel = document.getElementById('wh-panel');
 const panelBody = document.getElementById('wh-panel-body');
 const intro = document.getElementById('wh-intro');
 const tourLabel = document.getElementById('wh-tour-label');
+const hint = document.getElementById('wh-hint');
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const small = matchMedia('(max-width: 860px)');
 
@@ -26,6 +27,40 @@ const FRAMES = {
   side: { gate:[76,80], yard:[40,70], truck:[14,60], dock:[22,50], racks:[44,40],
     neighbor:[78,44], sprinkler:[56,29], engineering:[94,49], operator:[16,38], building:[88,27] },
 };
+/* Облёт: на «Загальному» виді склад можна тягнути — кадри відео облёту
+   змінюються під пальцем. ORBIT_KEYS — позиції зон на опорних кадрах;
+   між ними позиції інтерполюються, null — зону з цього ракурсу не видно. */
+const ORBIT_N = 65, ORBIT_C = 16;
+const ORBIT_SRC = i => `sklad-media/orbit/${String(i).padStart(2, '0')}.webp`;
+const ORBIT_KEYS = {
+  0: { gate:[50,84], yard:[30,75], truck:[33,62], dock:[36,52], racks:[55,37],
+    neighbor:[78,46], sprinkler:[52,31], engineering:[96,52], operator:[31,37], building:[90,30] },
+  8: { gate:[62,86], yard:[38,75], truck:[34,64], dock:[33,52], racks:[53,37],
+    neighbor:[76,46], sprinkler:[48,30], engineering:[95,47], operator:[28,38], building:[90,30] },
+  [ORBIT_C]: FRAMES.obshchiy,
+  28: { gate:[68,86], yard:[38,76], truck:[35,66], dock:[28,53], racks:[52,37],
+    neighbor:[72,46], sprinkler:[44,29], engineering:[92,44], operator:[24,38], building:[86,29] },
+  40: { gate:[40,84], yard:[24,72], truck:[20,63], dock:[18,50], racks:[42,36],
+    neighbor:[62,46], sprinkler:[38,29], engineering:[90,50], operator:[18,38], building:[86,28] },
+  52: { gate:[9,82], yard:[20,66], truck:[8,58], dock:[16,45], racks:[37,35],
+    neighbor:[52,45], sprinkler:[35,26], engineering:[80,48], operator:[14,35], building:[78,30] },
+  64: { gate:null, yard:[35,75], truck:null, dock:null, racks:[33,30],
+    neighbor:[40,45], sprinkler:[30,24], engineering:[72,50], operator:[13,32], building:[75,30] },
+};
+const HINT_ORBIT = 'Тягніть фото вбік, щоб покрутити склад · натисніть на позначку, щоб побачити ризики';
+const HINT_CLICK = 'Натисніть на позначку, щоб побачити ризики';
+const keyIdx = Object.keys(ORBIT_KEYS).map(Number).sort((a, b) => a - b);
+let orbit = ORBIT_C;
+const orbitSpot = (i, z) => {
+  let a = keyIdx[0], b = keyIdx[keyIdx.length - 1];
+  keyIdx.forEach(k => { if (k <= i) a = k; if (k >= i && b >= k) b = k; });
+  const p = ORBIT_KEYS[a][z], q = ORBIT_KEYS[b][z];
+  if (!p || !q) return null;
+  const t = a === b ? 0 : (i - a) / (b - a);
+  return [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
+};
+const spotOf = (v, z) => v === 'obshchiy' ? orbitSpot(orbit, z) : FRAMES[v][z];
+
 const layers = Object.fromEntries([...frame.querySelectorAll('[data-frame]')].map(l => [l.dataset.frame, l]));
 const marks = {};   // marks[frame][zone] → кнопка
 Object.entries(FRAMES).forEach(([f, spots]) => {
@@ -70,7 +105,7 @@ const layout = () => {
   frame.style.width = fw + 'px'; frame.style.height = fh + 'px';
   frame.style.left = left + 'px'; frame.style.top = top + 'px';
   let s = 1, tx = 0, ty = 0;
-  const spot = current && FRAMES[view][current];
+  const spot = current && spotOf(view, current);
   const side = spot && !small.matches && spot[0] > 55 ? 'left' : 'right';
   stage.classList.toggle('panel-left', side === 'left');
   if (spot) {
@@ -138,6 +173,8 @@ function showRole(r) {
 }
 
 function select(z, { fly = false } = {}) {
+  // З поточного ракурсу облёту зону не видно — повертаємось до основного кадру.
+  if (view === 'obshchiy' && !orbitSpot(orbit, z)) showOrbit(ORBIT_C, { settle:true });
   current = z;
   tourIdx = ZONES.indexOf(z);
   tourLabel.innerHTML = `<b>${num(z)}/${ZONES.length}</b>${zoneTitle(z)}`;
@@ -161,6 +198,7 @@ const setView = (v) => {
   view = v;
   stage.querySelectorAll('[data-view]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.view === v)));
   Object.entries(layers).forEach(([f, l]) => l.classList.toggle('is-on', f === v));
+  hint.textContent = v === 'obshchiy' && ORBIT_N > 1 ? HINT_ORBIT : HINT_CLICK;
   layout();
 };
 stage.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
@@ -188,6 +226,76 @@ stage.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') { step(-1); e.preventDefault(); }
   if (e.key === 'Escape') clear();
 });
+
+/* ---------- Облёт: тягнемо «Загальний» вид ---------- */
+const orbitImg = layers.obshchiy.querySelector('img');
+const photoSrc = orbitImg.currentSrc || orbitImg.src;
+const placeOrbit = () => {
+  ZONES.forEach(z => {
+    const p = orbitSpot(orbit, z), b = marks.obshchiy[z];
+    b.classList.toggle('is-gone', !p);
+    if (!p) return;
+    b.style.left = p[0] + '%'; b.style.top = p[1] + '%';
+    b.classList.toggle('is-flip', p[0] > 70);
+  });
+};
+const cache = [];
+const loadOrbit = () => {
+  if (cache.length || ORBIT_N < 2) return;
+  for (let i = 0; i < ORBIT_N; i++) { const im = new Image(); im.decoding = 'async'; im.src = ORBIT_SRC(i); cache[i] = im; }
+};
+const showOrbit = (i, { settle = false } = {}) => {
+  i = Math.max(0, Math.min(ORBIT_N - 1, Math.round(i)));
+  if (i !== orbit || settle) {
+    orbit = i;
+    orbitImg.removeAttribute('srcset');
+    // У центрі — чітке фото, на інших ракурсах — кадри облёту.
+    orbitImg.src = settle && i === ORBIT_C ? photoSrc : (cache[i] && cache[i].complete ? cache[i].src : ORBIT_SRC(i));
+  }
+  if (settle) placeOrbit();
+};
+let drag = null;
+photo.addEventListener('pointerdown', e => {
+  if (ORBIT_N < 2 || view !== 'obshchiy' || current || e.button > 0 || e.target.closest('.wh-mk')) return;
+  loadOrbit();
+  drag = { x:e.clientX, i:orbit, moved:false, id:e.pointerId };
+});
+photo.addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dx = e.clientX - drag.x;
+  if (!drag.moved && Math.abs(dx) < 6) return;
+  if (!drag.moved) { drag.moved = true; photo.setPointerCapture(e.pointerId); frame.classList.add('is-drag'); }
+  showOrbit(drag.i - dx * (ORBIT_N - 1) / (photo.clientWidth * .9));
+});
+const endDrag = () => {
+  if (!drag) return;
+  if (drag.moved) { frame.classList.remove('is-drag'); showOrbit(orbit, { settle:true }); }
+  drag = null;
+};
+photo.addEventListener('pointerup', endDrag);
+photo.addEventListener('pointercancel', endDrag);
+
+// Підказка: коли сцена вперше з’являється, склад трохи «повертається» сам.
+if (ORBIT_N > 1) {
+  addEventListener('load', loadOrbit, { once:true });
+  if (!still) new IntersectionObserver(([en], io) => {
+    if (!en.isIntersecting) return;
+    io.disconnect();
+    setTimeout(() => {
+      if (drag || current || view !== 'obshchiy') return;
+      const amp = Math.min(14, ORBIT_N - 1 - ORBIT_C), t0 = performance.now(), d = 2200;
+      frame.classList.add('is-drag');
+      const step = (now) => {
+        const k = Math.min(1, (now - t0) / d);
+        if (drag || current) { frame.classList.remove('is-drag'); return; }
+        showOrbit(ORBIT_C + amp * Math.sin(k * Math.PI));
+        if (k < 1) requestAnimationFrame(step);
+        else { frame.classList.remove('is-drag'); showOrbit(ORBIT_C, { settle:true }); }
+      };
+      requestAnimationFrame(step);
+    }, 900);
+  }, { threshold:.5 }).observe(photo);
+}
 
 paint();
 layout();
