@@ -1,6 +1,14 @@
 // Інтерактивний склад (sklad.html): фотокадри складу з позначками зон.
 // Клік — і кадр наїжджає на зону, а поруч відкривається картка.
 // Тексти зон не дублюються: картка бере їх зі списку статей #wh-zones.
+// На сторінці логістики списку немає — беремо зони й ролі з sklad.html.
+if (!document.getElementById('wh-zones')) {
+  const src = new DOMParser().parseFromString(await (await fetch('sklad.html')).text(), 'text/html');
+  const box = document.createElement('div');
+  box.hidden = true;
+  box.append(src.getElementById('wh-zones'), ...src.querySelectorAll('[data-role-card]'));
+  document.body.append(box);
+}
 const stage = document.getElementById('wh-stage');
 const photo = document.getElementById('wh-photo');
 const frame = document.getElementById('wh-ph-frame');

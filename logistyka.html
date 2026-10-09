@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="nh.css?v=6">
   <link rel="stylesheet" href="nh-pages.css?v=12">
+  <link rel="stylesheet" href="sklad.css?v=4">
   <link rel="preload" as="image" href="presentation-assets/logistics/hero.jpg">
   <style>
     /* Сторінка зібрана на nh.css / nh-pages.css. */
@@ -51,41 +52,56 @@
       </div>
     </section>
 
-    <section class="nh-sec" id="roles" aria-labelledby="roles-title">
+    <section class="wh-hero wh-embed" id="sklad" aria-labelledby="roles-title">
       <div class="nh-wrap">
-        <div class="nh-head">
-          <div><span class="nh-num nh-rv">01 / Склад</span><h2 id="roles-title" class="nh-rv nh-d1">На одному складі — <em class="nh-s">три різні ризики.</em></h2></div>
-          <div><p class="nh-lead nh-rv nh-d2">Власник, оператор і орендар працюють в одній будівлі, але відповідають за різне. Поліс, який закриває одного, не закриває іншого.</p><p class="nh-rv nh-d3" style="margin-top:16px"><a class="nh-link" href="sklad.html">Пройти склад на інтерактивному фото ↗</a></p></div>
-        </div>
-        <div class="nh-roles">
-          <div class="nh-roles-img nh-rv"><img src="presentation-assets/logistics/complex.jpg" alt="" loading="lazy" width="1344" height="752"></div>
-          <div class="nh-rv nh-d1">
-            <div class="nh-tabs" role="tablist" aria-label="Роль на складі">
-              <button type="button" role="tab" id="t-owner" aria-controls="p-owner" aria-selected="true">Власник складу</button>
-              <button type="button" role="tab" id="t-operator" aria-controls="p-operator" aria-selected="false" tabindex="-1">Оператор складу</button>
-              <button type="button" role="tab" id="t-tenant" aria-controls="p-tenant" aria-selected="false" tabindex="-1">Орендар</button>
-            </div>
-            <div class="nh-panel" role="tabpanel" id="p-owner" aria-labelledby="t-owner">
-              <span class="nh-k">Власник складу</span>
-              <h3>Будівля і дохід від неї</h3>
-              <ul><li>Пошкодження будівлі складського комплексу</li><li>Перерва в бізнесі, поки будівля не відновлена</li><li>Пошкодження товару орендарів</li><li>Втрата орендаря, якщо після збитку він стає неплатоспроможним</li><li>Шкода життю та здоров’ю третіх осіб</li></ul>
-              <div class="nh-case"><b>Модельна ситуація</b><p>Пожежа пошкоджує комплекс. Страховик власника виплачує відшкодування — і йде з регресом до винної сторони. Нею може виявитися ваш же орендар або оператор.</p></div>
-            </div>
-            <div class="nh-panel" role="tabpanel" id="p-operator" aria-labelledby="t-operator" hidden>
-              <span class="nh-k">Оператор складу</span>
-              <h3>Чужий товар у ваших руках</h3>
-              <ul><li>Відповідальність за пошкодження будівлі складу</li><li>Перерва в бізнесі через пошкодження будівлі</li><li>Пошкодження товару клієнтів під час операційної діяльності</li><li>Шкода життю та здоров’ю співробітників і третіх осіб</li></ul>
-              <div class="nh-case"><b>Модельна ситуація</b><p>Під час навантаження пошкоджено вантаж клієнта. Страховик клієнта виплачує йому відшкодування і виставляє регрес вам — як винній стороні.</p></div>
-            </div>
-            <div class="nh-panel" role="tabpanel" id="p-tenant" aria-labelledby="t-tenant" hidden>
-              <span class="nh-k">Орендар</span>
-              <h3>Свій товар серед чужих</h3>
-              <ul><li>Відповідальність за пошкодження будівлі складу</li><li>Перерва в бізнесі через пошкодження будівлі</li><li>Пошкодження товару інших орендарів</li><li>Пошкодження власного товару через дії сусідів або несправність комплексу</li><li>Шкода життю та здоров’ю співробітників і третіх осіб</li></ul>
-              <div class="nh-case"><b>Модельна ситуація</b><p>Пожежа в сусіднього орендаря. Під час гасіння ваш товар залито водою. Прямого винуватця немає — претензію пред’являти нема кому.</p></div>
-            </div>
+        <span class="nh-eyebrow">01 / Інтерактивний склад</span>
+        <h2 id="roles-title">На одному складі — <em class="nh-s">три різні ризики.</em></h2>
+        <p class="nh-lead">Власник, оператор і орендар працюють в одній будівлі, але відповідають за різне. Натисніть на позначку на складі: побачите, що там може статися, чий це ризик і яким страхуванням він покривається.</p>
+      </div>
+    </section>
+    <section class="wh-stage-sec" aria-label="Склад із зонами ризику">
+      <div class="wh-stage is-photo" id="wh-stage">
+        <div class="wh-photo" id="wh-photo">
+          <div class="wh-ph-frame" id="wh-ph-frame">
+            <div class="wh-ph-layer is-on" data-frame="obshchiy"><img src="sklad-media/sklad-obshchiy.webp" srcset="sklad-media/sklad-obshchiy-m.webp 1100w, sklad-media/sklad-obshchiy.webp 2048w" sizes="(max-width: 860px) 100vw, 1480px" decoding="async" alt="Логістичний склад на заході сонця: двір із вантажівками, рампа, стелажі під знятим дахом, КПП і паркінг" width="2048" height="1147" loading="lazy"></div>
+            <div class="wh-ph-layer" data-frame="top"><img src="sklad-media/sklad-zverhu.webp" srcset="sklad-media/sklad-zverhu-m.webp 1100w, sklad-media/sklad-zverhu.webp 2048w" sizes="(max-width: 860px) 100vw, 1480px" decoding="async" alt="Той самий склад згори: стелажі, офіс, зона сусіднього орендаря, рампа і двір" width="2048" height="1147" loading="lazy"></div>
+            <div class="wh-ph-layer" data-frame="side"><img src="sklad-media/sklad-zboku.webp" srcset="sklad-media/sklad-zboku-m.webp 1100w, sklad-media/sklad-zboku.webp 2048w" sizes="(max-width: 860px) 100vw, 1480px" decoding="async" alt="Склад у розрізі збоку: офіс, стелажі, навантажувач, сусідній орендар, КПП на виїзді" width="2048" height="1147" loading="lazy"></div>
           </div>
         </div>
+
+        <div class="wh-bar wh-bar-top">
+          <div class="wh-group" role="group" aria-label="Вид">
+            <button type="button" data-view="obshchiy" aria-pressed="true">Загальний</button>
+            <button type="button" data-view="top" aria-pressed="false">Зверху</button>
+            <button type="button" data-view="side" aria-pressed="false">Збоку</button>
+          </div>
+          <div class="wh-group" role="group" aria-label="Чиї ризики показати">
+            <button type="button" data-role="all" aria-pressed="true">Усі</button>
+            <button type="button" data-role="owner" aria-pressed="false">Я власник</button>
+            <button type="button" data-role="operator" aria-pressed="false">Я оператор</button>
+            <button type="button" data-role="tenant" aria-pressed="false">Я орендар</button>
+          </div>
+        </div>
+
+        <div class="wh-bar wh-bar-bottom">
+          <div class="wh-tour">
+            <button type="button" class="wh-tour-btn" id="wh-prev" aria-label="Попередня зона">←</button>
+            <button type="button" class="wh-tour-label" id="wh-tour-label">Почати тур складом</button>
+            <button type="button" class="wh-tour-btn" id="wh-next" aria-label="Наступна зона">→</button>
+          </div>
+          <p class="wh-hint" id="wh-hint">Тягніть фото вбік, щоб покрутити склад · натисніть на позначку, щоб побачити ризики</p>
+        </div>
+
+        <aside class="wh-panel" id="wh-panel" aria-live="polite" tabindex="-1">
+          <div class="wh-panel-intro" id="wh-intro">
+            <span class="nh-k">З чого почати</span>
+            <h2>Оберіть частину складу</h2>
+            <p>Лаймові позначки — це зони ризику. Натисніть на позначку, або оберіть свою роль угорі, щоб підсвітити саме ваші ризики.</p>
+          </div>
+          <div id="wh-panel-body"></div>
+        </aside>
       </div>
+      <p class="wh-embed-more"><a class="nh-link" href="sklad.html#zony">Усі десять зон складу списком ↗</a></p>
     </section>
 
     <section class="nh-sec nh-dark" aria-labelledby="regress-title">
@@ -166,5 +182,6 @@
     </section>
   </main>
   <script src="nh.js?v=3"></script>
+  <script type="module" src="sklad.js?v=5"></script>
 </body>
 </html>

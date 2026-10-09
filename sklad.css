@@ -4,10 +4,13 @@
 html{scroll-padding-top:110px}
 
 .wh-hero{background:var(--nh-navy);color:#fff;padding:clamp(36px,5vw,64px) 0 clamp(20px,3vw,32px)}
-.wh-hero h1{font-size:clamp(32px,4.6vw,60px);line-height:1.05;margin:14px 0 16px;max-width:20ch}
-.wh-hero h1 em.nh-s{color:var(--nh-lime)}
+.wh-hero h1,.wh-embed h2{font-size:clamp(32px,4.6vw,60px);line-height:1.05;margin:14px 0 16px;max-width:20ch}
+.wh-hero h1 em.nh-s,.wh-embed h2 em.nh-s{color:var(--nh-lime)}
 .wh-hero .nh-eyebrow{color:var(--nh-lime)}
 .wh-hero .nh-lead{color:rgba(255,255,255,.75)}
+.wh-embed{padding-top:clamp(56px,7vw,96px)}
+.wh-embed-more{max-width:1480px;margin:18px auto 0;text-align:right}
+.wh-embed-more .nh-link{color:var(--nh-lime)}
 .wh-back{display:table;margin-bottom:18px;font-size:14px;font-weight:600;color:rgba(255,255,255,.7)}
 .wh-back:hover{color:var(--nh-lime)}
 
@@ -175,3 +178,4 @@ html{scroll-padding-top:110px}
 .wh-stage.has-card .wh-photo{cursor:default}
 .wh-ph-frame.is-drag .wh-mk{opacity:0;pointer-events:none;transition:opacity .15s}
 .wh-photo .wh-mk.is-gone{opacity:0;pointer-events:none}
+@media (max-width:860px){.wh-embed-more{padding:0 var(--nh-gut);text-align:left}}
