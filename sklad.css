@@ -179,3 +179,17 @@ html{scroll-padding-top:110px}
 .wh-ph-frame.is-drag .wh-mk{opacity:0;pointer-events:none;transition:opacity .15s}
 .wh-photo .wh-mk.is-gone{opacity:0;pointer-events:none}
 @media (max-width:860px){.wh-embed-more{padding:0 var(--nh-gut);text-align:left}}
+/* Розкладачка зон на сторінці логістики */
+.wh-zones.wh-zones-acc{display:block;border-top:1px solid var(--nh-line)}
+.wh-zones-acc details{border-bottom:1px solid var(--nh-line)}
+.wh-zones-acc summary{list-style:none;display:flex;align-items:center;gap:18px;padding:22px 4px;cursor:pointer;font:600 clamp(18px,1.8vw,22px)/1.25 var(--c-font);color:var(--nh-ink)}
+.wh-zones-acc summary::-webkit-details-marker{display:none}
+.wh-zones-acc summary::after{content:"+";margin-left:auto;flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--nh-lime);color:var(--nh-navy);font-size:22px;font-weight:500;transition:transform .25s}
+.wh-zones-acc details[open] summary::after{transform:rotate(45deg)}
+.wh-zones-acc summary:hover{color:var(--nh-blue)}
+.wh-zones-acc .wh-zone{background:none;border:0;padding:0 4px 26px 52px;max-width:860px;box-shadow:none}
+.wh-zones-acc .wh-zone.is-on{box-shadow:none}
+.wh-zones-acc .wh-zone>.wh-zn,.wh-zones-acc .wh-zone>h3{display:none}
+@media (max-width:860px){.wh-zones-acc .wh-zone{padding-left:4px}}
+.wh-zones-acc summary .wh-zn{min-width:30px}
+.wh-zones-acc .wh-more{display:none}
