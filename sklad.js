@@ -97,7 +97,8 @@ Object.entries(FRAMES).forEach(([f, spots]) => {
     b.style.left = x + '%'; b.style.top = y + '%';
     b.innerHTML = `<i>${num(z)}</i><span>${zoneTitle(z)}</span>`;
     b.setAttribute('aria-label', `${zoneTitle(z)}: показати ризики`);
-    b.addEventListener('click', () => select(z, { fly:true }));
+    // Повторне натискання на вибрану позначку закриває зону.
+    b.addEventListener('click', () => z === current ? clear() : select(z, { fly:true }));
     layers[f].appendChild(b);
     marks[f][z] = b;
   });
@@ -144,6 +145,7 @@ const layout = () => {
   frame.style.setProperty('--s', s);
   frame.style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
   frame.classList.toggle('is-zoom', !!spot);
+  stage.classList.toggle('is-zoom', !!spot);
 };
 new ResizeObserver(layout).observe(photo);
 small.addEventListener('change', layout);
@@ -235,6 +237,12 @@ const step = (dir) => {
   const next = tourIdx < 0 ? (dir > 0 ? 0 : n - 1) : (tourIdx + dir + n) % n;
   select(ZONES[next], { fly:true });
 };
+// Віддалити: закрити зону й повернутися до всього складу.
+const zoomOut = document.createElement('button');
+zoomOut.type = 'button'; zoomOut.className = 'wh-zoomout';
+zoomOut.innerHTML = '<span aria-hidden="true">←</span> Весь склад';
+zoomOut.addEventListener('click', clear);
+stage.querySelector('.wh-bar-top').prepend(zoomOut);
 document.getElementById('wh-next').addEventListener('click', () => step(1));
 document.getElementById('wh-prev').addEventListener('click', () => step(-1));
 tourLabel.addEventListener('click', () => current ? select(current, { fly:true }) : step(1));
