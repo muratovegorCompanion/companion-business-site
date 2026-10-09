@@ -201,3 +201,6 @@ html{scroll-padding-top:110px}
 .wh-live{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;pointer-events:none}
 .wh-live.is-ready{opacity:1}
 .wh-ph-frame.is-drag .wh-live,.wh-ph-frame.off-c .wh-live{opacity:0;transition:none}
+/* Кадри облёту: canvas поверх фото, видно лише під час обертання або не в центрі */
+.wh-orbit{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+.wh-ph-frame.has-orbit.is-drag .wh-orbit,.wh-ph-frame.has-orbit.off-c .wh-orbit{opacity:1}
