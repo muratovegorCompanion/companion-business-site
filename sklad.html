@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Інтерактивний 3D-склад: оберіть будівлю, стелажі, рампу чи вантажівку й подивіться, які ризики там виникають, хто за них відповідає і яке страхування їх покриває.">
+  <meta name="description" content="Інтерактивний склад: оберіть будівлю, стелажі, рампу чи вантажівку й подивіться, які ризики там виникають, хто за них відповідає і яке страхування їх покриває.">
   <meta name="theme-color" content="#0B1934">
   <title>Інтерактивний склад: ризики і страхування — Страхове бюро «Компаньйон»</title>
   <link rel="icon" href="presentation-assets/companion-logo.png">
@@ -13,8 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="nh.css?v=6">
   <link rel="stylesheet" href="nh-pages.css?v=12">
-  <link rel="stylesheet" href="sklad.css?v=1">
-  <link rel="modulepreload" href="vendor/three/three.module.min.js">
+  <link rel="stylesheet" href="sklad.css?v=2">
   <script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js"}}</script>
 </head>
 <body class="business-page sklad-page">
@@ -32,14 +31,21 @@
       </div>
     </section>
 
-    <section class="wh-stage-sec" aria-label="3D-модель складу">
-      <div class="wh-stage" id="wh-stage">
+    <section class="wh-stage-sec" aria-label="Склад із зонами ризику">
+      <div class="wh-stage is-photo" id="wh-stage">
+        <div class="wh-photo" id="wh-photo">
+          <div class="wh-ph-frame" id="wh-ph-frame">
+            <div class="wh-ph-layer is-on" data-frame="obshchiy"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/2dc3621e-ebfc-46d8-b960-5e70b75762f8.webp" srcset="https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/9b4ea65f-c806-4d2a-9db8-b27413a3d952.webp 1100w, https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/2dc3621e-ebfc-46d8-b960-5e70b75762f8.webp 2048w" sizes="(max-width: 860px) 100vw, 1480px" decoding="async" alt="Логістичний склад на заході сонця: двір із вантажівками, рампа, стелажі під знятим дахом, КПП і паркінг" width="2048" height="1147" fetchpriority="high"></div>
+            <div class="wh-ph-layer" data-frame="top"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/0e904912-5c6b-42f1-8af1-e4d53ac138f8.webp" srcset="https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/c1aac5d8-109a-47e5-9d39-6c2fee33b62b.webp 1100w, https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/0e904912-5c6b-42f1-8af1-e4d53ac138f8.webp 2048w" sizes="(max-width: 860px) 100vw, 1480px" decoding="async" alt="Той самий склад згори: стелажі, офіс, зона сусіднього орендаря, рампа і двір" width="2048" height="1147" loading="lazy"></div>
+            <div class="wh-ph-layer" data-frame="side"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/9544e63e-474c-454a-8f4a-8a1ec6460093.webp" srcset="https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/0e29969d-507b-4f46-ada1-815c12e2327f.webp 1100w, https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/9544e63e-474c-454a-8f4a-8a1ec6460093.webp 2048w" sizes="(max-width: 860px) 100vw, 1480px" decoding="async" alt="Склад у розрізі збоку: офіс, стелажі, навантажувач, сусідній орендар, КПП на виїзді" width="2048" height="1147" loading="lazy"></div>
+          </div>
+        </div>
         <div class="wh-canvas" id="wh-canvas" aria-hidden="true"></div>
         <div class="wh-markers" id="wh-markers"></div>
 
         <div class="wh-bar wh-bar-top">
           <div class="wh-group" role="group" aria-label="Вид">
-            <button type="button" data-view="3d" aria-pressed="true">3D</button>
+            <button type="button" data-view="obshchiy" aria-pressed="true">Загальний</button>
             <button type="button" data-view="top" aria-pressed="false">Зверху</button>
             <button type="button" data-view="side" aria-pressed="false">Збоку</button>
           </div>
@@ -57,19 +63,18 @@
             <button type="button" class="wh-tour-label" id="wh-tour-label">Почати тур складом</button>
             <button type="button" class="wh-tour-btn" id="wh-next" aria-label="Наступна зона">→</button>
           </div>
-          <p class="wh-hint" id="wh-hint">Тягніть, щоб обертати · колесо або два пальці, щоб наблизити</p>
+          <button type="button" class="wh-mode" id="wh-mode" aria-pressed="false">Покрутити в 3D</button>
+          <p class="wh-hint" id="wh-hint">Натисніть на позначку, щоб побачити ризики</p>
         </div>
 
         <aside class="wh-panel" id="wh-panel" aria-live="polite" tabindex="-1">
           <div class="wh-panel-intro" id="wh-intro">
             <span class="nh-k">З чого почати</span>
             <h2>Оберіть частину складу</h2>
-            <p>Лаймові позначки — це зони ризику. Натисніть на позначку чи сам об’єкт, або оберіть свою роль угорі, щоб підсвітити саме ваші ризики.</p>
+            <p>Лаймові позначки — це зони ризику. Натисніть на позначку, або оберіть свою роль угорі, щоб підсвітити саме ваші ризики.</p>
           </div>
           <div id="wh-panel-body"></div>
         </aside>
-
-        <p class="wh-noscript" id="wh-fallback" hidden>Ваш браузер не показує 3D. Усі зони складу описані нижче.</p>
       </div>
     </section>
 
@@ -250,6 +255,6 @@
       </div>
     </section>
   </main>
-  <script type="module" src="sklad.js?v=2"></script>
+  <script type="module" src="sklad.js?v=3"></script>
 </body>
 </html>
