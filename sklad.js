@@ -258,8 +258,13 @@ stage.addEventListener('keydown', e => {
 });
 
 /* ---------- Облёт: тягнемо «Загальний» вид ---------- */
-const orbitImg = layers.obshchiy.querySelector('img');
-const photoSrc = orbitImg.currentSrc || orbitImg.src;
+// Кадри облёту малюємо на canvas поверх фото, а саме фото не чіпаємо:
+// заміна src у <img> на мить дає порожню сцену й смуги, поки кадр вантажиться.
+const orbitCv = document.createElement('canvas');
+orbitCv.className = 'wh-orbit'; orbitCv.width = 1280; orbitCv.height = 716;
+orbitCv.setAttribute('aria-hidden', 'true');
+layers.obshchiy.querySelector('img').after(orbitCv);
+const orbitCtx = orbitCv.getContext('2d');
 const placeOrbit = () => {
   ZONES.forEach(z => {
     const p = orbitSpot(orbit, z), b = marks.obshchiy[z];
@@ -274,14 +279,17 @@ const loadOrbit = () => {
   if (cache.length || ORBIT_N < 2) return;
   for (let i = 0; i < ORBIT_N; i++) { const im = new Image(); im.decoding = 'async'; im.src = ORBIT_SRC(i); cache[i] = im; }
 };
+const ready = i => cache[i] && cache[i].complete && cache[i].naturalWidth > 0;
+let drawn = -1;
 const showOrbit = (i, { settle = false } = {}) => {
   i = Math.max(0, Math.min(ORBIT_N - 1, Math.round(i)));
-  if (i !== orbit || settle) {
-    orbit = i;
-    orbitImg.removeAttribute('srcset');
-    // У центрі — чітке фото, на інших ракурсах — кадри облёту.
-    orbitImg.src = settle && i === ORBIT_C ? photoSrc : (cache[i] && cache[i].complete ? cache[i].src : ORBIT_SRC(i));
+  orbit = i;
+  // Кадр ще не завантажився — показуємо найближчий готовий до центру.
+  for (let k = i; ; k += Math.sign(ORBIT_C - k)) {
+    if (ready(k)) { if (k !== drawn) { orbitCtx.drawImage(cache[k], 0, 0, orbitCv.width, orbitCv.height); drawn = k; } break; }
+    if (k === ORBIT_C) { drawn = -1; break; }
   }
+  frame.classList.toggle('has-orbit', drawn >= 0);
   frame.classList.toggle('off-c', orbit !== ORBIT_C);
   if (settle) placeOrbit();
 };
@@ -312,7 +320,11 @@ if (ORBIT_N > 1) {
   if (!still) new IntersectionObserver(([en], io) => {
     if (!en.isIntersecting) return;
     io.disconnect();
-    setTimeout(() => {
+    // Крутимо, лише коли потрібні кадри вже завантажені й розкодовані.
+    loadOrbit();
+    const amp0 = Math.min(14, ORBIT_N - 1 - ORBIT_C);
+    const need = cache.slice(ORBIT_C, ORBIT_C + amp0 + 1).map(im => im.decode().catch(() => {}));
+    Promise.all(need).then(() => setTimeout(() => {
       if (drag || current || view !== 'obshchiy') return;
       const amp = Math.min(14, ORBIT_N - 1 - ORBIT_C), t0 = performance.now(), d = 2200;
       frame.classList.add('is-drag');
@@ -324,7 +336,7 @@ if (ORBIT_N > 1) {
         else { frame.classList.remove('is-drag'); showOrbit(ORBIT_C, { settle:true }); }
       };
       requestAnimationFrame(step);
-    }, 900);
+    }, 600));
   }, { threshold:.5 }).observe(photo);
 }
 
