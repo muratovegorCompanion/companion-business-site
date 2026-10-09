@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Інтерактивний 3D-склад: оберіть будівлю, стелажі, рампу чи вантажівку й подивіться, які ризики там виникають, хто за них відповідає і яке страхування їх покриває.">
+  <meta name="theme-color" content="#0B1934">
+  <title>Інтерактивний склад: ризики і страхування — Страхове бюро «Компаньйон»</title>
+  <link rel="icon" href="presentation-assets/companion-logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="home.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nh.css?v=6">
+  <link rel="stylesheet" href="nh-pages.css?v=12">
+  <link rel="stylesheet" href="sklad.css?v=1">
+  <link rel="modulepreload" href="vendor/three/three.module.min.js">
+  <script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js"}}</script>
+</head>
+<body class="business-page sklad-page">
+  <a class="skip-link" href="#content">Перейти до основного контенту</a>
+  <header class="site-header"><div class="shell header-inner"><a class="brand" href="/" aria-label="Страхове бюро «Компаньйон» — на головну"><img src="presentation-assets/companion-logo.png" alt="Страхове бюро «Компаньйон»" width="2172" height="724"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Меню</button><nav id="site-nav" class="site-nav" aria-label="Сайт"><a href="logistyka.html">Логістика</a><a class="header-meeting" href="/#meeting">Домовитися про зустріч ↗</a></nav></div></header>
+
+  <main id="content" class="nh">
+
+    <section class="wh-hero" aria-labelledby="hero-title">
+      <div class="nh-wrap">
+        <a class="wh-back" href="logistyka.html">← Страхування логістики</a>
+        <span class="nh-eyebrow">Інтерактивний склад</span>
+        <h1 id="hero-title">Пройдіться складом і подивіться, <em class="nh-s">де виникає ризик.</em></h1>
+        <p class="nh-lead">Натисніть на будь-яку частину складу: побачите, що там може статися, чий це ризик і яким страхуванням він покривається. Або пройдіть тур від воріт до будівлі.</p>
+      </div>
+    </section>
+
+    <section class="wh-stage-sec" aria-label="3D-модель складу">
+      <div class="wh-stage" id="wh-stage">
+        <div class="wh-canvas" id="wh-canvas" aria-hidden="true"></div>
+        <div class="wh-markers" id="wh-markers"></div>
+
+        <div class="wh-bar wh-bar-top">
+          <div class="wh-group" role="group" aria-label="Вид">
+            <button type="button" data-view="3d" aria-pressed="true">3D</button>
+            <button type="button" data-view="top" aria-pressed="false">Зверху</button>
+            <button type="button" data-view="side" aria-pressed="false">Збоку</button>
+          </div>
+          <div class="wh-group" role="group" aria-label="Чиї ризики показати">
+            <button type="button" data-role="all" aria-pressed="true">Усі</button>
+            <button type="button" data-role="owner" aria-pressed="false">Я власник</button>
+            <button type="button" data-role="operator" aria-pressed="false">Я оператор</button>
+            <button type="button" data-role="tenant" aria-pressed="false">Я орендар</button>
+          </div>
+        </div>
+
+        <div class="wh-bar wh-bar-bottom">
+          <div class="wh-tour">
+            <button type="button" class="wh-tour-btn" id="wh-prev" aria-label="Попередня зона">←</button>
+            <button type="button" class="wh-tour-label" id="wh-tour-label">Почати тур складом</button>
+            <button type="button" class="wh-tour-btn" id="wh-next" aria-label="Наступна зона">→</button>
+          </div>
+          <p class="wh-hint" id="wh-hint">Тягніть, щоб обертати · колесо або два пальці, щоб наблизити</p>
+        </div>
+
+        <aside class="wh-panel" id="wh-panel" aria-live="polite" tabindex="-1">
+          <div class="wh-panel-intro" id="wh-intro">
+            <span class="nh-k">З чого почати</span>
+            <h2>Оберіть частину складу</h2>
+            <p>Лаймові позначки — це зони ризику. Натисніть на позначку чи сам об’єкт, або оберіть свою роль угорі, щоб підсвітити саме ваші ризики.</p>
+          </div>
+          <div id="wh-panel-body"></div>
+        </aside>
+
+        <p class="wh-noscript" id="wh-fallback" hidden>Ваш браузер не показує 3D. Усі зони складу описані нижче.</p>
+      </div>
+    </section>
+
+    <section class="nh-sec" id="zony" aria-labelledby="zones-title">
+      <div class="nh-wrap">
+        <div class="nh-head">
+          <div><span class="nh-num">Усі зони складу</span><h2 id="zones-title">Десять місць, де <em class="nh-s">виникає збиток.</em></h2></div>
+          <p class="nh-lead">Те саме, що й на моделі, тільки списком. Кожну зону можна показати на складі.</p>
+        </div>
+
+        <div class="wh-zones" id="wh-zones">
+
+          <article class="wh-zone" id="z-gate" data-zone="gate" data-roles="owner operator tenant">
+            <span class="wh-zn">01</span>
+            <h3>В’їзд і охорона</h3>
+            <p class="wh-who"><b>Чий ризик:</b> власник, оператор і орендарі</p>
+            <h4>Що може статися</h4>
+            <ul><li>Крадіжка зі зломом або грабіж</li><li>Проникнення на територію в неробочий час</li><li>Пошкодження воріт і огорожі транспортом</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування майна і товарів від крадіжки та протиправних дій третіх осіб</li><li>Страхування огорожі й воріт як частини майнового комплексу</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Уночі через пошкоджену огорожу винесли частину товару. Виплата залежить від того, як у договорі описані вимоги до охорони й сигналізації. Їх варто звірити з реальністю ще до підписання.</p></div>
+            <button type="button" class="wh-show" data-show="gate">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-yard" data-zone="yard" data-roles="owner operator">
+            <span class="wh-zn">02</span>
+            <h3>Двір і відвідувачі</h3>
+            <p class="wh-who"><b>Чий ризик:</b> власник або оператор, залежно від договору</p>
+            <h4>Що може статися</h4>
+            <ul><li>Травма водія, кур’єра чи відвідувача на території</li><li>Пошкодження чужого автомобіля під час маневрів</li><li>Шкода сусідній ділянці, наприклад пожежа перекинулася на сусідів</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування цивільної відповідальності перед третіми особами</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Водій постачальника посковзнувся на обмерзлому майданчику біля рампи й зламав руку. Вимогу він пред’являє тому, хто відповідає за утримання території.</p></div>
+            <button type="button" class="wh-show" data-show="yard">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-truck" data-zone="truck" data-roles="operator tenant">
+            <span class="wh-zn">03</span>
+            <h3>Вантажівка: товар у дорозі</h3>
+            <p class="wh-who"><b>Чий ризик:</b> власник вантажу, перевізник, експедитор</p>
+            <h4>Що може статися</h4>
+            <ul><li>Пошкодження або втрата вантажу в дорозі: ДТП, перекидання, крадіжка</li><li>Ліміт відповідальності перевізника не покриває вартість вантажу</li><li>Штрафи й простій через зірвану поставку</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування вантажу (карго)</li><li>Страхування відповідальності перевізника та експедитора, зокрема за CMR</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Перевізник пошкодив партію електроніки. За CMR його відповідальність обмежена 8,33 SDR за кілограм, а для легкого дорогого вантажу це лише частина вартості. Різницю покриває тільки страхування самого вантажу.</p></div>
+            <p class="wh-more"><a class="nh-link" href="logistyka.html">Детальніше про вантажі й CMR ↗</a></p>
+            <button type="button" class="wh-show" data-show="truck">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-dock" data-zone="dock" data-roles="operator">
+            <span class="wh-zn">04</span>
+            <h3>Рампа і навантажувач</h3>
+            <p class="wh-who"><b>Чий ризик:</b> оператор складу</p>
+            <h4>Що може статися</h4>
+            <ul><li>Пошкодження вантажу клієнта під час навантаження і розвантаження</li><li>Пошкодження будівлі, рампи чи воріт технікою</li><li>Травма працівника</li><li>Поломка навантажувача</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування відповідальності оператора складу перед клієнтами</li><li>Страхування спецтехніки</li><li>Страхування працівників від нещасних випадків</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Під час навантаження оператор помилився, і вантаж клієнта пошкоджено. Страховик клієнта виплачує йому відшкодування і звертається з регресом до оператора як до винної сторони.</p></div>
+            <button type="button" class="wh-show" data-show="dock">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-racks" data-zone="racks" data-roles="operator tenant">
+            <span class="wh-zn">05</span>
+            <h3>Стелажі з товаром</h3>
+            <p class="wh-who"><b>Чий ризик:</b> власник товару та оператор, який його зберігає</p>
+            <h4>Що може статися</h4>
+            <ul><li>Пожежа, вибух, залиття</li><li>Падіння або обвал стелажа разом із товаром</li><li>Крадіжка</li><li>Недостача без видимих слідів події: більшість полісів її виключає</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування товарів на складі, власних або прийнятих на зберігання</li><li>Страхування відповідальності зберігача за товар на відповідальному зберіганні</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Навантажувач зачепив стійку, і ярус стелажа склався разом із товаром двох клієнтів. Збиток клієнтам відшкодовує оператор або його страховик, якщо відповідальність застрахована.</p></div>
+            <button type="button" class="wh-show" data-show="racks">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-neighbor" data-zone="neighbor" data-roles="tenant owner">
+            <span class="wh-zn">06</span>
+            <h3>Сусідній орендар</h3>
+            <p class="wh-who"><b>Чий ризик:</b> орендарі та власник</p>
+            <h4>Що може статися</h4>
+            <ul><li>Пожежа або залиття в сусіда переходить на ваш товар</li><li>Ваша подія пошкоджує товар сусіда або будівлю</li><li>Орендар після збитку стає неплатоспроможним, і власник втрачає орендну плату</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування власного товару незалежно від того, хто винен</li><li>Відповідальність орендаря перед власником та іншими орендарями</li><li>Для власника: страхування втрати орендної плати</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Пожежа в сусіднього орендаря. Під час гасіння ваш товар залили водою. Прямого винуватця немає, тож пред’являти претензію нікому. Допоможе лише страхування власного товару.</p></div>
+            <button type="button" class="wh-show" data-show="neighbor">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-sprinkler" data-zone="sprinkler" data-roles="owner operator tenant">
+            <span class="wh-zn">07</span>
+            <h3>Система пожежогасіння</h3>
+            <p class="wh-who"><b>Чий ризик:</b> власник будівлі та всі, чий товар під нею</p>
+            <h4>Що може статися</h4>
+            <ul><li>Хибне спрацювання або прорив труби заливає товар</li><li>Несправна система не зупиняє пожежу</li><li>Товар псується від води й піни під час гасіння</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування майна з ризиком «пошкодження водою із систем пожежогасіння»</li><li>Страхування товарів від вогню та наслідків гасіння</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Узимку замерзла й тріснула труба спринклерної системи, і вода залила два ряди стелажів. Чи буде виплата, залежить від того, чи цей ризик є в договорі і чи виконувалися умови обслуговування системи.</p></div>
+            <button type="button" class="wh-show" data-show="sprinkler">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-engineering" data-zone="engineering" data-roles="owner operator tenant">
+            <span class="wh-zn">08</span>
+            <h3>Інженерні системи та обладнання</h3>
+            <p class="wh-who"><b>Чий ризик:</b> власник обладнання та власник товару</p>
+            <h4>Що може статися</h4>
+            <ul><li>Коротке замикання й пожежа від електрощитової</li><li>Поломка холодильного обладнання і псування товару</li><li>Перебої з електроживленням</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування обладнання від поломок</li><li>Страхування товару від псування через збій температурного режиму</li><li>Страхування перерви в діяльності через пошкодження обладнання</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>На вихідних вийшов з ладу компресор холодильної камери, і товар клієнта зіпсувався. Звичайний поліс на майно таку подію часто не покриває, потрібен окремий ризик.</p></div>
+            <button type="button" class="wh-show" data-show="engineering">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-operator" data-zone="operator" data-roles="operator">
+            <span class="wh-zn">09</span>
+            <h3>Оператор складу: окрема компанія</h3>
+            <p class="wh-who"><b>Чий ризик:</b> оператор складу</p>
+            <p class="wh-intro">На складі часто працює оператор: окрема юридична особа, якій не належать ні будівля, ні товар. Вона приймає, зберігає й відвантажує чужий вантаж і відповідає за нього перед клієнтами та власником.</p>
+            <h4>Що може статися</h4>
+            <ul><li>Вимоги клієнтів за товар на відповідальному зберіганні</li><li>Вимоги власника за пошкодження будівлі</li><li>Перерва в бізнесі через пошкодження будівлі</li><li>Шкода життю й здоров’ю працівників і третіх осіб</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування відповідальності складського оператора</li><li>Страхування відповідальності перед орендодавцем</li><li>Страхування працівників від нещасних випадків і медичне страхування</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Клієнт оператора застрахував свій товар. Після пожежі його страховик виплатив відшкодування і пред’явив регрес оператору як зберігачу. Без поліса відповідальності ця сума лягає на самого оператора.</p></div>
+            <button type="button" class="wh-show" data-show="operator">Показати на складі ↑</button>
+          </article>
+
+          <article class="wh-zone" id="z-building" data-zone="building" data-roles="owner operator tenant">
+            <span class="wh-zn">10</span>
+            <h3>Будівля складського комплексу</h3>
+            <p class="wh-who"><b>Чий ризик:</b> власник, а відповідальність за пошкодження ще й на операторі та орендарях</p>
+            <h4>Що може статися</h4>
+            <ul><li>Пожежа, вибух, удар блискавки</li><li>Стихійні явища, вага снігу на покрівлі</li><li>Перерва в бізнесі, поки будівлю не відновлено</li><li>Збиток, який доходить до вартості всього комплексу</li></ul>
+            <h4>Чим покривається</h4>
+            <ul><li>Страхування будівлі та майнового комплексу</li><li>Страхування перерви в діяльності: втрата орендної плати або прибутку</li><li>Відповідальність оператора й орендарів перед власником за пошкодження будівлі</li></ul>
+            <div class="nh-case"><b>Модельна ситуація</b><p>Пожежа пошкодила комплекс. Страховик власника виплачує відшкодування і використовує право регресу до винної сторони. Нею може виявитися орендар або оператор, і для них регрес означає серйозні фінансові проблеми.</p></div>
+            <button type="button" class="wh-show" data-show="building">Показати на складі ↑</button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="nh-sec nh-dark wh-roles-sec" aria-labelledby="roles-title">
+      <div class="nh-wrap">
+        <div class="nh-head" style="margin-bottom:28px">
+          <div><span class="nh-num">Хто є хто на складі</span><h2 id="roles-title">Одна будівля, <em class="nh-s" style="color:var(--nh-lime)">кілька компаній.</em></h2></div>
+          <p class="nh-lead">Власник здає склад в оренду оператору та орендарям. Оператор надає складські послуги своїм клієнтам. У кожного свої ризики, і поліс одного не захищає іншого.</p>
+        </div>
+        <div class="wh-roles">
+          <article class="wh-role" id="r-owner" data-role-card="owner">
+            <span class="nh-k">Власник складу</span>
+            <h3>Будівля і дохід від неї</h3>
+            <ul><li>Пошкодження будівлі складу</li><li>Перерва в бізнесі через пошкодження будівлі</li><li>Пошкодження товару орендарів</li><li>Втрата орендаря, якщо після збитку він стає неплатоспроможним</li><li>Шкода життю та здоров’ю третіх осіб</li></ul>
+            <p class="wh-role-pol"><b>Ключові поліси:</b> майно і будівля, перерва в діяльності, відповідальність перед третіми особами.</p>
+          </article>
+          <article class="wh-role" id="r-operator" data-role-card="operator">
+            <span class="nh-k">Оператор складу</span>
+            <h3>Чужий товар у ваших руках</h3>
+            <ul><li>Відповідальність за пошкодження будівлі складу</li><li>Перерва в бізнесі через пошкодження будівлі</li><li>Пошкодження товару клієнтів під час роботи</li><li>Шкода життю та здоров’ю працівників і третіх осіб</li></ul>
+            <p class="wh-role-pol"><b>Ключові поліси:</b> відповідальність складського оператора, відповідальність перед орендодавцем, спецтехніка, працівники.</p>
+          </article>
+          <article class="wh-role" id="r-tenant" data-role-card="tenant">
+            <span class="nh-k">Орендар</span>
+            <h3>Свій товар серед чужих</h3>
+            <ul><li>Відповідальність за пошкодження будівлі складу</li><li>Перерва в бізнесі через пошкодження будівлі</li><li>Пошкодження товару інших орендарів</li><li>Пошкодження власного товару через дії сусідів або несправність комплексу</li><li>Шкода життю та здоров’ю працівників і третіх осіб</li></ul>
+            <p class="wh-role-pol"><b>Ключові поліси:</b> власний товар, відповідальність перед власником та іншими орендарями.</p>
+          </article>
+        </div>
+        <p class="nh-note wh-note-dark">Конкретні ризики, ліміти, франшизи та виключення визначаються програмою і договором страхування. Приклади на цій сторінці модельні й показують типову логіку, а не умови конкретного страховика.</p>
+      </div>
+    </section>
+
+    <section style="padding:clamp(64px,8vw,110px) 0" aria-labelledby="cta-title">
+      <div class="nh-wrap">
+        <div class="nh-cta">
+          <div>
+            <h2 id="cta-title">Розберемо ваш склад так само, тільки по-справжньому.</h2>
+            <p>Подивимося на договори оренди й зберігання, знайдемо, де у вас немає покриття, і проведемо тендер серед страховиків. Перша зустріч безоплатна, онлайн або особисто в Києві.</p>
+          </div>
+          <div class="nh-cta-acts"><a class="nh-btn nh-btn-light" href="/#meeting">Домовитися про зустріч <span class="nh-ar" aria-hidden="true">↗</span></a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="sklad.js?v=1"></script>
+</body>
+</html>
