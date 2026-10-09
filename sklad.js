@@ -4,10 +4,24 @@
 // На сторінці логістики списку немає — беремо зони й ролі з sklad.html.
 if (!document.getElementById('wh-zones')) {
   const src = new DOMParser().parseFromString(await (await fetch('sklad.html')).text(), 'text/html');
+  const zones = src.getElementById('wh-zones');
+  const acc = document.getElementById('wh-acc');
   const box = document.createElement('div');
   box.hidden = true;
-  box.append(src.getElementById('wh-zones'), ...src.querySelectorAll('[data-role-card]'));
+  box.append(...src.querySelectorAll('[data-role-card]'));
   document.body.append(box);
+  if (!acc) box.append(zones);
+  else {
+    // Під складом — ті самі зони розкладачкою: заголовок, а під ним приклади.
+    zones.classList.add('wh-zones-acc');
+    zones.querySelectorAll('.wh-zone').forEach(art => {
+      const d = document.createElement('details'), s = document.createElement('summary');
+      s.innerHTML = `<span class="wh-zn">${art.querySelector('.wh-zn').textContent}</span><span>${art.querySelector('h3').textContent}</span>`;
+      art.replaceWith(d);
+      d.append(s, art);
+    });
+    acc.append(zones);
+  }
 }
 const stage = document.getElementById('wh-stage');
 const photo = document.getElementById('wh-photo');
