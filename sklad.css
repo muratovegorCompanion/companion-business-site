@@ -1,5 +1,5 @@
-/* Інтерактивний склад (sklad.html). Сцена — three.js у sklad.js, тут лише
-   оболонка: темна сцена, панелі керування, картка зони і список зон. */
+/* Інтерактивний склад (sklad.html): фотокадри з позначками зон, панелі
+   керування, картка зони і список зон. Логіка — у sklad.js. */
 .sklad-page{background:#F6F5F0}
 html{scroll-padding-top:110px}
 
@@ -16,13 +16,8 @@ html{scroll-padding-top:110px}
 .wh-stage{scroll-margin-top:96px;position:relative;max-width:1480px;margin:0 auto;height:min(80vh,780px);min-height:520px;border-radius:28px;overflow:hidden;
   background:radial-gradient(120% 90% at 50% 0%,#18325a 0%,#0d1d38 55%,#08142a 100%);border:1px solid rgba(196,240,107,.16);
   box-shadow:0 40px 80px -40px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.03)}
-.wh-canvas{position:absolute;inset:0}
-.wh-canvas canvas{display:block;width:100%!important;height:100%!important;touch-action:none;cursor:grab}
-.wh-canvas canvas:active{cursor:grabbing}
-.wh-canvas.is-hover canvas{cursor:pointer}
 
 /* Позначки зон */
-.wh-markers{position:absolute;inset:0;pointer-events:none}
 .wh-mk{position:absolute;left:0;top:0;pointer-events:auto;display:flex;align-items:center;gap:8px;padding:0;border:0;background:none;cursor:pointer;
   font:600 13px/1 var(--c-font);color:#fff;transform:translate(-14px,-14px);transition:opacity .3s}
 .wh-mk i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-style:normal;font-size:12px;
@@ -118,10 +113,6 @@ html{scroll-padding-top:110px}
 @media (max-width:860px){
   .wh-stage-sec{padding:0 0 28px}
   .wh-stage{height:auto;min-height:0;border-radius:0;border-left:0;border-right:0;display:flex;flex-direction:column;overflow:visible;background:none;box-shadow:none;border:0}
-  .wh-canvas-wrap{position:relative}
-  .wh-canvas{position:relative;inset:auto;height:62vh;min-height:360px;max-height:560px;
-    background:radial-gradient(120% 90% at 50% 0%,#18325a 0%,#0d1d38 55%,#08142a 100%)}
-  .wh-markers{bottom:auto;height:62vh;min-height:360px;max-height:560px;overflow:hidden}
   .wh-bar{left:10px;right:10px;gap:6px}
   .wh-bar-top{top:10px}
   .wh-group button{padding:9px 10px;font-size:12.5px}
@@ -157,13 +148,7 @@ html{scroll-padding-top:110px}
 .wh-photo .wh-mk.is-flip span{transform:translateX(4px)}
 .wh-photo .wh-mk.is-flip:hover span,.wh-photo .wh-mk.is-flip.is-on span,.wh-photo .wh-mk.is-flip:focus-visible span{transform:none}
 
-.wh-stage.is-photo .wh-canvas,.wh-stage.is-photo .wh-markers{display:none}
-.wh-stage.is-3d .wh-photo{display:none}
 
-.wh-mode{font:600 13px/1 var(--c-font);padding:13px 18px;border-radius:999px;border:1px solid rgba(196,240,107,.55);
-  background:rgba(11,25,52,.78);color:var(--nh-lime);cursor:pointer;backdrop-filter:blur(8px);transition:background .2s,color .2s}
-.wh-mode:hover,.wh-mode[aria-pressed="true"]{background:var(--nh-lime);color:var(--nh-navy)}
-.wh-mode:disabled{opacity:.7;cursor:progress}
 
 @media (min-width:861px){
   .wh-panel{transition:opacity .35s,transform .35s,visibility 0s}
@@ -182,5 +167,4 @@ html{scroll-padding-top:110px}
   .wh-photo{position:relative;inset:auto;aspect-ratio:16/9;width:100%}
   .wh-stage.is-photo .wh-bar-top{position:relative;left:auto;right:auto;top:auto;order:-1;margin:0 var(--nh-gut) 10px}
   .wh-bar-bottom{flex-wrap:wrap}
-  .wh-mode{margin:0 auto}
 }

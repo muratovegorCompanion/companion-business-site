@@ -1,6 +1,5 @@
-// Інтерактивний склад (sklad.html). Спершу показуємо фотокадри складу з
-// позначками зон: клік — і кадр наїжджає на зону, а поруч відкривається
-// картка. 3D-модель (sklad-3d.js) вантажиться лише на кнопку «Покрутити в 3D».
+// Інтерактивний склад (sklad.html): фотокадри складу з позначками зон.
+// Клік — і кадр наїжджає на зону, а поруч відкривається картка.
 // Тексти зон не дублюються: картка бере їх зі списку статей #wh-zones.
 const stage = document.getElementById('wh-stage');
 const photo = document.getElementById('wh-photo');
@@ -9,8 +8,6 @@ const panel = document.getElementById('wh-panel');
 const panelBody = document.getElementById('wh-panel-body');
 const intro = document.getElementById('wh-intro');
 const tourLabel = document.getElementById('wh-tour-label');
-const modeBtn = document.getElementById('wh-mode');
-const hint = document.getElementById('wh-hint');
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const small = matchMedia('(max-width: 860px)');
 
@@ -50,8 +47,7 @@ Object.entries(FRAMES).forEach(([f, spots]) => {
 });
 
 /* ---------- Стан ---------- */
-let current = null, role = 'all', tourIdx = -1, view = 'obshchiy', mode = 'photo';
-let three = null;   // модуль sklad-3d.js, коли завантажений
+let current = null, role = 'all', tourIdx = -1, view = 'obshchiy';
 
 const paint = () => {
   ZONES.forEach(z => {
@@ -60,7 +56,6 @@ const paint = () => {
     Object.values(marks).forEach(m => { m[z].classList.toggle('is-on', on); m[z].classList.toggle('is-dim', dim); });
     zoneEl[z].classList.toggle('is-on', on);
   });
-  if (three) three.setState(current, role);
 };
 
 /* Наїзд на зону: кадр масштабується так, щоб зона стала в центрі вільної
@@ -75,7 +70,7 @@ const layout = () => {
   frame.style.width = fw + 'px'; frame.style.height = fh + 'px';
   frame.style.left = left + 'px'; frame.style.top = top + 'px';
   let s = 1, tx = 0, ty = 0;
-  const spot = current && mode === 'photo' && FRAMES[view][current];
+  const spot = current && FRAMES[view][current];
   const side = spot && !small.matches && spot[0] > 55 ? 'left' : 'right';
   stage.classList.toggle('panel-left', side === 'left');
   if (spot) {
@@ -149,7 +144,6 @@ function select(z, { fly = false } = {}) {
   showZone(z);
   paint();
   layout();
-  if (three && mode === '3d' && fly) three.focus(z);
   if (small.matches && fly) panel.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block:'nearest' });
 }
 function clear() {
@@ -168,7 +162,6 @@ const setView = (v) => {
   stage.querySelectorAll('[data-view]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.view === v)));
   Object.entries(layers).forEach(([f, l]) => l.classList.toggle('is-on', f === v));
   layout();
-  if (three && mode === '3d') three.view(v === 'obshchiy' ? '3d' : v);
 };
 stage.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
 stage.querySelectorAll('[data-role]').forEach(b => b.addEventListener('click', () => {
@@ -195,36 +188,6 @@ stage.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') { step(-1); e.preventDefault(); }
   if (e.key === 'Escape') clear();
 });
-
-/* ---------- 3D на запит ---------- */
-const HINTS = {
-  photo: 'Натисніть на позначку, щоб побачити ризики',
-  '3d': 'Тягніть, щоб обертати · колесо або два пальці, щоб наблизити',
-};
-stage.addEventListener('wh:pick', e => select(e.detail.zone, { fly:e.detail.fly }));
-const setMode = async (m) => {
-  if (m === '3d' && !three) {
-    modeBtn.disabled = true; modeBtn.textContent = 'Завантажую 3D…';
-    try { three = await import('./sklad-3d.js?v=3'); }
-    catch (err) {
-      console.warn('3D', err);
-      modeBtn.hidden = true; hint.textContent = 'Ваш браузер не показує 3D, але всі зони є на фото й у списку нижче.';
-      return;
-    } finally { modeBtn.disabled = false; }
-  }
-  mode = m;
-  stage.classList.toggle('is-photo', m === 'photo');
-  stage.classList.toggle('is-3d', m === '3d');
-  modeBtn.setAttribute('aria-pressed', String(m === '3d'));
-  modeBtn.textContent = m === '3d' ? 'Повернутися до фото' : 'Покрутити в 3D';
-  hint.textContent = HINTS[m];
-  layout();
-  if (m === '3d') {
-    three.setState(current, role);
-    if (current) three.focus(current); else three.view(view === 'obshchiy' ? '3d' : view);
-  }
-};
-modeBtn.addEventListener('click', () => setMode(mode === '3d' ? 'photo' : '3d'));
 
 paint();
 layout();

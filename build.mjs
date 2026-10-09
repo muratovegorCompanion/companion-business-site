@@ -296,7 +296,7 @@ for (const [file,prefix] of [['app.html','app'],['partners.html','partners']]) {
 for (const file of ['styles.css','home.css','site-footer.css','tokens.css','home.js','script.js','nav.js','footer.js','CNAME','google3dbd541ddd703421.html','cheklist-dms.pdf',
   // Посадкова під рекламу копіюється як є: спільне меню й підвал їй
   // протипоказані — з реклами кожне зайве посилання це вихід зі сторінки.
-  'korporatyvne-dms.html','form.js','nh.css','nh.js','nh-pages.css','favicon.ico','motion.css','motion.js','scrollvideo.js','analytics.js','vartist.js','sklad.css','sklad.js','sklad-3d.js']) {
+  'korporatyvne-dms.html','form.js','nh.css','nh.js','nh-pages.css','favicon.ico','motion.css','motion.js','scrollvideo.js','analytics.js','vartist.js','sklad.css','sklad.js']) {
   await copyFile(join(root, file), join(output, file));
 }
 for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
@@ -305,7 +305,6 @@ for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
 }
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});
 await cp(join(root, 'fonts'), join(output, 'fonts'), {recursive:true});
-await cp(join(root, 'vendor'), join(output, 'vendor'), {recursive:true});
 console.log('Built static Companion site with homepage-exact isolated header geometry.');
 
 // robots.txt і карта сайту: без них пошуковику нема з чого почати обхід.
