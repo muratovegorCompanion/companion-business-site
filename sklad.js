@@ -133,6 +133,7 @@ scene.add(grid);
 /* 10. Будівля: напівпрозорі стіни з контуром, ферми даху, підлога */
 const W = 48, D = 28, H = 10, BX = 0, BZ = -2;   // будівля x∈[-24,24], z∈[-16,12]
 const bFloor = mat('building', C.slab);
+bFloor.userData.flat = true;
 box('building', bFloor, W, .4, D, BX, .2, BZ, { shadow:false });
 const wallMat = mat('building', C.glass, { transparent:true, opacity:.10, depthWrite:false, roughness:.2, metalness:.1, side:THREE.DoubleSide });
 const walls = [
@@ -234,6 +235,7 @@ sign.castShadow = false;
 
 /* 04. Рампа і навантажувач */
 const dockMat = mat('dock', 0x2a4470);
+dockMat.userData.flat = true;
 box('dock', dockMat, 22, 1.2, 3, -2, .6, front + 1.5);
 [-10, -2, 6].forEach(x => box('dock', mat('dock', C.dark), 3.8, .1, 2.6, x, 1.25, front + 1.5));
 const primForklift = collect(() => {
@@ -277,6 +279,7 @@ const primTruck = collect(() => {
 
 /* 02. Двір: розмітка, чуже авто, водій */
 const yardMat = mat('yard', 0x1b3254);
+yardMat.userData.flat = true;
 box('yard', yardMat, 46, .06, 18, 2, .03, 23, { shadow:false });
 const lineMat = mat('yard', C.white, { emissive:C.white, emissiveIntensity:.2 });
 for (let x = 10; x <= 22; x += 3.2) box('yard', lineMat, .12, .08, 5, x, .08, 27, { shadow:false });
@@ -392,12 +395,12 @@ const MODELS = {
     } });
     retire(primRacks);
   },
-  booth: (g) => { place(g, 'gate', { size:11 }, 20, 0, 35.2); retire(primBooth); },
+  booth: (g) => { place(g, 'gate', { size:3.6 }, 26, 0, 36.5, -Math.PI / 2); primBooth.children.filter(o => Math.abs(o.position.x - 26) < .1).forEach(retire); },
   condenser: (g) => { [-12, -6].forEach(z => place(g, 'engineering', { size:4.2 }, 27.4, 0, z, Math.PI / 2)); retire(primCond); },
   worker: (g) => { people.forEach(p => { place(g, p.zone, { size:1.8, by:'height' }, p.x, p.zone === 'yard' ? 0 : .4, p.z, p.rotY); retire(p.g); }); },
   pallet: (g) => { pallets.forEach(([x, z, k], i) => place(g, 'neighbor', { size:1.2 + k * 2, by:'height' }, x, .4, z, (i % 4) * Math.PI / 2)); retire(primPallets); },
   car: (g) => { place(g, 'yard', { size:4.4 }, 14.8, 0, 27, Math.PI / 2); retire(primCar); },
-  office: (g) => { place(g, 'operator', { size:6.6 }, -20, .4, 8.4); retire(primDesk); retire(off); },
+  office: (g) => { place(g, 'operator', { size:3.3, by:'height' }, -20, .4, 8.4); retire(primDesk); retire(off); },
 };
 // Файли лежать у сховищі Higgsfield (CDN з CORS і вічним кешем). Коли
 // їх перенесуть у репозиторій, досить поміняти MODEL_BASE і імена.
@@ -486,7 +489,7 @@ const paint = () => {
       if (!m.userData.baseEmissive) m.userData.baseEmissive = { c:m.emissive.clone(), i:m.emissiveIntensity };
       const base = m.userData.baseEmissive;
       m.emissive.copy(on ? HL : base.c);
-      m.emissiveIntensity = on ? .22 : base.i;
+      m.emissiveIntensity = on ? (m.userData.flat ? .06 : .22) : base.i;
       const dim = !relevant && !on;
       m.transparent = dim || m.userData.baseTransparent;
       m.opacity = dim ? m.userData.baseOpacity * .22 : m.userData.baseOpacity;
