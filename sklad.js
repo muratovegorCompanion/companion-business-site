@@ -3,6 +3,7 @@
 // дублюються: картка бере їх зі списку статей #wh-zones під моделлю.
 import * as THREE from 'three';
 import { OrbitControls } from './vendor/three/OrbitControls.js';
+import { GLTFLoader } from './vendor/three/loaders/GLTFLoader.js';
 
 const stage = document.getElementById('wh-stage');
 const host = document.getElementById('wh-canvas');
@@ -68,6 +69,16 @@ const mat = (zone, color, opts = {}) => {
   if (zone) zoneMats[zone].push(m);
   return m;
 };
+// Прості форми кожного об’єкта збираються в окрему групу: коли
+// підвантажиться детальна модель, групу ховаємо. Не підвантажилась —
+// лишаються прості форми, і сцена все одно працює.
+let sink = null;
+const add = o => (sink || scene).add(o);
+const collect = (fn) => {
+  const g = new THREE.Group(); scene.add(g);
+  const prev = sink; sink = g; fn(); sink = prev;
+  return g;
+};
 const tag = (zone, mesh) => {
   mesh.userData.zone = zone;
   if (zone) zoneMeshes[zone].push(mesh);
@@ -77,7 +88,7 @@ const box = (zone, material, w, h, d, x, y, z, { shadow = true } = {}) => {
   const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
   m.position.set(x, y, z);
   m.castShadow = shadow; m.receiveShadow = true;
-  scene.add(tag(zone, m));
+  add(tag(zone, m));
   return m;
 };
 const cyl = (zone, material, r, h, x, y, z, rot = null, seg = 16) => {
@@ -85,7 +96,7 @@ const cyl = (zone, material, r, h, x, y, z, rot = null, seg = 16) => {
   m.position.set(x, y, z);
   if (rot) m.rotation.set(...rot);
   m.castShadow = true;
-  scene.add(tag(zone, m));
+  add(tag(zone, m));
   return m;
 };
 const edges = (mesh, color = C.edge, opacity = .55) => {
@@ -93,9 +104,10 @@ const edges = (mesh, color = C.edge, opacity = .55) => {
     new THREE.LineBasicMaterial({ color, transparent:true, opacity }));
   l.position.copy(mesh.position); l.rotation.copy(mesh.rotation);
   l.userData.zone = mesh.userData.zone; l.raycast = () => {};
-  scene.add(l);
+  add(l);
   return l;
 };
+const people = [];
 const person = (zone, x, z, color = C.white, rotY = 0) => {
   const g = new THREE.Group();
   const m = mat(zone, color);
@@ -105,7 +117,8 @@ const person = (zone, x, z, color = C.white, rotY = 0) => {
   vest.position.y = 1.15;
   [body, head, vest].forEach(p => { p.castShadow = true; tag(zone, p); g.add(p); });
   g.position.set(x, 0, z); g.rotation.y = rotY;
-  scene.add(g);
+  add(g);
+  people.push({ zone, g, x, z, rotY });
   return g;
 };
 
@@ -120,6 +133,7 @@ scene.add(grid);
 /* 10. Будівля: напівпрозорі стіни з контуром, ферми даху, підлога */
 const W = 48, D = 28, H = 10, BX = 0, BZ = -2;   // будівля x∈[-24,24], z∈[-16,12]
 const bFloor = mat('building', C.slab);
+bFloor.userData.flat = true;
 box('building', bFloor, W, .4, D, BX, .2, BZ, { shadow:false });
 const wallMat = mat('building', C.glass, { transparent:true, opacity:.10, depthWrite:false, roughness:.2, metalness:.1, side:THREE.DoubleSide });
 const walls = [
@@ -153,7 +167,7 @@ const beamMat = mat('racks', C.beam, { metalness:.4, roughness:.4 });
 const goodsMat = mat('racks', C.box, { roughness:.9 });
 const rackRows = [-12.5, -6.5, -0.5];
 const rackX0 = -14, rackX1 = 10, levels = [0.6, 2.5, 4.4, 6.3];
-{
+const primRacks = collect(() => {
   const posts = [], beams = [], goods = [];
   const rand = (i) => { const s = Math.sin(i * 91.7) * 43758.5; return s - Math.floor(s); };
   let n = 0;
@@ -171,7 +185,7 @@ const rackX0 = -14, rackX1 = 10, levels = [0.6, 2.5, 4.4, 6.3];
     const m = new THREE.InstancedMesh(geo, material, list.length);
     list.forEach((p, i) => { place(dummy, p); dummy.updateMatrix(); m.setMatrixAt(i, dummy.matrix); });
     m.castShadow = true; m.receiveShadow = true;
-    scene.add(tag('racks', m));
+    add(tag('racks', m));
     return m;
   };
   inst(new THREE.BoxGeometry(.18, 8, .18), rackMat, posts, (d, [x, z]) => { d.position.set(x, 4.4, z); d.scale.set(1,1,1); });
@@ -179,7 +193,7 @@ const rackX0 = -14, rackX1 = 10, levels = [0.6, 2.5, 4.4, 6.3];
   inst(new THREE.BoxGeometry(2.4, 1, 1.8), goodsMat, goods, (d, [x, y, z, h, r]) => {
     d.position.set(x + (r - .5) * .2, y + .4, z); d.scale.set(1 - r * .15, h, 1);
   });
-}
+});
 
 /* 07. Спринклери: червоні труби під дахом */
 const pipeMat = mat('sprinkler', C.red, { emissive:C.red, emissiveIntensity:.2, metalness:.3 });
@@ -194,19 +208,25 @@ box('sprinkler', pipeMat, .9, 2.2, .9, -22.6, 1.5, -13.5);
 /* 06. Сусідній орендар: палети на підлозі за перегородкою */
 const nGoods = mat('neighbor', C.box2, { roughness:.85 });
 const palMat = mat('neighbor', 0x8a6a45);
-for (let x = 15; x <= 22; x += 2.6) for (let z = -13; z <= 6; z += 2.6) {
-  const k = Math.abs(Math.sin(x * 3.1 + z));
-  if (k < .2) continue;
-  box('neighbor', palMat, 2, .2, 2, x, .5, z);
-  box('neighbor', nGoods, 1.8, 1 + k * 2.2, 1.8, x, .6 + (1 + k * 2.2) / 2, z);
-}
+const pallets = [];
+const primPallets = collect(() => {
+  for (let x = 15; x <= 22; x += 2.6) for (let z = -13; z <= 6; z += 2.6) {
+    const k = Math.abs(Math.sin(x * 3.1 + z));
+    if (k < .2) continue;
+    pallets.push([x, z, k]);
+    box('neighbor', palMat, 2, .2, 2, x, .5, z);
+    box('neighbor', nGoods, 1.8, 1 + k * 2.2, 1.8, x, .6 + (1 + k * 2.2) / 2, z);
+  }
+});
 
 /* 09. Оператор складу: скляний офіс і люди */
 const offMat = mat('operator', C.glass, { transparent:true, opacity:.22, depthWrite:false, side:THREE.DoubleSide });
 const off = box('operator', offMat, 7, 3.2, 6, -20, 2, 8.4, { shadow:false });
 edges(off, C.lime, .8);
-box('operator', mat('operator', C.white), 2.4, .1, 1.2, -20.5, 1.3, 8.6);
-box('operator', mat('operator', C.dark), .9, .6, .1, -20.5, 1.7, 8.1);
+const primDesk = collect(() => {
+  box('operator', mat('operator', C.white), 2.4, .1, 1.2, -20.5, 1.3, 8.6);
+  box('operator', mat('operator', C.dark), .9, .6, .1, -20.5, 1.7, 8.1);
+});
 person('operator', -19, 9.6, C.white, Math.PI);
 person('operator', -16, 3.5, C.white, -.6);
 // Табличка оператора
@@ -215,9 +235,10 @@ sign.castShadow = false;
 
 /* 04. Рампа і навантажувач */
 const dockMat = mat('dock', 0x2a4470);
+dockMat.userData.flat = true;
 box('dock', dockMat, 22, 1.2, 3, -2, .6, front + 1.5);
 [-10, -2, 6].forEach(x => box('dock', mat('dock', C.dark), 3.8, .1, 2.6, x, 1.25, front + 1.5));
-{
+const primForklift = collect(() => {
   const fl = new THREE.Group();
   const body = mat('dock', C.lime, { roughness:.45, metalness:.2 });
   const darkM = mat('dock', C.dark);
@@ -238,13 +259,13 @@ box('dock', dockMat, 22, 1.2, 3, -2, .6, front + 1.5);
     w.rotation.z = Math.PI / 2; w.position.set(x, .38, z); fl.add(tag('dock', w));
   });
   fl.position.set(-3, .4, 6.5); fl.rotation.y = .35;
-  scene.add(fl);
-  person('dock', 2, 8, C.white, 2.4);
-}
+  add(fl);
+});
+person('dock', 2, 8, C.white, 2.4);
 
 /* 03. Вантажівка біля рампи */
-{
-  const tz = front + 3 + 7.5;
+const tz = front + 3 + 7.5;
+const primTruck = collect(() => {
   const trailer = box('truck', mat('truck', C.white, { roughness:.5 }), 3.2, 3.6, 13, -2, 3, tz);
   edges(trailer, 0x9fb6d8, .4);
   box('truck', mat('truck', 0x2968e5, { roughness:.35, metalness:.3 }), 3.2, 3, 3, -2, 2.4, tz + 8.4);
@@ -254,19 +275,22 @@ box('dock', dockMat, 22, 1.2, 3, -2, .6, front + 1.5);
     cyl('truck', tyre, .55, .45, -2 + dx, .6, tz + dz, [0, 0, Math.PI / 2], 14)));
   // Груз у відкритих дверях напівпричепа
   box('truck', mat('truck', C.box), 1.2, 1.1, 1.2, -2.6, 1.8, tz - 5.6);
-}
+});
 
 /* 02. Двір: розмітка, чуже авто, водій */
 const yardMat = mat('yard', 0x1b3254);
+yardMat.userData.flat = true;
 box('yard', yardMat, 46, .06, 18, 2, .03, 23, { shadow:false });
 const lineMat = mat('yard', C.white, { emissive:C.white, emissiveIntensity:.2 });
 for (let x = 10; x <= 22; x += 3.2) box('yard', lineMat, .12, .08, 5, x, .08, 27, { shadow:false });
-box('yard', mat('yard', 0x7d93b8, { roughness:.4, metalness:.4 }), 2, 1.1, 4.2, 14.8, .85, 27);
-box('yard', mat('yard', C.dark, { roughness:.1, metalness:.6 }), 1.8, .7, 2.2, 14.8, 1.75, 26.9);
+const primCar = collect(() => {
+  box('yard', mat('yard', 0x7d93b8, { roughness:.4, metalness:.4 }), 2, 1.1, 4.2, 14.8, .85, 27);
+  box('yard', mat('yard', C.dark, { roughness:.1, metalness:.6 }), 1.8, .7, 2.2, 14.8, 1.75, 26.9);
+});
 person('yard', 9, 19, C.white, .8);
 // Ковзка зона біля рампи — блакитна пляма «ожеледиці»
 const ice = new THREE.Mesh(new THREE.CircleGeometry(2.2, 28), mat('yard', 0x9fd2ff, { transparent:true, opacity:.35, emissive:0x9fd2ff, emissiveIntensity:.3 }));
-ice.rotation.x = -Math.PI / 2; ice.position.set(9, .1, 17.5); scene.add(tag('yard', ice));
+ice.rotation.x = -Math.PI / 2; ice.position.set(9, .1, 17.5); add(tag('yard', ice));
 
 /* 01. В’їзд і охорона: огорожа, КПП, шлагбаум */
 const fenceMat = mat('gate', C.steel, { metalness:.5 });
@@ -277,6 +301,7 @@ fence.forEach(([x1, z1, x2, z2]) => {
   const rail = box('gate', fenceMat, x1 === x2 ? .06 : len, .06, z1 === z2 ? .06 : len, (x1 + x2) / 2, 2.1, (z1 + z2) / 2, { shadow:false });
   rail.castShadow = false;
 });
+const primBooth = collect(() => {
 const booth = box('gate', mat('gate', 0x2a4470), 2.6, 2.8, 2.6, 26, 1.4, 36.5);
 edges(booth, C.lime, .6);
 box('gate', mat('gate', C.glass, { transparent:true, opacity:.5 }), 2.7, .9, 2.7, 26, 2, 36.5);
@@ -285,6 +310,7 @@ cyl('gate', mat('gate', C.dark), .25, 1.1, 14.4, .55, 34);
 const armMat = mat('gate', C.red, { emissive:C.red, emissiveIntensity:.25 });
 const arm = box('gate', armMat, 9.2, .18, .18, 19, 1.05, 34);
 for (let i = 0; i < 4; i++) box('gate', mat('gate', C.white), .9, .2, .2, 15.8 + i * 2.2, 1.05, 34, { shadow:false });
+});
 // Камера на стовпі
 cyl('gate', fenceMat, .1, 5, 24, 2.5, 33.6, null, 8);
 box('gate', mat('gate', C.white), .7, .4, .4, 24, 5, 33.2);
@@ -292,16 +318,107 @@ box('gate', mat('gate', C.white), .7, .4, .4, 24, 5, 33.2);
 /* 08. Інженерія: холодильні агрегати і щитова біля правої стіни */
 const engMat = mat('engineering', 0x4a6a9a, { metalness:.5, roughness:.4 });
 const fanMat = mat('engineering', C.dark);
-[-12, -6].forEach(z => {
+const primCond = collect(() => [-12, -6].forEach(z => {
   const u = box('engineering', engMat, 3, 2.2, 4.2, 27.4, 1.1, z);
   edges(u, C.edge, .6);
   [-1, 1].forEach(s => cyl('engineering', fanMat, .8, .1, 27.4, 2.25, z + s * 1, null, 20));
-});
+}));
 const panelBox = box('engineering', mat('engineering', 0x3a5480), 1.6, 2.6, .9, 27, 1.3, 1.5);
 box('engineering', mat('engineering', 0xffd33d, { emissive:0xffd33d, emissiveIntensity:.4 }), .5, .5, .05, 27, 1.8, 2);
 edges(panelBox, C.edge, .6);
 // Кабель-канал до будівлі
 box('engineering', mat('engineering', C.dark), 2.5, .2, .2, 25.3, 2.4, 1.5, { shadow:false });
+
+
+/* ---------- Детальні моделі (згенеровані в Higgsfield) ----------
+   Вантажаться після першого кадру. Кожна замінює свою групу простих форм;
+   якщо файл не прийшов, прості форми лишаються на місці. */
+const retire = (obj) => {
+  obj.visible = false;
+  obj.traverse(o => {
+    const a = o.userData.zone && zoneMeshes[o.userData.zone];
+    const i = a ? a.indexOf(o) : -1;
+    if (i >= 0) a.splice(i, 1);
+  });
+};
+const zoneMatCache = new Map();
+const zoneMaterial = (zone, m) => {
+  const key = zone + m.uuid;
+  if (!zoneMatCache.has(key)) {
+    const c = m.clone();
+    c.userData.baseOpacity = c.opacity;
+    c.userData.baseTransparent = c.transparent;
+    zoneMats[zone].push(c);
+    zoneMatCache.set(key, c);
+  }
+  return zoneMatCache.get(key);
+};
+// Модель стає на землю, центр — у нулі, довга сторона — уздовж X,
+// масштаб — за довгою стороною або за висотою.
+const prep = (src, zone, { size, by = 'long' }) => {
+  const root = src.clone(true);
+  let b = new THREE.Box3().setFromObject(root);
+  let s = b.getSize(new THREE.Vector3());
+  if (s.z > s.x) root.rotation.y = Math.PI / 2;
+  const wrap = new THREE.Group(); wrap.add(root);
+  b = new THREE.Box3().setFromObject(wrap); s = b.getSize(new THREE.Vector3());
+  const k = size / (by === 'height' ? s.y : Math.max(s.x, s.z));
+  const c = b.getCenter(new THREE.Vector3());
+  root.position.set(-c.x, -b.min.y, -c.z);
+  wrap.scale.setScalar(k);
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    o.material = Array.isArray(o.material) ? o.material.map(m => zoneMaterial(zone, m)) : zoneMaterial(zone, o.material);
+    o.castShadow = true; o.receiveShadow = true;
+    tag(zone, o);
+  });
+  return { obj:wrap, len:s.x * k, depth:s.z * k, height:s.y * k };
+};
+const place = (src, zone, opts, x, y, z, ry = 0) => {
+  const p = prep(src, zone, opts);
+  p.obj.position.set(x, y, z); p.obj.rotation.y = ry;
+  scene.add(p.obj);
+  return p;
+};
+const MODELS = {
+  truck: (g) => { place(g, 'truck', { size:17 }, -2, 0, tz + 1.5, Math.PI / 2); retire(primTruck); },
+  forklift: (g) => { place(g, 'dock', { size:3.4 }, -3, .4, 6.5, .35 + Math.PI / 2); retire(primForklift); },
+  rack: (g) => {
+    const probe = prep(g, 'racks', { size:7.6, by:'height' });
+    const n = Math.max(1, Math.round((rackX1 - rackX0) / probe.len));
+    const step = (rackX1 - rackX0) / n;
+    rackRows.forEach(z => { for (let i = 0; i < n; i++) {
+      const p = prep(g, 'racks', { size:7.6, by:'height' });
+      p.obj.scale.x *= step / p.len;
+      p.obj.position.set(rackX0 + step * (i + .5), .4, z);
+      scene.add(p.obj);
+    } });
+    retire(primRacks);
+  },
+  booth: (g) => { place(g, 'gate', { size:3.6 }, 26, 0, 36.5, -Math.PI / 2); primBooth.children.filter(o => Math.abs(o.position.x - 26) < .1).forEach(retire); },
+  condenser: (g) => { [-12, -6].forEach(z => place(g, 'engineering', { size:4.2 }, 27.4, 0, z, Math.PI / 2)); retire(primCond); },
+  worker: (g) => { people.forEach(p => { place(g, p.zone, { size:1.8, by:'height' }, p.x, p.zone === 'yard' ? 0 : .4, p.z, p.rotY); retire(p.g); }); },
+  pallet: (g) => { pallets.forEach(([x, z, k], i) => place(g, 'neighbor', { size:1.2 + k * 2, by:'height' }, x, .4, z, (i % 4) * Math.PI / 2)); retire(primPallets); },
+  car: (g) => { place(g, 'yard', { size:4.4 }, 14.8, 0, 27, Math.PI / 2); retire(primCar); },
+  office: (g) => { place(g, 'operator', { size:3.3, by:'height' }, -20, .4, 8.4); retire(primDesk); retire(off); },
+};
+// Файли лежать у сховищі Higgsfield (CDN з CORS і вічним кешем). Коли
+// їх перенесуть у репозиторій, досить поміняти MODEL_BASE і імена.
+const MODEL_BASE = 'https://d2ol7oe51mr4n9.cloudfront.net/user_3Iw0kgM5PzAToGgsDMeaBRFqvuE/';
+const MODEL_FILES = {
+  truck:'d35d7479-293d-4a57-a899-a8760660babc', forklift:'bf93dcea-6aa1-43a1-81c1-e61a94db0ab0',
+  rack:'85bf9f1a-cfaf-476c-91dc-a7a47dd1fe8a', booth:'1586fc7c-9fe9-48d9-923e-b02514951203',
+  worker:'443b075f-ed78-4354-893e-a1b02971a399', car:'aef54383-141b-4f4c-a4f5-70ae6e68b2b8',
+  condenser:'13b9b4f1-7108-4ac2-bcaa-add0dacc204b', pallet:'619a6761-ddaa-4925-a285-16e585359b01',
+  office:'4eebe5c5-3ff3-4c91-9a38-babf84561fb4',
+};
+const loadModels = () => {
+  const loader = new GLTFLoader();
+  Object.entries(MODELS).forEach(([name, build]) =>
+    loader.loadAsync(MODEL_BASE + MODEL_FILES[name] + '.glb')
+      .then(gltf => { build(gltf.scene); paint(); })
+      .catch(e => console.warn('model', name, e)));
+};
 
 /* ---------- Позначки зон і кадри камери ---------- */
 // anchor — де стоїть позначка; cam/target — куди летить камера в турі.
@@ -372,7 +489,7 @@ const paint = () => {
       if (!m.userData.baseEmissive) m.userData.baseEmissive = { c:m.emissive.clone(), i:m.emissiveIntensity };
       const base = m.userData.baseEmissive;
       m.emissive.copy(on ? HL : base.c);
-      m.emissiveIntensity = on ? .22 : base.i;
+      m.emissiveIntensity = on ? (m.userData.flat ? .06 : .22) : base.i;
       const dim = !relevant && !on;
       m.transparent = dim || m.userData.baseTransparent;
       m.opacity = dim ? m.userData.baseOpacity * .22 : m.userData.baseOpacity;
@@ -480,12 +597,11 @@ stage.addEventListener('keydown', e => {
 /* Клік по об’єкту. Стіни будівлі прозорі й стоять перед усім іншим,
    тому будівля вибирається лише тоді, коли під курсором нічого іншого. */
 const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
-const pickables = ZONES.flatMap(z => zoneMeshes[z]);
 const pick = (e) => {
   const r = renderer.domElement.getBoundingClientRect();
   ptr.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
   ray.setFromCamera(ptr, camera);
-  const hits = ray.intersectObjects(pickables, false).filter(h => h.object.userData.zone);
+  const hits = ray.intersectObjects(ZONES.flatMap(z => zoneMeshes[z]), false).filter(h => h.object.userData.zone);
   const visible = hits.filter(h => role === 'all' || zoneRoles(h.object.userData.zone).includes(role) || h.object.userData.zone === current);
   const hit = visible.find(h => h.object.userData.zone !== 'building') || visible[0];
   return hit ? hit.object.userData.zone : null;
@@ -554,3 +670,4 @@ const tick = (now) => {
 };
 requestAnimationFrame(tick);
 paint();
+requestAnimationFrame(() => setTimeout(loadModels, 0));
