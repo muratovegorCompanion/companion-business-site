@@ -1,0 +1,141 @@
+/* Інтерактивний склад (sklad.html). Сцена — three.js у sklad.js, тут лише
+   оболонка: темна сцена, панелі керування, картка зони і список зон. */
+.sklad-page{background:#F6F5F0}
+html{scroll-padding-top:110px}
+
+.wh-hero{background:var(--nh-navy);color:#fff;padding:clamp(36px,5vw,64px) 0 clamp(20px,3vw,32px)}
+.wh-hero h1{font-size:clamp(32px,4.6vw,60px);line-height:1.05;margin:14px 0 16px;max-width:20ch}
+.wh-hero h1 em.nh-s{color:var(--nh-lime)}
+.wh-hero .nh-eyebrow{color:var(--nh-lime)}
+.wh-hero .nh-lead{color:rgba(255,255,255,.75)}
+.wh-back{display:table;margin-bottom:18px;font-size:14px;font-weight:600;color:rgba(255,255,255,.7)}
+.wh-back:hover{color:var(--nh-lime)}
+
+/* Сцена */
+.wh-stage-sec{background:var(--nh-navy);padding:0 var(--nh-gut) clamp(32px,4vw,56px)}
+.wh-stage{scroll-margin-top:96px;position:relative;max-width:1480px;margin:0 auto;height:min(80vh,780px);min-height:520px;border-radius:28px;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 0%,#18325a 0%,#0d1d38 55%,#08142a 100%);border:1px solid rgba(196,240,107,.16);
+  box-shadow:0 40px 80px -40px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.03)}
+.wh-canvas{position:absolute;inset:0}
+.wh-canvas canvas{display:block;width:100%!important;height:100%!important;touch-action:none;cursor:grab}
+.wh-canvas canvas:active{cursor:grabbing}
+.wh-canvas.is-hover canvas{cursor:pointer}
+
+/* Позначки зон */
+.wh-markers{position:absolute;inset:0;pointer-events:none}
+.wh-mk{position:absolute;left:0;top:0;pointer-events:auto;display:flex;align-items:center;gap:8px;padding:0;border:0;background:none;cursor:pointer;
+  font:600 13px/1 var(--c-font);color:#fff;transform:translate(-14px,-14px);transition:opacity .3s}
+.wh-mk i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-style:normal;font-size:12px;
+  background:rgba(11,25,52,.82);color:var(--nh-lime);border:1.5px solid var(--nh-lime);box-shadow:0 0 0 0 rgba(196,240,107,.5);
+  animation:wh-pulse 2.6s infinite;backdrop-filter:blur(4px)}
+.wh-mk span{opacity:0;transform:translateX(-4px);transition:opacity .2s,transform .2s;white-space:nowrap;background:rgba(11,25,52,.88);
+  padding:7px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.1)}
+.wh-mk:hover span,.wh-mk:focus-visible span,.wh-mk.is-on span{opacity:1;transform:none}
+.wh-mk.is-on i{background:var(--nh-lime);color:var(--nh-navy);animation:none;box-shadow:0 0 22px rgba(196,240,107,.7)}
+.wh-mk.is-dim{opacity:.28}
+.wh-mk.is-hidden{opacity:0;pointer-events:none}
+@keyframes wh-pulse{0%{box-shadow:0 0 0 0 rgba(196,240,107,.45)}70%{box-shadow:0 0 0 12px rgba(196,240,107,0)}100%{box-shadow:0 0 0 0 rgba(196,240,107,0)}}
+
+/* Панелі керування */
+.wh-bar{position:absolute;left:18px;right:18px;display:flex;gap:10px;flex-wrap:wrap;pointer-events:none;z-index:2}
+.wh-bar>*{pointer-events:auto}
+.wh-bar-top{top:18px}
+.wh-bar-bottom{bottom:18px;align-items:center;right:calc(400px + 36px)}
+.wh-group{display:flex;gap:2px;padding:4px;border-radius:999px;background:rgba(11,25,52,.78);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px)}
+.wh-group button,.wh-tour button{font:600 13px/1 var(--c-font);color:rgba(255,255,255,.78);background:none;border:0;border-radius:999px;padding:10px 14px;cursor:pointer;transition:background .2s,color .2s}
+.wh-group button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.wh-group button[aria-pressed="true"]{background:var(--nh-lime);color:var(--nh-navy)}
+.wh-tour{display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(11,25,52,.78);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px)}
+.wh-tour .wh-tour-btn{width:38px;height:38px;padding:0;font-size:16px;color:#fff}
+.wh-tour .wh-tour-btn:hover{background:rgba(255,255,255,.1)}
+.wh-tour .wh-tour-label{color:#fff;min-width:200px}
+.wh-tour .wh-tour-label b{color:var(--nh-lime);margin-right:8px}
+.wh-hint{margin:0;font-size:12.5px;color:rgba(255,255,255,.5)}
+
+/* Картка зони */
+.wh-panel{position:absolute;top:18px;right:18px;max-height:calc(100% - 36px);width:400px;z-index:3;overflow:auto;overscroll-behavior:contain;
+  background:#F6F5F0;color:var(--nh-ink);border-radius:22px;padding:26px 26px 22px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6);outline:none}
+.wh-panel h2,.wh-panel h3{font-size:24px;line-height:1.15;margin:8px 0 12px}
+.wh-panel p{font-size:15px;color:var(--nh-muted)}
+.wh-panel .wh-zn{display:none}
+.wh-panel .wh-show{display:none}
+.wh-panel-intro p{margin:0}
+.wh-panel .wh-panel-close{float:right;border:0;background:rgba(14,26,51,.06);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;color:var(--nh-ink)}
+.wh-panel .wh-panel-close:hover{background:rgba(14,26,51,.12)}
+.wh-panel .wh-kicker{display:block;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--nh-blue)}
+.wh-panel-zones{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.wh-panel-zones button{font:600 13px/1.2 var(--c-font);border:1px solid var(--nh-line);background:#fff;color:var(--nh-ink);border-radius:999px;padding:8px 12px;cursor:pointer}
+.wh-panel-zones button:hover{border-color:var(--nh-blue);color:var(--nh-blue)}
+.wh-panel-cta{margin-top:18px;display:flex}
+.wh-panel-cta .nh-btn{padding:13px 20px;font-size:15px}
+
+.wh-noscript{position:absolute;inset:auto 18px 18px 18px;margin:0;color:#fff;background:rgba(11,25,52,.85);padding:14px 18px;border-radius:14px}
+
+/* Вміст зони — і в списку, і в картці */
+.wh-zone h4{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--nh-muted);margin:16px 0 8px}
+.wh-zone ul,.wh-role ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.wh-zone li,.wh-role li{position:relative;padding-left:18px;font-size:15px;line-height:1.45}
+.wh-zone li::before,.wh-role li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--nh-lime);box-shadow:0 0 0 3px rgba(196,240,107,.25)}
+.wh-zone .wh-who{font-size:14px;margin:0 0 4px;color:var(--nh-muted)}
+.wh-zone .wh-who b{color:var(--nh-ink)}
+.wh-zone .wh-intro{font-size:15px;margin:10px 0 0}
+.wh-zone .nh-case{margin-top:16px}
+.wh-zone .nh-case p{font-size:14.5px;margin:6px 0 0}
+.wh-zone .wh-more{margin:14px 0 0}
+
+/* Список зон під моделлю */
+.wh-zones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.wh-zones .wh-zone{background:var(--nh-paper);border:1px solid var(--nh-line);border-radius:var(--nh-r);padding:28px 28px 24px;display:flex;flex-direction:column;
+  transition:border-color .3s,box-shadow .3s}
+.wh-zones .wh-zone.is-on{border-color:var(--nh-lime);box-shadow:0 0 0 3px rgba(196,240,107,.35)}
+.wh-zones .wh-zone h3{font-size:22px;margin:6px 0 8px}
+.wh-zones .wh-zn{font-size:13px;font-weight:700;color:var(--nh-blue);letter-spacing:.1em}
+.wh-zones .wh-show{margin-top:auto;align-self:flex-start;border:0;background:none;padding:18px 0 0;font:600 15px/1 var(--c-font);color:var(--nh-blue);cursor:pointer}
+.wh-zones .wh-show:hover{text-decoration:underline}
+.wh-zones .nh-case{margin-bottom:4px}
+
+/* Ролі */
+.wh-roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.wh-role{background:var(--nh-navy-2);border:1px solid rgba(255,255,255,.08);border-radius:var(--nh-r);padding:28px}
+.wh-role .nh-k{color:var(--nh-lime)}
+.wh-role h3{color:#fff;font-size:22px;margin:8px 0 14px}
+.wh-role li{color:rgba(255,255,255,.82)}
+.wh-role-pol{margin:16px 0 0;font-size:14.5px;color:rgba(255,255,255,.7)}
+.wh-role-pol b{color:#fff}
+.wh-panel .wh-role-pol{color:var(--nh-muted)}
+.wh-panel .wh-role-pol b{color:var(--nh-ink)}
+.wh-panel .wh-role{background:none;border:0;padding:0;border-radius:0}
+.wh-panel .wh-role .nh-k{color:var(--nh-blue)}
+.wh-panel .wh-role h3{color:var(--nh-ink)}
+.wh-panel .wh-role li{color:var(--nh-ink)}
+.wh-note-dark{color:rgba(255,255,255,.6)}
+
+@media (max-width:1100px){
+  .wh-panel{width:340px}
+  .wh-bar-bottom{right:calc(340px + 36px)}
+  .wh-roles{grid-template-columns:1fr}
+}
+/* Телефон і планшет: сцена коротша, картка — під нею, а не поверх. */
+@media (max-width:860px){
+  .wh-stage-sec{padding:0 0 28px}
+  .wh-stage{height:auto;min-height:0;border-radius:0;border-left:0;border-right:0;display:flex;flex-direction:column;overflow:visible;background:none;box-shadow:none;border:0}
+  .wh-canvas-wrap{position:relative}
+  .wh-canvas{position:relative;inset:auto;height:62vh;min-height:360px;max-height:560px;
+    background:radial-gradient(120% 90% at 50% 0%,#18325a 0%,#0d1d38 55%,#08142a 100%)}
+  .wh-markers{bottom:auto;height:62vh;min-height:360px;max-height:560px;overflow:hidden}
+  .wh-bar{left:10px;right:10px;gap:6px}
+  .wh-bar-top{top:10px}
+  .wh-group button{padding:9px 10px;font-size:12.5px}
+  .wh-bar-bottom{position:relative;left:auto;right:auto;bottom:auto;margin:12px var(--nh-gut) 0;justify-content:center}
+  .wh-tour{width:100%;justify-content:space-between}
+  .wh-tour .wh-tour-label{min-width:0;flex:1}
+  .wh-hint{display:none}
+  .wh-panel{position:relative;inset:auto;width:auto;max-height:none;margin:12px var(--nh-gut) 0;max-height:none;overflow:visible}
+  .wh-mk span{display:none}
+  .wh-zones{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .wh-group[aria-label="Вид"] button{padding:9px 9px}
+  .wh-bar-top .wh-group:last-child{order:-1}
+}
+@media (prefers-reduced-motion:reduce){.wh-mk i{animation:none}}
