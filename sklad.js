@@ -349,7 +349,7 @@ if (live && !still && !lite) {
     new IntersectionObserver(([en]) => {
       if (en.isIntersecting) {
         if (!live.src) {
-          live.src = `sklad-media/live-${small.matches ? 720 : 1600}.mp4`;
+          live.src = `sklad-media/live-${small.matches ? 720 : 1600}.mp4?v=2`;
           live.addEventListener('playing', () => live.classList.add('is-ready'), { once:true });
         }
         live.play().catch(() => {});
