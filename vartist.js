@@ -139,7 +139,7 @@
           const limit = root.querySelector(`[data-lim="${box.value}"]`);
           return limit ? `${label} на ${Number(limit.value).toLocaleString('uk-UA')} грн` : label;
         }).filter(Boolean);
-      const parts = [`${people.value} осіб`, `клініки: ${LABELS[tier.value]}`];
+      const parts = [`${Math.max(20, parseInt(people.value, 10) || 20)} осіб`, `клініки: ${LABELS[tier.value]}`];
       if (picked.length) parts.push(`опції: ${picked.join(', ')}`);
       parts.push(`орієнтир ${outPerson.textContent} грн/особу`);
       note.value = `Зібрав у конструкторі — ${parts.join('; ')}.`;
@@ -177,7 +177,17 @@
     if (lastFocused) lastFocused.focus({preventScroll: true});
   });
 
-  root.addEventListener('change', recount);
+  // Звичайний і розширений профогляд — це одна позиція різного обсягу:
+  // обидві разом додали б доплату двічі, тож друга знімає першу.
+  const EXCLUSIVE = { checkup: 'checkup5', checkup5: 'checkup' };
+  root.addEventListener('change', (event) => {
+    const pair = event.target.name === 'opt' && event.target.checked && EXCLUSIVE[event.target.value];
+    const other = pair && root.querySelector(`input[name="opt"][value="${pair}"]`);
+    if (other) other.checked = false;
+    // Менше 20 осіб ціна не рахує, тож і в полі показуємо те, що порахувано.
+    if (event.target === people) people.value = Math.max(20, parseInt(people.value, 10) || 20);
+    recount();
+  });
   root.addEventListener('input', (event) => {
     if (event.target === people) recount();
   });
