@@ -177,9 +177,10 @@
     if (lastFocused) lastFocused.focus({preventScroll: true});
   });
 
-  // Звичайний і розширений профогляд — це одна позиція різного обсягу:
-  // обидві разом додали б доплату двічі, тож друга знімає першу.
-  const EXCLUSIVE = { checkup: 'checkup5', checkup5: 'checkup' };
+  // Звичайний і розширений профогляд, як і психолог та «більше консультацій
+  // психолога», — одна позиція різного обсягу: розширена замінює звичайну,
+  // а не додається до неї, тож вибір однієї знімає іншу.
+  const EXCLUSIVE = { checkup: 'checkup5', checkup5: 'checkup', psy: 'psy5', psy5: 'psy' };
   root.addEventListener('change', (event) => {
     const pair = event.target.name === 'opt' && event.target.checked && EXCLUSIVE[event.target.value];
     const other = pair && root.querySelector(`input[name="opt"][value="${pair}"]`);
