@@ -90,6 +90,25 @@ if(presentationFrame){
   sizeFrame();
 }
 
+// Уточнення з форми (поля з data-detail) і джерело візиту воркер окремо
+// не приймає, тож складаємо їх у текст задачі — так вони доїдуть до
+// Telegram без зміни воркера. Приховані поля (інший напрямок) пропускаємо.
+function companionLeadBody(form){
+  const data=Object.fromEntries(new FormData(form));
+  const details={};
+  form.querySelectorAll('[data-detail]').forEach(el=>{
+    if(el.closest('[hidden]'))return;
+    const v=el.type==='checkbox'?(el.checked?el.value:''):el.value.trim();
+    if(v)(details[el.dataset.detail]=details[el.dataset.detail]||[]).push(v);
+  });
+  const lines=Object.entries(details).map(([k,v])=>`${k}: ${v.join(', ')}`);
+  Object.keys(data).forEach(k=>{if(k.startsWith('d_'))delete data[k];});
+  const source=window.companionLeadSource?window.companionLeadSource():'';
+  if(source)lines.push(`Джерело: ${source}`);
+  if(lines.length)data.message=[lines.join('\n'),data.message].filter(Boolean).join('\n\n').slice(0,2000);
+  return data;
+}
+
 // Заявки: один обробник на всі форми сайту. Форма позначається класом
 // .b-meeting-form і несе приховане поле source, щоб у заявці було видно,
 // звідки вона прийшла.
@@ -108,6 +127,13 @@ if(presentationFrame){
       if(status)status.textContent='Онлайн-запис ще не відкрито. Щоб погодити зустріч, зателефонуйте: +38 (050) 145 2605.';
     }
     contact?.addEventListener('input',()=>contact.setCustomValidity(''));
+    // Під обраний напрямок показуємо своє уточнююче поле, решту ховаємо.
+    const topic=form.elements.interest,details=form.querySelector('[data-details]');
+    const syncDetails=()=>{if(!details||!topic)return;
+      details.querySelectorAll('[data-for]').forEach(el=>{const f=el.dataset.for;el.hidden=f!=='current'&&f!==topic.value;});};
+    topic?.addEventListener('change',syncDetails);
+    form.addEventListener('reset',()=>setTimeout(syncDetails));
+    syncDetails();
     form.addEventListener('submit',async event=>{
       event.preventDefault();
       if(contact){
@@ -134,7 +160,7 @@ if(presentationFrame){
         const trusted=target.origin===location.origin||ALLOWED.includes(target.origin)||isOurWorker(target.origin);
         if(!trusted||target.protocol!=='https:')throw new Error('Untrusted endpoint');
         const response=await fetch(target,{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify(Object.fromEntries(new FormData(form))),signal:AbortSignal.timeout(15000)});
+          body:JSON.stringify(companionLeadBody(form)),signal:AbortSignal.timeout(15000)});
         if(!response.ok)throw new Error('Delivery failed');
         const result=await response.json();
         if(result.accepted!==true)throw new Error('Delivery not confirmed');

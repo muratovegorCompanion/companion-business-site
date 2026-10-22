@@ -2,6 +2,25 @@
 // робить script.js, який сюди не підключається: він ще й збирає розмітку
 // сторінки. Логіка довіри до приймача тут така сама — адресу беремо з
 // data-meeting-endpoint, приймаємо лише наш воркер і лише https.
+// Уточнення з форми (поля з data-detail) і джерело візиту воркер окремо
+// не приймає, тож складаємо їх у текст задачі — так вони доїдуть до
+// Telegram без зміни воркера. Приховані поля (інший напрямок) пропускаємо.
+function companionLeadBody(form){
+  const data=Object.fromEntries(new FormData(form));
+  const details={};
+  form.querySelectorAll('[data-detail]').forEach(el=>{
+    if(el.closest('[hidden]'))return;
+    const v=el.type==='checkbox'?(el.checked?el.value:''):el.value.trim();
+    if(v)(details[el.dataset.detail]=details[el.dataset.detail]||[]).push(v);
+  });
+  const lines=Object.entries(details).map(([k,v])=>`${k}: ${v.join(', ')}`);
+  Object.keys(data).forEach(k=>{if(k.startsWith('d_'))delete data[k];});
+  const source=window.companionLeadSource?window.companionLeadSource():'';
+  if(source)lines.push(`Джерело: ${source}`);
+  if(lines.length)data.message=[lines.join('\n'),data.message].filter(Boolean).join('\n\n').slice(0,2000);
+  return data;
+}
+
 (function initCompanionForms() {
   const isOurWorker = (origin) =>
     /^https:\/\/companion-meeting-form\.[a-z0-9-]+\.workers\.dev$/.test(origin);
@@ -57,7 +76,7 @@
         const response = await fetch(target, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+          body: JSON.stringify(companionLeadBody(form)),
           signal: AbortSignal.timeout(15000),
         });
         if (!response.ok) throw new Error('Delivery failed');

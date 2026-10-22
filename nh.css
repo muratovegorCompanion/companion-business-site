@@ -203,6 +203,21 @@
 .nh-f small{display:block;font-size:13px;color:var(--nh-muted);margin-top:6px}
 .nh-consent{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--nh-muted);cursor:pointer}
 .nh-consent input{width:20px;height:20px;accent-color:var(--nh-blue);margin-top:1px;flex:0 0 auto}
+/* Уточнення до заявки: поля під обраний напрямок + чинний договір */
+.nh-details{display:grid;gap:18px;padding:18px;border-radius:18px;background:var(--nh-bg);border:1px dashed var(--nh-line)}
+.nh-details [hidden]{display:none!important}
+.nh-details .nh-f input{background:var(--nh-paper)}
+.nh-chips{border:0;padding:0;margin:0;min-width:0}
+.nh-chips legend{font-size:14px;font-weight:600;margin-bottom:8px;padding:0}
+.nh-chips label{display:inline-flex;margin:0 8px 8px 0;cursor:pointer;font-weight:500}
+.nh-chips input{position:absolute;opacity:0;width:1px;height:1px}
+.nh-chips label span{padding:8px 14px;border-radius:999px;border:1px solid var(--nh-line);background:var(--nh-paper);font-size:14px;transition:background .2s,border-color .2s}
+.nh-chips label input:checked+span{background:var(--nh-lime);border-color:var(--nh-lime);color:var(--nh-navy,#0E1A33)}
+.nh-chips label input:focus-visible+span{box-shadow:0 0 0 4px rgba(41,104,229,.25)}
+.nh-details-head{margin:0;font-size:14px;font-weight:600}
+.nh-details-head .nh-opt{display:block;font-size:13px;margin-top:2px}
+.nh-details-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+.nh-details-note{font-size:13px;color:var(--nh-muted)}
 .nh .nh-form .nh-btn{justify-content:center}
 .nh .nh-form .nh-btn:disabled{opacity:.6;cursor:wait}
 .nh .nh-form .b-form-status{font-size:14px;color:var(--nh-blue);min-height:1.2em;margin:0}
