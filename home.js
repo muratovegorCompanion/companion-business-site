@@ -129,7 +129,25 @@ window.CompanionHome = {
       </div>
       <div class="nh-f"><label for="meeting-contact">Телефон або email *</label><input id="meeting-contact" name="contact" type="text" required maxlength="180" placeholder="Зручний контакт для відповіді" aria-describedby="contact-hint"><small id="contact-hint">Номер з кодом країни або email.</small></div>
       <div class="nh-f"><label for="meeting-topic">Що хочете обговорити?</label><select id="meeting-topic" name="interest"><option>Корпоративне медичне страхування</option><option>Логістика</option><option>Майно бізнесу</option><option>Відповідальність бізнесу</option><option>Інше</option></select></div>
-      <div class="nh-f"><label for="meeting-message">Кілька слів про задачу <span class="nh-opt">необов’язково</span></label><textarea id="meeting-message" name="message" rows="3" maxlength="2000" placeholder="Наприклад, плануємо продовжити програму для 150 працівників"></textarea></div>
+      <div class="nh-details" data-details>
+        <p class="nh-details-head">Кілька уточнень <span class="nh-opt">— необов’язково, але так ми прийдемо на зустріч уже з цифрами</span></p>
+        <div class="nh-f" data-for="Корпоративне медичне страхування"><label for="d-staff">Скільки працівників застрахувати?</label><input id="d-staff" name="d_staff" type="number" min="1" max="100000" inputmode="numeric" data-detail="Працівників" placeholder="Наприклад, 150"></div>
+        <div class="nh-f" data-for="Логістика" hidden><label for="d-cargo">Автопарк, маршрути, обсяги вантажів</label><input id="d-cargo" name="d_cargo" type="text" maxlength="300" data-detail="Логістика" placeholder="Напр., 40 авто, Україна та ЄС"></div>
+        <div class="nh-f" data-for="Майно бізнесу" hidden><label for="d-property">Що страхуємо</label><input id="d-property" name="d_property" type="text" maxlength="300" data-detail="Майно" placeholder="Напр., склад і обладнання, вартість"></div>
+        <div class="nh-f" data-for="Відповідальність бізнесу" hidden><label for="d-liability">Діяльність і від чого захиститися</label><input id="d-liability" name="d_liability" type="text" maxlength="300" data-detail="Відповідальність" placeholder="Напр., перевізник, шкода вантажу"></div>
+        <div class="nh-details-pair" data-for="current">
+          <div class="nh-f"><label for="d-insurer">Де страхуєтесь зараз</label><input id="d-insurer" name="d_insurer" type="text" maxlength="120" data-detail="Чинний страховик" placeholder="Страхова або «ще ні»"></div>
+          <div class="nh-f"><label for="d-until">Договір діє до</label><input id="d-until" name="d_until" type="text" maxlength="60" data-detail="Договір діє до" placeholder="Напр., 1 грудня"></div>
+        </div>
+        <fieldset class="nh-f nh-chips" data-for="current"><legend>Що не влаштовує зараз</legend>
+          <label><input type="checkbox" name="d_pain" value="ціна" data-detail="Не влаштовує"><span>Ціна</span></label>
+          <label><input type="checkbox" name="d_pain" value="виплати" data-detail="Не влаштовує"><span>Виплати</span></label>
+          <label><input type="checkbox" name="d_pain" value="обслуговування" data-detail="Не влаштовує"><span>Обслуговування</span></label>
+          <label><input type="checkbox" name="d_pain" value="покриття і ліміти" data-detail="Не влаштовує"><span>Покриття і ліміти</span></label>
+        </fieldset>
+        <small class="nh-details-note" data-for="current">Поточний поліс чи перелік об’єктів зможете надіслати у відповідь на наше повідомлення.</small>
+      </div>
+      <div class="nh-f"><label for="meeting-message">Що ще важливо знати <span class="nh-opt">необов’язково</span></label><textarea id="meeting-message" name="message" rows="3" maxlength="2000" placeholder="Наприклад, плануємо продовжити програму для 150 працівників"></textarea></div>
       <label class="nh-consent"><input name="consent" type="checkbox" required><span>Погоджуюся на обробку цих контактів для відповіді на мій запит.</span></label>
       <div class="b-honeypot" aria-hidden="true"><label for="meeting-website">Ваш сайт</label><input id="meeting-website" name="website" tabindex="-1" autocomplete="off"></div>
       <button class="nh-btn nh-btn-primary" type="submit">Домовитися про зустріч <span class="nh-ar" aria-hidden="true">↗</span></button>

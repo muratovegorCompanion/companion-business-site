@@ -212,7 +212,7 @@ const shareShell = (html, file) => {
   // Тег Google Ads: рахує заявки, надіслані з форми. Один файл на всі
   // сторінки; сам виклик конверсії живе в обробниках форми.
   if (!html.includes('analytics.js'))
-    html = html.replace('</head>', '<script src="analytics.js?v=1" defer></script></head>');
+    html = html.replace('</head>', '<script src="analytics.js?v=2" defer></script></head>');
   return openGraph(canonical(html, file), file);
 };
 
