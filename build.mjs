@@ -306,6 +306,8 @@ for (const file of ['logistyka.html','yak-my-pratsyuyemo.html',
 await cp(join(root, 'presentation-assets'), join(output, 'presentation-assets'), {recursive:true});
 await cp(join(root, 'fonts'), join(output, 'fonts'), {recursive:true});
 await cp(join(root, 'sklad-media'), join(output, 'sklad-media'), {recursive:true});
+// Окрема сторінка-історія для клієнта (не в меню й не в sitemap, noindex).
+await cp(join(root, 'dms-bizzabo'), join(output, 'dms-bizzabo'), {recursive:true});
 console.log('Built static Companion site with homepage-exact isolated header geometry.');
 
 // robots.txt і карта сайту: без них пошуковику нема з чого почати обхід.
