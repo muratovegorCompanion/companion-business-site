@@ -14,7 +14,7 @@ window.CompanionHome = {
     <div class="nh-stats" aria-label="Компаньйон у цифрах">
       <div class="nh-stat"><b data-count="12">12</b><span>років на ринку</span></div>
       <div class="nh-stat"><b data-count="97" data-suffix="%">97%</b><span>договорів продовжуються</span></div>
-      <div class="nh-stat"><b data-count="15678">15 678</b><span>застрахованих людей</span></div>
+      <div class="nh-stat"><b data-count="10000" data-suffix="+">10 000+</b><span>застрахованих людей</span></div>
       <div class="nh-stat"><b data-count="70" data-suffix="+">70+</b><span>компаній-клієнтів</span></div>
     </div>
   </div>
