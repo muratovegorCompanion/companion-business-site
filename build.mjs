@@ -176,7 +176,7 @@ const shareShell = (html, file) => {
   if (crumbs && !html.includes('BreadcrumbList'))
     html = html.replace('</head>', `${jsonLdTag(crumbs)}</head>`);
   if (!html.includes('site-footer.css'))
-    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=8"></head>');
+    html = html.replace('</head>', '<link rel="stylesheet" href="site-footer.css?v=9"></head>');
   // Кнопка «Меню» була лише на головній: розмітка з нею вклеювалась усюди,
   // а обробник лишався в script.js, який підключений тільки на index.
   if (html.includes('class="menu-toggle"') && !html.includes('nav.js'))

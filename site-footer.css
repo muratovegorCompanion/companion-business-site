@@ -51,6 +51,10 @@ body
 .site-footer .footer-dock{display:flex;align-items:center;justify-content:space-between;
   gap:16px;min-height:44px;padding:4px 0}
 .footer-dock-phone{font-weight:700;font-size:15px;color:#fff!important;white-space:nowrap}
+/* Пошта поруч із телефоном: обидва контакти видно і в згорнутій смужці */
+.footer-dock-contacts{display:flex;align-items:center;gap:6px 22px;flex-wrap:wrap;min-width:0}
+.footer-dock-mail{font-size:14px;color:#c9d4e2!important;white-space:nowrap}
+.footer-dock-mail:hover,.footer-dock-phone:hover{color:var(--c-lime)!important}
 .footer-toggle{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:6px 10px;
   background:none;border:0;border-radius:8px;color:#c9d4e2;font:inherit;font-size:13px;cursor:pointer}
 .footer-toggle:hover{background:rgba(255,255,255,.08);color:#fff}
@@ -63,4 +67,6 @@ body
 /* телефон вже стоїть у смужці — у розгорнутій частині він зайвий */
 .site-footer .footer-body .footer-phone{display:none}
 @media (prefers-reduced-motion:reduce){.site-footer .footer-body,.footer-chev{transition:none}}
-@media (max-width:700px){.footer-dock-phone{font-size:14px}.footer-toggle{font-size:12.5px}}
+@media (max-width:700px){.footer-dock-phone{font-size:14px}.footer-dock-mail{font-size:13px}.footer-toggle{font-size:12.5px}}
+/* На вузькому телефоні три елементи в рядок не влазять: кнопці лишаємо стрілку */
+@media (max-width:480px){.footer-dock-contacts{gap:2px 14px}.footer-toggle-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
