@@ -159,6 +159,13 @@
 .nh-loop{display:flex;gap:14px;align-items:center;margin-top:clamp(40px,5vw,64px);padding:20px 24px;border-radius:18px;background:var(--nh-paper);border:1px solid var(--nh-line);font-weight:600;font-size:clamp(17px,1.6vw,20px)}
 .nh-loop span{flex:0 0 40px;height:40px;border-radius:50%;background:var(--nh-lime);display:grid;place-items:center;font-size:22px;color:var(--nh-ink)}
 .nh-soft{margin-top:26px;color:var(--nh-muted)}
+/* Прямі контакти біля форми: кому зручніше подзвонити, ніж заповнювати */
+.nh-direct{margin-top:30px;padding:20px 22px;border-radius:18px;background:var(--nh-paper);border:1px solid var(--nh-line);display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 22px}
+.nh-direct-label{flex:1 0 100%;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--nh-blue)}
+.nh-direct a{color:var(--nh-ink);font-weight:500;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.nh-direct a b{font-size:19px;font-weight:700}
+.nh-direct a:hover{color:var(--nh-blue);border-color:currentColor}
+.nh-direct small{flex:1 0 100%;font-size:13px;color:var(--nh-muted)}
 .nh-soft .nh-link{display:inline}
 
 /* support */

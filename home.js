@@ -120,6 +120,7 @@ window.CompanionHome = {
       <h2 id="meeting-heading" class="nh-rv nh-d1">Розкажіть, що важливо <em class="nh-s">вашій компанії.</em></h2>
       <p class="nh-lead nh-rv nh-d2">Залиште контакти, і ми погодимо зручний час зустрічі. Обговоримо вашу ситуацію, потрібну інформацію та наступні кроки.</p>
       <ul class="nh-perks nh-rv nh-d3"><li>Безоплатна перша зустріч</li><li>Онлайн або особисто в Києві</li><li>Для ДМС — з керівником напряму або його заступником</li></ul>
+      <div class="nh-direct nh-rv nh-d3"><span class="nh-direct-label">Або напишіть чи зателефонуйте напряму</span><a href="tel:+380501452605"><b>+38 (050) 145 2605</b></a><a href="mailto:zapyt@icompanion.com.ua">zapyt@icompanion.com.ua</a><a href="https://t.me/EgorMuratov" target="_blank" rel="noreferrer">Telegram ↗</a><small>Пн–пт, 09:00–18:00</small></div>
       <p class="nh-soft nh-rv nh-d3">Ще не готові до зустрічі? <a class="nh-link" href="perevirka-dms.html">Почніть із чек-листа перед продовженням ДМС ↗</a></p>
     </div>
     <form class="b-meeting-form nh-form nh-rv nh-d1" id="meeting-form">
